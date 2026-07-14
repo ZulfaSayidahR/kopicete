@@ -152,10 +152,10 @@
 }
 
 .action-helper {
-    margin: 15px 0 0;
+    margin: 20px 0 0;
 
     color: #edf8ff;
-    font-size: 9px;
+    font-size: 12px;
     line-height: 1.45;
     text-align: center;
     font-style: italic;
@@ -517,7 +517,6 @@
 }
 
 @media (max-width: 520px) {
-
     .aduan-box,
     .tracking-box {
         border-radius: 21px;
@@ -648,7 +647,6 @@
 .pengaduan-body {
     padding: 40px;
 }
-
 
 /* =====================================================
    STEPPER
@@ -941,9 +939,9 @@ textarea.form-control {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: 'Poppins', sans-serif;
+    font-family: "Poppins", sans-serif;
 
-    background: linear-gradient(135deg, #0B73B9 0%, #0E8AD7 45%, #78C8F9 100%);
+    background: linear-gradient(135deg, #0b73b9 0%, #0e8ad7 45%, #78c8f9 100%);
     overflow: hidden;
     position: relative;
 }
@@ -956,7 +954,7 @@ textarea.form-control {
     width: 420px;
     height: 420px;
     border-radius: 50%;
-    background: rgba(255, 255, 255, .12);
+    background: rgba(255, 255, 255, 0.12);
     top: -120px;
     left: -120px;
 }
@@ -967,7 +965,7 @@ textarea.form-control {
     width: 300px;
     height: 300px;
     border-radius: 50%;
-    background: rgba(255, 255, 255, .08);
+    background: rgba(255, 255, 255, 0.08);
     right: -90px;
     bottom: -80px;
 }
@@ -975,22 +973,19 @@ textarea.form-control {
 /* ===================================================== */
 
 .login-admin-page {
-
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 40px 20px;
-
 }
 
 /* ===================================================== */
 
 .login-admin-card {
-
     width: 460px;
 
-    background: rgba(255, 255, 255, .94);
+    background: rgba(255, 255, 255, 0.94);
 
     backdrop-filter: blur(20px);
 
@@ -999,18 +994,16 @@ textarea.form-control {
     padding: 45px;
 
     box-shadow:
-        0 30px 60px rgba(0, 0, 0, .18),
-        0 10px 25px rgba(0, 0, 0, .08);
+        0 30px 60px rgba(0, 0, 0, 0.18),
+        0 10px 25px rgba(0, 0, 0, 0.08);
 
     position: relative;
     z-index: 2;
 
-    animation: fadeLogin .7s ease;
-
+    animation: fadeLogin 0.7s ease;
 }
 
 @keyframes fadeLogin {
-
     from {
         opacity: 0;
         transform: translateY(40px);
@@ -1020,13 +1013,11 @@ textarea.form-control {
         opacity: 1;
         transform: translateY(0);
     }
-
 }
 
 /* ===================================================== */
 
 .login-icon {
-
     width: 85px;
     height: 85px;
 
@@ -1038,20 +1029,18 @@ textarea.form-control {
 
     border-radius: 22px;
 
-    background: linear-gradient(135deg, #0B73B9, #0A5B90);
+    background: linear-gradient(135deg, #0b73b9, #0a5b90);
 
     color: #fff;
 
     font-size: 38px;
 
-    box-shadow: 0 12px 30px rgba(11, 115, 185, .35);
+    box-shadow: 0 12px 30px rgba(11, 115, 185, 0.35);
 
     margin-bottom: 20px;
-
 }
 
 .admin-logo {
-
     width: 72px;
 
     display: block;
@@ -1059,20 +1048,16 @@ textarea.form-control {
     margin: auto;
 
     margin-bottom: 15px;
-
 }
 
 .login-admin-card h2 {
-
     font-weight: 700;
-    color: #0B73B9;
+    color: #0b73b9;
 
     margin-bottom: 6px;
-
 }
 
 .login-admin-card p {
-
     color: #666;
 
     font-size: 14px;
@@ -1080,18 +1065,16 @@ textarea.form-control {
     line-height: 1.6;
 
     margin-bottom: 30px;
-
 }
 
 /* ===================================================== */
 
 .input-login {
-
     display: flex;
 
     align-items: center;
 
-    background: #F5F8FC;
+    background: #f5f8fc;
 
     border: 2px solid transparent;
 
@@ -1101,34 +1084,26 @@ textarea.form-control {
 
     margin-bottom: 18px;
 
-    transition: .3s;
-
+    transition: 0.3s;
 }
 
 .input-login:hover {
-
-    border-color: #8ECFFF;
-
+    border-color: #8ecfff;
 }
 
 .input-login:focus-within {
+    border-color: #0b73b9;
 
-    border-color: #0B73B9;
-
-    box-shadow: 0 0 0 4px rgba(11, 115, 185, .15);
-
+    box-shadow: 0 0 0 4px rgba(11, 115, 185, 0.15);
 }
 
 .input-login i {
-
-    color: #0B73B9;
+    color: #0b73b9;
 
     font-size: 17px;
-
 }
 
 .input-login input {
-
     border: none;
 
     background: none;
@@ -1142,13 +1117,11 @@ textarea.form-control {
     margin-left: 12px;
 
     font-size: 15px;
-
 }
 
 /* ===================================================== */
 
 .login-menu {
-
     display: flex;
 
     justify-content: space-between;
@@ -1158,23 +1131,19 @@ textarea.form-control {
     margin-bottom: 22px;
 
     font-size: 13px;
-
 }
 
 .login-menu a {
-
     text-decoration: none;
 
-    color: #0B73B9;
+    color: #0b73b9;
 
     font-weight: 600;
-
 }
 
 /* ===================================================== */
 
 .btn-admin-login {
-
     width: 100%;
 
     height: 55px;
@@ -1183,7 +1152,7 @@ textarea.form-control {
 
     border-radius: 14px;
 
-    background: linear-gradient(135deg, #0B73B9, #095B93);
+    background: linear-gradient(135deg, #0b73b9, #095b93);
 
     color: #fff;
 
@@ -1191,30 +1160,24 @@ textarea.form-control {
 
     font-weight: 700;
 
-    transition: .3s;
-
+    transition: 0.3s;
 }
 
 .btn-admin-login:hover {
-
     transform: translateY(-2px);
 
-    box-shadow: 0 10px 20px rgba(11, 115, 185, .35);
-
+    box-shadow: 0 10px 20px rgba(11, 115, 185, 0.35);
 }
 
 /* ===================================================== */
 
 .divider {
-
     margin: 28px 0;
 
     position: relative;
-
 }
 
 .divider::before {
-
     content: "";
 
     position: absolute;
@@ -1224,11 +1187,9 @@ textarea.form-control {
     top: 50%;
 
     border-top: 1px solid #ddd;
-
 }
 
 .divider span {
-
     position: relative;
 
     background: #fff;
@@ -1238,13 +1199,11 @@ textarea.form-control {
     color: #999;
 
     font-size: 13px;
-
 }
 
 /* ===================================================== */
 
 .btn-google {
-
     width: 100%;
 
     height: 54px;
@@ -1267,54 +1226,44 @@ textarea.form-control {
 
     font-weight: 600;
 
-    transition: .3s;
-
+    transition: 0.3s;
 }
 
 .btn-google img {
-
     width: 22px;
-
 }
 
 .btn-google:hover {
-
     background: #f6f6f6;
 
     transform: translateY(-2px);
-
 }
 
 /* ===================================================== */
 
 .btn-back {
-
     display: block;
 
     text-align: center;
 
     margin-top: 22px;
 
-    color: #0B73B9;
+    color: #0b73b9;
 
     text-decoration: none;
 
     font-weight: 600;
 
-    transition: .3s;
-
+    transition: 0.3s;
 }
 
 .btn-back:hover {
-
-    color: #084F82;
-
+    color: #084f82;
 }
 
 /* ===================================================== */
 
 .system-version {
-
     margin-top: 25px;
 
     text-align: center;
@@ -1322,7 +1271,6 @@ textarea.form-control {
     font-size: 12px;
 
     color: #8c8c8c;
-
 }
 
 /* ============================
@@ -1330,7 +1278,6 @@ textarea.form-control {
 ============================ */
 
 .alert-success {
-
     border: none;
     border-radius: 12px;
     background: #d1f7dd;
@@ -1342,25 +1289,19 @@ textarea.form-control {
     margin-bottom: 20px;
 
     padding: 12px;
-
 }
 
 .btn-admin-login {
-
-    transition: .3s;
-
+    transition: 0.3s;
 }
 
 .btn-admin-login:hover {
-
     transform: translateY(-2px);
 
-    box-shadow: 0 10px 25px rgba(11, 115, 185, .3);
-
+    box-shadow: 0 10px 25px rgba(11, 115, 185, 0.3);
 }
 
 .btn-back {
-
     width: 100%;
 
     display: flex;
@@ -1377,14 +1318,11 @@ textarea.form-control {
 
     font-weight: 600;
 
-    color: #0B73B9;
-
+    color: #0b73b9;
 }
 
 .btn-back:hover {
-
     color: #084f83;
-
 }
 
 @media (max-width: 576px) {
@@ -1467,5 +1405,4 @@ textarea.form-control {
     .btn-next i {
         margin-right: 6px;
     }
-
 }
