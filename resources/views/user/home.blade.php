@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@extends('layouts.footer')
 
 @section('title')
     Kopi CeTe - Portal Aduan
@@ -132,7 +133,7 @@
 
                     </div>
 
-                   <button type="submit" class="tracking-button">
+                    <button type="submit" class="tracking-button">
                         <i></i>Lacak
                     </button>
 

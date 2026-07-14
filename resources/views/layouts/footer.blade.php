@@ -1,34 +1,112 @@
-<footer>
+<footer class="footer-bnn">
 
-<div class="container">
+    <div class="container">
 
-<div class="row">
+        <div class="row gy-4">
 
-<div class="col-lg-6">
+            <!-- Logo -->
+            <div class="col-lg-5">
 
-<h4>KopiCete</h4>
+                <div class="footer-brand">
 
-<p>
+                    <img src="{{ asset('images/logo-bnn.png') }}" alt="BNNK">
 
-Portal Pengaduan dan Permohonan
-BNNK Tulungagung
+                    <div>
 
-</p>
+                        <h4>Kopi CeTe</h4>
 
-</div>
+                        <p>
+                            Portal Pengaduan dan Permohonan Digital
+                            BNNK Tulungagung.
+                            Memberikan layanan pengaduan masyarakat
+                            dan permohonan secara cepat, mudah,
+                            aman dan transparan.
+                        </p>
 
-<div class="col-lg-6 text-end">
+                    </div>
 
-<p>
+                </div>
 
-© 2026 BNNK Tulungagung
+            </div>
 
-</p>
+            <!-- Menu -->
+            <div class="col-lg-3">
 
-</div>
+                <h5>Menu</h5>
 
-</div>
+                <ul class="footer-menu">
 
-</div>
+                    <li>
+                        <a href="{{ route('home') }}">
+                            Beranda
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="{{ route('pengaduan.create') }}">
+                            Pengaduan
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="{{ route('permohonan.create') }}">
+                            Permohonan
+                        </a>
+                    </li>
+
+                    <!-- <li>
+                        <a href="{{ route('') }}">
+                            Lacak Aduan
+                        </a>
+                    </li> -->
+
+                </ul>
+
+            </div>
+
+            <!-- Kontak -->
+            <div class="col-lg-4">
+
+                <h5>Kontak</h5>
+
+                <ul class="footer-contact">
+
+                    <li>
+                        <i class="bi bi-geo-alt-fill"></i>
+                        Jl. MT Haryono No. 01,
+                        Tulungagung
+                    </li>
+
+                    <li>
+                        <i class="bi bi-telephone-fill"></i>
+                        (0355) 123456
+                    </li>
+
+                    <li>
+                        <i class="bi bi-envelope-fill"></i>
+                        info@bnnktulungagung.go.id
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </div>
+
+        <hr>
+
+        <div class="footer-bottom">
+
+            <span>
+                © {{ date('Y') }} BNNK Tulungagung
+            </span>
+
+            <span>
+                Dikembangkan oleh Tim Kopi CeTe
+            </span>
+
+        </div>
+
+    </div>
 
 </footer>
