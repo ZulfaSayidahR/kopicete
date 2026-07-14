@@ -1009,4 +1009,204 @@ textarea.form-control {
     .btn-next i {
         margin-right: 6px;
     }
+
+       /* =====================================================
+LOGIN ADMIN
+=====================================================*/
+
+.login-page{
+
+    min-height:90vh;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:60px 0;
+
+    background:linear-gradient(135deg,#0B73B9,#56B8F5,#EAF5FC);
+
+}
+
+.login-wrapper{
+
+    width:100%;
+
+    display:flex;
+
+    justify-content:center;
+
+}
+
+.login-card{
+
+    width:450px;
+
+    background:#fff;
+
+    border-radius:22px;
+
+    padding:40px;
+
+    box-shadow:0 20px 45px rgba(0,0,0,.18);
+
+}
+
+.login-logo{
+
+    text-align:center;
+
+    margin-bottom:30px;
+
+}
+
+.login-logo img{
+
+    width:80px;
+
+    margin-bottom:10px;
+
+}
+
+.login-logo h3{
+
+    font-size:24px;
+
+    font-weight:700;
+
+    color:#0B73B9;
+
+    margin-bottom:5px;
+
+}
+
+.login-logo p{
+
+    color:#666;
+
+    font-size:14px;
+
+}
+
+.login-card h4{
+
+    text-align:center;
+
+    font-weight:700;
+
+}
+
+.login-subtitle{
+
+    text-align:center;
+
+    color:#666;
+
+    margin-bottom:30px;
+
+}
+
+.login-card .form-control{
+
+    height:50px;
+
+    border-radius:10px;
+
+}
+
+.login-card .input-group-text{
+
+    background:#0B73B9;
+
+    color:#fff;
+
+    border:none;
+
+}
+
+.login-option{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:25px;
+
+    font-size:14px;
+
+}
+
+.login-option a{
+
+    text-decoration:none;
+
+    color:#0B73B9;
+
+    font-weight:600;
+
+}
+
+.btn-login{
+
+    width:100%;
+
+    height:50px;
+
+    border:none;
+
+    border-radius:10px;
+
+    background:#0B73B9;
+
+    color:#fff;
+
+    font-weight:700;
+
+    transition:.3s;
+
+}
+
+.btn-login:hover{
+
+    background:#075F9C;
+
+}
+
+.btn-kembali{
+
+    display:block;
+
+    margin-top:15px;
+
+    text-align:center;
+
+    text-decoration:none;
+
+    color:#0B73B9;
+
+    font-weight:600;
+
+}
+
+.btn-kembali:hover{
+
+    color:#075F9C;
+
+}
+
+@media(max-width:576px){
+
+.login-card{
+
+width:100%;
+
+padding:30px 20px;
+
+}
+
+}
 }
