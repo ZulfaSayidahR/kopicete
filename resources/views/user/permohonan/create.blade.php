@@ -49,15 +49,10 @@
                                             Pilih Jenis Permohonan
                                         </option>
 
-                                        <option>Sosialisasi</option>
+                                        <option>Permohonan Sosialisasi</option>
 
-                                        <option>Penyuluhan</option>
+                                        <option>Permohonan Rehabilitasi</option>
 
-                                        <option>Rehabilitasi</option>
-
-                                        <option>Tes Urine</option>
-
-                                        <option>Narasumber</option>
 
                                     </select>
 

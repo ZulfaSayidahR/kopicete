@@ -11,8 +11,8 @@
             <div class="pengaduan-wrapper">
 
                 <!-- ==========================================
-                                                        FORM PENGADUAN
-                                                =========================================== -->
+                                                            FORM PENGADUAN
+                                                    =========================================== -->
 
                 <div class="pengaduan-card">
 
@@ -100,13 +100,9 @@
 
                                         <option>Pilih kategori</option>
 
-                                        <option>Penyalahgunaan Narkoba</option>
+                                        <option>Penyalahgunaan Narkoba dan Peredaran Gelap Narkoba</option>
 
-                                        <option>Peredaran Gelap Narkoba</option>
-
-                                        <option>Pelayanan Publik</option>
-
-                                        <option>Whistleblowing System</option>
+                                        <option>Pelayanan Publik dan Pelanggaran Internal</option>
 
                                     </select>
 
@@ -151,8 +147,8 @@
                 </div>
 
                 <!-- ==========================================
-                                                        SIDEBAR
-                                                =========================================== -->
+                                                            SIDEBAR
+                                                    =========================================== -->
 
                 <aside class="sidebar-aduan">
 
