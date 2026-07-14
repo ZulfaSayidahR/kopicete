@@ -1,112 +1,51 @@
-<footer class="footer-bnn">
+<!-- Kontak -->
+<div class="col-lg-4">
 
-    <div class="container">
+    <h5>Kontak</h5>
 
-        <div class="row gy-4">
+    <ul class="footer-contact">
 
-            <!-- Logo -->
-            <div class="col-lg-5">
+        <li>
+            <i class="bi bi-geo-alt-fill"></i>
+            Jl. Sultan Agung No.1A, Dusun Kedungsingkal,
+            Ketanon, Kec. Kedungwaru,
+            Kabupaten Tulungagung,
+            Jawa Timur 66229
+        </li>
 
-                <div class="footer-brand">
+        <li>
+            <i class="bi bi-telephone-fill"></i>
+            0821-5224-9911
+        </li>
 
-                    <img src="{{ asset('images/logo-bnn.png') }}" alt="BNNK">
+        <li>
+            <i class="bi bi-envelope-fill"></i>
+            info@bnnktulungagung.go.id
+        </li>
 
-                    <div>
+    </ul>
 
-                        <h4>Kopi CeTe</h4>
+    <!-- Sosial Media -->
+    <div class="footer-social">
 
-                        <p>
-                            Portal Pengaduan dan Permohonan Digital
-                            BNNK Tulungagung.
-                            Memberikan layanan pengaduan masyarakat
-                            dan permohonan secara cepat, mudah,
-                            aman dan transparan.
-                        </p>
+        <a href="https://www.facebook.com/" target="_blank" title="Facebook">
 
-                    </div>
+            <i class="bi bi-facebook"></i>
 
-                </div>
+        </a>
 
-            </div>
+        <a href="https://www.instagram.com/" target="_blank" title="Instagram">
 
-            <!-- Menu -->
-            <div class="col-lg-3">
+            <i class="bi bi-instagram"></i>
 
-                <h5>Menu</h5>
+        </a>
 
-                <ul class="footer-menu">
+        <a href="https://twitter.com/" target="_blank" title="Twitter">
 
-                    <li>
-                        <a href="{{ route('home') }}">
-                            Beranda
-                        </a>
-                    </li>
+            <i class="bi bi-twitter-x"></i>
 
-                    <li>
-                        <a href="{{ route('pengaduan.create') }}">
-                            Pengaduan
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="{{ route('permohonan.create') }}">
-                            Permohonan
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="{{ route('home') }}">
-                            Lacak Aduan
-                        </a>
-                    </li>
-
-                </ul>
-
-            </div>
-
-            <!-- Kontak -->
-            <div class="col-lg-4">
-
-                <h5>Kontak</h5>
-
-                <ul class="footer-contact">
-
-                    <li>
-                        <i class="bi bi-geo-alt-fill"></i>
-                        Jl. MT Haryono No. 01,
-                        Tulungagung
-                    </li>
-
-                    <li>
-                        <i class="bi bi-telephone-fill"></i>
-                        (0355) 123456
-                    </li>
-
-                    <li>
-                        <i class="bi bi-envelope-fill"></i>
-                        info@bnnktulungagung.go.id
-                    </li>
-
-                </ul>
-
-            </div>
-
-        </div>
-
-        <hr>
-
-        <div class="footer-bottom">
-
-            <span>
-                © {{ date('Y') }} BNNK Tulungagung
-            </span>
-
-            <span>
-                Dikembangkan oleh Tim Kopi CeTe
-            </span>
-
-        </div>
+        </a>
 
     </div>
 
-</footer>
+</div>

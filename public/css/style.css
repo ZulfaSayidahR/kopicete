@@ -1601,4 +1601,36 @@ FOOTER
         text-align: center;
     }
 
+    /* ==========================
+   FOOTER SOCIAL MEDIA
+========================== */
+
+    .footer-social {
+        margin-top: 20px;
+        display: flex;
+        gap: 14px;
+    }
+
+    .footer-social a {
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, .12);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #fff;
+        font-size: 20px;
+        text-decoration: none;
+        transition: .3s;
+        border: 1px solid rgba(255, 255, 255, .15);
+    }
+
+    .footer-social a:hover {
+        background: #FFC72C;
+        color: #0B3C6D;
+        transform: translateY(-5px);
+        box-shadow: 0 8px 18px rgba(0, 0, 0, .2);
+    }
+
 }
