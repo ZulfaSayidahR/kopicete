@@ -2,23 +2,14 @@
    HOME PAGE
 ===================================================== */
 
-@media(min-width:1400px) {
-
+@media (min-width: 1400px) {
     .home-page {
-
         max-width: 1600px;
-
     }
-
 
     .home-grid {
-
-        grid-template-columns:
-
-            2.3fr 1fr;
-
+        grid-template-columns: 2.3fr 1fr;
     }
-
 }
 
 /* =====================================================
@@ -31,10 +22,7 @@
     min-width: 0;
     min-height: 625px;
 
-    background: linear-gradient(145deg,
-            #0c76b8 0%,
-            #096baa 55%,
-            #075f9c 100%);
+    background: linear-gradient(145deg, #0c76b8 0%, #096baa 55%, #075f9c 100%);
 
     border-radius: 28px;
     color: #ffffff;
@@ -45,8 +33,6 @@
         inset 0 1px 2px rgba(255, 255, 255, 0.25),
         inset 0 -10px 30px rgba(0, 0, 0, 0.08);
     overflow: hidden;
-
-
 }
 
 /* =====================================================
@@ -58,12 +44,11 @@
 
     display: flex;
     flex-direction: column;
-
 }
 
 .badge-layanan {
     width: fit-content;
-    padding: 7px 17px;
+    padding: 15px 22px;
 
     display: inline-flex;
     align-items: center;
@@ -73,7 +58,7 @@
     border-radius: 30px;
 
     color: #ffffff;
-    font-size: 10px;
+    font-size: 14px;
     line-height: 1;
     font-weight: 700;
     letter-spacing: 0.1px;
@@ -240,12 +225,12 @@
 }
 
 .tracking-header {
-    background: #0B73B9;
+    background: #0b73b9;
     padding: 22px 35px;
     border-radius: 15px 15px 0 0;
     display: flex;
     align-items: center;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, .15);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
 }
 
 .logo-box {
@@ -270,7 +255,7 @@
     background: #fff;
     padding: 30px;
     border-radius: 0 0 15px 15px;
-    box-shadow: 0 12px 30px rgba(0, 0, 0, .12);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
 }
 
 .tracking-grid {
@@ -284,11 +269,11 @@
 ===================================================== */
 
 .tracking-card {
-    background: #0B73B9;
+    background: #0b73b9;
     color: #fff;
     border-radius: 12px;
     padding: 25px;
-    box-shadow: 0 12px 25px rgba(0, 0, 0, .15);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
 }
 
 .tracking-card h5 {
@@ -362,7 +347,7 @@
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    transition: .3s;
+    transition: 0.3s;
 }
 
 .lampiran-item:hover {
@@ -441,8 +426,7 @@
    RESPONSIVE
 ===================================================== */
 
-@media(max-width:992px) {
-
+@media (max-width: 992px) {
     .tracking-grid {
         grid-template-columns: 1fr;
     }
@@ -450,11 +434,9 @@
     .status-card {
         min-height: auto;
     }
-
 }
 
-@media(max-width:768px) {
-
+@media (max-width: 768px) {
     .info-grid {
         grid-template-columns: 1fr;
     }
@@ -470,7 +452,6 @@
     .lampiran {
         justify-content: center;
     }
-
 }
 
 /* =====================================================
@@ -536,7 +517,6 @@
 }
 
 @media (max-width: 520px) {
-
     .aduan-box,
     .tracking-box {
         border-radius: 21px;
@@ -586,7 +566,7 @@
 
     .info-grid strong i {
         margin-right: 6px;
-        color: #FFC928;
+        color: #ffc928;
     }
 
     .kronologi h6 {
@@ -642,8 +622,7 @@
     background: #ffffff;
     border-radius: 28px;
     overflow: hidden;
-    box-shadow:
-        0 20px 45px rgba(0, 0, 0, .12);
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.12);
 }
 
 .pengaduan-header {
@@ -662,7 +641,7 @@
     margin-top: 6px;
     margin-bottom: 0;
     font-size: 14px;
-    opacity: .9;
+    opacity: 0.9;
 }
 
 .pengaduan-body {
@@ -714,14 +693,14 @@
     font-weight: 700;
     position: relative;
     z-index: 2;
-    transition: .3s;
+    transition: 0.3s;
 }
 
 .step.active .step-number {
     background: #0c76b8;
     border-color: #0c76b8;
     color: #fff;
-    box-shadow: 0 10px 20px rgba(11, 115, 185, .25);
+    box-shadow: 0 10px 20px rgba(11, 115, 185, 0.25);
 }
 
 .step-title {
@@ -747,7 +726,7 @@
     border-radius: 12px;
     border: 1px solid #d8e2ef;
     font-size: 14px;
-    transition: .3s;
+    transition: 0.3s;
 }
 
 textarea.form-control {
@@ -758,7 +737,7 @@ textarea.form-control {
 .form-control:focus,
 .form-select:focus {
     border-color: #0c76b8;
-    box-shadow: 0 0 0 .2rem rgba(12, 118, 184, .15);
+    box-shadow: 0 0 0 0.2rem rgba(12, 118, 184, 0.15);
 }
 
 .form-note {
@@ -814,8 +793,7 @@ textarea.form-control {
     border-radius: 28px;
     padding: 25px;
     color: #fff;
-    box-shadow:
-        0 20px 45px rgba(0, 0, 0, .18);
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.18);
 }
 
 .sidebar-header {
@@ -839,7 +817,7 @@ textarea.form-control {
     padding: 8px 18px;
     font-size: 12px;
     font-weight: 700;
-    transition: .3s;
+    transition: 0.3s;
 }
 
 .btn-sidebar:hover {
@@ -857,12 +835,12 @@ textarea.form-control {
     padding: 18px;
     margin-bottom: 16px;
     position: relative;
-    transition: .3s;
+    transition: 0.3s;
 }
 
 .aduan-item:hover {
     transform: translateY(-4px);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, .12);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
 }
 
 .aduan-item h6 {
@@ -911,11 +889,10 @@ textarea.form-control {
     background: #27c76f;
 }
 
-
 /* ANIMASI */
 .pengaduan-card,
 .sidebar-aduan {
-    transition: .35s;
+    transition: 0.35s;
 }
 
 .pengaduan-card:hover,
@@ -923,10 +900,8 @@ textarea.form-control {
     transform: translateY(-3px);
 }
 
-
 /* RESPONSIVE */
-@media(max-width:992px) {
-
+@media (max-width: 992px) {
     .pengaduan-wrapper {
         grid-template-columns: 1fr;
     }
@@ -934,11 +909,9 @@ textarea.form-control {
     .sidebar-aduan {
         margin-top: 20px;
     }
-
 }
 
-@media(max-width:768px) {
-
+@media (max-width: 768px) {
     .pengaduan-body {
         padding: 25px;
     }
@@ -954,11 +927,9 @@ textarea.form-control {
     .step-title {
         font-size: 11px;
     }
-
 }
 
-@media(max-width:576px) {
-
+@media (max-width: 576px) {
     .pengaduan-header {
         padding: 22px;
     }
@@ -982,11 +953,11 @@ textarea.form-control {
         border-radius: 14px;
         overflow: hidden;
         border: 1px solid #d6e9f7;
-        box-shadow: 0 10px 25px rgba(0, 0, 0, .08);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
     }
 
     .summary-header {
-        background: #0B73B9;
+        background: #0b73b9;
         color: #fff;
         padding: 14px 20px;
         font-size: 17px;
@@ -1039,6 +1010,7 @@ textarea.form-control {
         margin-right: 6px;
     }
 
+    
 
 
 
