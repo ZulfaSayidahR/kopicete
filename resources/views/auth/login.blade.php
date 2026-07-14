@@ -72,7 +72,7 @@
 
                     </label>
 
-                    <a href="#">
+                    <a href="{{ route('forgot.password') }}">
 
                         Lupa Password?
 

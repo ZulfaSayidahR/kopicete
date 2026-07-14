@@ -173,15 +173,17 @@ Route::prefix('tracking')
     });
 
 
-
-
-
-Route::get('/login', [AuthController::class, 'index'])
+Route::get('/login', [AuthController::class, 'login'])
     ->name('login');
 
-Route::post('/login', [AuthController::class, 'login'])
+Route::post('/login', [AuthController::class, 'loginProses'])
     ->name('login.proses');
 
+Route::get('/forgot-password', [AuthController::class, 'forgotPassword'])
+    ->name('forgot.password');
+
+Route::post('/forgot-password', [AuthController::class, 'forgotPasswordProses'])
+    ->name('forgot.password.proses');
 
 // ==========================
 // INFORMASI
