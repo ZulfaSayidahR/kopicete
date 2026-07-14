@@ -1,136 +1,120 @@
-@extends('layouts.app')
+<!DOCTYPE html>
+<html lang="id">
 
-@section('title','Login Admin')
+<head>
 
-@section('content')
+    <meta charset="UTF-8">
 
-<section class="login-page">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <div class="container">
+    <title>Login Admin | BNNK Tulungagung</title>
 
-        <div class="login-wrapper">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
-            <!-- Background Card -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 
-            <div class="login-card">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 
-                <div class="login-logo">
+</head>
 
-                    <img src="{{ asset('images/logo-bnn.png') }}" alt="Logo">
+<body class="login-admin-body">
 
-                    <h3>BNNK TULUNGAGUNG</h3>
+    <section class="login-admin-page">
 
-                    <p>
-                        Portal Administrator Pengaduan &
-                        Permohonan
-                    </p>
+        <div class="login-admin-card">
 
-                </div>
+            <div class="login-icon">
 
-                <form method="POST" action="{{ route('login') }}">
-
-                    @csrf
-
-                    <h4>Selamat Datang</h4>
-
-                    <p class="login-subtitle">
-                        Silakan masuk menggunakan akun Admin.
-                    </p>
-
-                    <div class="mb-3">
-
-                        <label class="form-label">
-
-                            Email
-
-                        </label>
-
-                        <div class="input-group">
-
-                            <span class="input-group-text">
-
-                                <i class="bi bi-envelope-fill"></i>
-
-                            </span>
-
-                            <input
-                                type="email"
-                                name="email"
-                                class="form-control"
-                                placeholder="Masukkan Email">
-
-                        </div>
-
-                    </div>
-
-                    <div class="mb-4">
-
-                        <label class="form-label">
-
-                            Password
-
-                        </label>
-
-                        <div class="input-group">
-
-                            <span class="input-group-text">
-
-                                <i class="bi bi-lock-fill"></i>
-
-                            </span>
-
-                            <input
-                                type="password"
-                                name="password"
-                                class="form-control"
-                                placeholder="Masukkan Password">
-
-                        </div>
-
-                    </div>
-
-                    <div class="login-option">
-
-                        <label>
-
-                            <input type="checkbox">
-
-                            Ingat Saya
-
-                        </label>
-
-                        <a href="#">
-
-                            Lupa Password?
-
-                        </a>
-
-                    </div>
-
-                    <button class="btn-login">
-
-                        <i class="bi bi-box-arrow-in-right"></i>
-
-                        Masuk
-
-                    </button>
-
-                    <a href="{{ route('home') }}" class="btn-kembali">
-
-                        <i class="bi bi-arrow-left"></i>
-
-                        Kembali ke Beranda
-
-                    </a>
-
-                </form>
+                <i class="bi bi-shield-lock-fill"></i>
 
             </div>
 
+            <img src="{{ asset('images/logo-bnn.png') }}" class="admin-logo">
+
+            <h2>Login Admin</h2>
+
+            <p>
+
+                Portal Pengaduan dan Permohonan
+
+                <br>
+
+                BNNK Tulungagung
+
+            </p>
+
+            <form action="{{ route('login.proses') }}" method="POST">
+
+                @csrf
+
+                <div class="input-login">
+
+                    <i class="bi bi-envelope-fill"></i>
+
+                    <input type="email" name="email" placeholder="Masukkan Email" required>
+
+                </div>
+
+                <div class="input-login">
+
+                    <i class="bi bi-lock-fill"></i>
+
+                    <input type="password" name="password" placeholder="Masukkan Password" required>
+
+                </div>
+
+                <div class="login-menu">
+
+                    <label>
+
+                        <input type="checkbox">
+
+                        Ingat Saya
+
+                    </label>
+
+                    <a href="#">
+
+                        Lupa Password?
+
+                    </a>
+
+                </div>
+
+                <button type="submit" class="btn-admin-login">
+
+                    <i class="bi bi-box-arrow-in-right"></i>
+
+                    Masuk
+
+                </button>
+
+            </form>
+
+            <div class="divider">
+
+                <span>atau</span>
+
+            </div>
+
+            <a href="{{ route('google.login') }}" class="btn-google">
+
+                <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg">
+
+                Masuk dengan Google
+
+            </a>
+
+            <a href="{{ route('home') }}" class="btn-back">
+
+                ← Kembali ke Beranda
+
+            </a>
+
         </div>
 
-    </div>
+    </section>
 
-</section>
+</body>
 
-@endsection
+</html>

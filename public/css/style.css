@@ -1011,27 +1011,25 @@ textarea.form-control {
         margin-right: 6px;
     }
 
-    /* =====================================================
-LOGIN ADMIN
-=====================================================*/
+    .login-admin-body {
 
-    .login-page {
+        margin: 0;
 
-        min-height: 90vh;
+        min-height: 100vh;
 
         display: flex;
 
-        align-items: center;
-
         justify-content: center;
 
-        padding: 60px 0;
+        align-items: center;
 
-        background: linear-gradient(135deg, #0B73B9, #56B8F5, #EAF5FC);
+        background: linear-gradient(135deg, #5ba9ff, #d8f3ff);
+
+        font-family: Poppins, sans-serif;
 
     }
 
-    .login-wrapper {
+    .login-admin-page {
 
         width: 100%;
 
@@ -1039,151 +1037,217 @@ LOGIN ADMIN
 
         justify-content: center;
 
+        align-items: center;
+
     }
 
-    .login-card {
+    .login-admin-card {
 
-        width: 450px;
+        width: 430px;
+
+        background: rgba(255, 255, 255, .92);
+
+        backdrop-filter: blur(20px);
+
+        border-radius: 25px;
+
+        padding: 45px;
+
+        box-shadow: 0 20px 40px rgba(0, 0, 0, .18);
+
+        text-align: center;
+
+    }
+
+    .login-icon {
+
+        width: 75px;
+
+        height: 75px;
+
+        margin: auto;
+
+        border-radius: 20px;
 
         background: #fff;
 
-        border-radius: 22px;
+        display: flex;
 
-        padding: 40px;
+        justify-content: center;
 
-        box-shadow: 0 20px 45px rgba(0, 0, 0, .18);
+        align-items: center;
 
-    }
-
-    .login-logo {
-
-        text-align: center;
-
-        margin-bottom: 30px;
-
-    }
-
-    .login-logo img {
-
-        width: 80px;
-
-        margin-bottom: 10px;
-
-    }
-
-    .login-logo h3 {
-
-        font-size: 24px;
-
-        font-weight: 700;
+        font-size: 32px;
 
         color: #0B73B9;
 
-        margin-bottom: 5px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, .15);
+
+        margin-bottom: 20px;
 
     }
 
-    .login-logo p {
+    .admin-logo {
 
-        color: #666;
+        width: 70px;
 
-        font-size: 14px;
-
-    }
-
-    .login-card h4 {
-
-        text-align: center;
-
-        font-weight: 700;
+        margin-bottom: 15px;
 
     }
 
-    .login-subtitle {
+    .input-login {
 
-        text-align: center;
+        display: flex;
 
-        color: #666;
+        align-items: center;
 
-        margin-bottom: 30px;
+        background: #f4f7fa;
 
-    }
+        border-radius: 12px;
 
-    .login-card .form-control {
+        padding: 0 15px;
 
-        height: 50px;
-
-        border-radius: 10px;
+        margin-bottom: 18px;
 
     }
 
-    .login-card .input-group-text {
+    .input-login i {
 
-        background: #0B73B9;
+        color: #888;
 
-        color: #fff;
+    }
+
+    .input-login input {
 
         border: none;
 
+        background: none;
+
+        width: 100%;
+
+        height: 55px;
+
+        outline: none;
+
+        margin-left: 10px;
+
     }
 
-    .login-option {
+    .login-menu {
 
         display: flex;
 
         justify-content: space-between;
 
-        align-items: center;
+        margin-bottom: 20px;
 
-        margin-bottom: 25px;
-
-        font-size: 14px;
+        font-size: 13px;
 
     }
 
-    .login-option a {
-
-        text-decoration: none;
-
-        color: #0B73B9;
-
-        font-weight: 600;
-
-    }
-
-    .btn-login {
+    .btn-admin-login {
 
         width: 100%;
 
-        height: 50px;
+        height: 52px;
 
         border: none;
 
-        border-radius: 10px;
+        border-radius: 12px;
 
-        background: #0B73B9;
+        background: #151522;
 
         color: #fff;
 
-        font-weight: 700;
-
-        transition: .3s;
+        font-weight: 600;
 
     }
 
-    .btn-login:hover {
+    .btn-admin-login:hover {
 
-        background: #075F9C;
+        background: #0B73B9;
 
     }
 
-    .btn-kembali {
+    .divider {
+
+        margin: 25px 0;
+
+        position: relative;
+
+    }
+
+    .divider::before {
+
+        content: "";
+
+        position: absolute;
+
+        top: 50%;
+
+        left: 0;
+
+        right: 0;
+
+        border-top: 1px solid #ddd;
+
+    }
+
+    .divider span {
+
+        background: #fff;
+
+        padding: 0 15px;
+
+        position: relative;
+
+        color: #888;
+
+    }
+
+    .btn-google {
+
+        width: 100%;
+
+        height: 52px;
+
+        border: 1px solid #ddd;
+
+        border-radius: 12px;
+
+        display: flex;
+
+        justify-content: center;
+
+        align-items: center;
+
+        gap: 12px;
+
+        color: #333;
+
+        text-decoration: none;
+
+        font-weight: 600;
+
+    }
+
+    .btn-google img {
+
+        width: 22px;
+
+    }
+
+    .btn-google:hover {
+
+        background: #f5f5f5;
+
+    }
+
+    .btn-back {
 
         display: block;
 
-        margin-top: 15px;
-
-        text-align: center;
+        margin-top: 20px;
 
         text-decoration: none;
 
@@ -1192,25 +1256,6 @@ LOGIN ADMIN
         font-weight: 600;
 
     }
-
-    .btn-kembali:hover {
-
-        color: #075F9C;
-
-    }
-
-    @media(max-width:576px) {
-
-        .login-card {
-
-            width: 100%;
-
-            padding: 30px 20px;
-
-        }
-
-    }
-
 
 
 }

@@ -79,12 +79,11 @@
 
                 <li class="nav-item ms-3">
 
-                    <a class="btn btn-yellow">
+                    <a href="{{ route('login') }}" class="btn btn-yellow">
 
                         Masuk Admin
 
                     </a>
-
 
                 </li>
 
