@@ -1325,6 +1325,68 @@ textarea.form-control {
 
 }
 
+/* ============================
+   FORGOT PASSWORD
+============================ */
+
+.alert-success {
+
+    border: none;
+    border-radius: 12px;
+    background: #d1f7dd;
+
+    color: #0f5132;
+
+    font-size: 14px;
+
+    margin-bottom: 20px;
+
+    padding: 12px;
+
+}
+
+.btn-admin-login {
+
+    transition: .3s;
+
+}
+
+.btn-admin-login:hover {
+
+    transform: translateY(-2px);
+
+    box-shadow: 0 10px 25px rgba(11, 115, 185, .3);
+
+}
+
+.btn-back {
+
+    width: 100%;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 8px;
+
+    margin-top: 15px;
+
+    text-decoration: none;
+
+    font-weight: 600;
+
+    color: #0B73B9;
+
+}
+
+.btn-back:hover {
+
+    color: #084f83;
+
+}
+
 @media (max-width: 576px) {
     .pengaduan-header {
         padding: 22px;
