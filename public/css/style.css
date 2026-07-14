@@ -152,7 +152,7 @@
 }
 
 .action-helper {
-    margin: 20px 0 0;
+    margin: 15px 0 15px 0;
 
     color: #edf8ff;
     font-size: 12px;
@@ -181,19 +181,23 @@
 }
 
 .info-item:nth-child(1) {
-    background: #ffd136;
+    background: #ffffff;
+    border: 2px solid #0d6efd;
 }
 
 .info-item:nth-child(2) {
-    background: #83df4f;
+    background: #ffffff;
+    border: 2px solid #0d6efd;
 }
 
 .info-item:nth-child(3) {
-    background: #9ce7f1;
+    background: #ffffff;
+    border: 2px solid #0d6efd;
 }
 
 .info-item:nth-child(4) {
-    background: #ff7557;
+    background: #ffffff;
+    border: 2px solid #0d6efd;
 }
 
 .info-item small {
