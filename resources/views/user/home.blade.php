@@ -104,7 +104,7 @@
             <section class="tracking-box">
 
                 <h2 class="tracking-heading">
-                    LACAK!!!
+                    LACAK PROGRES
                 </h2>
 
                 <div class="tracking-image">
@@ -132,10 +132,8 @@
 
                     </div>
 
-                    <button type="submit" class="tracking-button">
-
-                        Lacak
-
+                   <button type="submit" class="tracking-button">
+                        <i class="bi bi-search me-2"></i>Lacak
                     </button>
 
                 </form>
