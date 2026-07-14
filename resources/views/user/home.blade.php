@@ -133,7 +133,7 @@
                     </div>
 
                    <button type="submit" class="tracking-button">
-                        <i class="bi bi-search me-2"></i>Lacak
+                        <i></i>Lacak
                     </button>
 
                 </form>
