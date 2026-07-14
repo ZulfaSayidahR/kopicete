@@ -175,16 +175,14 @@ Route::prefix('tracking')
 
 
 
-Route::get('/login', [AuthController::class, 'showLogin'])
+
+Route::get('/login', [AuthController::class, 'index'])
     ->name('login');
 
 Route::post('/login', [AuthController::class, 'login'])
-    ->name('login.process');
+    ->name('login.proses');
 
-Route::post('/logout', [AuthController::class, 'logout'])
-    ->name('logout');
 
-    
 // ==========================
 // INFORMASI
 // ==========================
