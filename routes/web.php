@@ -185,6 +185,9 @@ Route::get('/forgot-password', [AuthController::class, 'forgotPassword'])
 Route::post('/forgot-password', [AuthController::class, 'forgotPasswordProses'])
     ->name('forgot.password.proses');
 
+Route::post('/forgot-password', [AuthController::class, 'sendResetLink'])
+    ->name('forgot.password.send');
+
 // ==========================
 // INFORMASI
 // ==========================
