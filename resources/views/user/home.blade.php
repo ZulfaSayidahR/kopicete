@@ -18,7 +18,7 @@
             <section class="aduan-box">
 
                 <span class="badge-layanan">
-                    LAYANAN PENGADUAN DIGITAL
+                    LAYANAN DIGITAL
                 </span>
 
                 <div class="aduan-main">
@@ -59,7 +59,7 @@
                             <i class="bi bi-file-earmark-text-fill"></i>
 
                             <span>
-                                Buat Permohonan
+                                Buat Permohonan Cepat
                             </span>
 
                         </a>
