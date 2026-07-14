@@ -104,7 +104,7 @@
             <section class="tracking-box">
 
                 <h2 class="tracking-heading">
-                    LACAK ADUAN
+                    LACAK!!!
                 </h2>
 
                 <div class="tracking-image">

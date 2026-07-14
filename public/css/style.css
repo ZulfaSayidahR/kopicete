@@ -517,7 +517,6 @@
     .aduan-box,
     .tracking-box {
         min-height: auto;
-        border: none;
     }
 
     .aduan-box {
@@ -533,7 +532,6 @@
     .aduan-box,
     .tracking-box {
         border-radius: 21px;
-        border: none;
     }
 
     .aduan-main {
@@ -1419,4 +1417,11 @@ textarea.form-control {
     .btn-next i {
         margin-right: 6px;
     }
+}
+
+.aduan-box,
+.tracking-box {
+    border: none !important;
+    outline: none !important;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.18) !important;
 }
