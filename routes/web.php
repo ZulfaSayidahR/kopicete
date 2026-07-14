@@ -8,6 +8,7 @@ use App\Http\Controllers\PermohonanController;
 use App\Http\Controllers\TrackingController;
 use App\Http\Controllers\InformasiController;
 use App\Http\Controllers\KontakController;
+use App\Http\Controllers\AuthController;
 
 // use App\Http\Controllers\Admin\AdminDashboardController;
 // use App\Http\Controllers\Admin\AdminPengaduanController;
@@ -174,6 +175,16 @@ Route::prefix('tracking')
 
 
 
+Route::get('/login', [AuthController::class, 'showLogin'])
+    ->name('login');
+
+Route::post('/login', [AuthController::class, 'login'])
+    ->name('login.process');
+
+Route::post('/logout', [AuthController::class, 'logout'])
+    ->name('logout');
+
+    
 // ==========================
 // INFORMASI
 // ==========================
