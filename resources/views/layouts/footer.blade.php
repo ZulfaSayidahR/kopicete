@@ -54,11 +54,11 @@
                         </a>
                     </li>
 
-                    <!-- <li>
-                        <a href="{{ route('') }}">
+                    <li>
+                        <a href="{{ route('home') }}">
                             Lacak Aduan
                         </a>
-                    </li> -->
+                    </li>
 
                 </ul>
 

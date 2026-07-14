@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@extends('layouts.footer')
+
 
 @section('title')
     Kopi CeTe - Portal Aduan
@@ -154,5 +154,6 @@
         </div>
 
     </main>
+
 
 @endsection
