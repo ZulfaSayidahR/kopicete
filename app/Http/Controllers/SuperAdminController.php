@@ -13,7 +13,10 @@ class SuperAdminController extends Controller
     {
         return view('superadmin.dashboard');
     }
-
+    public function data_pengaduan()
+    {
+        return view('superadmin.data_pengaduan');
+    }
     /**
      * Menampilkan halaman Data Admin.
      */

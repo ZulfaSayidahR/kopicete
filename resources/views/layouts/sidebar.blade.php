@@ -46,19 +46,11 @@
             </li>
 
             {{-- Pengaduan --}}
-            <li class="sa-menu-item
-                {{ request()->routeIs('superadmin.pengaduan*') ? 'active' : '' }}">
-
-                <a href="{{ Route::has('superadmin.pengaduan')
-    ? route('superadmin.pengaduan')
-    : '#' }}">
-
+            <li class="{{ request()->routeIs('superadmin.data_pengaduan') ? 'active' : '' }}">
+                <a href="{{ route('superadmin.data_pengaduan') }}">
                     <i class="bi bi-file-earmark-text-fill"></i>
-
-                    <span>Pengaduan</span>
-
+                    <span>Data Pengaduan</span>
                 </a>
-
             </li>
 
             {{-- Permohonan --}}

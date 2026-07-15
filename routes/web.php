@@ -23,15 +23,8 @@ Route::prefix('superadmin')->name('superadmin.')->group(function () {
         [SuperAdminController::class, 'dataAdmin']
     )->name('data_admin');
 
-    Route::get('/admin', [SuperAdminController::class, 'admin'])->name('admin');
-
-    Route::get('/pengaduan', [SuperAdminController::class, 'pengaduan'])->name('pengaduan');
-
-    Route::get('/permohonan', [SuperAdminController::class, 'permohonan'])->name('permohonan');
-
-    Route::get('/aktivitas', [SuperAdminController::class, 'aktivitas'])->name('aktivitas');
-
-    Route::get('/pengaturan', [SuperAdminController::class, 'pengaturan'])->name('pengaturan');
+    Route::get('/data-pengaduan', [PengaduanController::class, 'data_pengaduan'])
+        ->name('data_pengaduan');
 
 });
 
