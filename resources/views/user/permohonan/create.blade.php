@@ -8,7 +8,7 @@
 
         <div class="container">
 
-            <div class="pengaduan-wrapper">
+            <div class="permohonan-wrapper">
 
                 <!-- ================================================= -->
                 <!-- FORM -->

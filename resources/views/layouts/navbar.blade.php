@@ -7,9 +7,10 @@
         <a class="navbar-brand" href="{{route('home')}}">
 
 
-            <i class="bi bi-shield-check"></i>
+            <img src="{{ asset('images/bnn.webp') }}" alt="logo bnn">
+            <img src="{{ asset('images/warondrugs.jpg') }}" alt="logo warondrugs">
 
-            BNNK TULUNGAGUNG
+            KopI CeTe
 
 
         </a>
@@ -66,7 +67,7 @@
 
 
 
-                <li class="nav-item">
+                {{-- <li class="nav-item">
 
                     <a class="nav-link" href="/tracking">
 
@@ -74,7 +75,7 @@
 
                     </a>
 
-                </li>
+                </li> --}}
 
 
                 <li class="nav-item ms-3">

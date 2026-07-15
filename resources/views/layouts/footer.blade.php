@@ -9,11 +9,11 @@
 
                 <div class="footer-brand">
 
-                    <img src="{{ asset('images/logo-bnn.png') }}" alt="BNNK Tulungagung">
-
+                    <img src="{{ asset('images/bnn.webp') }}" alt="logo bnn">
+                    <img src="{{ asset('images/warondrugs.jpg') }}" alt="logo warondrugs">
                     <div>
 
-                        <h4>Kopi CeTe</h4>
+                        <h4>KopI CeTe</h4>
 
                         <p>
                             Portal Pengaduan dan Permohonan Digital
@@ -88,11 +88,6 @@
 
                         <span>0821-5224-9911</span>
                     </li>
-                    <li>
-                        <i class="bi bi-telephone-fill"></i>
-
-                        <span>184</span>
-                    </li>
 
                     <li>
                         <i class="bi bi-envelope-fill"></i>
@@ -127,7 +122,7 @@
             </span>
 
             <span>
-                Dikembangkan oleh Tim Kopi CeTe
+                Dikembangkan oleh Tim BNNK Tulungagung
             </span>
 
         </div>
