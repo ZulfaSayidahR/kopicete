@@ -2,55 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class SuperAdminController extends Controller
 {
     /**
-     * Menampilkan halaman dashboard Super Admin
+     * Menampilkan halaman dashboard Super Admin.
      */
-    public function dashboard()
+    public function dashboard(): View
     {
         return view('superadmin.dashboard');
     }
 
     /**
-     * Menampilkan halaman Data Admin
+     * Menampilkan halaman Data Admin.
      */
-    public function admin()
+    public function dataAdmin(): View
     {
-        return view('superadmin.admin');
-    }
-
-    /**
-     * Menampilkan Data Pengaduan
-     */
-    public function pengaduan()
-    {
-        return view('superadmin.pengaduan');
-    }
-
-    /**
-     * Menampilkan Data Permohonan
-     */
-    public function permohonan()
-    {
-        return view('superadmin.permohonan');
-    }
-
-    /**
-     * Menampilkan Log Aktivitas
-     */
-    public function aktivitas()
-    {
-        return view('superadmin.aktivitas');
-    }
-
-    /**
-     * Menampilkan Pengaturan Website
-     */
-    public function pengaturan()
-    {
-        return view('superadmin.pengaturan');
+        // Sesuai nama file: data_admin.blade.php
+        return view('superadmin.data_admin');
     }
 }

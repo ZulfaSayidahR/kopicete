@@ -1685,32 +1685,32 @@ body {
 ===================================================== */
 
 .sa-sidebar {
-    width: var(--sa-sidebar-width);
-    min-width: var(--sa-sidebar-width);
-    min-height: calc(100vh - 80px);
-    padding: 28px 18px 22px;
+    width: 270px;
+    min-width: 270px;
+    height: 100vh;
+
+    position: fixed;
+    left: 0;
+    top: 0;
 
     display: flex;
     flex-direction: column;
 
-    background:
-        linear-gradient(180deg,
-            #06264f 0%,
-            #064978 48%,
-            #0b73b5 100%);
+    background: linear-gradient(180deg, #072b55, #0B73B5);
 
-    color: #ffffff;
+    transition: .35s;
+
     overflow: hidden;
 
-    box-shadow: 12px 0 35px rgba(6, 38, 79, 0.13);
+    z-index: 1000;
+}
 
-    transition:
-        width 0.3s ease,
-        min-width 0.3s ease,
-        transform 0.3s ease;
+.sa-dashboard.sidebar-collapsed .sa-sidebar {
 
-    position: relative;
-    z-index: 50;
+    width: 85px;
+
+    min-width: 85px;
+
 }
 
 .sa-sidebar::before {
@@ -1787,46 +1787,56 @@ body {
     margin: 0;
 }
 
+.sa-menu {
+
+    padding: 0;
+
+    margin: 25px 0;
+
+    list-style: none;
+
+}
+
 .sa-menu-item {
+
     margin-bottom: 8px;
+
 }
 
 .sa-menu-item a {
-    min-height: 50px;
-    padding: 0 15px;
 
     display: flex;
-    align-items: center;
-    gap: 13px;
 
-    color: #dceeff;
-    border-radius: 14px;
+    align-items: center;
+
+    gap: 15px;
+
+    padding: 15px 18px;
+
+    color: #fff;
+
     text-decoration: none;
 
-    transition:
-        color 0.2s ease,
-        background 0.2s ease,
-        transform 0.2s ease;
+    border-radius: 12px;
+
+    transition: .3s;
+
 }
 
-.sa-menu-item a i {
-    width: 22px;
-    min-width: 22px;
-    font-size: 18px;
-    text-align: center;
+.sa-menu-item.active a {
+
+    background: #FFC928;
+
+    color: #072b55;
+
+    font-weight: 700;
+
 }
 
-.sa-menu-item a span {
-    min-width: 145px;
-    font-size: 14px;
-    font-weight: 600;
-    white-space: nowrap;
-}
+.sa-menu-item a:hover {
 
-.sa-menu-item:hover a {
-    color: #ffffff;
-    background: rgba(255, 255, 255, 0.1);
-    transform: translateX(3px);
+    background: rgba(255, 255, 255, .12);
+
 }
 
 .sa-menu-item.active a {
@@ -1836,8 +1846,13 @@ body {
 }
 
 .sa-sidebar-footer {
-    padding-top: 18px;
-    border-top: 1px solid rgba(255, 255, 255, 0.12);
+
+    margin-top: auto;
+
+    padding-top: 20px;
+
+    border-top: 1px solid rgba(255, 255, 255, .12);
+
 }
 
 .sa-logout {
@@ -1911,26 +1926,37 @@ body {
 ===================================================== */
 
 .sa-main {
+
     flex: 1;
-    min-width: 0;
-    padding: 28px 30px 45px;
-    overflow: hidden;
+
+    margin-left: 270px;
+
+    padding: 30px;
+
+    transition: .35s;
+
+    min-height: 100vh;
+
 }
 
 .sa-topbar {
-    min-height: 82px;
-    padding: 16px 20px;
+
+    background: #fff;
+
+    border-radius: 18px;
+
+    padding: 20px 25px;
+
+    margin-bottom: 25px;
 
     display: flex;
+
     justify-content: space-between;
+
     align-items: center;
-    gap: 20px;
 
-    background: #ffffff;
-    border: 1px solid var(--sa-border);
-    border-radius: 20px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, .06);
 
-    box-shadow: 0 10px 30px rgba(24, 48, 78, 0.06);
 }
 
 .sa-topbar-left {
@@ -2650,10 +2676,20 @@ body {
    RESPONSIVE
 ===================================================== */
 
-@media (max-width: 1199px) {
+@media(max-width:576px) {
 
     .sa-statistics {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+
+        grid-template-columns: 1fr;
+
+    }
+
+    .sa-topbar {
+
+        flex-direction: column;
+
+        align-items: flex-start;
+
     }
 
 }
@@ -2798,10 +2834,9 @@ body {
         display: none;
     }
 
-    .sa-toggle-sidebar {
-        width: 42px;
-        height: 42px;
-        min-width: 42px;
+    .sa-dashboard.sidebar-collapsed .sa-sidebar {
+        width: 80px;
+        min-width: 80px;
     }
 
     .sa-stat-card {

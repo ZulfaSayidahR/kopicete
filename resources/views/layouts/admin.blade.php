@@ -32,8 +32,7 @@
 
 <body>
 
-    {{-- Navbar --}}
-    @include('layouts.navbar')
+    @include('layouts.sidebar')
 
     {{-- Content --}}
     <main>
@@ -45,7 +44,7 @@
     {{-- Footer --}}
     @include('layouts.footer')
 
-   
+
 
 
 

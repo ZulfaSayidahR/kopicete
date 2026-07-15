@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('title', 'Dashboard Super Admin')
 
@@ -6,81 +6,8 @@
 
     <section class="sa-dashboard" id="superAdminDashboard">
 
-        {{-- =================================================
-        SIDEBAR
-        ================================================== --}}
-        <aside class="sa-sidebar" id="superAdminSidebar">
-
-            <div class="sa-sidebar-header">
-
-                <div class="sa-brand-logo">
-                    <img src="{{ asset('images/logo-bnn.png') }}" alt="Logo BNNK Tulungagung">
-                </div>
-
-                <div class="sa-brand-text">
-                    <h4>SUPER ADMIN</h4>
-                    <small>BNNK Tulungagung</small>
-                </div>
-
-            </div>
-
-            <nav class="sa-navigation">
-
-                <ul class="sa-menu">
-
-                    <li class="sa-menu-item active">
-                        <a href="{{ url('/superadmin/dashboard') }}">
-                            <i class="bi bi-grid-fill"></i>
-                            <span>Dashboard</span>
-                        </a>
-                    </li>
-
-                    <li class="sa-menu-item">
-                        <a href="#">
-                            <i class="bi bi-people-fill"></i>
-                            <span>Data Admin</span>
-                        </a>
-                    </li>
-
-                    <li class="sa-menu-item">
-                        <a href="#">
-                            <i class="bi bi-file-earmark-text-fill"></i>
-                            <span>Pengaduan</span>
-                        </a>
-                    </li>
-
-                    <li class="sa-menu-item">
-                        <a href="#">
-                            <i class="bi bi-envelope-paper-fill"></i>
-                            <span>Permohonan</span>
-                        </a>
-                    </li>
-
-                    <li class="sa-menu-item">
-                        <a href="#">
-                            <i class="bi bi-clock-history"></i>
-                            <span>Aktivitas</span>
-                        </a>
-                    </li>
-
-                </ul>
-
-            </nav>
-
-            <div class="sa-sidebar-footer">
-
-                <a href="#" class="sa-logout">
-                    <i class="bi bi-box-arrow-left"></i>
-                    <span>Keluar</span>
-                </a>
-
-            </div>
-
-        </aside>
-
-        {{-- Overlay untuk mobile --}}
-        <button type="button" class="sa-sidebar-overlay" id="sidebarOverlay" aria-label="Tutup sidebar">
-        </button>
+        <!-- {{-- Sidebar dipanggil dari satu file --}}
+        @include('layouts.sidebar') -->
 
         {{-- =================================================
         KONTEN UTAMA
@@ -92,15 +19,22 @@
 
                 <div class="sa-topbar-left">
 
-                    <button type="button" class="sa-toggle-sidebar" id="toggleSidebar" aria-label="Buka atau tutup sidebar">
+                    <button type="button" class="sa-toggle-sidebar" id="toggleSidebar" aria-label="Buka atau tutup sidebar"
+                        aria-controls="superAdminSidebar" aria-expanded="true">
 
                         <i class="bi bi-list"></i>
 
                     </button>
 
                     <div class="sa-page-heading">
+
                         <h1>Dashboard Super Admin</h1>
-                        <p>Monitoring Portal Pengaduan dan Permohonan BNNK Tulungagung</p>
+
+                        <p>
+                            Monitoring Portal Pengaduan dan Permohonan
+                            BNNK Tulungagung
+                        </p>
+
                     </div>
 
                 </div>
@@ -112,8 +46,13 @@
                     </div>
 
                     <div class="sa-profile-info">
-                        <strong>Super Admin</strong>
+
+                        <strong>
+                            {{ auth()->user()->name ?? 'Super Admin' }}
+                        </strong>
+
                         <small>Administrator Sistem</small>
+
                     </div>
 
                     <i class="bi bi-chevron-down sa-profile-arrow"></i>
@@ -134,12 +73,16 @@
                     </div>
 
                     <div class="sa-stat-content">
+
                         <span>Total Admin</span>
+
                         <h2>15</h2>
+
                         <small>
                             <i class="bi bi-arrow-up-short"></i>
                             2 akun baru
                         </small>
+
                     </div>
 
                 </article>
@@ -151,12 +94,16 @@
                     </div>
 
                     <div class="sa-stat-content">
+
                         <span>Total Pengaduan</span>
+
                         <h2>530</h2>
+
                         <small>
                             <i class="bi bi-clock"></i>
                             18 sedang diproses
                         </small>
+
                     </div>
 
                 </article>
@@ -168,12 +115,16 @@
                     </div>
 
                     <div class="sa-stat-content">
+
                         <span>Total Permohonan</span>
+
                         <h2>200</h2>
+
                         <small>
-                            <i class="bi bi-check-circle"></i>
-                            176 telah selesai
+                            <i class="bi bi-envelope-check"></i>
+                            Permohonan masuk
                         </small>
+
                     </div>
 
                 </article>
@@ -185,6 +136,7 @@
                     </div>
 
                     <div class="sa-stat-content">
+
                         <span>Laporan Selesai</span>
 
                         <h2>176</h2>
@@ -193,6 +145,7 @@
                             <i class="bi bi-check2-all"></i>
                             Telah ditindaklanjuti
                         </small>
+
                     </div>
 
                 </article>
@@ -207,22 +160,32 @@
                 <div class="sa-panel-header">
 
                     <div>
+
                         <h3>Data Admin Terdaftar</h3>
-                        <p>Daftar akun admin yang pernah masuk ke sistem.</p>
+
+                        <p>
+                            Daftar akun admin yang pernah masuk ke sistem.
+                        </p>
+
                     </div>
 
                     <div class="sa-table-tools">
 
                         <div class="sa-search-box">
+
                             <i class="bi bi-search"></i>
 
                             <input type="search" id="adminSearch" placeholder="Cari nama atau email..." autocomplete="off">
+
                         </div>
 
-                        <button type="button" class="sa-filter-button">
-                            <i class="bi bi-funnel-fill"></i>
-                            <span>Filter</span>
-                        </button>
+                        <a href="{{ route('superadmin.data_admin') }}" class="sa-filter-button">
+
+                            <i class="bi bi-people-fill"></i>
+
+                            <span>Lihat Semua</span>
+
+                        </a>
 
                     </div>
 
@@ -233,6 +196,7 @@
                     <table class="sa-table" id="adminTable">
 
                         <thead>
+
                             <tr>
                                 <th>Admin</th>
                                 <th>Email</th>
@@ -241,6 +205,7 @@
                                 <th>Status</th>
                                 <th class="sa-action-column">Aksi</th>
                             </tr>
+
                         </thead>
 
                         <tbody>
@@ -248,6 +213,7 @@
                             <tr>
 
                                 <td>
+
                                     <div class="sa-admin-user">
 
                                         <div class="sa-admin-avatar">
@@ -260,28 +226,41 @@
                                         </div>
 
                                     </div>
+
                                 </td>
 
                                 <td>
+
                                     <span class="sa-email-text">
                                         andi@gmail.com
                                     </span>
+
                                 </td>
 
                                 <td>
+
                                     <span class="sa-login-badge">
+
                                         <i class="bi bi-google"></i>
+
                                         Google
+
                                     </span>
+
                                 </td>
 
                                 <td>15 Juli 2026</td>
 
                                 <td>
+
                                     <span class="sa-status-badge active">
+
                                         <span></span>
+
                                         Aktif
+
                                     </span>
+
                                 </td>
 
                                 <td>
@@ -289,13 +268,14 @@
                                     <div class="sa-action-buttons">
 
                                         <button type="button" class="sa-action-button sa-detail-button"
-                                            title="Lihat detail">
+                                            title="Lihat detail admin" aria-label="Lihat detail Andi Saputra">
 
                                             <i class="bi bi-eye-fill"></i>
 
                                         </button>
 
-                                        <button type="button" class="sa-action-button sa-key-button" title="Reset password">
+                                        <button type="button" class="sa-action-button sa-key-button"
+                                            title="Reset password admin" aria-label="Reset password Andi Saputra">
 
                                             <i class="bi bi-key-fill"></i>
 
@@ -310,6 +290,7 @@
                             <tr>
 
                                 <td>
+
                                     <div class="sa-admin-user">
 
                                         <div class="sa-admin-avatar purple">
@@ -322,28 +303,41 @@
                                         </div>
 
                                     </div>
+
                                 </td>
 
                                 <td>
+
                                     <span class="sa-email-text">
                                         siti@gmail.com
                                     </span>
+
                                 </td>
 
                                 <td>
+
                                     <span class="sa-login-badge">
+
                                         <i class="bi bi-google"></i>
+
                                         Google
+
                                     </span>
+
                                 </td>
 
                                 <td>10 Juli 2026</td>
 
                                 <td>
+
                                     <span class="sa-status-badge active">
+
                                         <span></span>
+
                                         Aktif
+
                                     </span>
+
                                 </td>
 
                                 <td>
@@ -351,13 +345,14 @@
                                     <div class="sa-action-buttons">
 
                                         <button type="button" class="sa-action-button sa-detail-button"
-                                            title="Lihat detail">
+                                            title="Lihat detail admin" aria-label="Lihat detail Siti Rahma">
 
                                             <i class="bi bi-eye-fill"></i>
 
                                         </button>
 
-                                        <button type="button" class="sa-action-button sa-key-button" title="Reset password">
+                                        <button type="button" class="sa-action-button sa-key-button"
+                                            title="Reset password admin" aria-label="Reset password Siti Rahma">
 
                                             <i class="bi bi-key-fill"></i>
 
@@ -381,16 +376,28 @@
 
                     <div class="sa-pagination">
 
-                        <button type="button" disabled>
+                        <button type="button" disabled aria-label="Halaman sebelumnya">
+
                             <i class="bi bi-chevron-left"></i>
+
                         </button>
 
-                        <button type="button" class="active">1</button>
+                        <button type="button" class="active" aria-label="Halaman 1">
 
-                        <button type="button">2</button>
+                            1
 
-                        <button type="button">
+                        </button>
+
+                        <button type="button" aria-label="Halaman 2">
+
+                            2
+
+                        </button>
+
+                        <button type="button" aria-label="Halaman selanjutnya">
+
                             <i class="bi bi-chevron-right"></i>
+
                         </button>
 
                     </div>
@@ -398,7 +405,6 @@
                 </div>
 
             </section>
-
 
         </main>
 
@@ -410,40 +416,26 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            const dashboard = document.getElementById('superAdminDashboard');
-            const toggleButton = document.getElementById('toggleSidebar');
-            const overlay = document.getElementById('sidebarOverlay');
             const searchInput = document.getElementById('adminSearch');
             const adminTable = document.getElementById('adminTable');
 
-            function toggleSidebar() {
-                if (window.innerWidth <= 991) {
-                    dashboard.classList.toggle('mobile-sidebar-open');
-                } else {
-                    dashboard.classList.toggle('sidebar-collapsed');
-                }
+            if (!searchInput || !adminTable) {
+                return;
             }
 
-            toggleButton.addEventListener('click', toggleSidebar);
-
-            overlay.addEventListener('click', function () {
-                dashboard.classList.remove('mobile-sidebar-open');
-            });
-
-            window.addEventListener('resize', function () {
-                if (window.innerWidth > 991) {
-                    dashboard.classList.remove('mobile-sidebar-open');
-                }
-            });
-
             searchInput.addEventListener('input', function () {
-                const keyword = this.value.toLowerCase();
+                const keyword = this.value
+                    .trim()
+                    .toLowerCase();
+
                 const rows = adminTable.querySelectorAll('tbody tr');
 
                 rows.forEach(function (row) {
-                    const content = row.textContent.toLowerCase();
+                    const rowContent = row.textContent
+                        .trim()
+                        .toLowerCase();
 
-                    row.style.display = content.includes(keyword)
+                    row.style.display = rowContent.includes(keyword)
                         ? ''
                         : 'none';
                 });

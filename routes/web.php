@@ -18,6 +18,11 @@ Route::prefix('superadmin')->name('superadmin.')->group(function () {
 
     Route::get('/dashboard', [SuperAdminController::class, 'dashboard'])->name('dashboard');
 
+    Route::get(
+        '/data-admin',
+        [SuperAdminController::class, 'dataAdmin']
+    )->name('data_admin');
+
     Route::get('/admin', [SuperAdminController::class, 'admin'])->name('admin');
 
     Route::get('/pengaduan', [SuperAdminController::class, 'pengaduan'])->name('pengaduan');
