@@ -6,8 +6,8 @@
 
     <section class="sa-dashboard" id="superAdminDashboard">
 
-        <!-- {{-- Sidebar dipanggil dari satu file --}}
-        @include('layouts.sidebar') -->
+        {{-- Sidebar dipanggil dari satu file --}}
+        @include('layouts.sidebar')
 
         {{-- =================================================
         KONTEN UTAMA

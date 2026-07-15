@@ -4,7 +4,7 @@
 
 @section('content')
 
-    <section class="sa-dashboard">
+    <section class="sa-dashboard" id="superAdminDashboard">
 
         @include('layouts.sidebar')
 

@@ -32,7 +32,7 @@
 
 <body>
 
-    @include('layouts.sidebar')
+    {{-- @include('layouts.sidebar') --}}
 
     {{-- Content --}}
     <main>

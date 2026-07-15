@@ -3,14 +3,13 @@
     <div class="sa-sidebar-header">
 
         <div class="sa-brand-logo">
-            <img src="{{ asset('images/logo-bnn.png') }}" alt="Logo BNNK Tulungagung">
+            <img src="{{ asset('images/bnn.webp') }}" alt="Logo BNNK Tulungagung">
         </div>
 
         <div class="sa-brand-text">
             <h4>SUPER ADMIN</h4>
             <small>BNNK Tulungagung</small>
         </div>
-
     </div>
 
     <nav class="sa-navigation">
