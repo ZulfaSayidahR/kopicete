@@ -1499,27 +1499,29 @@ textarea.form-control {
 }
 
 /*=====================================================
-                FOOTER
+                    FOOTER
 =====================================================*/
 
 .footer-bnn {
     margin-top: 80px;
     background: linear-gradient(135deg, #0B4F8C, #0B73B9);
     color: #fff;
-    padding: 65px 0 20px;
+    padding: 70px 0 25px;
     position: relative;
     overflow: hidden;
 }
 
+/* Ornament Background */
+
 .footer-bnn::before {
     content: "";
     position: absolute;
-    width: 320px;
-    height: 320px;
-    border-radius: 50%;
+    width: 350px;
+    height: 350px;
     background: rgba(255, 255, 255, .05);
-    top: -120px;
-    right: -100px;
+    border-radius: 50%;
+    top: -170px;
+    right: -130px;
 }
 
 .footer-bnn::after {
@@ -1527,53 +1529,59 @@ textarea.form-control {
     position: absolute;
     width: 250px;
     height: 250px;
-    border-radius: 50%;
     background: rgba(255, 255, 255, .04);
+    border-radius: 50%;
+    left: -100px;
     bottom: -120px;
-    left: -90px;
 }
 
-/*==============================
-LOGO
-==============================*/
-
-.footer-brand {
-    display: flex;
-    gap: 20px;
+.footer-bnn .container {
     position: relative;
     z-index: 2;
 }
 
+/*==================================
+LOGO
+==================================*/
+
+.footer-brand {
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
+}
+
 .footer-brand img {
-    width: 72px;
-    height: 72px;
+    width: 75px;
+    height: 75px;
     object-fit: contain;
     flex-shrink: 0;
+}
+
+.footer-brand div {
+    flex: 1;
 }
 
 .footer-brand h4 {
     font-size: 30px;
     font-weight: 700;
     margin-bottom: 12px;
-    color: #fff;
 }
 
 .footer-brand p {
     color: #dceeff;
     line-height: 1.8;
     margin: 0;
-    font-size: 15px;
 }
 
-/*==============================
+/*==================================
 JUDUL
-==============================*/
+==================================*/
 
 .footer-bnn h5 {
     color: #FFC928;
     font-size: 20px;
     font-weight: 700;
-    margin-bottom: 22px;
+    margin-bottom: 20px;
     position: relative;
 }
 
@@ -1583,30 +1591,36 @@ JUDUL
     width: 45px;
     height: 3px;
     background: #FFC928;
-    border-radius: 30px;
+    border-radius: 50px;
     margin-top: 8px;
 }
 
-/*==============================
+/*==================================
 MENU
-==============================*/
+==================================*/
 
-.footer-menu,
-.footer-contact {
+.footer-menu {
     list-style: none;
     padding: 0;
     margin: 0;
 }
 
 .footer-menu li {
-    margin-bottom: 13px;
+    margin-bottom: 15px;
 }
 
 .footer-menu a {
     color: #eef7ff;
     text-decoration: none;
     transition: .3s;
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+}
+
+.footer-menu a::before {
+    content: "›";
+    margin-right: 8px;
+    color: #FFC928;
 }
 
 .footer-menu a:hover {
@@ -1614,92 +1628,104 @@ MENU
     transform: translateX(6px);
 }
 
-/*==============================
+/*==================================
 KONTAK
-==============================*/
+==================================*/
+
+.footer-contact {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
 
 .footer-contact li {
     display: flex;
+    align-items: flex-start;
     gap: 12px;
-    margin-bottom: 16px;
-    line-height: 1.7;
+    margin-bottom: 18px;
     color: #eef7ff;
+    line-height: 1.7;
 }
 
 .footer-contact i {
     color: #FFC928;
     font-size: 18px;
-    margin-top: 4px;
+    min-width: 22px;
+    margin-top: 3px;
 }
 
-/*==============================
+/*==================================
 SOSIAL MEDIA
-==============================*/
+==================================*/
 
 .footer-social {
     display: flex;
-    gap: 14px;
+    gap: 12px;
     margin-top: 25px;
 }
 
 .footer-social a {
-    width: 46px;
-    height: 46px;
+    width: 45px;
+    height: 45px;
     border-radius: 50%;
     background: rgba(255, 255, 255, .12);
+    color: #fff;
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #fff;
     text-decoration: none;
-    font-size: 20px;
-    transition: .35s;
-    border: 1px solid rgba(255, 255, 255, .18);
+    font-size: 19px;
+    transition: .3s;
 }
 
 .footer-social a:hover {
     background: #FFC928;
     color: #0B4F8C;
     transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, .25);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, .25);
 }
 
-/*==============================
+/*==================================
 GARIS
-==============================*/
+==================================*/
 
 .footer-bnn hr {
     border: none;
-    border-top: 1px solid rgba(255, 255, 255, .15);
-    margin: 40px 0 18px;
+    border-top: 1px solid rgba(255, 255, 255, .18);
+    margin: 40px 0 20px;
 }
 
-/*==============================
+/*==================================
 COPYRIGHT
-==============================*/
+==================================*/
 
 .footer-bottom {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    color: #d8ebff;
+    flex-wrap: wrap;
+    gap: 15px;
+    color: #dceeff;
     font-size: 14px;
-    position: relative;
-    z-index: 2;
 }
 
 .footer-bottom span:last-child {
     font-weight: 500;
 }
 
-/*==============================
+/*==================================
 RESPONSIVE
-==============================*/
+==================================*/
 
 @media(max-width:991px) {
 
     .footer-brand {
-        margin-bottom: 30px;
+        margin-bottom: 35px;
+    }
+
+    .footer-bnn .col-lg-3,
+    .footer-bnn .col-lg-4 {
+        margin-top: 35px;
     }
 
 }
@@ -1708,13 +1734,12 @@ RESPONSIVE
 
     .footer-bnn {
         text-align: center;
-        padding-top: 50px;
+        padding-top: 55px;
     }
 
     .footer-brand {
         flex-direction: column;
         align-items: center;
-        text-align: center;
     }
 
     .footer-contact li {
@@ -1728,7 +1753,8 @@ RESPONSIVE
 
     .footer-bottom {
         flex-direction: column;
-        gap: 10px;
         text-align: center;
     }
+
 }
+
