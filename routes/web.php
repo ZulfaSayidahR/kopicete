@@ -27,6 +27,10 @@ Route::prefix('superadmin')
 
         Route::get('/data-pengaduan', [DataPengaduanController::class, 'dataPengaduan'])
             ->name('data_pengaduan');
+
+        Route::get('/data-permohonan', [PermohonanController::class, 'dataPermohonan'])
+            ->name('data_permohonan');
+
     });
 
 /*

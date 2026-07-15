@@ -52,21 +52,13 @@
                     <span>Data Pengaduan</span>
                 </a>
             </li>
-            
+
             {{-- Permohonan --}}
-            <li class="sa-menu-item
-                {{ request()->routeIs('superadmin.permohonan*') ? 'active' : '' }}">
-
-                <a href="{{ Route::has('superadmin.permohonan')
-    ? route('superadmin.permohonan')
-    : '#' }}">
-
+            <li class="sa-menu-item {{ request()->routeIs('superadmin.data_permohonan') ? 'active' : '' }}">
+                <a href="{{ route('superadmin.data_permohonan') }}">
                     <i class="bi bi-envelope-paper-fill"></i>
-
-                    <span>Permohonan</span>
-
+                    <span>Data Permohonan</span>
                 </a>
-
             </li>
 
             {{-- Aktivitas --}}
