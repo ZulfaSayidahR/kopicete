@@ -88,27 +88,28 @@
 
                         <span>0821-5224-9911</span>
                     </li>
+                    <li>
+                        <i class="bi bi-telephone-fill"></i>
+
+                        <span>184</span>
+                    </li>
 
                     <li>
                         <i class="bi bi-envelope-fill"></i>
 
-                        <span>info@bnnktulungagung.go.id</span>
+                        <span> bnnkab_tulungagung@bnn.go.id</span>
                     </li>
 
                 </ul>
 
                 <div class="footer-social">
 
-                    <a href="https://www.facebook.com/" target="_blank">
+                    <a href="https://www.facebook.com/tulungagungstopnarkoba/" target="_blank">
                         <i class="bi bi-facebook"></i>
                     </a>
 
-                    <a href="https://www.instagram.com/" target="_blank">
+                    <a href="https://www.instagram.com/tulungagungstopnarkoba/" target="_blank">
                         <i class="bi bi-instagram"></i>
-                    </a>
-
-                    <a href="https://twitter.com/" target="_blank">
-                        <i class="bi bi-twitter-x"></i>
                     </a>
 
                 </div>

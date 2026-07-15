@@ -9,9 +9,26 @@ use App\Http\Controllers\TrackingController;
 use App\Http\Controllers\InformasiController;
 use App\Http\Controllers\KontakController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\SuperAdminController;
 
-// use App\Http\Controllers\Admin\AdminDashboardController;
-// use App\Http\Controllers\Admin\AdminPengaduanController;
+
+// SUPER ADMIN
+
+Route::prefix('superadmin')->name('superadmin.')->group(function () {
+
+    Route::get('/dashboard', [SuperAdminController::class, 'dashboard'])->name('dashboard');
+
+    Route::get('/admin', [SuperAdminController::class, 'admin'])->name('admin');
+
+    Route::get('/pengaduan', [SuperAdminController::class, 'pengaduan'])->name('pengaduan');
+
+    Route::get('/permohonan', [SuperAdminController::class, 'permohonan'])->name('permohonan');
+
+    Route::get('/aktivitas', [SuperAdminController::class, 'aktivitas'])->name('aktivitas');
+
+    Route::get('/pengaturan', [SuperAdminController::class, 'pengaturan'])->name('pengaturan');
+
+});
 
 
 /*
