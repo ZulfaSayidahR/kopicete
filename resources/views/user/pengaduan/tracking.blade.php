@@ -13,8 +13,6 @@
 
                 <div class="logo-box">
 
-                    <img src="{{ asset('images/logo-bnn.png') }}" alt="Logo BNN">
-
                     <div>
 
                         <h4>BNNK Tulungagung</h4>

@@ -28,8 +28,6 @@
 
             </div>
 
-            <img src="{{ asset('images/logo-bnn.png') }}" class="admin-logo">
-
             <h2>Login Admin</h2>
 
             <p>

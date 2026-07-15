@@ -960,15 +960,14 @@ textarea.form-control {
 
 .login-admin-body {
     margin: 0;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     font-family: "Poppins", sans-serif;
 
     background: linear-gradient(135deg, #0b73b9 0%, #0e8ad7 45%, #78c8f9 100%);
-    overflow: hidden;
-    position: relative;
+
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    min-height: auto;
 }
 
 /* Ornamen Background */
@@ -1002,7 +1001,27 @@ textarea.form-control {
     display: flex;
     justify-content: center;
     align-items: center;
+
     padding: 40px 20px;
+
+    min-height: auto;
+}
+
+@media (max-width: 768px) {
+    .login-admin-body {
+        padding: 20px 0;
+    }
+
+    .login-admin-page {
+        align-items: flex-start;
+        padding: 20px 15px;
+    }
+
+    .login-admin-card {
+        width: 100%;
+        max-width: 420px;
+        padding: 30px 20px;
+    }
 }
 
 /* ===================================================== */
@@ -1065,31 +1084,19 @@ textarea.form-control {
     margin-bottom: 20px;
 }
 
-.admin-logo {
-    width: 72px;
-
-    display: block;
-
-    margin: auto;
-
-    margin-bottom: 15px;
-}
-
 .login-admin-card h2 {
     font-weight: 700;
     color: #0b73b9;
-
+    text-align: center;
     margin-bottom: 6px;
 }
 
 .login-admin-card p {
     color: #666;
-
     font-size: 14px;
-
     line-height: 1.6;
-
     margin-bottom: 30px;
+    text-align: center;
 }
 
 /* ===================================================== */
