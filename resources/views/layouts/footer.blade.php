@@ -1,51 +1,136 @@
-<!-- Kontak -->
-<div class="col-lg-4">
+<footer class="footer-bnn">
 
-    <h5>Kontak</h5>
+    <div class="container">
 
-    <ul class="footer-contact">
+        <div class="row gy-5">
 
-        <li>
-            <i class="bi bi-geo-alt-fill"></i>
-            Jl. Sultan Agung No.1A, Dusun Kedungsingkal,
-            Ketanon, Kec. Kedungwaru,
-            Kabupaten Tulungagung,
-            Jawa Timur 66229
-        </li>
+            <!-- Brand -->
+            <div class="col-lg-5">
 
-        <li>
-            <i class="bi bi-telephone-fill"></i>
-            0821-5224-9911
-        </li>
+                <div class="footer-brand">
 
-        <li>
-            <i class="bi bi-envelope-fill"></i>
-            info@bnnktulungagung.go.id
-        </li>
+                    <img src="{{ asset('images/logo-bnn.png') }}" alt="BNNK Tulungagung">
 
-    </ul>
+                    <div>
 
-    <!-- Sosial Media -->
-    <div class="footer-social">
+                        <h4>Kopi CeTe</h4>
 
-        <a href="https://www.facebook.com/" target="_blank" title="Facebook">
+                        <p>
+                            Portal Pengaduan dan Permohonan Digital
+                            BNNK Tulungagung. Memberikan layanan
+                            pengaduan masyarakat dan permohonan
+                            secara cepat, mudah, aman dan transparan.
+                        </p>
 
-            <i class="bi bi-facebook"></i>
+                    </div>
 
-        </a>
+                </div>
 
-        <a href="https://www.instagram.com/" target="_blank" title="Instagram">
+            </div>
 
-            <i class="bi bi-instagram"></i>
+            <!-- Menu -->
+            <div class="col-lg-3">
 
-        </a>
+                <h5>Menu</h5>
 
-        <a href="https://twitter.com/" target="_blank" title="Twitter">
+                <ul class="footer-menu">
 
-            <i class="bi bi-twitter-x"></i>
+                    <li>
+                        <a href="{{ route('home') }}">
+                            Beranda
+                        </a>
+                    </li>
 
-        </a>
+                    <li>
+                        <a href="{{ route('pengaduan.create') }}">
+                            Pengaduan
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="{{ route('permohonan.create') }}">
+                            Permohonan
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="{{ route('home') }}">
+                            Lacak Aduan
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+            <!-- Kontak -->
+            <div class="col-lg-4">
+
+                <h5>Kontak</h5>
+
+                <ul class="footer-contact">
+
+                    <li>
+                        <i class="bi bi-geo-alt-fill"></i>
+
+                        <span>
+                            Jl. Sultan Agung No.1A,
+                            Dusun Kedungsingkal,
+                            Ketanon,
+                            Kec. Kedungwaru,
+                            Kabupaten Tulungagung,
+                            Jawa Timur 66229
+                        </span>
+                    </li>
+
+                    <li>
+                        <i class="bi bi-telephone-fill"></i>
+
+                        <span>0821-5224-9911</span>
+                    </li>
+
+                    <li>
+                        <i class="bi bi-envelope-fill"></i>
+
+                        <span>info@bnnktulungagung.go.id</span>
+                    </li>
+
+                </ul>
+
+                <div class="footer-social">
+
+                    <a href="https://www.facebook.com/" target="_blank">
+                        <i class="bi bi-facebook"></i>
+                    </a>
+
+                    <a href="https://www.instagram.com/" target="_blank">
+                        <i class="bi bi-instagram"></i>
+                    </a>
+
+                    <a href="https://twitter.com/" target="_blank">
+                        <i class="bi bi-twitter-x"></i>
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <hr>
+
+        <div class="footer-bottom">
+
+            <span>
+                © {{ date('Y') }} BNNK Tulungagung
+            </span>
+
+            <span>
+                Dikembangkan oleh Tim Kopi CeTe
+            </span>
+
+        </div>
 
     </div>
 
-</div>
+</footer>
