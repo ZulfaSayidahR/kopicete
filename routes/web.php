@@ -10,24 +10,24 @@ use App\Http\Controllers\InformasiController;
 use App\Http\Controllers\KontakController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\SuperAdminController;
+use App\Http\Controllers\DataPengaduanController;
 
 
 // SUPER ADMIN
 
-Route::prefix('superadmin')->name('superadmin.')->group(function () {
+Route::prefix('superadmin')
+    ->name('superadmin.')
+    ->group(function () {
 
-    Route::get('/dashboard', [SuperAdminController::class, 'dashboard'])->name('dashboard');
+        Route::get('/dashboard', [SuperAdminController::class, 'dashboard'])
+            ->name('dashboard');
 
-    Route::get(
-        '/data-admin',
-        [SuperAdminController::class, 'dataAdmin']
-    )->name('data_admin');
+        Route::get('/data-admin', [SuperAdminController::class, 'dataAdmin'])
+            ->name('data_admin');
 
-    Route::get('/data-pengaduan', [PengaduanController::class, 'data_pengaduan'])
-        ->name('data_pengaduan');
-
-});
-
+        Route::get('/data-pengaduan', [DataPengaduanController::class, 'dataPengaduan'])
+            ->name('data_pengaduan');
+    });
 
 /*
 |--------------------------------------------------------------------------
