@@ -11,7 +11,7 @@ use App\Http\Controllers\KontakController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\SuperAdminController;
 use App\Http\Controllers\DataPengaduanController;
-
+use App\Http\Controllers\DataPermohonanController;
 
 // SUPER ADMIN
 
