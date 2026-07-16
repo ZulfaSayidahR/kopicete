@@ -9,6 +9,31 @@
         @include('layouts.sidebar')
 
         <main class="sa-main">
+            @if(session('success'))
+                <div class="alert alert-success alert-dismissible fade show mt-3">
+
+                    <i class="bi bi-check-circle-fill"></i>
+
+                    {{ session('success') }}
+
+                    <button type="button" class="btn-close" data-bs-dismiss="alert">
+                    </button>
+
+                </div>
+            @endif
+
+            @if(session('error'))
+                <div class="alert alert-danger alert-dismissible fade show mt-3">
+
+                    <i class="bi bi-exclamation-triangle-fill"></i>
+
+                    {{ session('error') }}
+
+                    <button type="button" class="btn-close" data-bs-dismiss="alert">
+                    </button>
+
+                </div>
+            @endif
 
             {{-- ================= HEADER ================= --}}
             <header class="sa-topbar">
@@ -176,38 +201,34 @@
                             <tr>
 
                                 <td>PHGSHJBJ</td>
-
                                 <td>Penyalahgunaan</td>
-
                                 <td>Campurdarat</td>
-
                                 <td>21/12/2025</td>
 
                                 <td>
-
                                     <span class="sa-status-badge active">
-
                                         <span></span>
-
                                         Selesai
-
                                     </span>
-
                                 </td>
 
                                 <td>
 
                                     <div class="sa-action-buttons">
 
-                                        <button class="sa-action-button sa-detail-button">
-
-                                            <i class="bi bi-eye-fill"></i>
-
-                                        </button>
-
-                                        <button class="sa-action-button sa-key-button">
+                                        {{-- Detail / Edit --}}
+                                        <a href="{{ route('superadmin.detail_pengaduan') }}"
+                                            class="sa-action-button sa-key-button" title="Lihat Detail">
 
                                             <i class="bi bi-pencil-square"></i>
+
+                                        </a>
+
+                                        {{-- Hapus --}}
+                                        <button class="sa-action-button sa-delete-button"
+                                            onclick="return confirm('Yakin ingin menghapus data ini?')" title="Hapus">
+
+                                            <i class="bi bi-trash-fill"></i>
 
                                         </button>
 
@@ -220,38 +241,32 @@
                             <tr>
 
                                 <td>PHGSHJBJ</td>
-
                                 <td>WBS</td>
-
                                 <td>Kauman</td>
-
                                 <td>23/05/2026</td>
 
                                 <td>
-
                                     <span class="sa-status-badge">
-
                                         <span style="background:#ffc107"></span>
-
                                         Diverifikasi
-
                                     </span>
-
                                 </td>
 
                                 <td>
 
                                     <div class="sa-action-buttons">
 
-                                        <button class="sa-action-button sa-detail-button">
-
-                                            <i class="bi bi-eye-fill"></i>
-
-                                        </button>
-
-                                        <button class="sa-action-button sa-key-button">
+                                        <a href="{{ route('superadmin.detail_pengaduan') }}"
+                                            class="sa-action-button sa-key-button" title="Lihat Detail">
 
                                             <i class="bi bi-pencil-square"></i>
+
+                                        </a>
+
+                                        <button class="sa-action-button sa-delete-button"
+                                            onclick="return confirm('Yakin ingin menghapus data ini?')" title="Hapus">
+
+                                            <i class="bi bi-trash-fill"></i>
 
                                         </button>
 
@@ -264,38 +279,32 @@
                             <tr>
 
                                 <td>SAAFDGD</td>
-
                                 <td>WBS</td>
-
                                 <td>Tulungagung</td>
-
                                 <td>22/03/2026</td>
 
                                 <td>
-
                                     <span class="sa-status-badge">
-
                                         <span style="background:#0d6efd"></span>
-
                                         Diajukan
-
                                     </span>
-
                                 </td>
 
                                 <td>
 
                                     <div class="sa-action-buttons">
 
-                                        <button class="sa-action-button sa-detail-button">
-
-                                            <i class="bi bi-eye-fill"></i>
-
-                                        </button>
-
-                                        <button class="sa-action-button sa-key-button">
+                                        <a href="{{ route('superadmin.detail_pengaduan') }}"
+                                            class="sa-action-button sa-key-button" title="Lihat Detail">
 
                                             <i class="bi bi-pencil-square"></i>
+
+                                        </a>
+
+                                        <button class="sa-action-button sa-delete-button"
+                                            onclick="return confirm('Yakin ingin menghapus data ini?')" title="Hapus">
+
+                                            <i class="bi bi-trash-fill"></i>
 
                                         </button>
 
@@ -308,38 +317,32 @@
                             <tr>
 
                                 <td>BNNK001</td>
-
                                 <td>Penyalahgunaan</td>
-
                                 <td>Bandung</td>
-
                                 <td>01/07/2026</td>
 
                                 <td>
-
                                     <span class="sa-status-badge">
-
                                         <span style="background:#fd7e14"></span>
-
                                         Diproses
-
                                     </span>
-
                                 </td>
 
                                 <td>
 
                                     <div class="sa-action-buttons">
 
-                                        <button class="sa-action-button sa-detail-button">
-
-                                            <i class="bi bi-eye-fill"></i>
-
-                                        </button>
-
-                                        <button class="sa-action-button sa-key-button">
+                                        <a href="{{ route('superadmin.detail_pengaduan') }}"
+                                            class="sa-action-button sa-key-button" title="Lihat Detail">
 
                                             <i class="bi bi-pencil-square"></i>
+
+                                        </a>
+
+                                        <button class="sa-action-button sa-delete-button"
+                                            onclick="return confirm('Yakin ingin menghapus data ini?')" title="Hapus">
+
+                                            <i class="bi bi-trash-fill"></i>
 
                                         </button>
 

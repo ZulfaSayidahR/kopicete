@@ -529,6 +529,7 @@
 }
 
 @media (max-width: 520px) {
+
     .aduan-box,
     .tracking-box {
         border-radius: 21px;
@@ -2107,7 +2108,7 @@ body {
     min-width: 0;
 }
 
-.sa-stat-content > span {
+.sa-stat-content>span {
     display: block;
     color: #778697;
     font-size: 11px;
@@ -2163,7 +2164,7 @@ body {
 
 .sa-panel-header p,
 .sa-panel-title p,
-.sa-reset-panel > p {
+.sa-reset-panel>p {
     margin: 0;
     color: #8391a1;
     font-size: 10px;
@@ -2394,14 +2395,26 @@ body {
     transform: translateY(-2px);
 }
 
-.sa-detail-button {
-    color: #0869ae;
-    background: #dceffc;
+.sa-delete-button {
+    background: #dc3545;
+    color: #fff;
+    border: none;
+    transition: .3s;
+}
+
+.sa-delete-button:hover {
+    background: #bb2d3b;
+    color: #fff;
 }
 
 .sa-key-button {
-    color: #9a6700;
-    background: #fff0b7;
+    background: #0d6efd;
+    color: #fff;
+}
+
+.sa-key-button:hover {
+    background: #0b5ed7;
+    color: #fff;
 }
 
 .sa-table-footer {
@@ -2830,4 +2843,92 @@ body {
         flex-direction: column;
         gap: 12px;
     }
+}
+
+/* ================= TIMELINE ================= */
+
+.status-timeline {
+    position: relative;
+    padding-left: 10px;
+}
+
+.timeline-item {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    padding-bottom: 28px;
+}
+
+.timeline-item:last-child {
+    padding-bottom: 0;
+}
+
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    left: 6px;
+    top: 12px;
+    width: 2px;
+    height: 100%;
+    background: #c8c8c8;
+}
+
+.timeline-item:last-child::before {
+    display: none;
+}
+
+.timeline-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #9d9d9d;
+    flex-shrink: 0;
+    z-index: 2;
+}
+
+.timeline-item.active .timeline-dot {
+    background: #000;
+}
+
+.timeline-content h6 {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 700;
+    color: #1f1f1f;
+}
+
+.timeline-content small {
+    display: block;
+    color: #808080;
+    margin-top: 3px;
+}
+
+.timeline-item:not(.active) h6 {
+    color: #7f7f7f;
+}
+
+.timeline-item:not(.active) small {
+    color: #a0a0a0;
+}
+
+.sa-delete-button {
+    background: #dc3545;
+    color: #fff;
+    border: none;
+    transition: .3s;
+}
+
+.sa-delete-button:hover {
+    background: #bb2d3b;
+    transform: translateY(-2px);
+}
+
+.sa-key-button {
+    background: #0d6efd;
+    color: #fff;
+}
+
+.sa-key-button:hover {
+    background: #0b5ed7;
 }

@@ -11,4 +11,19 @@ class DataPengaduanController extends Controller
     {
         return view('superadmin.data_pengaduan');
     }
+
+    public function detailPengaduan()
+    {
+        return view('superadmin.detail_pengaduan');
+    }
+
+    public function updateStatus(Request $request)
+    {
+        // Karena belum memakai database,
+        // hanya redirect dengan pesan berhasil.
+
+        return redirect()
+            ->route('superadmin.data_pengaduan')
+            ->with('success', 'Status pengaduan berhasil diperbarui.');
+    }
 }

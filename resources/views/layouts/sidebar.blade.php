@@ -61,7 +61,7 @@
             </li>
 
             {{-- Aktivitas --}}
-            <li class="sa-menu-item
+            <!-- <li class="sa-menu-item
                 {{ request()->routeIs('superadmin.aktivitas*') ? 'active' : '' }}">
 
                 <a href="{{ Route::has('superadmin.aktivitas')
@@ -74,7 +74,7 @@
 
                 </a>
 
-            </li>
+            </li> -->
 
         </ul>
 

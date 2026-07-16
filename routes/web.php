@@ -39,10 +39,37 @@ Route::prefix('superadmin')
             ->name('data_pengaduan');
 
         Route::get(
+            '/detail-pengaduan',
+            [DataPengaduanController::class, 'detailPengaduan']
+        )
+            ->name('detail_pengaduan');
+
+        Route::post(
+            '/detail-pengaduan/update',
+            [DataPengaduanController::class, 'updatePengaduan']
+        )
+            ->name('detail_pengaduan.update');
+
+
+
+        Route::get(
             '/data-permohonan',
-            [PermohonanController::class, 'dataPermohonan']
+            [DataPermohonanController::class, 'dataPermohonan']
         )
             ->name('data_permohonan');
+
+        Route::get(
+            '/detail-permohonan',
+            [DataPermohonanController::class, 'detailPermohonan']
+        )
+            ->name('detail_permohonan');
+
+        Route::post(
+            '/detail-permohonan/update',
+            [DataPermohonanController::class, 'updatePermohonan']
+        )
+            ->name('detail_permohonan.update');
+
     });
 
 /*

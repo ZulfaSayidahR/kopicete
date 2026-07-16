@@ -9,6 +9,20 @@
         @include('layouts.sidebar')
 
         <main class="sa-main">
+            @if(session('success'))
+
+                <div class="alert alert-success alert-dismissible fade show">
+
+                    <i class="bi bi-check-circle-fill"></i>
+
+                    {{ session('success') }}
+
+                    <button type="button" class="btn-close" data-bs-dismiss="alert">
+                    </button>
+
+                </div>
+
+            @endif
 
             {{-- ================= HEADER ================= --}}
             <header class="sa-topbar">
@@ -21,7 +35,7 @@
 
                     <div class="sa-page-heading">
                         <h1>Data Permohonan</h1>
-                        <p>Kelola dan tindak lanjut seluruh permohonan masyarakat.</p>
+                        <p>Kelola seluruh permohonan layanan masyarakat BNNK Tulungagung.</p>
                     </div>
 
                 </div>
@@ -33,15 +47,13 @@
                     </div>
 
                     <div class="sa-profile-info">
-                        <strong>{{ auth()->user()->name ?? 'Admin BNNK' }}</strong>
-                        <small>Administrator</small>
+                        <strong>{{ auth()->user()->name ?? 'Super Admin' }}</strong>
+                        <small>Administrator Sistem</small>
                     </div>
 
                 </div>
 
             </header>
-
-
 
             {{-- ================= FILTER ================= --}}
 
@@ -50,11 +62,8 @@
                 <div class="sa-panel-header">
 
                     <div>
-
                         <h3>Filter Permohonan</h3>
-
-                        <p>Cari berdasarkan token, kategori, kecamatan maupun status.</p>
-
+                        <p>Cari permohonan berdasarkan token, nama pemohon maupun status.</p>
                     </div>
 
                 </div>
@@ -69,7 +78,7 @@
 
                                 <i class="bi bi-search"></i>
 
-                                <input type="text" placeholder="Cari Token atau Judul Aduan">
+                                <input type="text" placeholder="Cari Token atau Nama Pemohon">
 
                             </div>
 
@@ -79,11 +88,9 @@
 
                             <select class="form-select">
 
-                                <option>Semua Kategori</option>
-
-                                <option>Penyalahgunaan Narkoba</option>
-
-                                <option>Whistle Blowing System</option>
+                                <option>Semua Jenis Permohonan</option>
+                                <option>Permohonan Rehabilitasi</option>
+                                <option>Permohonan Sosialisasi</option>
 
                             </select>
 
@@ -94,12 +101,11 @@
                             <select class="form-select">
 
                                 <option>Semua Kecamatan</option>
-
-                                <option>Campurdarat</option>
-
-                                <option>Kauman</option>
-
                                 <option>Tulungagung</option>
+                                <option>Campurdarat</option>
+                                <option>Kauman</option>
+                                <option>Ngunut</option>
+                                <option>Boyolangu</option>
 
                             </select>
 
@@ -110,13 +116,9 @@
                             <select class="form-select">
 
                                 <option>Semua Status</option>
-
-                                <option>Diajukan</option>
-
+                                <option>Menunggu Verifikasi</option>
                                 <option>Diverifikasi</option>
-
                                 <option>Diproses</option>
-
                                 <option>Selesai</option>
 
                             </select>
@@ -129,8 +131,6 @@
 
             </section>
 
-
-
             {{-- ================= TABEL ================= --}}
 
             <section class="sa-panel mt-4">
@@ -141,7 +141,7 @@
 
                         <h3>Daftar Permohonan</h3>
 
-                        <p>Data permohonan masyarakat yang masuk ke sistem.</p>
+                        <p>Seluruh data permohonan yang telah dikirim masyarakat.</p>
 
                     </div>
 
@@ -155,16 +155,12 @@
 
                             <tr>
 
-                                <th>Kode Aduan</th>
-
-                                <th>Kategori</th>
-
+                                <th>Token</th>
+                                <th>Jenis Permohonan</th>
+                                <th>Nama Pemohon</th>
                                 <th>Kecamatan</th>
-
                                 <th>Tanggal</th>
-
                                 <th>Status</th>
-
                                 <th class="sa-action-column">Aksi</th>
 
                             </tr>
@@ -175,83 +171,35 @@
 
                             <tr>
 
-                                <td>PHGSHJBJ</td>
-
-                                <td>Penyalahgunaan</td>
-
+                                <td>PMH-001</td>
+                                <td>Permohonan Rehabilitasi</td>
+                                <td>Ahmad Fauzi</td>
                                 <td>Campurdarat</td>
-
-                                <td>21/12/2025</td>
-
-                                <td>
-
-                                    <span class="sa-status-badge active">
-
-                                        <span></span>
-
-                                        Selesai
-
-                                    </span>
-
-                                </td>
+                                <td>16 Juli 2026</td>
 
                                 <td>
-
-                                    <div class="sa-action-buttons">
-
-                                        <button class="sa-action-button sa-detail-button">
-
-                                            <i class="bi bi-eye-fill"></i>
-
-                                        </button>
-
-                                        <button class="sa-action-button sa-key-button">
-
-                                            <i class="bi bi-pencil-square"></i>
-
-                                        </button>
-
-                                    </div>
-
-                                </td>
-
-                            </tr>
-
-                            <tr>
-
-                                <td>PHGSHJBJ</td>
-
-                                <td>WBS</td>
-
-                                <td>Kauman</td>
-
-                                <td>23/05/2026</td>
-
-                                <td>
-
                                     <span class="sa-status-badge">
-
                                         <span style="background:#ffc107"></span>
-
-                                        Diverifikasi
-
+                                        Menunggu Verifikasi
                                     </span>
-
                                 </td>
 
                                 <td>
 
                                     <div class="sa-action-buttons">
 
-                                        <button class="sa-action-button sa-detail-button">
-
-                                            <i class="bi bi-eye-fill"></i>
-
-                                        </button>
-
-                                        <button class="sa-action-button sa-key-button">
-
+                                        {{-- Detail / Edit --}}
+                                        <a href="{{ route('superadmin.detail_permohonan') }}"
+                                            class="sa-action-button sa-key-button" title="Detail Permohonan">
                                             <i class="bi bi-pencil-square"></i>
+                                        </a>
+
+                                        {{-- Delete --}}
+                                        <button class="sa-action-button sa-delete-button"
+                                            onclick="return confirm('Yakin ingin menghapus data permohonan ini?')"
+                                            title="Hapus">
+
+                                            <i class="bi bi-trash-fill"></i>
 
                                         </button>
 
@@ -263,39 +211,33 @@
 
                             <tr>
 
-                                <td>SAAFDGD</td>
-
-                                <td>WBS</td>
-
+                                <td>PMH-002</td>
+                                <td>Permohonan Sosialisasi</td>
+                                <td>SMAN 1 Tulungagung</td>
                                 <td>Tulungagung</td>
-
-                                <td>22/03/2026</td>
+                                <td>18 Juli 2026</td>
 
                                 <td>
-
                                     <span class="sa-status-badge">
-
                                         <span style="background:#0d6efd"></span>
-
-                                        Diajukan
-
+                                        Diproses
                                     </span>
-
                                 </td>
 
                                 <td>
 
                                     <div class="sa-action-buttons">
 
-                                        <button class="sa-action-button sa-detail-button">
-
-                                            <i class="bi bi-eye-fill"></i>
-
-                                        </button>
-
-                                        <button class="sa-action-button sa-key-button">
-
+                                        <a href="{{ route('superadmin.detail_permohonan') }}"
+                                            class="sa-action-button sa-key-button" title="Detail Permohonan">
                                             <i class="bi bi-pencil-square"></i>
+                                        </a>
+
+                                        <button class="sa-action-button sa-delete-button"
+                                            onclick="return confirm('Yakin ingin menghapus data permohonan ini?')"
+                                            title="Hapus">
+
+                                            <i class="bi bi-trash-fill"></i>
 
                                         </button>
 
@@ -307,39 +249,33 @@
 
                             <tr>
 
-                                <td>BNNK001</td>
-
-                                <td>Penyalahgunaan</td>
-
-                                <td>Bandung</td>
-
-                                <td>01/07/2026</td>
+                                <td>PMH-003</td>
+                                <td>Permohonan Rehabilitasi</td>
+                                <td>Siti Aminah</td>
+                                <td>Kauman</td>
+                                <td>20 Juli 2026</td>
 
                                 <td>
-
-                                    <span class="sa-status-badge">
-
-                                        <span style="background:#fd7e14"></span>
-
-                                        Diproses
-
+                                    <span class="sa-status-badge active">
+                                        <span></span>
+                                        Selesai
                                     </span>
-
                                 </td>
 
                                 <td>
 
                                     <div class="sa-action-buttons">
 
-                                        <button class="sa-action-button sa-detail-button">
-
-                                            <i class="bi bi-eye-fill"></i>
-
-                                        </button>
-
-                                        <button class="sa-action-button sa-key-button">
-
+                                        <a href="{{ route('superadmin.detail_permohonan') }}"
+                                            class="sa-action-button sa-key-button" title="Detail Permohonan">
                                             <i class="bi bi-pencil-square"></i>
+                                        </a>
+
+                                        <button class="sa-action-button sa-delete-button"
+                                            onclick="return confirm('Yakin ingin menghapus data permohonan ini?')"
+                                            title="Hapus">
+
+                                            <i class="bi bi-trash-fill"></i>
 
                                         </button>
 
@@ -357,7 +293,7 @@
 
                 <div class="sa-table-footer">
 
-                    <span>Menampilkan 4 dari 4 permohonan</span>
+                    <span>Menampilkan 3 dari 3 permohonan</span>
 
                     <div class="sa-pagination">
 
@@ -367,7 +303,7 @@
 
                         <button class="active">1</button>
 
-                        <button>
+                        <button disabled>
                             <i class="bi bi-chevron-right"></i>
                         </button>
 
