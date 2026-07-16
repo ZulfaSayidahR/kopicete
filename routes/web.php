@@ -72,6 +72,37 @@ Route::prefix('superadmin')
 
     });
 
+
+// ADMIN PENGADUAN
+
+use App\Http\Controllers\AdminPengaduanController;
+
+Route::prefix('admin-pengaduan')
+    ->name('adminpengaduan.')
+    ->group(function () {
+
+        Route::get(
+            '/dashboard',
+            [AdminPengaduanController::class, 'dashboard']
+        )->name('dashboard');
+
+        Route::get(
+            '/data-pengaduan',
+            [AdminPengaduanController::class, 'dataPengaduan']
+        )->name('data_pengaduan');
+
+        Route::get(
+            '/detail-pengaduan',
+            [AdminPengaduanController::class, 'detailPengaduan']
+        )->name('detail_pengaduan');
+
+        Route::post(
+            '/detail-pengaduan',
+            [AdminPengaduanController::class, 'updatePengaduan']
+        )->name('detail_pengaduan.update');
+
+    });
+
 /*
 |--------------------------------------------------------------------------
 | USER ROUTES

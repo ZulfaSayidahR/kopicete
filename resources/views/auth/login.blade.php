@@ -78,13 +78,13 @@
 
                 </div>
 
-                <button type="submit" class="btn-admin-login">
+                <a href="{{ route('superadmin.dashboard') }}" class="btn-admin-login">
 
                     <i class="bi bi-box-arrow-in-right"></i>
 
                     Masuk
 
-                </button>
+                </a>
 
             </form>
 
