@@ -3,8 +3,9 @@
 namespace App\Http\Controllers\SuperAdmin;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 
-class PermohonanController extends Controller
+class DataPermohonanController extends Controller
 {
     public function dataPermohonan()
     {

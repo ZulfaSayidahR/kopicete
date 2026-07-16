@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Data Pengaduan')
+@section('title', 'Data Permohonan')
 
 @section('content')
 
@@ -20,8 +20,8 @@
                     </button>
 
                     <div class="sa-page-heading">
-                        <h1>Data Pengaduan</h1>
-                        <p>Kelola dan tindak lanjut seluruh pengaduan masyarakat.</p>
+                        <h1>Data Permohonan</h1>
+                        <p>Kelola dan tindak lanjut seluruh permohonan masyarakat.</p>
                     </div>
 
                 </div>
@@ -51,7 +51,7 @@
 
                     <div>
 
-                        <h3>Filter Pengaduan</h3>
+                        <h3>Filter Permohonan</h3>
 
                         <p>Cari berdasarkan token, kategori, kecamatan maupun status.</p>
 
@@ -139,9 +139,9 @@
 
                     <div>
 
-                        <h3>Daftar Pengaduan</h3>
+                        <h3>Daftar Permohonan</h3>
 
-                        <p>Data pengaduan masyarakat yang masuk ke sistem.</p>
+                        <p>Data permohonan masyarakat yang masuk ke sistem.</p>
 
                     </div>
 
@@ -357,7 +357,7 @@
 
                 <div class="sa-table-footer">
 
-                    <span>Menampilkan 4 dari 4 pengaduan</span>
+                    <span>Menampilkan 4 dari 4 permohonan</span>
 
                     <div class="sa-pagination">
 
