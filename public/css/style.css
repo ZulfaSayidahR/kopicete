@@ -1177,31 +1177,42 @@ textarea.form-control {
 /* ===================================================== */
 
 .btn-admin-login {
-    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
 
+    width: 100%;
     height: 55px;
 
     border: none;
-
     border-radius: 14px;
 
     background: linear-gradient(135deg, #0b73b9, #095b93);
 
     color: #fff;
-
     font-size: 15px;
-
     font-weight: 700;
+    text-decoration: none;
 
-    transition: 0.3s;
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
 
 .btn-admin-login:hover {
+    background: linear-gradient(135deg, #0d82cf, #0b73b9);
+    color: #fff;
     transform: translateY(-2px);
-
     box-shadow: 0 10px 20px rgba(11, 115, 185, 0.35);
 }
 
+.btn-admin-login:active {
+    transform: translateY(0);
+}
+
+.btn-admin-login i {
+    font-size: 18px;
+}
 /* ===================================================== */
 
 .divider {
