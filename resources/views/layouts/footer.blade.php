@@ -13,7 +13,11 @@
                     <img src="{{ asset('images/warondrugs.jpg') }}" alt="logo warondrugs">
                     <div>
 
-                        <h4>KopI CeTe</h4>
+                        <img src="{{ asset('images/kopicete2.png') }}"
+                            alt="Logo KopiCete"
+                            style="height: 100px; width: auto; object-fit: contain; vertical-align: middle;">
+
+                        <!-- <h4>KopI CeTe</h4> -->
 
                         <p>
                             Portal Pengaduan dan Permohonan Digital

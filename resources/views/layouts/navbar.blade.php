@@ -10,11 +10,11 @@
             <img src="{{ asset('images/bnn.webp') }}" alt="logo bnn">
             <img src="{{ asset('images/warondrugs.jpg') }}" alt="logo warondrugs">
 
-            {{-- <img src="{{ asset('images/kopicete.png') }}"
+            <img src="{{ asset('images/kopicete.png') }}"
      alt="Logo KopiCete"
-     style="width:200px; height:auto; margin-left:-10px;"> --}}
+     style="width:200px; height:auto; margin-left:-20px;">
 
-            KOPI CETE
+            <!-- KOPI CETE -->
 
 
         </a>
