@@ -12,7 +12,7 @@
 
             <img src="{{ asset('images/kopicete.png') }}"
      alt="Logo KopiCete"
-     style="width:200px; height:auto; margin-left:-20px;">
+     style="width:180px; height:auto; margin-left:-20;">
 
             <!-- KOPI CETE -->
 

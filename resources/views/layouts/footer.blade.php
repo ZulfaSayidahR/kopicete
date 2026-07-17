@@ -12,9 +12,9 @@
                     <img src="{{ asset('images/logocete.png') }}" alt="logo cete" style="height: 100px; width: auto; object-fit: contain; vertical-align: middle;">
                     <div>
 
-                        <img src="{{ asset('images/kopicete2.png') }}"
+                        <img src="{{ asset('images/kopicete.png') }}"
                             alt="Logo KopiCete"
-                            style="height: 100px; width: auto; object-fit: contain; vertical-align: middle;">
+                            style="height: 125px; width: auto; object-fit: contain; vertical-align: middle;">
 
                         <!-- <h4>KopI CeTe</h4> -->
 
