@@ -8,17 +8,17 @@ class AdminPengaduanController extends Controller
 {
     public function dashboard()
     {
-        return view('admin_pengaduan.dashboard');
+        return view('adminpengaduan.dashboard');
     }
 
     public function dataPengaduan()
     {
-        return view('admin_pengaduan.data_pengaduan');
+        return view('adminpengaduan.data_pengaduan');
     }
 
     public function detailPengaduan()
     {
-        return view('admin_pengaduan.detail_pengaduan');
+        return view('adminpengaduan.detail_pengaduan');
     }
 
     public function updatePengaduan(Request $request)

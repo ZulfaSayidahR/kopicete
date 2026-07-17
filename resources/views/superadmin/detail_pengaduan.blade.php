@@ -4,7 +4,7 @@
 
 @section('content')
 
-    <section class="sa-dashboard">
+    <section class="sa-dashboard" id="superAdminDashboard">
 
         @include('layouts.sidebar')
 
@@ -16,7 +16,7 @@
                 <div class="sa-topbar-left">
 
                     <button class="sa-toggle-sidebar">
-                        <i class="bi bi-list"></i>
+                        <i class="bi bi-list" id="toggleSidebar"></i>
                     </button>
 
                     <div class="sa-page-heading">
@@ -215,7 +215,6 @@
 
                                         <option>Diajukan</option>
                                         <option>Diverifikasi</option>
-                                        <option>Diproses Kecamatan</option>
                                         <option>Diproses Lapangan</option>
                                         <option>Selesai</option>
 

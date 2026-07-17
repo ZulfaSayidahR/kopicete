@@ -77,29 +77,26 @@ Route::prefix('superadmin')
 
 use App\Http\Controllers\AdminPengaduanController;
 
-Route::prefix('admin-pengaduan')
+Route::prefix('adminpengaduan')
     ->name('adminpengaduan.')
     ->group(function () {
 
-        Route::get(
-            '/dashboard',
-            [AdminPengaduanController::class, 'dashboard']
-        )->name('dashboard');
+        // Dashboard
+        Route::get('/dashboard', function () {
+            return view('adminpengaduan.dashboard');
+        })->name('dashboard');
 
-        Route::get(
-            '/data-pengaduan',
-            [AdminPengaduanController::class, 'dataPengaduan']
-        )->name('data_pengaduan');
+        // Data Pengaduan
+        Route::get('/data-pengaduan', function () {
+            return view('adminpengaduan.data_pengaduan');
+        })->name('data_pengaduan');
 
-        Route::get(
-            '/detail-pengaduan',
-            [AdminPengaduanController::class, 'detailPengaduan']
-        )->name('detail_pengaduan');
+       Route::get('/detail-pengaduan', [AdminPengaduanController::class, 'detailPengaduan'])
+            ->name('detail_pengaduan');
 
-        Route::post(
-            '/detail-pengaduan',
-            [AdminPengaduanController::class, 'updatePengaduan']
-        )->name('detail_pengaduan.update');
+        // UPDATE STATUS
+        Route::post('/update-pengaduan', [AdminPengaduanController::class, 'updatePengaduan'])
+            ->name('update_pengaduan');
 
     });
 

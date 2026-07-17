@@ -9,8 +9,7 @@
 
                 <div class="footer-brand">
 
-                    <img src="{{ asset('images/bnn.webp') }}" alt="logo bnn">
-                    <img src="{{ asset('images/warondrugs.jpg') }}" alt="logo warondrugs">
+                    <img src="{{ asset('images/logocete.png') }}" alt="logo cete" style="height: 100px; width: auto; object-fit: contain; vertical-align: middle;">
                     <div>
 
                         <img src="{{ asset('images/kopicete2.png') }}"
@@ -109,6 +108,14 @@
 
                     <a href="https://www.instagram.com/tulungagungstopnarkoba/" target="_blank">
                         <i class="bi bi-instagram"></i>
+                    </a>
+
+                    <a href="https://x.com/INFOBNN" target="_blank">
+                        <i class="bi bi-twitter"></i>
+                    </a>
+
+                    <a href="https://www.youtube.com/@tulungagungstopnarkoba4037" target="_blank">
+                        <i class="bi bi-youtube"></i>
                     </a>
 
                 </div>
