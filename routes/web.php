@@ -100,6 +100,31 @@ Route::prefix('adminpengaduan')
 
     });
 
+    // ADMIN PERMOHONANNNN
+    use App\Http\Controllers\AdminPermohonanController;
+
+Route::prefix('adminpermohonan')
+    ->name('adminpermohonan.')
+    ->group(function () {
+
+        Route::get('/dashboard',
+            [AdminPermohonanController::class,'dashboard'])
+            ->name('dashboard');
+
+        Route::get('/data-permohonan',
+            [AdminPermohonanController::class,'dataPermohonan'])
+            ->name('data_permohonan');
+
+        Route::get('/detail-permohonan',
+            [AdminPermohonanController::class,'detailPermohonan'])
+            ->name('detail_permohonan');
+
+        Route::post('/update-permohonan',
+            [AdminPermohonanController::class,'updatePermohonan'])
+            ->name('update_permohonan');
+
+    });
+
 /*
 |--------------------------------------------------------------------------
 | USER ROUTES

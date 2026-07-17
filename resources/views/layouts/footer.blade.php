@@ -87,9 +87,15 @@
                     </li>
 
                     <li>
-                        <i class="bi bi-telephone-fill"></i>
+                        <i class="bi bi-whatsapp"></i>
 
                         <span>0821-5224-9911</span>
+                    </li>
+
+                    <li>
+                        <i class="bi bi-telephone-fill"></i>
+
+                        <span>Call center: 184</span>
                     </li>
 
                     <li>
