@@ -116,7 +116,7 @@
 
                                 </label>
 
-                                <input type="file" class="form-control" name="lampiran">
+                                <input type="file" class="form-control file-upload" name="lampiran" accept=".jpg,.jpeg,.png">
 
                                 <div class="form-note">
 

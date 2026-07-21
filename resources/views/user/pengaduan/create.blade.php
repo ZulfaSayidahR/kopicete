@@ -102,7 +102,7 @@
 
                                         <option>Penyalahgunaan Narkoba dan Peredaran Gelap Narkoba</option>
 
-                                        <option>Pelayanan Publik dan Pelanggaran Internal</option>
+                                        <option>Aduan Pelanggaran Grativikasi (WBS) </option>
 
                                     </select>
 
@@ -184,9 +184,19 @@
 
                         </small>
                         <small>
-                            <i class="bi bi-calendar-event-fill"></i>
-                            09 Juli 2026
-                        </small>
+    <i class="bi bi-calendar-event-fill"></i>
+    09 Juli 2026
+</small>
+
+<button
+    class="btn-detail-laporan"
+    data-bs-toggle="modal"
+    data-bs-target="#detailLaporanModal">
+
+    <i class="bi bi-eye-fill"></i>
+    Lihat Detail
+
+</button>
 
                     </div>
 
@@ -242,6 +252,119 @@
 
                 </aside>
 
+                <!-- Modal Detail Aduan -->
+<div class="modal fade"
+     id="detailLaporanModal"
+     tabindex="-1">
+
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <h5 class="modal-title">
+                    Detail Tindak Lanjut Aduan
+                </h5>
+
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal">
+                </button>
+
+            </div>
+
+            <div class="modal-body">
+
+                <div class="row">
+
+                    <!-- Gambar -->
+                    <div class="col-md-5">
+
+                        <img
+                            src="{{ asset('images/bukti-default.jpg') }}"
+                            class="img-fluid rounded shadow"
+                            alt="Bukti">
+
+                    </div>
+
+                    <!-- Informasi -->
+                    <div class="col-md-7">
+
+                        <h5>
+                            Dugaan Penyalahgunaan Narkotika
+                        </h5>
+
+                        <hr>
+
+                        <p>
+
+                            <strong>Status :</strong>
+
+                            <span class="badge bg-warning text-dark">
+
+                                Verifikasi
+
+                            </span>
+
+                        </p>
+
+                        <p>
+
+                            <strong>Admin :</strong>
+
+                            Admin BNNK Tulungagung
+
+                        </p>
+
+                        <p>
+
+                            <strong>Tanggal Penanganan :</strong>
+
+                            10 Juli 2026
+
+                        </p>
+
+                        <label class="fw-bold">
+
+                            Catatan Admin
+
+                        </label>
+
+                        <div class="border rounded p-3 bg-light">
+
+                            Tim telah melakukan verifikasi awal
+                            terhadap laporan yang diterima.
+                            Saat ini laporan sedang dalam proses
+                            pendalaman informasi sebelum dilakukan
+                            tindak lanjut lapangan.
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+
+                <button
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal">
+
+                    Tutup
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
             </div>
 
         </div>

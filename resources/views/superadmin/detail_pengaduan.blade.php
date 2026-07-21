@@ -195,59 +195,102 @@
                     {{-- Update Status --}}
                     <div class="sa-panel mt-4">
 
-                        <div class="sa-panel-header">
+    <div class="sa-panel-header">
 
-                            <h3>Verifikasi</h3>
+        <h3>Verifikasi</h3>
 
-                        </div>
+    </div>
 
-                        <div class="p-4">
+    <div class="p-4">
 
-                            <form action="{{ route('superadmin.detail_pengaduan.update') }}" method="POST">
+        <form action="{{ route('superadmin.detail_pengaduan.update') }}"
+              method="POST"
+              enctype="multipart/form-data">
 
-                                @csrf
+            @csrf
 
-                                <div class="mb-3">
+            {{-- Status --}}
+            <div class="mb-3">
 
-                                    <label>Status</label>
+                <label class="form-label fw-semibold">
+                    Status
+                </label>
 
-                                    <select class="form-select">
+                <select class="form-select" name="status">
 
-                                        <option>Diajukan</option>
-                                        <option>Diverifikasi</option>
-                                        <option>Diproses Lapangan</option>
-                                        <option>Selesai</option>
+                    <option value="Diajukan">Diajukan</option>
+                    <option value="Diverifikasi">Diverifikasi</option>
+                    <option value="Diproses Lapangan">Diproses Lapangan</option>
+                    <option value="Selesai">Selesai</option>
 
-                                    </select>
+                </select>
 
-                                </div>
+            </div>
 
-                                <div class="mb-3">
+            {{-- Catatan --}}
+            <div class="mb-3">
 
-                                    <label>Catatan Admin</label>
+                <label class="form-label fw-semibold">
+                    Catatan Admin
+                </label>
 
-                                    <textarea class="form-control" rows="4"></textarea>
+                <textarea
+                    class="form-control"
+                    name="catatan"
+                    rows="4"
+                    placeholder="Masukkan catatan hasil verifikasi..."></textarea>
 
-                                </div>
+            </div>
 
-                                <div class="d-grid">
+            {{-- Upload Bukti --}}
+            <div class="mb-4">
 
-                                    <button type="submit" class="btn btn-primary">
+                <label class="form-label fw-semibold">
+                    Upload Bukti Tindak Lanjut
+                </label>
 
-                                        <i class="bi bi-check-circle-fill"></i>
+                <input
+                    type="file"
+                    name="bukti"
+                    id="bukti"
+                    class="form-control file-upload"
+                    accept="image/*">
 
-                                        Simpan Perubahan
+                <small class="text-muted">
+                    Format: JPG, JPEG, PNG. Maksimal 2 MB.
+                </small>
 
-                                    </button>
+                {{-- Preview --}}
+                <div class="mt-3">
 
-                                </div>
+                    <img
+                        id="previewBukti"
+                        src="#"
+                        alt="Preview Bukti"
+                        class="img-fluid rounded shadow"
+                        style="display:none; max-height:250px;">
 
-                            </form>
+                </div>
 
-                        </div>
+            </div>
 
-                    </div>
+            <div class="d-grid">
 
+                <button type="submit" class="btn btn-primary">
+
+                    <i class="bi bi-check-circle-fill"></i>
+
+                    Simpan Perubahan
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
                 </div>
 
             </div>
@@ -257,3 +300,23 @@
     </section>
 
 @endsection
+
+<script>
+document.getElementById('bukti').addEventListener('change', function (e) {
+
+    const file = e.target.files[0];
+    const preview = document.getElementById('previewBukti');
+
+    if (file) {
+
+        preview.src = URL.createObjectURL(file);
+        preview.style.display = 'block';
+
+    } else {
+
+        preview.style.display = 'none';
+
+    }
+
+});
+</script>

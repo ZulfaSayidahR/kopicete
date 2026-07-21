@@ -253,6 +253,37 @@
 
                                 </div>
 
+                                <div class="mb-4">
+
+                <label class="form-label fw-semibold">
+                    Upload Bukti Tindak Lanjut
+                </label>
+
+                <input
+                    type="file"
+                    name="bukti"
+                    id="bukti"
+                    class="form-control file-upload"
+                    accept="image/*">
+
+                <small class="text-muted">
+                    Format: JPG, JPEG, PNG. Maksimal 2 MB.
+                </small>
+
+                {{-- Preview --}}
+                <div class="mt-3">
+
+                    <img
+                        id="previewBukti"
+                        src="#"
+                        alt="Preview Bukti"
+                        class="img-fluid rounded shadow"
+                        style="display:none; max-height:250px;">
+
+                </div>
+
+            </div>
+
                                 <div class="d-grid">
 
                                     <button type="submit" class="btn btn-primary">
