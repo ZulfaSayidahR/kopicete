@@ -3056,44 +3056,85 @@ body {
     }
 }
 
-/* Tombol hamburger */
+.navbar {
+    padding: 10px 20px;
+}
+
+.navbar-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
 .navbar-toggler {
-    border: none;
-    box-shadow: none !important;
-    padding: 6px 10px;
     margin-left: auto;
+    border: 0;
+    padding: 0.4rem 0.6rem;
+    box-shadow: none !important;
 }
 
 .navbar-toggler:focus {
     box-shadow: none !important;
 }
 
-/* Ukuran icon */
 .navbar-toggler-icon {
-    width: 1.6rem;
-    height: 1.6rem;
+    width: 28px;
+    height: 28px;
 }
 
 /* Tablet */
-@media (max-width: 992px) {
-    .navbar-toggler {
-        padding: 5px 8px;
+@media (max-width: 991.98px) {
+    .navbar > .container,
+    .navbar > .container-fluid {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: nowrap;
     }
 
-    .navbar-toggler-icon {
-        width: 1.5rem;
-        height: 1.5rem;
+    .navbar-brand {
+        width: calc(100% - 60px);
+        overflow: hidden;
+    }
+
+    .navbar-collapse {
+        width: 100%;
+        margin-top: 15px;
+        background: #0d4d86;
+        border-radius: 12px;
+        padding: 15px;
+    }
+
+    .navbar-nav {
+        text-align: center;
+    }
+
+    .navbar-nav .nav-item {
+        margin: 8px 0;
+    }
+
+    .btn-yellow {
+        width: 100%;
+        margin-top: 10px;
     }
 }
 
 /* Mobile */
 @media (max-width: 576px) {
+    .navbar {
+        padding: 10px 12px;
+    }
+
+    .navbar-brand {
+        max-width: 80%;
+    }
+
     .navbar-toggler {
-        padding: 4px 6px;
+        padding: 4px;
     }
 
     .navbar-toggler-icon {
-        width: 1.3rem;
-        height: 1.3rem;
+        width: 24px;
+        height: 24px;
     }
 }
