@@ -1,33 +1,26 @@
 <nav class="navbar navbar-expand-lg navbar-bnn">
 
 
-    <div class="container">
+    <div class="container px-5">
 
 
-        <a class="navbar-brand" href="{{route('home')}}">
+        <div class="d-flex justify-content-between align-items-center w-100">
 
-
-            <img src="{{ asset('images/bnn.webp') }}" alt="logo bnn">
-            <img src="{{ asset('images/warondrugs.jpg') }}" alt="logo warondrugs">
-
-            <img src="{{ asset('images/kopicete.png') }}"
-     alt="Logo KopiCete"
-     style="width:180px; height:auto; margin-left:-20;">
-
-            <!-- KOPI CETE -->
-
-
+        <a href="{{ route('home') }}" class="d-flex align-items-center logo-group">
+            <img src="{{ asset('images/bnn.webp') }}" class="logo-bnn">
+            <img src="{{ asset('images/warondrugs.jpg') }}" class="logo-war">
+            <img src="{{ asset('images/kopicete.png') }}" class="logo-kopicete">
         </a>
 
-
-
-        <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#menu">
-
-
-            <span class="navbar-toggler-icon"></span>
-
-
-        </button>
+        <button class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#menu"
+            aria-controls="menu"
+            aria-expanded="false"
+            aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
 
 
 

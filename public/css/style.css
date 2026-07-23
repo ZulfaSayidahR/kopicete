@@ -3021,3 +3021,79 @@ body {
 .sa-key-button:hover {
     background: #0b5ed7;
 }
+
+/* Logo navbar */
+.logo-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo-bnn,
+.logo-war {
+    width: 55px;
+    height: auto;
+}
+
+.logo-kopicete {
+    width: 150px;
+    height: auto;
+}
+
+/* Mobile */
+@media (max-width: 576px) {
+    .logo-group {
+        gap: 6px;
+    }
+
+    .logo-bnn,
+    .logo-war {
+        width: 42px;
+    }
+
+    .logo-kopicete {
+        width: 170px;
+    }
+}
+
+/* Tombol hamburger */
+.navbar-toggler {
+    border: none;
+    box-shadow: none !important;
+    padding: 6px 10px;
+    margin-left: auto;
+}
+
+.navbar-toggler:focus {
+    box-shadow: none !important;
+}
+
+/* Ukuran icon */
+.navbar-toggler-icon {
+    width: 1.6rem;
+    height: 1.6rem;
+}
+
+/* Tablet */
+@media (max-width: 992px) {
+    .navbar-toggler {
+        padding: 5px 8px;
+    }
+
+    .navbar-toggler-icon {
+        width: 1.5rem;
+        height: 1.5rem;
+    }
+}
+
+/* Mobile */
+@media (max-width: 576px) {
+    .navbar-toggler {
+        padding: 4px 6px;
+    }
+
+    .navbar-toggler-icon {
+        width: 1.3rem;
+        height: 1.3rem;
+    }
+}

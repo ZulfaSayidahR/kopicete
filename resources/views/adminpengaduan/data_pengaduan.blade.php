@@ -106,9 +106,9 @@
 
                                 <option>Semua Kategori</option>
 
-                                <option>Penyalahgunaan Narkoba</option>
+                                <option>Aduan Penyalahgunaan Narkoba dan Peredaran Gelap Narkotika</option>
 
-                                <option>Whistle Blowing System</option>
+                                <option>Aduan Pelanggaran Grativikasi (WBS)</option>
 
                             </select>
 
