@@ -80,61 +80,182 @@ input {
 ===================================================== */
 
 .navbar-bnn {
-    width: 100%;
-
-    height: 80px;
-
-    background: linear-gradient(90deg, var(--navy), var(--blue));
-
-    display: flex;
-
-    align-items: center;
-
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    background: linear-gradient(90deg, #06264f, #075a93);
+    min-height: 80px;
+    padding: 12px 0;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, .15);
 }
 
 .navbar-bnn .container {
-    height: 100%;
-
     display: flex;
-
     align-items: center;
-
     justify-content: space-between;
 }
 
-.navbar-brand {
+.logo-group {
     display: flex;
-
     align-items: center;
-
-    gap: 12px;
-
-    color: white !important;
-
-    font-size: 21px;
-
-    font-weight: 700;
+    gap: 10px;
 }
 
-.navbar-brand img {
-    width: 35px;
+.logo-bnn,
+.logo-war,
+.logo-kopicete {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+    border-radius: 10px;
+}
 
-    height: 35px;
+.navbar-nav {
+    align-items: center;
+    gap: 10px;
 }
 
 .nav-link {
-    color: white !important;
-
-    font-size: 15px;
-
+    color: #fff !important;
     font-weight: 500;
-
-    transition: 0.25s;
+    transition: .3s;
 }
 
 .nav-link:hover {
-    color: var(--yellow) !important;
+    color: #ffc928 !important;
+}
+
+/* =======================
+   TOGGLE
+======================= */
+
+.navbar-toggler {
+
+    width: 52px;
+    height: 52px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 0;
+
+    border-radius: 12px;
+
+    background: rgba(255, 255, 255, .12);
+
+    transition: .25s;
+
+    padding: 0;
+
+}
+
+.navbar-toggler:hover {
+
+    background: rgba(255, 255, 255, .2);
+
+}
+
+.navbar-toggler:focus {
+
+    box-shadow: none;
+
+}
+
+.navbar-toggler:active {
+
+    transform: scale(.96);
+
+}
+
+.navbar-toggler-icon {
+
+    width: 1.6rem;
+    height: 1.6rem;
+
+    filter: invert(1);
+
+}
+
+/* =====================================
+RESPONSIVE NAVBAR
+===================================== */
+
+@media (max-width:991px) {
+
+    .navbar-bnn {
+
+        padding: 10px 0;
+
+    }
+
+    .logo-group {
+
+        gap: 6px;
+
+    }
+
+    .logo-bnn,
+    .logo-war,
+    .logo-kopicete {
+
+        width: 38px;
+        height: 38px;
+
+    }
+
+    .navbar-toggler {
+
+        width: 50px;
+        height: 50px;
+
+        margin-left: auto;
+
+    }
+
+    .navbar-collapse {
+
+        margin-top: 15px;
+
+        background: #06264f;
+
+        border-radius: 16px;
+
+        padding: 18px;
+
+        box-shadow: 0 10px 25px rgba(0, 0, 0, .25);
+
+    }
+
+    .navbar-nav {
+
+        align-items: stretch;
+
+        gap: 5px;
+
+    }
+
+    .nav-item {
+
+        width: 100%;
+
+    }
+
+    .nav-link {
+
+        width: 100%;
+
+        padding: 14px 8px;
+
+        border-bottom: 1px solid rgba(255, 255, 255, .08);
+
+    }
+
+    .btn-yellow {
+
+        width: 100%;
+
+        margin-top: 15px;
+
+    }
+
 }
 
 /* =====================================================
@@ -267,8 +388,8 @@ main {
     border-radius: 50%;
 }
 
-.aduan-box > *,
-.tracking-box > * {
+.aduan-box>*,
+.tracking-box>* {
     position: relative;
 
     z-index: 2;
@@ -411,6 +532,7 @@ main {
 }
 
 @media (max-width: 480px) {
+
     .aduan-box,
     .tracking-box {
         padding: 25px;
