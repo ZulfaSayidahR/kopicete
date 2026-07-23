@@ -283,15 +283,134 @@
 .tracking-card {
     background: #0b73b9;
     color: #fff;
-    border-radius: 12px;
-    padding: 25px;
-    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+    border-radius: 18px;
+    padding: 28px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.18);
 }
 
 .tracking-card h5 {
-    margin-bottom: 25px;
-    font-size: 23px;
+    color: #fff;
+    font-size: 32px;
     font-weight: 700;
+    margin-bottom: 35px;
+}
+
+/* ========================= */
+
+.timeline {
+    position: relative;
+    padding-left: 60px;
+}
+
+/* Garis utama */
+.timeline::before {
+    content: "";
+    position: absolute;
+    left: 19px;
+    top: 20px;
+    bottom: 20px;
+    width: 4px;
+    background: #d9d9d9;
+    border-radius: 20px;
+}
+
+/* item */
+.timeline-item {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    gap: 25px;
+    margin-bottom: 45px;
+}
+
+.timeline-item:last-child {
+    margin-bottom: 0;
+}
+
+/* lingkaran */
+.timeline-icon {
+    width: 42px;
+    height: 42px;
+    min-width: 42px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+/* selesai */
+.timeline-item.selesai .timeline-icon {
+    background: #fff;
+    border: 4px solid #0d6efd;
+    color: #0d6efd;
+}
+
+/* proses */
+.timeline-item.proses .timeline-icon {
+    background: #0d6efd;
+    color: #fff;
+}
+
+/* pending */
+.timeline-item.pending .timeline-icon {
+    background: #d9d9d9;
+    color: #666;
+}
+
+/* isi */
+.timeline-content {
+    flex: 1;
+}
+
+.timeline-content h6 {
+    color: #fff;
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.timeline-content small {
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 15px;
+}
+
+/* Responsive */
+
+@media (max-width: 768px) {
+    .tracking-card {
+        padding: 20px;
+    }
+
+    .tracking-card h5 {
+        font-size: 24px;
+    }
+
+    .timeline-item {
+        gap: 18px;
+    }
+
+    .timeline-icon {
+        width: 34px;
+        height: 34px;
+        min-width: 34px;
+        font-size: 16px;
+    }
+
+    .timeline::before {
+        left: 15px;
+    }
+
+    .timeline-content h6 {
+        font-size: 17px;
+    }
+
+    .timeline-content small {
+        font-size: 14px;
+    }
 }
 
 /* =====================================================

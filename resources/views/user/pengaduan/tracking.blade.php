@@ -174,71 +174,67 @@
 
                     <aside class="tracking-card status-card">
 
-                        <h5>
+    <h5>
+        <i class="bi bi-clock-history"></i>
+        Riwayat Status
+    </h5>
 
-                            <i class="bi bi-clock-history"></i>
+    <div class="timeline">
 
-                            Riwayat Status
+    <div class="timeline-item selesai">
+        <div class="timeline-icon">
+            <i class="bi bi-check-lg"></i>
+        </div>
 
-                        </h5>
+        <div class="timeline-content">
+            <h6>Diajukan</h6>
+            <small>05 Juli 2026</small>
+        </div>
+    </div>
 
-                        <div class="timeline">
+    <div class="timeline-item selesai">
+        <div class="timeline-icon">
+            <i class="bi bi-check-lg"></i>
+        </div>
 
-                            <div class="timeline-item selesai">
+        <div class="timeline-content">
+            <h6>Diverifikasi Admin BNNK</h6>
+            <small>06 Juli 2026</small>
+        </div>
+    </div>
 
-                                <span></span>
+    <div class="timeline-item proses">
+        <div class="timeline-icon">
+            <i class="bi bi-hourglass-split"></i>
+        </div>
 
-                                <h6>Diajukan</h6>
+        <div class="timeline-content">
+            <h6>Ditindaklanjuti BNNK</h6>
+            <small>Menunggu Proses</small>
+        </div>
+    </div>
 
-                                <small>05 Juli 2026</small>
+    <div class="timeline-item pending">
+        <div class="timeline-icon">
+            4
+        </div>
 
-                            </div>
+        <div class="timeline-content">
+            <h6>Selesai</h6>
+            <small>Belum tersedia</small>
+        </div>
+    </div>
 
-                            <div class="timeline-item selesai">
+</div>
 
-                                <span></span>
+    <div class="mt-4">
+        <a href="{{ route('home') }}" class="btn btn-light w-100">
+            <i class="bi bi-house-door-fill"></i>
+            Kembali ke Beranda
+        </a>
+    </div>
 
-                                <h6>Diverifikasi Admin BNNK</h6>
-
-                                <small>06 Juli 2026</small>
-
-                            </div>
-
-                            <div class="timeline-item proses">
-
-                                <span></span>
-
-                                <h6>Ditindaklanjuti BNNK</h6>
-
-                                <small>Menunggu Proses</small>
-
-                            </div>
-
-                            <div class="timeline-item proses">
-
-                                <span></span>
-
-                                <h6>Selesai</h6>
-
-                                <small>Belum tersedia</small>
-
-                            </div>
-
-                        </div>
-
-                        <div class="mt-auto pt-4">
-
-                            <a href="{{ route('home') }}" class="btn btn-light w-100">
-
-                                <i class="bi bi-house-door-fill"></i>
-
-                                Kembali ke Beranda
-
-                            </a>
-
-                        </div>
-
-                    </aside>
+</aside>
 
                 </div>
 
