@@ -3666,3 +3666,45 @@ body {
 .btn-admin-detail i {
     font-size: 14px;
 }
+
+/*=================================
+VERIFIKASI OTP
+=================================*/
+
+.otp-icon {
+    width: 90px;
+    height: 90px;
+    margin: auto;
+    border-radius: 50%;
+    background: #25D366;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    font-size: 42px;
+    box-shadow: 0 10px 25px rgba(37, 211, 102, .35);
+}
+
+.otp-input {
+
+    height: 65px;
+
+    text-align: center;
+
+    font-size: 28px;
+
+    letter-spacing: 10px;
+
+    font-weight: 700;
+
+    border-radius: 15px;
+
+}
+
+.otp-input:focus {
+
+    border-color: #0d6efd;
+
+    box-shadow: 0 0 0 .25rem rgba(13, 110, 253, .15);
+
+}

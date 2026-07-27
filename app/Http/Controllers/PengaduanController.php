@@ -45,7 +45,29 @@ class PengaduanController extends Controller
     {
         return view('user.pengaduan.konfirmasi');
     }
+    // ===========================
+// HALAMAN VERIFIKASI OTP
+// ===========================
+    public function verifikasiOtp()
+    {
+        return view('user.pengaduan.verifikasiotp');
+    }
 
+
+    // ===========================
+// PROSES VERIFIKASI OTP
+// ===========================
+    public function verifyOtp(Request $request)
+    {
+        $request->validate([
+            'otp' => 'required|min:6|max:6'
+        ]);
+
+        // sementara anggap OTP benar
+        return redirect()->route('pengaduan.success', [
+            'kode' => 'BNNK-123456'
+        ]);
+    }
     /*
     |--------------------------------------------------------------------------
     | Simpan Pengaduan

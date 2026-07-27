@@ -91,7 +91,7 @@ Route::prefix('adminpengaduan')
             return view('adminpengaduan.data_pengaduan');
         })->name('data_pengaduan');
 
-       Route::get('/detail-pengaduan', [AdminPengaduanController::class, 'detailPengaduan'])
+        Route::get('/detail-pengaduan', [AdminPengaduanController::class, 'detailPengaduan'])
             ->name('detail_pengaduan');
 
         // UPDATE STATUS
@@ -100,27 +100,35 @@ Route::prefix('adminpengaduan')
 
     });
 
-    // ADMIN PERMOHONANNNN
-    use App\Http\Controllers\AdminPermohonanController;
+// ADMIN PERMOHONANNNN
+use App\Http\Controllers\AdminPermohonanController;
 
 Route::prefix('adminpermohonan')
     ->name('adminpermohonan.')
     ->group(function () {
 
-        Route::get('/dashboard',
-            [AdminPermohonanController::class,'dashboard'])
+        Route::get(
+            '/dashboard',
+            [AdminPermohonanController::class, 'dashboard']
+        )
             ->name('dashboard');
 
-        Route::get('/data-permohonan',
-            [AdminPermohonanController::class,'dataPermohonan'])
+        Route::get(
+            '/data-permohonan',
+            [AdminPermohonanController::class, 'dataPermohonan']
+        )
             ->name('data_permohonan');
 
-        Route::get('/detail-permohonan',
-            [AdminPermohonanController::class,'detailPermohonan'])
+        Route::get(
+            '/detail-permohonan',
+            [AdminPermohonanController::class, 'detailPermohonan']
+        )
             ->name('detail_permohonan');
 
-        Route::post('/update-permohonan',
-            [AdminPermohonanController::class,'updatePermohonan'])
+        Route::post(
+            '/update-permohonan',
+            [AdminPermohonanController::class, 'updatePermohonan']
+        )
             ->name('update_permohonan');
 
     });
@@ -182,12 +190,6 @@ Route::prefix('pengaduan')
             ->name('konfirmasi');
 
         /*
-        |--------------------------------------------------------------------------
-        | Simpan Pengaduan
-        |--------------------------------------------------------------------------
-        */
-        Route::post('/store', [PengaduanController::class, 'store'])
-            ->name('store');
 
         /*
         |--------------------------------------------------------------------------
@@ -196,6 +198,23 @@ Route::prefix('pengaduan')
         */
         Route::get('/berhasil/{kode}', [PengaduanController::class, 'success'])
             ->name('success');
+
+
+        // Halaman Verifikasi OTP
+        Route::get('/verifikasi-otp', [PengaduanController::class, 'verifikasiOtp'])
+            ->name('otp');
+
+        // Proses Verifikasi OTP
+        Route::post('/verifikasi-otp', [PengaduanController::class, 'verifyOtp'])
+            ->name('otp.verify');
+        /*
+|--------------------------------------------------------------------------
+    | Simpan Pengaduan
+    |--------------------------------------------------------------------------
+    */
+        Route::post('/store', [PengaduanController::class, 'store'])
+            ->name('store');
+
 
     });
 
