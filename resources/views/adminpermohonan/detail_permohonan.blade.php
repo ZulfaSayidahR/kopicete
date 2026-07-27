@@ -130,64 +130,115 @@
                     <div class="sa-panel">
 
                         <div class="sa-panel-header">
-                            <h3>Riwayat Status</h3>
+                            <h3>
+                                <i class="bi bi-clock-history me-2"></i>
+                                Riwayat Status
+                            </h3>
                         </div>
 
                         <div class="p-4">
 
-                            <div class="status-timeline">
+                            <div class="admin-tracking-timeline">
 
-                                <div class="timeline-item active">
+                                <!-- Permohonan Diajukan -->
+                                <div class="admin-tracking-item selesai">
 
-                                    <div class="timeline-dot"></div>
+                                    <div class="admin-tracking-icon">
+                                        <i class="bi bi-check-lg"></i>
+                                    </div>
 
-                                    <div class="timeline-content">
+                                    <div class="admin-tracking-content">
 
                                         <h6>Permohonan Diajukan</h6>
 
-                                        <small>16 Jul 2026 - 09:30 WIB</small>
+                                        <small>
+                                            <i class="bi bi-calendar-event me-1"></i>
+                                            16 Juli 2026 • 09:30 WIB
+                                        </small>
+
+                                        <button type="button" class="btn-detail-admin mt-2" data-bs-toggle="modal"
+                                            data-bs-target="#detailPermohonanModal">
+
+                                            <i class="bi bi-eye-fill me-1"></i>
+                                            Lihat Bukti & Catatan
+
+                                        </button>
 
                                     </div>
 
                                 </div>
 
-                                <div class="timeline-item active">
+                                <!-- Diverifikasi -->
+                                <div class="admin-tracking-item selesai">
 
-                                    <div class="timeline-dot"></div>
+                                    <div class="admin-tracking-icon">
+                                        <i class="bi bi-check-lg"></i>
+                                    </div>
 
-                                    <div class="timeline-content">
+                                    <div class="admin-tracking-content">
 
                                         <h6>Diverifikasi Admin BNNK</h6>
 
-                                        <small>16 Jul 2026 - 10:45 WIB</small>
+                                        <small>
+                                            <i class="bi bi-calendar-event me-1"></i>
+                                            16 Juli 2026 • 10:45 WIB
+                                        </small>
+
+                                        <button type="button" class="btn-detail-admin mt-2" data-bs-toggle="modal"
+                                            data-bs-target="#detailPermohonanModal">
+
+                                            <i class="bi bi-eye-fill me-1"></i>
+                                            Lihat Bukti & Catatan
+
+                                        </button>
 
                                     </div>
 
                                 </div>
 
-                                <div class="timeline-item">
+                                <!-- Diproses -->
+                                <div class="admin-tracking-item proses">
 
-                                    <div class="timeline-dot"></div>
+                                    <div class="admin-tracking-icon">
+                                        <i class="bi bi-hourglass-split"></i>
+                                    </div>
 
-                                    <div class="timeline-content">
+                                    <div class="admin-tracking-content">
 
                                         <h6>Diproses Bidang Rehabilitasi</h6>
 
-                                        <small>Menunggu</small>
+                                        <small>
+                                            <i class="bi bi-calendar-event me-1"></i>
+                                            Sedang Diproses
+                                        </small>
+
+                                        <button type="button" class="btn-detail-admin mt-2" data-bs-toggle="modal"
+                                            data-bs-target="#detailPermohonanModal">
+
+                                            <i class="bi bi-eye-fill me-1"></i>
+                                            Lihat Bukti & Catatan
+
+                                        </button>
 
                                     </div>
 
                                 </div>
 
-                                <div class="timeline-item">
+                                <!-- Selesai -->
+                                <div class="admin-tracking-item pending">
 
-                                    <div class="timeline-dot"></div>
+                                    <div class="admin-tracking-icon">
+                                        <i class="bi bi-flag"></i>
+                                    </div>
 
-                                    <div class="timeline-content">
+                                    <div class="admin-tracking-content">
 
                                         <h6>Permohonan Selesai</h6>
 
-                                        <small>Menunggu</small>
+                                        <small>
+                                            <i class="bi bi-calendar-event me-1"></i>
+                                            Menunggu
+                                        </small>
 
                                     </div>
 
@@ -198,7 +249,6 @@
                         </div>
 
                     </div>
-
 
 
                     {{-- Verifikasi --}}
@@ -212,8 +262,8 @@
 
                         <div class="p-4">
 
-                     <form action="{{ route('adminpermohonan.update_permohonan') }}" method="POST">
-    @csrf
+                            <form action="{{ route('adminpermohonan.update_permohonan') }}" method="POST">
+                                @csrf
                                 @csrf
 
                                 <div class="mb-3">
@@ -255,34 +305,26 @@
 
                                 <div class="mb-4">
 
-                <label class="form-label fw-semibold">
-                    Upload Bukti Tindak Lanjut
-                </label>
+                                    <label class="form-label fw-semibold">
+                                        Upload Bukti Tindak Lanjut
+                                    </label>
 
-                <input
-                    type="file"
-                    name="bukti"
-                    id="bukti"
-                    class="form-control file-upload"
-                    accept="image/*">
+                                    <input type="file" name="bukti" id="bukti" class="form-control file-upload"
+                                        accept="image/*">
 
-                <small class="text-muted">
-                    Format: JPG, JPEG, PNG. Maksimal 2 MB.
-                </small>
+                                    <small class="text-muted">
+                                        Format: JPG, JPEG, PNG. Maksimal 2 MB.
+                                    </small>
 
-                {{-- Preview --}}
-                <div class="mt-3">
+                                    {{-- Preview --}}
+                                    <div class="mt-3">
 
-                    <img
-                        id="previewBukti"
-                        src="#"
-                        alt="Preview Bukti"
-                        class="img-fluid rounded shadow"
-                        style="display:none; max-height:250px;">
+                                        <img id="previewBukti" src="#" alt="Preview Bukti" class="img-fluid rounded shadow"
+                                            style="display:none; max-height:250px;">
 
-                </div>
+                                    </div>
 
-            </div>
+                                </div>
 
                                 <div class="d-grid">
 
@@ -309,5 +351,122 @@
         </main>
 
     </section>
+
+    <!-- ==========================================
+         MODAL DETAIL TINDAK LANJUT PERMOHONAN
+    ========================================== -->
+    <div class="modal fade" id="detailPermohonanModal" tabindex="-1" aria-labelledby="detailPermohonanModalLabel"
+        aria-hidden="true">
+
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+
+            <div class="modal-content border-0 shadow-lg rounded-4">
+
+                <!-- Header -->
+                <div class="modal-header">
+
+                    <h5 class="modal-title fw-bold" id="detailPermohonanModalLabel">
+                        <i class="bi bi-file-earmark-text-fill me-2"></i>
+                        Detail Tindak Lanjut Permohonan
+                    </h5>
+
+                    <button type="button" class="btn-close" data-bs-dismiss="modal">
+                    </button>
+
+                </div>
+
+                <!-- Body -->
+                <div class="modal-body p-4">
+
+                    <div class="row g-4 align-items-start">
+
+                        <!-- Dokumen / Bukti -->
+                        <div class="col-md-5">
+
+                            <img src="{{ asset('images/bukti-default.jpg') }}" class="img-fluid rounded-3 shadow-sm border"
+                                alt="Dokumen Permohonan">
+
+                        </div>
+
+                        <!-- Informasi -->
+                        <div class="col-md-7">
+
+                            <h4 class="fw-bold mb-3">
+                                Permohonan Rehabilitasi
+                            </h4>
+
+                            <hr>
+
+                            <p class="mb-3">
+
+                                <strong>Status :</strong>
+
+                                <span class="badge bg-primary px-3 py-2">
+                                    Diproses
+                                </span>
+
+                            </p>
+
+                            <p class="mb-3">
+
+                                <strong>Petugas/Admin :</strong>
+
+                                Admin BNNK Tulungagung
+
+                            </p>
+
+                            <p class="mb-3">
+
+                                <strong>Tanggal Penanganan :</strong>
+
+                                16 Juli 2026 • 10:45 WIB
+
+                            </p>
+
+                            <label class="fw-bold mb-2">
+
+                                <i class="bi bi-journal-text me-1"></i>
+
+                                Catatan Admin
+
+                            </label>
+
+                            <div class="border rounded-3 bg-light p-3">
+
+                                Dokumen permohonan telah diterima dan
+                                diverifikasi oleh Admin BNNK Tulungagung.
+
+                                <br><br>
+
+                                Selanjutnya permohonan diteruskan ke
+                                Bidang Rehabilitasi untuk dilakukan
+                                pemeriksaan kelengkapan administrasi dan
+                                penjadwalan proses layanan.
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- Footer -->
+                <div class="modal-footer">
+
+                    <button class="btn btn-secondary" data-bs-dismiss="modal">
+
+                        <i class="bi bi-x-circle me-1"></i>
+                        Tutup
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
 
 @endsection

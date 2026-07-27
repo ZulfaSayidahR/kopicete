@@ -33,8 +33,8 @@
                 <div class="tracking-grid">
 
                     <!-- ==============================
-                            KOLOM KIRI
-                    =============================== -->
+                                                            KOLOM KIRI
+                                                    =============================== -->
 
                     <div class="tracking-left">
 
@@ -169,72 +169,147 @@
                     </div>
 
                     <!-- ==============================
-                            KOLOM KANAN
-                    =============================== -->
+                                                            KOLOM KANAN
+                                                    =============================== -->
 
                     <aside class="tracking-card status-card">
 
-    <h5>
-        <i class="bi bi-clock-history"></i>
-        Riwayat Status
-    </h5>
+                        <h5>
+                            <i class="bi bi-clock-history"></i>
+                            Riwayat Status
+                        </h5>
 
-    <div class="timeline">
+                        <div class="tracking-timeline">
 
-    <div class="timeline-item selesai">
-        <div class="timeline-icon">
-            <i class="bi bi-check-lg"></i>
-        </div>
+                            <!-- =========================
+                 DIAJUKAN
+            ========================== -->
+                            <div class="tracking-item selesai">
 
-        <div class="timeline-content">
-            <h6>Diajukan</h6>
-            <small>05 Juli 2026</small>
-        </div>
-    </div>
+                                <div class="tracking-icon">
+                                    <i class="bi bi-check-lg"></i>
+                                </div>
 
-    <div class="timeline-item selesai">
-        <div class="timeline-icon">
-            <i class="bi bi-check-lg"></i>
-        </div>
+                                <div class="tracking-content">
 
-        <div class="timeline-content">
-            <h6>Diverifikasi Admin BNNK</h6>
-            <small>06 Juli 2026</small>
-        </div>
-    </div>
+                                    <h6>Diajukan</h6>
 
-    <div class="timeline-item proses">
-        <div class="timeline-icon">
-            <i class="bi bi-hourglass-split"></i>
-        </div>
+                                    <small>
+                                        <i class="bi bi-calendar-event me-1"></i>
+                                        05 Juli 2026
+                                    </small>
 
-        <div class="timeline-content">
-            <h6>Ditindaklanjuti BNNK</h6>
-            <small>Menunggu Proses</small>
-        </div>
-    </div>
+                                </div>
 
-    <div class="timeline-item pending">
-        <div class="timeline-icon">
-            4
-        </div>
+                            </div>
 
-        <div class="timeline-content">
-            <h6>Selesai</h6>
-            <small>Belum tersedia</small>
-        </div>
-    </div>
+                            <!-- =========================
+                 DIVERIFIKASI
+            ========================== -->
+                            <div class="tracking-item selesai">
 
-</div>
+                                <div class="tracking-icon">
+                                    <i class="bi bi-check-lg"></i>
+                                </div>
 
-    <div class="mt-4">
-        <a href="{{ route('home') }}" class="btn btn-light w-100">
-            <i class="bi bi-house-door-fill"></i>
-            Kembali ke Beranda
-        </a>
-    </div>
+                                <div class="tracking-content">
 
-</aside>
+                                    <h6>Diverifikasi Admin BNNK</h6>
+
+                                    <small>
+                                        <i class="bi bi-calendar-event me-1"></i>
+                                        06 Juli 2026
+                                    </small>
+
+                                    <button type="button" class="btn-detail-admin" data-bs-toggle="modal"
+                                        data-bs-target="#detailLaporanModal">
+
+                                        <i class="bi bi-eye-fill"></i>
+                                        Lihat Bukti & Catatan
+
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+                            <!-- =========================
+                 DITINDAKLANJUTI
+            ========================== -->
+                            <div class="tracking-item proses">
+
+                                <div class="tracking-icon">
+                                    <i class="bi bi-hourglass-split"></i>
+                                </div>
+
+                                <div class="tracking-content">
+
+                                    <h6>Ditindaklanjuti BNNK</h6>
+
+                                    <small>
+                                        <i class="bi bi-calendar-event me-1"></i>
+                                        10 Juli 2026
+                                    </small>
+
+                                    <button type="button" class="btn-detail-admin" data-bs-toggle="modal"
+                                        data-bs-target="#detailLaporanModal">
+
+                                        <i class="bi bi-eye-fill"></i>
+                                        Lihat Bukti & Catatan
+
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+                            <!-- =========================
+                 SELESAI
+            ========================== -->
+                            <div class="tracking-item selesai">
+
+                                <div class="tracking-icon">
+                                    <i class="bi bi-flag-fill"></i>
+                                </div>
+
+                                <div class="tracking-content">
+
+                                    <h6>Selesai</h6>
+
+                                    <small>
+                                        <i class="bi bi-calendar-event me-1"></i>
+                                        15 Juli 2026
+                                    </small>
+
+                                    <button type="button" class="btn-detail-admin" data-bs-toggle="modal"
+                                        data-bs-target="#detailLaporanModal">
+
+                                        <i class="bi bi-eye-fill"></i>
+                                        Lihat Bukti & Catatan
+
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="mt-4">
+
+                            <a href="{{ route('home') }}" class="btn btn-light w-100">
+
+                                <i class="bi bi-house-door-fill"></i>
+
+                                Kembali ke Beranda
+
+                            </a>
+
+                        </div>
+
+                    </aside>
+
+
 
                 </div>
 
@@ -243,5 +318,120 @@
         </div>
 
     </section>
+
+    <!-- Modal Bukti & Catatan -->
+    <div class="modal fade" id="detailLaporanModal" tabindex="-1" aria-hidden="true">
+
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+
+            <div class="modal-content shadow">
+
+                <div class="modal-header">
+
+                    <h5 class="modal-title">
+
+                        <i class="bi bi-folder2-open me-2"></i>
+
+                        Detail Tindak Lanjut Aduan
+
+                    </h5>
+
+                    <button type="button" class="btn-close" data-bs-dismiss="modal">
+                    </button>
+
+                </div>
+
+                <div class="modal-body">
+
+                    <div class="row g-4">
+
+                        <!-- Foto -->
+                        <div class="col-md-5">
+
+                            <img src="{{ asset('images/bukti-default.jpg') }}" class="img-fluid rounded shadow-sm border"
+                                alt="Bukti">
+
+                        </div>
+
+                        <!-- Informasi -->
+                        <div class="col-md-7">
+
+                            <h4 class="fw-bold">
+
+                                Dugaan Penyalahgunaan Narkotika
+
+                            </h4>
+
+                            <hr>
+
+                            <p>
+
+                                <strong>Status :</strong>
+
+                                <span class="badge bg-warning text-dark">
+
+                                    Diverifikasi
+
+                                </span>
+
+                            </p>
+
+                            <p>
+
+                                <strong>Admin :</strong>
+
+                                Admin BNNK Tulungagung
+
+                            </p>
+
+                            <p>
+
+                                <strong>Tanggal Penanganan :</strong>
+
+                                10 Juli 2026
+
+                            </p>
+
+                            <div class="mt-3">
+
+                                <label class="fw-bold mb-2">
+
+                                    Catatan Admin
+
+                                </label>
+
+                                <div class="border rounded p-3 bg-light">
+
+                                    Tim telah melakukan verifikasi awal
+                                    terhadap laporan yang diterima.
+                                    Saat ini laporan sedang dalam proses
+                                    pendalaman informasi sebelum dilakukan
+                                    tindak lanjut lapangan.
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+
+                    <button class="btn btn-secondary" data-bs-dismiss="modal">
+
+                        Tutup
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
 
 @endsection

@@ -276,9 +276,10 @@
     gap: 30px;
 }
 
-/* =====================================================
-   CARD
-===================================================== */
+
+/* =========================
+   Tracking Card
+========================= */
 
 /* =========================
    Tracking Card
@@ -497,12 +498,19 @@
 /* =====================================================
    STATUS
 ===================================================== */
+/* ==========================================
+   STATUS CARD
+========================================== */
 
 .status-card {
     min-height: 560px;
 }
 
-.timeline {
+/* ==========================================
+   TIMELINE USER
+========================================== */
+
+.tracking-timeline {
     position: relative;
     margin-top: 25px;
     padding-left: 70px;
@@ -523,9 +531,26 @@
 /* Hapus garis hijau lama */
 .timeline::after {
     display: none;
+    padding-left: 55px;
 }
 
-.timeline-item {
+.tracking-timeline::before {
+    content: "";
+    position: absolute;
+    left: 20px;
+    top: 18px;
+    bottom: 18px;
+    width: 4px;
+    background: #d9d9d9;
+    border-radius: 20px;
+
+}
+
+/* ==========================================
+   ITEM
+========================================== */
+
+.tracking-item {
     position: relative;
     padding-bottom: 55px;
 }
@@ -589,6 +614,202 @@
     margin-top: 5px;
     color: rgba(255, 255, 255, 0.9);
     font-size: 15px;
+    padding-bottom: 48px;
+    min-height: 48px;
+}
+
+.tracking-item:last-child {
+    padding-bottom: 0;
+}
+
+/* ==========================================
+   ICON
+========================================== */
+
+.tracking-icon {
+    position: absolute;
+    left: -55px;
+    top: 0;
+
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 50%;
+    z-index: 2;
+
+    font-size: 18px;
+}
+
+/* selesai */
+
+.tracking-item.selesai .tracking-icon {
+
+    background: #ffffff;
+
+    border: 4px solid #2563eb;
+
+    color: #2563eb;
+
+}
+
+/* proses */
+
+.tracking-item.proses .tracking-icon {
+
+    background: #2563eb;
+
+    color: #ffffff;
+
+    animation: pulse 2s infinite;
+
+}
+
+/* pending */
+
+.tracking-item.pending .tracking-icon {
+
+    background: #d9d9d9;
+
+    color: #ffffff;
+
+}
+
+/* ==========================================
+   TEXT
+========================================== */
+
+.tracking-content {
+
+    padding-left: 10px;
+
+}
+
+.tracking-content h6 {
+
+    margin: 0;
+
+    color: #ffffff;
+
+    font-size: 18px;
+
+    font-weight: 700;
+
+    line-height: 1.35;
+
+}
+
+.tracking-content small {
+
+    display: block;
+
+    margin-top: 5px;
+
+    color: rgba(255, 255, 255, .92);
+
+    font-size: 14px;
+
+    line-height: 1.5;
+
+}
+
+/* ==========================================
+   ANIMASI
+========================================== */
+
+@keyframes pulse {
+
+    0% {
+        box-shadow: 0 0 0 0 rgba(37, 99, 235, .45);
+    }
+
+    70% {
+        box-shadow: 0 0 0 12px rgba(37, 99, 235, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(37, 99, 235, 0);
+    }
+
+}
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media (max-width:768px) {
+
+    .tracking-timeline {
+        padding-left: 48px;
+    }
+
+    .tracking-icon {
+
+        left: -48px;
+
+        width: 36px;
+        height: 36px;
+
+        font-size: 15px;
+
+    }
+
+    .tracking-content h6 {
+
+        font-size: 16px;
+
+    }
+
+    .tracking-content small {
+
+        font-size: 13px;
+
+    }
+
+}
+
+/* =====================================
+   BUTTON LIHAT BUKTI
+===================================== */
+
+.btn-detail-admin {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    margin-top: 12px;
+
+    padding: 8px 14px;
+
+    border: none;
+    border-radius: 10px;
+
+    background: #ffffff;
+    color: #0b73b9;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    transition: .3s;
+}
+
+.btn-detail-admin i {
+    font-size: 15px;
+}
+
+.btn-detail-admin:hover {
+    background: #ffc928;
+    color: #06264f;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, .18);
+}
+
+.btn-detail-admin:active {
+    transform: scale(.98);
+    >>>>>>>03d6f9b (mmkm)
 }
 
 /* =====================================================
@@ -686,6 +907,7 @@
 }
 
 @media (max-width: 520px) {
+
     .aduan-box,
     .tracking-box {
         border-radius: 21px;
@@ -1054,6 +1276,7 @@ textarea.form-control {
     color: #0c76b8;
     margin-right: 5px;
 }
+
 .btn-detail-laporan {
     width: 100%;
     margin-top: 12px;
@@ -1396,6 +1619,7 @@ textarea.form-control {
 .btn-admin-login i {
     font-size: 18px;
 }
+
 /* ===================================================== */
 
 .divider {
@@ -2354,7 +2578,7 @@ body {
     min-width: 0;
 }
 
-.sa-stat-content > span {
+.sa-stat-content>span {
     display: block;
     color: #778697;
     font-size: 11px;
@@ -2410,7 +2634,7 @@ body {
 
 .sa-panel-header p,
 .sa-panel-title p,
-.sa-reset-panel > p {
+.sa-reset-panel>p {
     margin: 0;
     color: #8391a1;
     font-size: 10px;
@@ -3102,8 +3326,11 @@ body {
 .status-timeline::before {
     content: "";
     position: absolute;
-    left: 5px; /* tengah titik */
-    top: 8px;
+    <<<<<<< HEAD left: 5px;
+    /* tengah titik */
+    =======left: 5px;
+    /* tengah titik */
+    >>>>>>>03d6f9b (mmkm) top: 8px;
     bottom: 8px;
     width: 2px;
     background: #d6d6d6;
@@ -3246,8 +3473,9 @@ body {
 
 /* Tablet */
 @media (max-width: 991.98px) {
-    .navbar > .container,
-    .navbar > .container-fluid {
+
+    .navbar>.container,
+    .navbar>.container-fluid {
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -3299,4 +3527,142 @@ body {
         width: 24px;
         height: 24px;
     }
+}
+
+/*====================================
+ ADMIN TIMELINE
+====================================*/
+
+.admin-tracking-timeline {
+    position: relative;
+    margin-top: 15px;
+    padding-left: 55px;
+}
+
+/* garis */
+.admin-tracking-timeline::before {
+    content: "";
+    position: absolute;
+    left: 18px;
+    top: 20px;
+    bottom: 20px;
+    width: 4px;
+    background: #d9d9d9;
+    border-radius: 20px;
+}
+
+/* item */
+.admin-tracking-item {
+    position: relative;
+    margin-bottom: 40px;
+}
+
+.admin-tracking-item:last-child {
+    margin-bottom: 0;
+}
+
+/* icon */
+.admin-tracking-icon {
+    position: absolute;
+    left: -55px;
+    top: 0;
+
+    width: 40px;
+    height: 40px;
+
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 17px;
+    z-index: 2;
+}
+
+/* selesai */
+
+.admin-tracking-item.selesai .admin-tracking-icon {
+    background: #fff;
+    border: 3px solid #2563eb;
+    color: #2563eb;
+}
+
+/* proses */
+
+.admin-tracking-item.proses .admin-tracking-icon {
+    background: #2563eb;
+    color: #fff;
+    animation: adminPulse 2s infinite;
+}
+
+/* pending */
+
+.admin-tracking-item.pending .admin-tracking-icon {
+    background: #e5e7eb;
+    color: #9ca3af;
+}
+
+/* text */
+
+.admin-tracking-content h6 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 700;
+    color: #222;
+    line-height: 1.4;
+}
+
+.admin-tracking-content small {
+    display: block;
+    margin-top: 5px;
+    color: #7b7b7b;
+    font-size: 13px;
+}
+
+/* animasi */
+
+@keyframes adminPulse {
+
+    0% {
+        box-shadow: 0 0 0 0 rgba(37, 99, 235, .45);
+    }
+
+    70% {
+        box-shadow: 0 0 0 12px rgba(37, 99, 235, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(37, 99, 235, 0);
+    }
+
+}
+
+.btn-admin-detail {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+
+    margin-top: 10px;
+    padding: 7px 14px;
+
+    border: none;
+    border-radius: 8px;
+
+    background: #2563eb;
+    color: #fff;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    transition: .25s;
+}
+
+.btn-admin-detail:hover {
+    background: #1d4ed8;
+    color: #fff;
+    transform: translateY(-2px);
+}
+
+.btn-admin-detail i {
+    font-size: 14px;
 }
