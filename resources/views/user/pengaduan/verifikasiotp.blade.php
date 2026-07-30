@@ -10,7 +10,7 @@
 
             <div class="pengaduan-card">
 
-                <!-- Header -->
+                <!-- HEADER -->
                 <div class="pengaduan-header">
 
                     <div class="header-icon">
@@ -18,26 +18,22 @@
                     </div>
 
                     <div>
-
                         <h2>Verifikasi Nomor WhatsApp</h2>
 
                         <p>
                             Masukkan kode OTP yang telah dikirim ke nomor WhatsApp Anda.
                         </p>
-
                     </div>
 
                 </div>
 
-                <!-- Body -->
+                <!-- BODY -->
                 <div class="pengaduan-body">
 
                     <div class="text-center mb-4">
 
                         <div class="otp-icon">
-
                             <i class="bi bi-whatsapp"></i>
-
                         </div>
 
                         <h4 class="mt-3">
@@ -50,13 +46,25 @@
 
                             <br>
 
-                            <strong>0896******123</strong>
+                            <strong>
+                                {{ session('pengaduan.step3.whatsapp') }}
+                            </strong>
 
                         </p>
 
                     </div>
 
-                    <form action="{{ route('pengaduan.otp.verify') }}" method="POST">
+                    @if ($errors->any())
+
+                        <div class="alert alert-danger">
+
+                            {{ $errors->first() }}
+
+                        </div>
+
+                    @endif
+
+                    <form action="{{ route('pengaduan.verifyOtp') }}" method="POST">
 
                         @csrf
 
@@ -69,7 +77,7 @@
                             </label>
 
                             <input type="text" name="otp" maxlength="6" class="form-control otp-input"
-                                placeholder="Contoh : 834921">
+                                placeholder="Contoh : 834921" required>
 
                         </div>
 
@@ -83,7 +91,8 @@
 
                             <br>
 
-                            <a href="#">
+                            <a href="{{ route('pengaduan.kirimOtp') }}"
+                                onclick="event.preventDefault();document.getElementById('resendOtp').submit();">
 
                                 Kirim Ulang OTP
 
@@ -91,13 +100,19 @@
 
                         </div>
 
-                        <a href="{{ route('home') }}" class="btn btn-primary w-100">
+                        <button type="submit" class="btn btn-primary w-100">
 
                             <i class="bi bi-check-circle-fill me-2"></i>
 
                             Verifikasi OTP
 
-                        </a>
+                        </button>
+
+                    </form>
+
+                    <form id="resendOtp" action="{{ route('pengaduan.kirimOtp') }}" method="POST" style="display:none">
+
+                        @csrf
 
                     </form>
 

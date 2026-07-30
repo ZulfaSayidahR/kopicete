@@ -11,8 +11,8 @@
             <div class="pengaduan-wrapper">
 
                 <!-- ==========================================
-                                                                                    FORM KONFIRMASI
-                                                                            =========================================== -->
+                                                                                        FORM KONFIRMASI
+                                                                                =========================================== -->
 
                 <div class="pengaduan-card">
 
@@ -320,7 +320,6 @@
 
                         <form action="{{ route('pengaduan.kirimOtp') }}" method="POST">
 
-
                             @csrf
 
                             <div class="form-navigation">
@@ -329,14 +328,11 @@
                                     Sebelumnya
                                 </a>
 
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="bi bi-send-fill me-2"></i>
+                                    Kirim Pengaduan
+                                </button>
 
-                                <form action="{{ route('pengaduan.kirimOtp') }}" method="POST">
-                                    @csrf
-
-                                    <button type="submit" class="btn btn-primary">
-                                        Kirim Pengaduan
-                                    </button>
-                                </form>
                             </div>
 
                         </form>
@@ -345,8 +341,8 @@
                 </div>
 
                 <!-- ==========================================
-                                                                                    SIDEBAR
-                                                                            =========================================== -->
+                                                                                        SIDEBAR
+                                                                                =========================================== -->
 
                 <aside class="sidebar-aduan">
 

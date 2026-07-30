@@ -133,34 +133,24 @@ Route::prefix('adminpermohonan')
 
     });
 
-/*
-|--------------------------------------------------------------------------
-| USER ROUTES
-|--------------------------------------------------------------------------
-*/
-
-
-// Halaman Beranda
-Route::get(
-    '/',
-    [HomeController::class, 'index']
-)->name('home');
-
-
 Route::prefix('pengaduan')->name('pengaduan.')->group(function () {
 
+    // STEP 1
     Route::get('/', [PengaduanController::class, 'create'])->name('create');
-
     Route::post('/step1', [PengaduanController::class, 'storeStep1'])->name('storeStep1');
 
+    // STEP 2
     Route::get('/lokasi', [PengaduanController::class, 'lokasi'])->name('lokasi');
     Route::post('/lokasi', [PengaduanController::class, 'storeStep2'])->name('storeStep2');
 
+    // AJAX
     Route::get('/get-desa/{id}', [PengaduanController::class, 'getDesa'])->name('getDesa');
 
+    // STEP 3
     Route::get('/datapribadi', [PengaduanController::class, 'dataPribadi'])->name('datapribadi');
     Route::post('/datapribadi', [PengaduanController::class, 'storeStep3'])->name('storeStep3');
 
+    // STEP 4
     Route::get('/konfirmasi', [PengaduanController::class, 'konfirmasi'])->name('konfirmasi');
 
     // KIRIM OTP
@@ -169,80 +159,17 @@ Route::prefix('pengaduan')->name('pengaduan.')->group(function () {
     // HALAMAN OTP
     Route::get('/verifikasi-otp', [PengaduanController::class, 'verifikasiOtp'])->name('verifikasiOtp');
 
-    // CEK OTP
+    // VERIFIKASI OTP
     Route::post('/verifikasi-otp', [PengaduanController::class, 'verifyOtp'])->name('verifyOtp');
+
+    // SIMPAN PENGADUAN
+    Route::post('/store', [PengaduanController::class, 'store'])->name('store');
+
+    // BERHASIL
+    Route::get('/berhasil/{kode}', [PengaduanController::class, 'success'])->name('success');
 
 });
 
-
-// ==========================
-// PENGADUAN
-// ==========================
-
-Route::prefix('pengaduan')
-    ->name('pengaduan.')
-    ->group(function () {
-
-        /*
-        |--------------------------------------------------------------------------
-        | STEP 1 - Data Aduan
-        |--------------------------------------------------------------------------
-        */
-        Route::get('/', [PengaduanController::class, 'create'])
-            ->name('create');
-
-        /*
-        |--------------------------------------------------------------------------
-        | STEP 2 - Lokasi & Lampiran
-        |--------------------------------------------------------------------------
-        */
-        Route::get('/lokasi', [PengaduanController::class, 'lokasi'])
-            ->name('lokasi');
-
-        /*
-        |--------------------------------------------------------------------------
-        | STEP 3 - Data Pribadi
-        |--------------------------------------------------------------------------
-        */
-        Route::get('/datapribadi', [PengaduanController::class, 'dataPribadi'])
-            ->name('datapribadi');
-
-        /*
-        |--------------------------------------------------------------------------
-        | STEP 4 - Konfirmasi
-        |--------------------------------------------------------------------------
-        */
-        Route::get('/konfirmasi', [PengaduanController::class, 'konfirmasi'])
-            ->name('konfirmasi');
-
-        /*
-
-        /*
-        |--------------------------------------------------------------------------
-        | Halaman Berhasil
-        |--------------------------------------------------------------------------
-        */
-        Route::get('/berhasil/{kode}', [PengaduanController::class, 'success'])
-            ->name('success');
-
-
-        // Halaman Verifikasi OTP
-        Route::get('/verifikasi-otp', [PengaduanController::class, 'verifikasiOtp'])
-            ->name('otp');
-
-        // Proses Verifikasi OTP
-        Route::post('/verifikasi-otp', [PengaduanController::class, 'verifyOtp'])
-            ->name('otp.verify');
-        /*
-|--------------------------------------------------------------------------
-    | Simpan Pengaduan
-    |--------------------------------------------------------------------------
-    */
-        Route::post('/store', [PengaduanController::class, 'store'])
-            ->name('store');
-
-
-    });
 
 
 // =========================
@@ -375,73 +302,3 @@ Route::get(
 
 
 
-/*
-|--------------------------------------------------------------------------
-| ADMIN ROUTES
-|--------------------------------------------------------------------------
-*/
-
-
-// Route::prefix('admin')
-//     ->name('admin.')
-//     ->middleware(['auth'])
-//     ->group(function () {
-
-
-
-//         // Dashboard
-
-//         Route::get(
-//             '/',
-//             [AdminDashboardController::class, 'index']
-//         )
-//             ->name('dashboard');
-
-
-
-
-//         // Data Pengaduan
-
-//         Route::prefix('pengaduan')
-//             ->name('pengaduan.')
-//             ->group(function () {
-
-
-
-//                 Route::get(
-//                     '/',
-//                     [AdminPengaduanController::class, 'index']
-//                 )
-//                     ->name('index');
-
-
-
-//                 Route::get(
-//                     '/{id}',
-//                     [AdminPengaduanController::class, 'show']
-//                 )
-//                     ->name('show');
-
-
-
-//                 Route::put(
-//                     '/update/{id}',
-//                     [AdminPengaduanController::class, 'update']
-//                 )
-//                     ->name('update');
-
-
-
-//                 Route::delete(
-//                     '/delete/{id}',
-//                     [AdminPengaduanController::class, 'destroy']
-//                 )
-//                     ->name('delete');
-
-
-
-//      });
-
-
-
-// });
