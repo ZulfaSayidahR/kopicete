@@ -230,49 +230,37 @@ class PengaduanController extends Controller
 
     }
 
-
+};
 
     /*
-    |--------------------------------------------------------------------------
-    | STEP 4 : KONFIRMASI
-    |--------------------------------------------------------------------------
-    */
+|--------------------------------------------------------------------------
+| STEP 4 : KONFIRMASI
+|--------------------------------------------------------------------------
+*/
+
+Route::get(
+    '/konfirmasi',
+    [PengaduanController::class, 'konfirmasi']
+)->name('pengaduan.konfirmasi');
 
 
-    public function konfirmasi()
-    {
+// KIRIM OTP
 
-        $step1 = Session::get('pengaduan.step1');
-
-        $step2 = Session::get('pengaduan.step2');
-
-        $step3 = Session::get('pengaduan.step3');
+Route::post(
+    '/kirim-otp',
+    [PengaduanController::class, 'kirimOtp']
+)->name('pengaduan.kirimOtp');
 
 
-        $kecamatan = \App\Models\Kecamatan::find(
-            $step2['id_kecamatan'] ?? null
-        );
 
 
-        $desa = \App\Models\Desa::find(
-            $step2['id_desa'] ?? null
-        );
 
+// HALAMAN OTP
 
-        return view(
-            'user.pengaduan.konfirmasi',
-            compact(
-                'step1',
-                'step2',
-                'step3',
-                'kecamatan',
-                'desa'
-            )
-        );
-
-    }
-
-
+Route::get(
+    '/verifikasi-otp',
+    [PengaduanController::class, 'verifikasiOtp']
+)->name('pengaduan.verifikasiOtp');
 
 
 

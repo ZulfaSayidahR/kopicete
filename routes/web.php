@@ -198,13 +198,28 @@ Route::prefix('pengaduan')->name('pengaduan.')->group(function () {
         [PengaduanController::class, 'storeStep3']
     )->name('storeStep3');
 
-    // KONFIRMASI 
+    // KONFIRMASI
 
     Route::get(
         '/konfirmasi',
         [PengaduanController::class, 'konfirmasi']
-    )->name('konfirmasi');
+    )->name('pengaduan.konfirmasi');
 
+
+    // KIRIM OTP
+
+    Route::post(
+        '/kirim-otp',
+        [PengaduanController::class, 'kirimOtp']
+    )->name('pengaduan.kirimOtp');
+
+
+    // HALAMAN OTP
+
+    Route::get(
+        '/verifikasi-otp',
+        [PengaduanController::class, 'verifikasiOtp']
+    )->name('pengaduan.verifikasiOtp');
 });
 
 

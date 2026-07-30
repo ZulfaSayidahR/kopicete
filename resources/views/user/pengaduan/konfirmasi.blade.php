@@ -11,8 +11,8 @@
             <div class="pengaduan-wrapper">
 
                 <!-- ==========================================
-                                                            FORM KONFIRMASI
-                                                    =========================================== -->
+                                                                                FORM KONFIRMASI
+                                                                        =========================================== -->
 
                 <div class="pengaduan-card">
 
@@ -318,39 +318,32 @@
 
                         <!-- BUTTON -->
 
-                        <div class="form-navigation">
+                        <form action="{{ route('pengaduan.kirimOtp') }}" method="POST">
 
-                            <a href="{{ route('pengaduan.datapribadi') }}" class="btn btn-secondary">
 
-                                Sebelumnya
+                            @csrf
 
-                            </a>
+                            <div class="form-navigation">
 
-                            <form action="{{ route('pengaduan.sendOtp') }}" method="POST">
-
-                                @csrf
+                                <a href="{{ route('pengaduan.datapribadi') }}" class="btn btn-secondary">
+                                    Sebelumnya
+                                </a>
 
 
                                 <button type="submit" class="btn-next">
-
-                                    <i class="bi bi-send-fill"></i>
-
                                     Daftar & Kirim Aduan
-
                                 </button>
 
+                            </div>
 
-                            </form>
-
-                        </div>
-
+                        </form>
                     </div>
 
                 </div>
 
                 <!-- ==========================================
-                                                            SIDEBAR
-                                                    =========================================== -->
+                                                                                SIDEBAR
+                                                                        =========================================== -->
 
                 <aside class="sidebar-aduan">
 
