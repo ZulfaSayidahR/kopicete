@@ -11,8 +11,8 @@
             <div class="pengaduan-wrapper">
 
                 <!-- ==========================================
-                                                        FORM KONFIRMASI
-                                                =========================================== -->
+                                                            FORM KONFIRMASI
+                                                    =========================================== -->
 
                 <div class="pengaduan-card">
 
@@ -326,13 +326,21 @@
 
                             </a>
 
-                            <button type="submit" class="btn-next">
+                            <form action="{{ route('pengaduan.sendOtp') }}" method="POST">
 
-                                <i class="bi bi-send-fill"></i>
+                                @csrf
 
-                                Daftar & Kirim Aduan
 
-                            </button>
+                                <button type="submit" class="btn-next">
+
+                                    <i class="bi bi-send-fill"></i>
+
+                                    Daftar & Kirim Aduan
+
+                                </button>
+
+
+                            </form>
 
                         </div>
 
@@ -341,8 +349,8 @@
                 </div>
 
                 <!-- ==========================================
-                                                        SIDEBAR
-                                                =========================================== -->
+                                                            SIDEBAR
+                                                    =========================================== -->
 
                 <aside class="sidebar-aduan">
 
