@@ -178,7 +178,7 @@
                                 </div>
 
                             </div>
-                            <div class="mb-4">
+                            <!-- <div class="mb-4">
 
                                 <label class="form-label">
 
@@ -202,7 +202,7 @@
 
                                 </div>
 
-                            </div>
+                            </div> -->
 
                             <div class="form-navigation">
 

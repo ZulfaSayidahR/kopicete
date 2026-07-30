@@ -167,44 +167,59 @@ class PengaduanController extends Controller
 
 
     /*
-    |--------------------------------------------------------------------------
-    | STEP 3 : Data Pelapor
-    |--------------------------------------------------------------------------
-    */
+ |--------------------------------------------------------------------------
+ | STEP 3 : DATA PRIBADI
+ |--------------------------------------------------------------------------
+ */
+
+
+    public function dataPribadi()
+    {
+        return view('user.pengaduan.datapribadi');
+    }
+
 
 
     public function storeStep3(Request $request)
     {
 
+        $request->validate(
+            [
 
-        $request->validate([
+                'nama' => 'required',
 
-            'nama' => 'required',
+                'whatsapp' => 'required',
 
-            'whatsapp' => 'required',
+                'alamat' => 'required',
 
-            'alamat' => 'required',
+                'email' => 'nullable|email',
 
-            'email' => 'nullable|email',
+            ],
+            [
 
-        ]);
+                'nama.required' =>
+                    'Nama lengkap wajib diisi',
+
+                'whatsapp.required' =>
+                    'Nomor WhatsApp wajib diisi',
+
+                'alamat.required' =>
+                    'Alamat wajib diisi',
+
+            ]
+        );
 
 
 
         Session::put('pengaduan.step3', [
 
-
             'nama' => $request->nama,
-
 
             'whatsapp' => $request->whatsapp,
 
-
             'email' => $request->email,
 
-
             'alamat' => $request->alamat,
-
 
         ]);
 
@@ -214,8 +229,6 @@ class PengaduanController extends Controller
             ->route('pengaduan.konfirmasi');
 
     }
-
-
 
 
 
@@ -229,17 +242,32 @@ class PengaduanController extends Controller
     public function konfirmasi()
     {
 
+        $step1 = Session::get('pengaduan.step1');
+
+        $step2 = Session::get('pengaduan.step2');
+
+        $step3 = Session::get('pengaduan.step3');
+
+
+        $kecamatan = \App\Models\Kecamatan::find(
+            $step2['id_kecamatan'] ?? null
+        );
+
+
+        $desa = \App\Models\Desa::find(
+            $step2['id_desa'] ?? null
+        );
+
+
         return view(
             'user.pengaduan.konfirmasi',
-            [
-
-                'step1' => Session::get('pengaduan.step1'),
-
-                'step2' => Session::get('pengaduan.step2'),
-
-                'step3' => Session::get('pengaduan.step3'),
-
-            ]
+            compact(
+                'step1',
+                'step2',
+                'step3',
+                'kecamatan',
+                'desa'
+            )
         );
 
     }

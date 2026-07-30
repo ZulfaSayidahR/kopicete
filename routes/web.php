@@ -144,8 +144,7 @@ Route::prefix('adminpermohonan')
 Route::get(
     '/',
     [HomeController::class, 'index']
-)
-    ->name('home');
+)->name('home');
 
 
 Route::prefix('pengaduan')->name('pengaduan.')->group(function () {
@@ -155,43 +154,56 @@ Route::prefix('pengaduan')->name('pengaduan.')->group(function () {
     Route::get(
         '/',
         [PengaduanController::class, 'create']
-    )
-        ->name('create');
+    )->name('create');
 
 
     Route::post(
         '/step1',
         [PengaduanController::class, 'storeStep1']
-    )
-        ->name('storeStep1');
+    )->name('storeStep1');
 
 
 
-    // HALAMAN LOKASI STEP 2
+    // STEP 2
     Route::get(
         '/lokasi',
         [PengaduanController::class, 'lokasi']
-    )
-        ->name('lokasi');
+    )->name('lokasi');
 
 
-
-    // SIMPAN STEP 2
     Route::post(
         '/lokasi',
         [PengaduanController::class, 'storeStep2']
-    )
-        ->name('storeStep2');
+    )->name('storeStep2');
 
 
 
-    // AJAX AMBIL DESA BERDASARKAN KECAMATAN
+    // AJAX DESA
     Route::get(
         '/get-desa/{id_kecamatan}',
         [PengaduanController::class, 'getDesa']
-    )
-        ->name('getDesa');
+    )->name('getDesa');
 
+
+
+    // STEP 3 DATA PRIBADI
+    Route::get(
+        '/datapribadi',
+        [PengaduanController::class, 'dataPribadi']
+    )->name('datapribadi');
+
+
+    Route::post(
+        '/datapribadi/store',
+        [PengaduanController::class, 'storeStep3']
+    )->name('storeStep3');
+
+    // KONFIRMASI 
+
+    Route::get(
+        '/konfirmasi',
+        [PengaduanController::class, 'konfirmasi']
+    )->name('konfirmasi');
 
 });
 

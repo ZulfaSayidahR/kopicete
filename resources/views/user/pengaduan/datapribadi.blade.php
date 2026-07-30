@@ -11,8 +11,8 @@
             <div class="pengaduan-wrapper">
 
                 <!-- ==========================================
-                        FORM STEP 3
-                =========================================== -->
+                                            FORM STEP 3
+                                    =========================================== -->
 
                 <div class="pengaduan-card">
 
@@ -71,99 +71,134 @@
                         </div>
 
                         <!-- FORM -->
+                        <!-- FORM -->
 
-                        
+                        <form action="{{ route('pengaduan.storeStep3') }}" method="POST">
 
                             @csrf
 
-                            <div class="row">
 
-                                <div class="col-md-12 mb-3">
+                            <div class="mb-3">
 
-                                    <label class="form-label">
+                                <label class="form-label">
+                                    Nama Lengkap
+                                </label>
 
-                                        Nama Lengkap
+                                <input type="text" class="form-control" name="nama" placeholder="Masukkan nama lengkap"
+                                    value="{{ old('nama') }}" required>
 
-                                    </label>
+                            </div>
 
-                                    <input type="text" name="nama" class="form-control"
-                                        placeholder="Masukkan nama lengkap Anda">
 
-                                </div>
 
-                                <div class="col-md-6 mb-3">
+                            <div class="mb-3">
 
-                                    <label class="form-label">
+                                <label class="form-label">
+                                    Nomor WhatsApp
+                                </label>
 
-                                        Nomor WhatsApp
+                                <input type="text" class="form-control" name="whatsapp" placeholder="Contoh : 081234567890"
+                                    value="{{ old('whatsapp') }}" required>
 
-                                    </label>
 
-                                    <input type="text" name="whatsapp" class="form-control" placeholder="08xxxxxxxxxx">
+                                <div class="form-note">
 
-                                </div>
-
-                                <div class="col-md-6 mb-3">
-
-                                    <label class="form-label">
-
-                                        Email (Opsional)
-
-                                    </label>
-
-                                    <input type="email" name="email" class="form-control" placeholder="email@gmail.com">
-
-                                </div>
-
-                                <div class="col-md-12 mb-3">
-
-                                    <label class="form-label">
-
-                                        Alamat Domisili
-
-                                    </label>
-
-                                    <textarea name="alamat" rows="4" class="form-control"
-                                        placeholder="Masukkan alamat lengkap"></textarea>
+                                    Pastikan nomor WhatsApp yang diberikan aktif,
+                                    karena petugas dapat menghubungi Anda melalui nomor tersebut
+                                    untuk proses verifikasi atau tindak lanjut laporan.
 
                                 </div>
 
                             </div>
 
-                            <div class="form-note">
 
-                                <i class="bi bi-info-circle-fill"></i>
 
-                                Data pribadi akan dijaga kerahasiaannya dan hanya
-                                digunakan untuk proses verifikasi laporan.
+                            <div class="mb-3">
+
+                                <label class="form-label">
+                                    Email
+                                </label>
+
+                                <input type="email" class="form-control" name="email"
+                                    placeholder="Masukkan email aktif (opsional)" value="{{ old('email') }}">
+
+
+                                <div class="form-note">
+
+                                    Email bersifat opsional dan digunakan apabila diperlukan
+                                    untuk informasi tambahan terkait laporan.
+
+                                </div>
 
                             </div>
+
+
+
+                            <div class="mb-4">
+
+                                <label class="form-label">
+                                    Alamat Domisili
+                                </label>
+
+
+                                <textarea class="form-control" name="alamat" rows="4"
+                                    placeholder="Masukkan alamat lengkap">{{ old('alamat') }}</textarea>
+
+
+                            </div>
+
+
+
+                            <div class="alert alert-info">
+
+                                <div class="form-check">
+
+                                    <input class="form-check-input" type="checkbox" name="konfirmasi_data" value="setuju"
+                                        required>
+
+
+                                    <label class="form-check-label">
+
+                                        Saya memastikan data pribadi yang saya masukkan
+                                        adalah benar dan dapat dipertanggungjawabkan.
+
+                                    </label>
+
+                                </div>
+
+                            </div>
+
+
 
                             <div class="form-navigation">
 
-                                <a href="{{ route('pengaduan.lokasi') }}" class="btn-prev">
+
+                                <a href="{{ route('pengaduan.lokasi') }}" class="btn btn-secondary">
 
                                     Sebelumnya
 
                                 </a>
 
-                               <a href="{{ route('pengaduan.konfirmasi') }}" class="btn-next">
 
-                                   Selanjutnya
 
-                                </a>
+                                <button type="submit" class="btn-next">
+
+                                    Selanjutnya
+
+                                </button>
+
 
                             </div>
 
-                        </form>
 
+                        </form>
                     </div>
 
                 </div>
 
                 <!-- ==========================================
-                                                                    SIDEBAR
-                                                            =========================================== -->
+                                                                                        SIDEBAR
+                                                                                =========================================== -->
 
                 <aside class="sidebar-aduan">
 

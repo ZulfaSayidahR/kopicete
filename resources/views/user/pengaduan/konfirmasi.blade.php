@@ -11,8 +11,8 @@
             <div class="pengaduan-wrapper">
 
                 <!-- ==========================================
-                            FORM KONFIRMASI
-                    =========================================== -->
+                                                        FORM KONFIRMASI
+                                                =========================================== -->
 
                 <div class="pengaduan-card">
 
@@ -72,7 +72,10 @@
 
                         <!-- RINGKASAN -->
 
+                        <!-- RINGKASAN -->
+
                         <div class="summary-card">
+
 
                             <div class="summary-header">
 
@@ -82,64 +85,190 @@
 
                             </div>
 
+
+
                             <div class="summary-body">
+
 
                                 <div class="row">
 
+
+                                    <!-- DATA ADUAN -->
+
                                     <div class="col-md-7">
 
-                                        <h6>Data Aduan</h6>
+
+                                        <h6>
+                                            Data Aduan
+                                        </h6>
+
 
                                         <p>
+
                                             <strong>Judul :</strong>
-                                            Dugaan Peredaran Narkotika di Sekitar Terminal
+
+                                            {{ $step1['judul_aduan'] ?? '-' }}
+
                                         </p>
 
+
+
                                         <p>
+
                                             <strong>Topik :</strong>
-                                            Aduan Penyalahgunaan dan Peredaran Gelap Narkotika
+
+                                            {{ $step1['topik_aduan'] ?? '-' }}
+
                                         </p>
+
+
 
                                         <p>
-                                            <strong>Lokasi :</strong>
-                                            Terminal Gayatri, Tulungagung
+
+                                            <strong>Isi Aduan :</strong>
+
                                         </p>
 
+
+                                        <div class="summary-detail">
+
+                                            {{ $step1['detail_aduan'] ?? '-' }}
+
+                                        </div>
                                     </div>
+
+
+
+
+                                    <!-- DATA PRIBADI -->
 
                                     <div class="col-md-5">
 
-                                        <h6>Data Pribadi</h6>
+
+                                        <h6>
+                                            Data Pribadi
+                                        </h6>
+
+
 
                                         <p>
+
                                             <strong>Nama :</strong>
-                                            Supardi Supriyono
+
+                                            {{ $step3['nama'] ?? '-' }}
+
                                         </p>
 
+
+
                                         <p>
+
                                             <strong>No WhatsApp :</strong>
-                                            089********
+
+                                            {{ $step3['whatsapp'] ?? '-' }}
+
                                         </p>
+
+
+
+                                        <p>
+
+                                            <strong>Email :</strong>
+
+                                            {{ $step3['email'] ?? '-' }}
+
+                                        </p>
+
+
+
+                                        <p>
+
+                                            <strong>Alamat :</strong>
+
+                                            {{ $step3['alamat'] ?? '-' }}
+
+                                        </p>
+
 
                                     </div>
 
+
                                 </div>
+
+
+
+
+                                <hr>
+
+
+
+
+                                <!-- DATA LOKASI -->
+
 
                                 <div class="mt-4">
 
-                                    <h6>Detail Aduan</h6>
 
-                                    <div class="summary-detail">
+                                    <h6>
+                                        Lokasi Kejadian
+                                    </h6>
 
-                                        Pada tanggal 5 Juli 2026 sekitar pukul 21.30 WIB,
-                                        saya melihat aktivitas yang mencurigakan di sekitar
-                                        Terminal Gayatri, Tulungagung.
 
-                                    </div>
+
+                                    <p>
+
+                                        <strong>Alamat :</strong>
+
+                                        {{ $step2['alamat'] ?? '-' }}
+
+                                    </p>
+
+
+
+                                    <p>
+                                        <strong>Kecamatan :</strong>
+
+                                        {{ $kecamatan->nama_kecamatan ?? '-' }}
+
+                                    </p>
+
+
+                                    <p>
+                                        <strong>Desa :</strong>
+
+                                        {{ $desa->nama_desa ?? '-' }}
+
+                                    </p>
 
                                 </div>
 
+
+
+
+                                @if(isset($step2['lampiran']))
+
+
+                                    <div class="mt-4">
+
+
+                                        <h6>
+                                            Lampiran
+                                        </h6>
+
+
+                                        <img src="{{ asset('storage/' . $step2['lampiran']) }}" class="img-fluid rounded"
+                                            width="250">
+
+
+                                    </div>
+
+
+                                @endif
+
+
+
                             </div>
+
 
                         </div>
 
@@ -147,14 +276,43 @@
 
                         <div class="form-check mt-4">
 
-                            <input class="form-check-input" type="checkbox" id="setuju">
+                            <input class="form-check-input" type="checkbox" name="persetujuan" value="setuju" id="setuju"
+                                required>
+
 
                             <label class="form-check-label" for="setuju">
 
-                                Saya setuju dengan syarat dan ketentuan
-                                pengaduan BNNK Tulungagung.
+                                Saya menyatakan bahwa seluruh data yang saya isi
+                                adalah benar dan dapat dipertanggungjawabkan.
 
                             </label>
+
+
+                        </div>
+
+                        <div class="mb-4">
+
+                            <label class="form-label">
+
+                                Verifikasi Keamanan
+
+                            </label>
+
+                            <div class="border rounded p-3">
+
+                                <div class="form-check">
+
+                                    <input class="form-check-input" type="checkbox" required>
+
+                                    <label class="form-check-label">
+
+                                        Saya bukan robot
+
+                                    </label>
+
+                                </div>
+
+                            </div>
 
                         </div>
 
@@ -162,7 +320,7 @@
 
                         <div class="form-navigation">
 
-                            <a href="{{ route('pengaduan.datapribadi') }}" class="btn-prev">
+                            <a href="{{ route('pengaduan.datapribadi') }}" class="btn btn-secondary">
 
                                 Sebelumnya
 
@@ -183,8 +341,8 @@
                 </div>
 
                 <!-- ==========================================
-                            SIDEBAR
-                    =========================================== -->
+                                                        SIDEBAR
+                                                =========================================== -->
 
                 <aside class="sidebar-aduan">
 
