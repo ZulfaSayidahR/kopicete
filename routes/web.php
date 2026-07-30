@@ -149,79 +149,30 @@ Route::get(
 
 Route::prefix('pengaduan')->name('pengaduan.')->group(function () {
 
+    Route::get('/', [PengaduanController::class, 'create'])->name('create');
 
-    // STEP 1
-    Route::get(
-        '/',
-        [PengaduanController::class, 'create']
-    )->name('create');
+    Route::post('/step1', [PengaduanController::class, 'storeStep1'])->name('storeStep1');
 
+    Route::get('/lokasi', [PengaduanController::class, 'lokasi'])->name('lokasi');
+    Route::post('/lokasi', [PengaduanController::class, 'storeStep2'])->name('storeStep2');
 
-    Route::post(
-        '/step1',
-        [PengaduanController::class, 'storeStep1']
-    )->name('storeStep1');
+    Route::get('/get-desa/{id}', [PengaduanController::class, 'getDesa'])->name('getDesa');
 
+    Route::get('/datapribadi', [PengaduanController::class, 'dataPribadi'])->name('datapribadi');
+    Route::post('/datapribadi', [PengaduanController::class, 'storeStep3'])->name('storeStep3');
 
-
-    // STEP 2
-    Route::get(
-        '/lokasi',
-        [PengaduanController::class, 'lokasi']
-    )->name('lokasi');
-
-
-    Route::post(
-        '/lokasi',
-        [PengaduanController::class, 'storeStep2']
-    )->name('storeStep2');
-
-
-
-    // AJAX DESA
-    Route::get(
-        '/get-desa/{id_kecamatan}',
-        [PengaduanController::class, 'getDesa']
-    )->name('getDesa');
-
-
-
-    // STEP 3 DATA PRIBADI
-    Route::get(
-        '/datapribadi',
-        [PengaduanController::class, 'dataPribadi']
-    )->name('datapribadi');
-
-
-    Route::post(
-        '/datapribadi/store',
-        [PengaduanController::class, 'storeStep3']
-    )->name('storeStep3');
-
-    // KONFIRMASI
-
-    Route::get(
-        '/konfirmasi',
-        [PengaduanController::class, 'konfirmasi']
-    )->name('pengaduan.konfirmasi');
-
+    Route::get('/konfirmasi', [PengaduanController::class, 'konfirmasi'])->name('konfirmasi');
 
     // KIRIM OTP
-
-    Route::post(
-        '/kirim-otp',
-        [PengaduanController::class, 'kirimOtp']
-    )->name('pengaduan.kirimOtp');
-
+    Route::post('/kirim-otp', [PengaduanController::class, 'kirimOtp'])->name('kirimOtp');
 
     // HALAMAN OTP
+    Route::get('/verifikasi-otp', [PengaduanController::class, 'verifikasiOtp'])->name('verifikasiOtp');
 
-    Route::get(
-        '/verifikasi-otp',
-        [PengaduanController::class, 'verifikasiOtp']
-    )->name('pengaduan.verifikasiOtp');
+    // CEK OTP
+    Route::post('/verifikasi-otp', [PengaduanController::class, 'verifyOtp'])->name('verifyOtp');
+
 });
-
 
 
 // ==========================
