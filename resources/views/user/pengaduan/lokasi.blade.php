@@ -11,8 +11,8 @@
             <div class="pengaduan-wrapper">
 
                 <!-- =========================================
-                                FORM STEP 2
-                        ========================================== -->
+                                                        FORM STEP 2
+                                                ========================================== -->
 
                 <div class="pengaduan-card">
 
@@ -54,9 +54,10 @@
 
                         </div>
 
-                        <form action="{{ route('pengaduan.lokasi') }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('pengaduan.storeStep2') }}" method="POST" enctype="multipart/form-data">
 
                             @csrf
+
 
                             <div class="mb-3">
 
@@ -73,28 +74,48 @@
 
                             <div class="row">
 
+
+                                <!-- KECAMATAN -->
+
                                 <div class="col-md-6 mb-3">
 
                                     <label class="form-label">
-
                                         Kecamatan
-
                                     </label>
 
-                                    <select class="form-select" name="kecamatan">
 
-                                        <option>Pilih Kecamatan</option>
+                                    <select class="form-select" name="id_kecamatan" id="kecamatan" required>
 
-                                        <option>Tulungagung</option>
-                                        <option>Campurdarat</option>
-                                        <option>Bandung</option>
-                                        <option>Ngunut</option>
+
+                                        <option value="">
+                                            Pilih Kecamatan
+                                        </option>
+
+
+                                        @foreach($kecamatan as $item)
+
+                                            <option value="{{ $item->id_kecamatan }}">
+
+                                                {{ $item->nama_kecamatan }}
+
+                                            </option>
+
+
+
+                                        @endforeach
+
 
                                     </select>
 
+
                                 </div>
 
+
+
+                                <!-- DESA -->
+
                                 <div class="col-md-6 mb-3">
+
 
                                     <label class="form-label">
 
@@ -102,9 +123,21 @@
 
                                     </label>
 
-                                    <input type="text" class="form-control" name="desa" placeholder="Masukkan Desa">
+
+
+                                    <select class="form-select" name="id_desa" id="desa" required>
+
+
+                                        <option value="">
+                                            Pilih Kecamatan Terlebih Dahulu
+                                        </option>
+
+
+                                    </select>
+
 
                                 </div>
+
 
                             </div>
 
@@ -116,7 +149,8 @@
 
                                 </label>
 
-                                <input type="file" class="form-control file-upload" name="lampiran" accept=".jpg,.jpeg,.png">
+                                <input type="file" class="form-control file-upload" name="lampiran"
+                                    accept=".jpg,.jpeg,.png">
 
                                 <div class="form-note">
 
@@ -131,7 +165,8 @@
 
                                 <div class="form-check">
 
-                                    <input class="form-check-input" type="checkbox" required>
+                                    <input class="form-check-input" type="checkbox" name="pernyataan" value="setuju"
+                                        required>
 
                                     <label class="form-check-label">
 
@@ -143,7 +178,6 @@
                                 </div>
 
                             </div>
-
                             <div class="mb-4">
 
                                 <label class="form-label">
@@ -178,13 +212,14 @@
 
                                 </a>
 
-                                <a href="{{ route('pengaduan.datapribadi') }}" class="btn-next">
+
+                                <button type="submit" class="btn-next">
 
                                     Selanjutnya
 
-                                </a>
-                            </div>
+                                </button>
 
+                            </div>
                         </form>
 
                     </div>
@@ -192,8 +227,8 @@
                 </div>
 
                 <!-- ==========================================
-                                                                SIDEBAR
-                                                        =========================================== -->
+                                                                                        SIDEBAR
+                                                                                =========================================== -->
 
                 <aside class="sidebar-aduan">
 
@@ -293,5 +328,87 @@
         </div>
 
     </section>
+    <script>
+
+        document
+            .getElementById('kecamatan')
+            .addEventListener('change', function () {
+
+
+                let idKecamatan = this.value;
+
+
+                let desa = document.getElementById('desa');
+
+
+
+                desa.innerHTML = `
+                        <option>
+                            Memuat desa...
+                        </option>
+                    `;
+
+
+
+                if (idKecamatan == '') {
+
+                    desa.innerHTML = `
+                            <option>
+                                Pilih Kecamatan Terlebih Dahulu
+                            </option>
+                        `;
+
+                    return;
+
+                }
+
+
+
+                fetch(
+                    "{{ url('/pengaduan/get-desa') }}/"
+                    + idKecamatan
+                )
+
+
+                    .then(response => response.json())
+
+
+                    .then(data => {
+
+
+                        desa.innerHTML = `
+                            <option value="">
+                                Pilih Desa
+                            </option>
+                        `;
+
+
+
+                        data.forEach(item => {
+
+
+                            desa.innerHTML += `
+
+                                <option value="${item.id_desa}">
+
+                                    ${item.nama_desa}
+
+                                </option>
+
+                            `;
+
+
+                        });
+
+
+
+                    });
+
+
+
+            });
+
+
+    </script>
 
 @endsection

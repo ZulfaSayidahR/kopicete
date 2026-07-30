@@ -148,6 +148,54 @@ Route::get(
     ->name('home');
 
 
+Route::prefix('pengaduan')->name('pengaduan.')->group(function () {
+
+
+    // STEP 1
+    Route::get(
+        '/',
+        [PengaduanController::class, 'create']
+    )
+        ->name('create');
+
+
+    Route::post(
+        '/step1',
+        [PengaduanController::class, 'storeStep1']
+    )
+        ->name('storeStep1');
+
+
+
+    // HALAMAN LOKASI STEP 2
+    Route::get(
+        '/lokasi',
+        [PengaduanController::class, 'lokasi']
+    )
+        ->name('lokasi');
+
+
+
+    // SIMPAN STEP 2
+    Route::post(
+        '/lokasi',
+        [PengaduanController::class, 'storeStep2']
+    )
+        ->name('storeStep2');
+
+
+
+    // AJAX AMBIL DESA BERDASARKAN KECAMATAN
+    Route::get(
+        '/get-desa/{id_kecamatan}',
+        [PengaduanController::class, 'getDesa']
+    )
+        ->name('getDesa');
+
+
+});
+
+
 
 // ==========================
 // PENGADUAN

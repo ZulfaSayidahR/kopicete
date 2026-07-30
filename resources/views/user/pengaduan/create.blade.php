@@ -11,8 +11,8 @@
             <div class="pengaduan-wrapper">
 
                 <!-- ==========================================
-                                                                FORM PENGADUAN
-                                                        =========================================== -->
+                                                                        FORM PENGADUAN
+                                                                =========================================== -->
 
                 <div class="pengaduan-card">
 
@@ -75,71 +75,99 @@
                         </div>
 
                         <!-- FORM -->
+                        <form action="{{ route('pengaduan.storeStep1') }}" method="POST">
 
-                        <form>
+                            @csrf
 
                             <div class="row">
 
-                                <div class="col-md-6 mb-3">
+                                <div class="mb-3">
 
                                     <label class="form-label">
+
                                         Judul Aduan
+
                                     </label>
 
-                                    <input type="text" class="form-control" placeholder="Ringkasan masalah">
+                                    <input type="text" class="form-control" name="judul_aduan"
+                                        value="{{ old('judul_aduan', session('pengaduan.step1.judul_aduan')) }}"
+                                        placeholder="Masukkan judul aduan">
+
+                                    @error('judul_aduan')
+                                        <small class="text-danger">{{ $message }}</small>
+                                    @enderror
 
                                 </div>
+                                <div class="mb-3">
 
-                                <div class="col-md-6 mb-3">
+    <label class="form-label">
 
-                                    <label class="form-label">
-                                        Topik Aduan
-                                    </label>
+        Topik Aduan
 
-                                    <select class="form-select">
+    </label>
 
-                                        <option>Pilih kategori</option>
+    <select
+        class="form-select"
+        name="topik_aduan">
 
-                                        <option>Aduan Penyalahgunaan Narkoba dan Peredaran Gelap Narkotika</option>
+        <option value="">-- Pilih Topik --</option>
 
-                                        <option>Aduan Pelanggaran Grativikasi (WBS) </option>
+        <option value="Penyalahgunaan Narkotika"
+            {{ session('pengaduan.step1.topik_aduan')=='Penyalahgunaan Narkotika'?'selected':'' }}>
+            Penyalahgunaan Narkotika
+        </option>
 
-                                    </select>
+        <option value="Peredaran Gelap Narkotika"
+            {{ session('pengaduan.step1.topik_aduan')=='Peredaran Gelap Narkotika'?'selected':'' }}>
+            Peredaran Gelap Narkotika
+        </option>
 
-                                </div>
+        <option value="Pelanggaran Internal"
+            {{ session('pengaduan.step1.topik_aduan')=='Pelanggaran Internal'?'selected':'' }}>
+            Pelanggaran Internal
+        </option>
+
+    </select>
+
+    @error('topik_aduan')
+        <small class="text-danger">{{ $message }}</small>
+    @enderror
+
+</div>
 
                             </div>
 
-                            <div class="mb-3">
+                           <div class="mb-3">
 
-                                <label class="form-label">
-                                    Detail Aduan
-                                </label>
+    <label class="form-label">
 
-                                <textarea class="form-control" placeholder="Jelaskan kronologi kejadian..."></textarea>
+        Detail Aduan
 
-                                <div class="form-note">
+    </label>
 
-                                    Semakin lengkap informasi yang diberikan,
-                                    semakin mudah laporan diproses.
+    <textarea
+        name="detail_aduan"
+        rows="6"
+        class="form-control"
+        placeholder="Jelaskan kronologi kejadian secara lengkap">{{ old('detail_aduan', session('pengaduan.step1.detail_aduan')) }}</textarea>
 
-                                </div>
+    @error('detail_aduan')
+        <small class="text-danger">{{ $message }}</small>
+    @enderror
 
-                            </div>
+</div>
 
-                            <div class="form-navigation">
+                          <div class="form-navigation">
 
-                                <a href="{{ route('home') }}" class="btn-prev">
-                                    Sebelumnya
-                                </a>
+    <button type="submit" class="btn-next">
 
-                                <a href="{{ route('pengaduan.lokasi') }}" class="btn-next">
-                                    Selanjutnya
-                                </a>
+        Selanjutnya
 
+    </button>
 
-                            </div>
+</div>
 
+</form>
                         </form>
 
                     </div>
@@ -147,8 +175,8 @@
                 </div>
 
                 <!-- ==========================================
-                                                                SIDEBAR
-                                                        =========================================== -->
+                                                                        SIDEBAR
+                                                                =========================================== -->
 
                 <aside class="sidebar-aduan">
 
