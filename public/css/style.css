@@ -809,7 +809,7 @@
 
 .btn-detail-admin:active {
     transform: scale(.98);
-    >>>>>>>03d6f9b (mmkm)
+   
 }
 
 /* =====================================================
@@ -3326,11 +3326,11 @@ body {
 .status-timeline::before {
     content: "";
     position: absolute;
-    <<<<<<< HEAD left: 5px;
+    left: 5px;
     /* tengah titik */
-    =======left: 5px;
+    left: 5px;
     /* tengah titik */
-    >>>>>>>03d6f9b (mmkm) top: 8px;
+    top: 8px;
     bottom: 8px;
     width: 2px;
     background: #d6d6d6;
