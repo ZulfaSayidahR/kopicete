@@ -11,8 +11,8 @@
             <div class="pengaduan-wrapper">
 
                 <!-- ==========================================
-                                                                                        FORM KONFIRMASI
-                                                                                =========================================== -->
+                                                                                            FORM KONFIRMASI
+                                                                                    =========================================== -->
 
                 <div class="pengaduan-card">
 
@@ -155,7 +155,7 @@
 
                                             <strong>Nama :</strong>
 
-                                            {{ $step3['nama'] ?? '-' }}
+                                            {{ $step3['nama_lengkap'] ?? '-' }}
 
                                         </p>
 
@@ -165,7 +165,7 @@
 
                                             <strong>No WhatsApp :</strong>
 
-                                            {{ $step3['whatsapp'] ?? '-' }}
+                                            {{ $step3['no_whatsapp'] ?? '-' }}
 
                                         </p>
 
@@ -185,7 +185,7 @@
 
                                             <strong>Alamat :</strong>
 
-                                            {{ $step3['alamat'] ?? '-' }}
+                                            {{ $step3['alamat_domisili'] ?? '-' }}
 
                                         </p>
 
@@ -341,8 +341,8 @@
                 </div>
 
                 <!-- ==========================================
-                                                                                        SIDEBAR
-                                                                                =========================================== -->
+                                                                                            SIDEBAR
+                                                                                    =========================================== -->
 
                 <aside class="sidebar-aduan">
 

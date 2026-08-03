@@ -11,8 +11,8 @@
             <div class="pengaduan-wrapper">
 
                 <!-- ==========================================
-                                            FORM STEP 3
-                                    =========================================== -->
+                                                    FORM STEP 3
+                                            =========================================== -->
 
                 <div class="pengaduan-card">
 
@@ -76,7 +76,23 @@
                         <form action="{{ route('pengaduan.storeStep3') }}" method="POST">
 
                             @csrf
+                            @if ($errors->any())
 
+                                <div class="alert alert-danger">
+
+                                    <ul class="mb-0">
+
+                                        @foreach ($errors->all() as $error)
+
+                                            <li>{{ $error }}</li>
+
+                                        @endforeach
+
+                                    </ul>
+
+                                </div>
+
+                            @endif
 
                             <div class="mb-3">
 
@@ -84,8 +100,8 @@
                                     Nama Lengkap
                                 </label>
 
-                                <input type="text" class="form-control" name="nama" placeholder="Masukkan nama lengkap"
-                                    value="{{ old('nama') }}" required>
+                                <input type="text" class="form-control" name="nama_lengkap"
+                                    placeholder="Masukkan nama lengkap" value="{{ old('nama_lengkap') }}" required>
 
                             </div>
 
@@ -97,8 +113,8 @@
                                     Nomor WhatsApp
                                 </label>
 
-                                <input type="text" class="form-control" name="whatsapp" placeholder="Contoh : 081234567890"
-                                    value="{{ old('whatsapp') }}" required>
+                                <input type="text" class="form-control" name="no_whatsapp"
+                                    placeholder="Contoh : 081234567890" value="{{ old('no_whatsapp') }}" required>
 
 
                                 <div class="form-note">
@@ -141,8 +157,8 @@
                                 </label>
 
 
-                                <textarea class="form-control" name="alamat" rows="4"
-                                    placeholder="Masukkan alamat lengkap">{{ old('alamat') }}</textarea>
+                                <textarea class="form-control" name="alamat_domisili" rows="4"
+                                    placeholder="Masukkan alamat lengkap">{{ old('alamat_domisili') }}</textarea>
 
 
                             </div>
@@ -197,8 +213,8 @@
                 </div>
 
                 <!-- ==========================================
-                                                                                        SIDEBAR
-                                                                                =========================================== -->
+                                                                                                SIDEBAR
+                                                                                        =========================================== -->
 
                 <aside class="sidebar-aduan">
 

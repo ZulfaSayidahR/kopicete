@@ -14,6 +14,17 @@ use App\Http\Controllers\SuperAdmin\DataPengaduanController;
 use App\Http\Controllers\SuperAdmin\DataPermohonanController;
 
 
+/*
+|--------------------------------------------------------------------------
+| HOME
+|--------------------------------------------------------------------------
+*/
+
+Route::get('/', [HomeController::class, 'index'])
+    ->name('home');
+
+    
+
 // SUPER ADMIN
 
 Route::prefix('superadmin')
@@ -167,6 +178,8 @@ Route::prefix('pengaduan')->name('pengaduan.')->group(function () {
 
     // BERHASIL
     Route::get('/berhasil/{kode}', [PengaduanController::class, 'success'])->name('success');
+
+   
 
 });
 

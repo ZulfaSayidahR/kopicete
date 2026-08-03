@@ -76,7 +76,7 @@
 
                         <!-- FORM -->
                         <form action="{{ route('pengaduan.storeStep1') }}" method="POST">
-
+    
                             @csrf
 
                             <div class="row">

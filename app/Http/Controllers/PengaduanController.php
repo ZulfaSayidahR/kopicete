@@ -4,9 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Http;
+
+use App\Models\Pengaduan;
+use Illuminate\Support\Str;
 
 use App\Models\Kecamatan;
 use App\Models\Desa;
+
+use Carbon\Carbon;
 
 class PengaduanController extends Controller
 {
@@ -15,6 +21,8 @@ class PengaduanController extends Controller
     | STEP 1 : DATA ADUAN
     |--------------------------------------------------------------------------
     */
+
+
 
     public function create()
     {
@@ -34,7 +42,7 @@ class PengaduanController extends Controller
             'topik_aduan' => $request->topik_aduan,
             'detail_aduan' => $request->detail_aduan,
         ]);
-
+      
         return redirect()->route('pengaduan.lokasi');
     }
 
@@ -99,14 +107,16 @@ class PengaduanController extends Controller
             'lampiran' => $lampiran,
         ]);
 
+    
+
         return redirect()->route('pengaduan.datapribadi');
     }
 
     /*
-    |--------------------------------------------------------------------------
-    | STEP 3 : DATA PRIBADI
-    |--------------------------------------------------------------------------
-    */
+   |--------------------------------------------------------------------------
+   | STEP 3 : DATA PRIBADI
+   |--------------------------------------------------------------------------
+   */
 
     public function dataPribadi()
     {
@@ -115,30 +125,20 @@ class PengaduanController extends Controller
 
     public function storeStep3(Request $request)
     {
-        $request->validate(
-            [
-                'nama' => 'required',
-                'whatsapp' => 'required',
-                'alamat' => 'required',
-                'email' => 'nullable|email',
-            ],
-            [
-                'nama.required' =>
-                    'Nama lengkap wajib diisi',
-
-                'whatsapp.required' =>
-                    'Nomor WhatsApp wajib diisi',
-
-                'alamat.required' =>
-                    'Alamat wajib diisi',
-            ]
-        );
+        $request->validate([
+            'nama_lengkap' => 'required|string|max:255',
+            'no_whatsapp' => 'required|string|max:20',
+            'alamat_domisili' => 'required|string',
+            'email' => 'nullable|email',
+        ]);
 
         Session::put('pengaduan.step3', [
-            'nama' => $request->nama,
-            'whatsapp' => $request->whatsapp,
+
+            'nama_lengkap' => $request->nama_lengkap,
+            'no_whatsapp' => $request->no_whatsapp,
             'email' => $request->email,
-            'alamat' => $request->alamat,
+            'alamat_domisili' => $request->alamat_domisili,
+
         ]);
 
         return redirect()->route('pengaduan.konfirmasi');
@@ -152,9 +152,26 @@ class PengaduanController extends Controller
 
     public function konfirmasi()
     {
-        return view('user.pengaduan.konfirmasi');
-    }
+        $step1 = Session::get('pengaduan.step1');
+        $step2 = Session::get('pengaduan.step2');
+        $step3 = Session::get('pengaduan.step3');
 
+        $kecamatan = null;
+        $desa = null;
+
+        if ($step2) {
+            $kecamatan = Kecamatan::find($step2['id_kecamatan']);
+            $desa = Desa::find($step2['id_desa']);
+        }
+
+        return view('user.pengaduan.konfirmasi', compact(
+            'step1',
+            'step2',
+            'step3',
+            'kecamatan',
+            'desa'
+        ));
+    }
     /*
     |--------------------------------------------------------------------------
     | KIRIM OTP
@@ -163,43 +180,102 @@ class PengaduanController extends Controller
 
     public function kirimOtp(Request $request)
     {
-        // nanti di sini proses kirim OTP menggunakan Fonnte
+        $step3 = Session::get('pengaduan.step3');
+
+        if (!$step3) {
+            return redirect()->route('pengaduan.datapribadi');
+        }
+
+        $nomor = $step3['no_whatsapp'];
+
+        // ubah 08 menjadi 628
+        if (substr($nomor, 0, 1) == '0') {
+            $nomor = '62' . substr($nomor, 1);
+        }
+
+        // Generate OTP
+        $otp = rand(100000, 999999);
+
+        // Simpan OTP
+        Session::put('otp', $otp);
+
+        // Simpan waktu kadaluarsa
+        $expired = now()->addMinutes(5);
+
+        Session::put('otp_expired', $expired);
+
+        Http::withHeaders([
+            'Authorization' => env('FONNTE_TOKEN')
+        ])->post('https://api.fonnte.com/send', [
+
+                    'target' => $nomor,
+
+                    'message' =>
+                        "Kode OTP Pengaduan BNNK Tulungagung\n\n" .
+                        "Kode OTP Anda : $otp\n\n" .
+                        "Berlaku selama 5 menit.\n\n" .
+                        "Jangan berikan kode ini kepada siapa pun."
+
+                ]);
 
         return redirect()->route('pengaduan.verifikasiOtp');
     }
-
     /*
     |--------------------------------------------------------------------------
     | HALAMAN OTP
     |--------------------------------------------------------------------------
     */
-
     public function verifikasiOtp()
     {
-        return view('user.pengaduan.verifikasiotp');
-    }
+        $expired = Session::get('otp_expired');
 
+        return view('user.pengaduan.verifikasiotp', [
+            'expired' => $expired
+                ? $expired->timestamp * 1000
+                : 0
+        ]);
+    }
     /*
     |--------------------------------------------------------------------------
     | VERIFIKASI OTP
     |--------------------------------------------------------------------------
     */
-
     public function verifyOtp(Request $request)
     {
         $request->validate([
-            'otp' => 'required|min:6|max:6',
+            'otp' => 'required|digits:6'
         ]);
 
-        // nanti cek OTP di sini
+        if (!Session::has('otp') || !Session::has('otp_expired')) {
 
-        return redirect()->route(
-            'pengaduan.success',
-            [
-                'kode' => 'BNNK-123456',
-            ]
-        );
+            return back()->with(
+                'error',
+                'OTP tidak ditemukan.'
+            );
+        }
+
+        if (Carbon::now()->gt(Session::get('otp_expired'))) {
+
+            Session::forget('otp');
+            Session::forget('otp_expired');
+
+            return back()->with(
+                'error',
+                'OTP telah kedaluwarsa. Silakan kirim ulang OTP.'
+            );
+        }
+
+        if ($request->otp != Session::get('otp')) {
+
+            return back()->with(
+                'error',
+                'Kode OTP yang Anda masukkan salah.'
+            );
+        }
+
+        return $this->store();
     }
+
 
     /*
     |--------------------------------------------------------------------------
@@ -207,28 +283,64 @@ class PengaduanController extends Controller
     |--------------------------------------------------------------------------
     */
 
-    public function store(Request $request)
+    public function store()
     {
         $step1 = Session::get('pengaduan.step1');
         $step2 = Session::get('pengaduan.step2');
         $step3 = Session::get('pengaduan.step3');
 
-        /*
-        Nanti di sini:
+        // Pastikan semua session masih ada
+        if (!$step1 || !$step2 || !$step3) {
+
+            return redirect()
+                ->route('pengaduan.create')
+                ->with(
+                    'error',
+                    'Data pengaduan telah berakhir. Silakan isi kembali dari awal.'
+                );
+        }
+
+        // Generate kode
+        $kode = 'BNNK-' . date('Ymd') . '-' . strtoupper(Str::random(5));
 
         Pengaduan::create([
-            ...
+
+            'kode_aduan' => $kode,
+
+            'judul_aduan' => $step1['judul_aduan'],
+
+            'topik_aduan' => $step1['topik_aduan'],
+
+            'detail_aduan' => $step1['detail_aduan'],
+
+            'id_kecamatan' => $step2['id_kecamatan'],
+
+            'id_desa' => $step2['id_desa'],
+
+            'lampiran' => $step2['lampiran'],
+
+            'nama_lengkap' => $step3['nama_lengkap'],
+
+            'no_whatsapp' => $step3['no_whatsapp'],
+
+            'email' => $step3['email'],
+
+            'alamat_domisili' => $step3['alamat_domisili'],
+
+            'otp_verified_at' => now(),
+
+            'status' => 'Menunggu'
+
         ]);
-        */
 
+        // Bersihkan session
         Session::forget('pengaduan');
+        Session::forget('otp');
+        Session::forget('otp_expired');
 
-        return redirect()->route(
-            'pengaduan.success',
-            [
-                'kode' => 'BNNK-001',
-            ]
-        );
+        return redirect()->route('pengaduan.success', [
+            'kode' => $kode
+        ]);
     }
 
     /*

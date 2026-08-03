@@ -40,4 +40,13 @@ class Kecamatan extends Model
         );
     }
 
+    public function pengaduan()
+    {
+        return $this->hasMany(
+            Pengaduan::class,
+            'id_kecamatan',
+            'id_kecamatan'
+        );
+    }
+
 }
