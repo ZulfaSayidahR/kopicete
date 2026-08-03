@@ -66,7 +66,7 @@
             ================================================== --}}
             <section class="sa-statistics">
 
-                <article class="sa-stat-card">
+                {{-- <article class="sa-stat-card">
 
                     <div class="sa-stat-icon sa-stat-blue">
                         <i class="bi bi-people-fill"></i>
@@ -85,7 +85,7 @@
 
                     </div>
 
-                </article>
+                </article> --}}
 
                 <article class="sa-stat-card">
 

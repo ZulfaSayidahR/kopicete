@@ -89,13 +89,13 @@
                     <li>
                         <i class="bi bi-whatsapp"></i>
 
-                        <span>0821-5224-9911</span>
+                        <span>0821-5224-9911 (BNNK Tulungagung)</span>
                     </li>
 
                     <li>
                         <i class="bi bi-telephone-fill"></i>
 
-                        <span>Call center: 184</span>
+                        <span>Call center: 184 (BNN RI)</span>
                     </li>
 
                     <li>
@@ -116,7 +116,7 @@
                         <i class="bi bi-instagram"></i>
                     </a>
 
-                    <a href="https://x.com/INFOBNN" target="_blank">
+                    <a href="https://x.com/BnnkTulungagung?s=20" target="_blank">
                         <i class="bi bi-twitter"></i>
                     </a>
 

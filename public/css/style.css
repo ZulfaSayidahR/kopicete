@@ -167,14 +167,14 @@
     margin-top: auto;
 
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 8px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 15px;
 }
 
 .info-item {
     min-width: 0;
     min-height: 62px;
-    padding: 25px 25px 15px;
+    padding: 15px 15px 15px;
 
     border-radius: 7px;
     color: #111111;
@@ -275,7 +275,6 @@
     grid-template-columns: 2fr 1fr;
     gap: 30px;
 }
-
 
 /* =========================
    Tracking Card
@@ -543,7 +542,6 @@
     width: 4px;
     background: #d9d9d9;
     border-radius: 20px;
-
 }
 
 /* ==========================================
@@ -647,35 +645,29 @@
 /* selesai */
 
 .tracking-item.selesai .tracking-icon {
-
     background: #ffffff;
 
     border: 4px solid #2563eb;
 
     color: #2563eb;
-
 }
 
 /* proses */
 
 .tracking-item.proses .tracking-icon {
-
     background: #2563eb;
 
     color: #ffffff;
 
     animation: pulse 2s infinite;
-
 }
 
 /* pending */
 
 .tracking-item.pending .tracking-icon {
-
     background: #d9d9d9;
 
     color: #ffffff;
-
 }
 
 /* ==========================================
@@ -683,13 +675,10 @@
 ========================================== */
 
 .tracking-content {
-
     padding-left: 10px;
-
 }
 
 .tracking-content h6 {
-
     margin: 0;
 
     color: #ffffff;
@@ -699,21 +688,18 @@
     font-weight: 700;
 
     line-height: 1.35;
-
 }
 
 .tracking-content small {
-
     display: block;
 
     margin-top: 5px;
 
-    color: rgba(255, 255, 255, .92);
+    color: rgba(255, 255, 255, 0.92);
 
     font-size: 14px;
 
     line-height: 1.5;
-
 }
 
 /* ==========================================
@@ -721,9 +707,8 @@
 ========================================== */
 
 @keyframes pulse {
-
     0% {
-        box-shadow: 0 0 0 0 rgba(37, 99, 235, .45);
+        box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.45);
     }
 
     70% {
@@ -733,42 +718,33 @@
     100% {
         box-shadow: 0 0 0 0 rgba(37, 99, 235, 0);
     }
-
 }
 
 /* ==========================================
    RESPONSIVE
 ========================================== */
 
-@media (max-width:768px) {
-
+@media (max-width: 768px) {
     .tracking-timeline {
         padding-left: 48px;
     }
 
     .tracking-icon {
-
         left: -48px;
 
         width: 36px;
         height: 36px;
 
         font-size: 15px;
-
     }
 
     .tracking-content h6 {
-
         font-size: 16px;
-
     }
 
     .tracking-content small {
-
         font-size: 13px;
-
     }
-
 }
 
 /* =====================================
@@ -793,7 +769,7 @@
     font-size: 13px;
     font-weight: 600;
 
-    transition: .3s;
+    transition: 0.3s;
 }
 
 .btn-detail-admin i {
@@ -804,12 +780,11 @@
     background: #ffc928;
     color: #06264f;
     transform: translateY(-2px);
-    box-shadow: 0 8px 18px rgba(0, 0, 0, .18);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.18);
 }
 
 .btn-detail-admin:active {
-    transform: scale(.98);
-   
+    transform: scale(0.98);
 }
 
 /* =====================================================
@@ -907,7 +882,6 @@
 }
 
 @media (max-width: 520px) {
-
     .aduan-box,
     .tracking-box {
         border-radius: 21px;
@@ -926,9 +900,25 @@
         max-width: 100%;
     }
 
-    .info-card {
+    /* .info-card {
         margin-top: 28px;
         grid-template-columns: repeat(2, minmax(0, 1fr));
+    } */
+
+    .info-card {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+        width: 100%;
+        margin-top: 28px;
+    }
+
+    .info-item {
+        flex: 1;
+        background: #fff;
+        border-radius: 12px;
+        padding: 24px;
+        box-sizing: border-box;
     }
 
     .info-item small {
@@ -2513,13 +2503,13 @@ body {
 .sa-statistics {
     margin: 24px 0;
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 18px;
 }
 
 .sa-stat-card {
     min-height: 126px;
-    padding: 21px;
+    padding: 21px;  
 
     display: flex;
     align-items: center;
@@ -2578,7 +2568,7 @@ body {
     min-width: 0;
 }
 
-.sa-stat-content>span {
+.sa-stat-content > span {
     display: block;
     color: #778697;
     font-size: 11px;
@@ -2634,7 +2624,7 @@ body {
 
 .sa-panel-header p,
 .sa-panel-title p,
-.sa-reset-panel>p {
+.sa-reset-panel > p {
     margin: 0;
     color: #8391a1;
     font-size: 10px;
@@ -3473,9 +3463,8 @@ body {
 
 /* Tablet */
 @media (max-width: 991.98px) {
-
-    .navbar>.container,
-    .navbar>.container-fluid {
+    .navbar > .container,
+    .navbar > .container-fluid {
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -3622,9 +3611,8 @@ body {
 /* animasi */
 
 @keyframes adminPulse {
-
     0% {
-        box-shadow: 0 0 0 0 rgba(37, 99, 235, .45);
+        box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.45);
     }
 
     70% {
@@ -3634,7 +3622,6 @@ body {
     100% {
         box-shadow: 0 0 0 0 rgba(37, 99, 235, 0);
     }
-
 }
 
 .btn-admin-detail {
@@ -3654,7 +3641,7 @@ body {
     font-size: 13px;
     font-weight: 600;
 
-    transition: .25s;
+    transition: 0.25s;
 }
 
 .btn-admin-detail:hover {
@@ -3676,17 +3663,16 @@ VERIFIKASI OTP
     height: 90px;
     margin: auto;
     border-radius: 50%;
-    background: #25D366;
+    background: #25d366;
     display: flex;
     justify-content: center;
     align-items: center;
     color: #fff;
     font-size: 42px;
-    box-shadow: 0 10px 25px rgba(37, 211, 102, .35);
+    box-shadow: 0 10px 25px rgba(37, 211, 102, 0.35);
 }
 
 .otp-input {
-
     height: 65px;
 
     text-align: center;
@@ -3698,13 +3684,10 @@ VERIFIKASI OTP
     font-weight: 700;
 
     border-radius: 15px;
-
 }
 
 .otp-input:focus {
-
     border-color: #0d6efd;
 
-    box-shadow: 0 0 0 .25rem rgba(13, 110, 253, .15);
-
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.15);
 }

@@ -81,16 +81,6 @@
                     </div>
 
                     <div class="info-item">
-                        <small>Total Aduan Selesai</small>
-                        <h3>7</h3>
-                    </div>
-
-                    <div class="info-item">
-                        <small>Total Aduan Proses</small>
-                        <h3>1</h3>
-                    </div>
-
-                    <div class="info-item">
                         <small>Total Permohonan</small>
                         <h3>276</h3>
                     </div>
