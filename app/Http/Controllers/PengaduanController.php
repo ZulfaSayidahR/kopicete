@@ -89,6 +89,7 @@ class PengaduanController extends Controller
         $request->validate([
             'id_kecamatan' => 'required|exists:kecamatan,id_kecamatan',
             'id_desa' => 'required|exists:desa,id_desa',
+            'alamat_kejadian' => 'required',
             'lampiran' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
@@ -104,6 +105,7 @@ class PengaduanController extends Controller
         Session::put('pengaduan.step2', [
             'id_kecamatan' => $request->id_kecamatan,
             'id_desa' => $request->id_desa,
+            'alamat_kejadian' => $request->alamat_kejadian,
             'lampiran' => $lampiran,
         ]);
 

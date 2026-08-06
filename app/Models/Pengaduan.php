@@ -15,6 +15,7 @@ class Pengaduan extends Model
         'judul_aduan',
         'topik_aduan',
         'detail_aduan',
+        'alamat_kejadian',
         'id_kecamatan',
         'id_desa',
         'lampiran',

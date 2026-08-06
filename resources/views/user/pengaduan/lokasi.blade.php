@@ -11,8 +11,8 @@
             <div class="pengaduan-wrapper">
 
                 <!-- =========================================
-                                                        FORM STEP 2
-                                                ========================================== -->
+                                                            FORM STEP 2
+                                                    ========================================== -->
 
                 <div class="pengaduan-card">
 
@@ -59,16 +59,16 @@
                             @csrf
 
 
-                            <div class="mb-3">
+                            <div class="mb-4">
 
                                 <label class="form-label">
 
-                                    Alamat / Lokasi Lengkap
+                                    Alamat Kejadian
 
                                 </label>
 
-                                <input type="text" class="form-control" name="alamat"
-                                    placeholder="Contoh : Jl. Raya BNN No.21 RT01/RW02">
+                                <textarea name="alamat_kejadian" rows="3" class="form-control"
+                                    placeholder="Masukkan alamat lengkap lokasi kejadian">{{ old('alamat_kejadian') }}</textarea>
 
                             </div>
 
@@ -180,29 +180,29 @@
                             </div>
                             <!-- <div class="mb-4">
 
-                                <label class="form-label">
+                                    <label class="form-label">
 
-                                    Verifikasi Keamanan
+                                        Verifikasi Keamanan
 
-                                </label>
+                                    </label>
 
-                                <div class="border rounded p-3">
+                                    <div class="border rounded p-3">
 
-                                    <div class="form-check">
+                                        <div class="form-check">
 
-                                        <input class="form-check-input" type="checkbox" required>
+                                            <input class="form-check-input" type="checkbox" required>
 
-                                        <label class="form-check-label">
+                                            <label class="form-check-label">
 
-                                            Saya bukan robot
+                                                Saya bukan robot
 
-                                        </label>
+                                            </label>
+
+                                        </div>
 
                                     </div>
 
-                                </div>
-
-                            </div> -->
+                                </div> -->
 
                             <div class="form-navigation">
 
@@ -227,8 +227,8 @@
                 </div>
 
                 <!-- ==========================================
-                                                                                        SIDEBAR
-                                                                                =========================================== -->
+                                                                                            SIDEBAR
+                                                                                    =========================================== -->
 
                 <aside class="sidebar-aduan">
 
@@ -343,20 +343,20 @@
 
 
                 desa.innerHTML = `
-                        <option>
-                            Memuat desa...
-                        </option>
-                    `;
+                            <option>
+                                Memuat desa...
+                            </option>
+                        `;
 
 
 
                 if (idKecamatan == '') {
 
                     desa.innerHTML = `
-                            <option>
-                                Pilih Kecamatan Terlebih Dahulu
-                            </option>
-                        `;
+                                <option>
+                                    Pilih Kecamatan Terlebih Dahulu
+                                </option>
+                            `;
 
                     return;
 
@@ -377,10 +377,10 @@
 
 
                         desa.innerHTML = `
-                            <option value="">
-                                Pilih Desa
-                            </option>
-                        `;
+                                <option value="">
+                                    Pilih Desa
+                                </option>
+                            `;
 
 
 
@@ -389,13 +389,13 @@
 
                             desa.innerHTML += `
 
-                                <option value="${item.id_desa}">
+                                    <option value="${item.id_desa}">
 
-                                    ${item.nama_desa}
+                                        ${item.nama_desa}
 
-                                </option>
+                                    </option>
 
-                            `;
+                                `;
 
 
                         });
