@@ -12,32 +12,25 @@ class Pengaduan extends Model
     protected $fillable = [
 
         'kode_aduan',
-
         'judul_aduan',
-
         'topik_aduan',
-
         'detail_aduan',
-
         'id_kecamatan',
-
         'id_desa',
-
         'lampiran',
-
         'nama_lengkap',
-
         'no_whatsapp',
-
         'email',
-
         'alamat_domisili',
-
-        'otp',
-
         'otp_verified_at',
+        'status',
 
-        'status'
+        // tracking
+        'tanggal_verifikasi',
+        'tanggal_proses',
+        'tanggal_selesai',
+        'catatan_admin',
+        'foto_tindak_lanjut',
 
     ];
 

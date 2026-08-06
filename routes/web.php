@@ -23,7 +23,7 @@ use App\Http\Controllers\SuperAdmin\DataPermohonanController;
 Route::get('/', [HomeController::class, 'index'])
     ->name('home');
 
-    
+
 
 // SUPER ADMIN
 
@@ -144,6 +144,8 @@ Route::prefix('adminpermohonan')
 
     });
 
+
+// USER
 Route::prefix('pengaduan')->name('pengaduan.')->group(function () {
 
     // STEP 1
@@ -179,7 +181,7 @@ Route::prefix('pengaduan')->name('pengaduan.')->group(function () {
     // BERHASIL
     Route::get('/berhasil/{kode}', [PengaduanController::class, 'success'])->name('success');
 
-   
+
 
 });
 
@@ -225,64 +227,6 @@ Route::prefix('permohonan')
 
 
 
-// ==========================
-// TRACKING ADUAN
-// ==========================
-
-
-Route::prefix('tracking')
-    ->name('tracking.')
-    ->group(function () {
-
-
-
-        // halaman tracking
-    
-        Route::get(
-            '/',
-            [TrackingController::class, 'index']
-        )
-            ->name('index');
-
-
-
-        // proses pencarian kode
-    
-        Route::post(
-            '/search',
-            [TrackingController::class, 'search']
-        )
-            ->name('search');
-
-
-
-        // detail status
-    
-        Route::get(
-            '/{kode}',
-            [TrackingController::class, 'detail']
-        )
-            ->name('detail');
-
-
-
-    });
-
-
-Route::get('/login', [AuthController::class, 'login'])
-    ->name('login');
-
-Route::post('/login', [AuthController::class, 'loginProses'])
-    ->name('login.proses');
-
-Route::get('/forgot-password', [AuthController::class, 'forgotPassword'])
-    ->name('forgot.password');
-
-Route::post('/forgot-password', [AuthController::class, 'forgotPasswordProses'])
-    ->name('forgot.password.proses');
-
-Route::post('/forgot-password', [AuthController::class, 'sendResetLink'])
-    ->name('forgot.password.send');
 
 // ==========================
 // INFORMASI
@@ -310,7 +254,23 @@ Route::get(
     ->name('kontak');
 
 
+/*
+|--------------------------------------------------------------------------
+| AUTH
+|--------------------------------------------------------------------------
+*/
 
+Route::get('/login', [AuthController::class, 'login'])
+    ->name('login');
+
+Route::post('/login', [AuthController::class, 'loginProses'])
+    ->name('login.proses');
+
+Route::get('/forgot-password', [AuthController::class, 'forgotPassword'])
+    ->name('forgot.password');
+
+Route::post('/forgot-password', [AuthController::class, 'sendResetLink'])
+    ->name('forgot.password.send');
 
 
 

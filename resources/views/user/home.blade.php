@@ -119,15 +119,26 @@
 
                         <i class="bi bi-search"></i>
 
-                        <input type="text" name="kode" class="tracking-input" placeholder="Masukkan kode aduan..." required>
+                        <input type="text" name="kode" class="tracking-input" placeholder="Masukkan kode aduan..."
+                            value="{{ request('kode') }}" required>
 
                     </div>
 
                     <button type="submit" class="tracking-button">
-                        <i></i>Lacak
+
+                        <i class="bi bi-search"></i>
+
+                        Lacak
+
                     </button>
 
                 </form>
+
+                @if(session('error'))
+                    <div class="alert alert-danger mt-3">
+                        {{ session('error') }}
+                    </div>
+                @endif
 
                 <div class="footer-text">
 

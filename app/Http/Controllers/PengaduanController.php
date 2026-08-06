@@ -42,7 +42,7 @@ class PengaduanController extends Controller
             'topik_aduan' => $request->topik_aduan,
             'detail_aduan' => $request->detail_aduan,
         ]);
-      
+
         return redirect()->route('pengaduan.lokasi');
     }
 
@@ -107,7 +107,7 @@ class PengaduanController extends Controller
             'lampiran' => $lampiran,
         ]);
 
-    
+
 
         return redirect()->route('pengaduan.datapribadi');
     }
@@ -348,23 +348,30 @@ class PengaduanController extends Controller
     | TRACKING
     |--------------------------------------------------------------------------
     */
-
     public function search(Request $request)
     {
-        return redirect()->route(
-            'pengaduan.tracking',
-            $request->kode
-        );
+        $request->validate([
+            'kode' => 'required'
+        ]);
+
+        return redirect()->route('pengaduan.tracking', [
+            'kode' => $request->kode
+        ]);
     }
 
     public function tracking($kode)
     {
-        return view(
-            'user.pengaduan.tracking',
-            compact('kode')
-        );
-    }
+        $pengaduan = Pengaduan::where('kode_aduan', $kode)->firstOrFail();
 
+        $kecamatan = Kecamatan::find($pengaduan->id_kecamatan);
+        $desa = Desa::find($pengaduan->id_desa);
+
+        return view('user.pengaduan.tracking', compact(
+            'pengaduan',
+            'kecamatan',
+            'desa'
+        ));
+    }
     /*
     |--------------------------------------------------------------------------
     | BERHASIL

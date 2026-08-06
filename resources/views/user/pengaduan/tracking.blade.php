@@ -33,13 +33,12 @@
                 <div class="tracking-grid">
 
                     <!-- ==============================
-                                                            KOLOM KIRI
-                                                    =============================== -->
+                                                                                            KOLOM KIRI
+                                                                                    =============================== -->
 
                     <div class="tracking-left">
 
                         <!-- INFORMASI -->
-
                         <div class="tracking-card mb-4">
 
                             <div class="d-flex justify-content-between align-items-center mb-4">
@@ -48,8 +47,19 @@
                                     Informasi Pengaduan
                                 </h5>
 
-                                <span class="badge bg-success">
-                                    Diverifikasi
+                                <span class="badge
+                                            @if($pengaduan->status == 'Menunggu')
+                                                bg-warning
+                                            @elseif($pengaduan->status == 'Diproses')
+                                                bg-primary
+                                            @elseif($pengaduan->status == 'Selesai')
+                                                bg-success
+                                            @else
+                                                bg-secondary
+                                            @endif">
+
+                                    {{ $pengaduan->status }}
+
                                 </span>
 
                             </div>
@@ -63,7 +73,7 @@
                                         Kode Aduan
                                     </strong>
 
-                                    <p>P0001</p>
+                                    <p>{{ $pengaduan->kode_aduan }}</p>
 
                                 </div>
 
@@ -74,7 +84,7 @@
                                         Kecamatan
                                     </strong>
 
-                                    <p>Tulungagung</p>
+                                    <p>{{ $kecamatan->nama_kecamatan ?? '-' }}</p>
 
                                 </div>
 
@@ -85,10 +95,7 @@
                                         Topik Aduan
                                     </strong>
 
-                                    <p>
-                                        Penyalahgunaan dan
-                                        Peredaran Gelap Narkotika
-                                    </p>
+                                    <p>{{ $pengaduan->topik_aduan }}</p>
 
                                 </div>
 
@@ -99,7 +106,21 @@
                                         No WhatsApp
                                     </strong>
 
-                                    <p>089********</p>
+                                    <p>
+
+                                        @if($pengaduan->no_whatsapp)
+
+                                            {{ substr($pengaduan->no_whatsapp, 0, 4) }}
+                                            ******
+                                            {{ substr($pengaduan->no_whatsapp, -3) }}
+
+                                        @else
+
+                                            -
+
+                                        @endif
+
+                                    </p>
 
                                 </div>
 
@@ -117,12 +138,7 @@
 
                                 <div class="kronologi-box">
 
-                                    Pada tanggal 5 Juli 2026 sekitar pukul
-                                    21.30 WIB saya melihat aktivitas
-                                    mencurigakan di sekitar Terminal
-                                    Gayatri Tulungagung yang diduga
-                                    berkaitan dengan penyalahgunaan
-                                    narkotika.
+                                    {{ $pengaduan->detail_aduan }}
 
                                 </div>
 
@@ -142,35 +158,34 @@
 
                             </h5>
 
-                            <div class="lampiran">
+                            @if($pengaduan->lampiran)
 
-                                <div class="lampiran-item">
+                                <div class="text-center mt-3">
 
-                                    <i class="bi bi-folder-fill"></i>
-
-                                </div>
-
-                                <div class="lampiran-item">
-
-                                    <i class="bi bi-image-fill"></i>
+                                    <img src="{{ asset('storage/' . $pengaduan->lampiran) }}" class="img-fluid rounded shadow"
+                                        style="max-height:350px;">
 
                                 </div>
 
-                                <div class="lampiran-item">
+                            @else
 
-                                    <i class="bi bi-camera-fill"></i>
+                                <div class="alert alert-light text-center mt-3">
+
+                                    <i class="bi bi-image fs-2 d-block mb-2"></i>
+
+                                    Tidak ada lampiran yang diunggah.
 
                                 </div>
 
-                            </div>
+                            @endif
 
                         </div>
 
                     </div>
 
                     <!-- ==============================
-                                                            KOLOM KANAN
-                                                    =============================== -->
+                                                                                            KOLOM KANAN
+                                                                                    =============================== -->
 
                     <aside class="tracking-card status-card">
 
@@ -181,9 +196,7 @@
 
                         <div class="tracking-timeline">
 
-                            <!-- =========================
-                 DIAJUKAN
-            ========================== -->
+                            {{-- ================= DIAJUKAN ================= --}}
                             <div class="tracking-item selesai">
 
                                 <div class="tracking-icon">
@@ -194,106 +207,160 @@
 
                                     <h6>Diajukan</h6>
 
-                                    <small>
+                                    <small class="d-block">
                                         <i class="bi bi-calendar-event me-1"></i>
-                                        05 Juli 2026
+                                        {{ $pengaduan->created_at->translatedFormat('d F Y H:i') }}
                                     </small>
 
                                 </div>
 
                             </div>
 
-                            <!-- =========================
-                 DIVERIFIKASI
-            ========================== -->
-                            <div class="tracking-item selesai">
+
+                            {{-- ================= DIVERIFIKASI ================= --}}
+                            <div class="tracking-item {{ $pengaduan->tanggal_verifikasi ? 'selesai' : '' }}">
 
                                 <div class="tracking-icon">
-                                    <i class="bi bi-check-lg"></i>
+
+                                    @if($pengaduan->tanggal_verifikasi)
+
+                                        <i class="bi bi-check-lg"></i>
+
+                                    @else
+
+                                        <i class="bi bi-circle"></i>
+
+                                    @endif
+
                                 </div>
 
                                 <div class="tracking-content">
 
-                                    <h6>Diverifikasi Admin BNNK</h6>
+                                    <h6>Diverifikasi Admin</h6>
 
-                                    <small>
-                                        <i class="bi bi-calendar-event me-1"></i>
-                                        06 Juli 2026
-                                    </small>
+                                    @if($pengaduan->tanggal_verifikasi)
 
-                                    <button type="button" class="btn-detail-admin" data-bs-toggle="modal"
-                                        data-bs-target="#detailLaporanModal">
+                                        <small class="d-block mb-2">
 
-                                        <i class="bi bi-eye-fill"></i>
-                                        Lihat Bukti & Catatan
+                                            <i class="bi bi-calendar-event me-1"></i>
 
-                                    </button>
+                                            {{ \Carbon\Carbon::parse($pengaduan->tanggal_verifikasi)->translatedFormat('d F Y H:i') }}
+
+                                        </small>
+
+                                        <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal"
+                                            data-bs-target="#modalVerifikasi">
+
+                                            <i class="bi bi-eye-fill"></i>
+
+                                            Lihat Detail
+
+                                        </button>
+
+                                    @endif
 
                                 </div>
 
                             </div>
 
-                            <!-- =========================
-                 DITINDAKLANJUTI
-            ========================== -->
-                            <div class="tracking-item proses">
+
+
+                            {{-- ================= DIPROSES ================= --}}
+                            <div class="tracking-item {{ $pengaduan->tanggal_proses ? 'proses' : '' }}">
 
                                 <div class="tracking-icon">
-                                    <i class="bi bi-hourglass-split"></i>
+
+                                    @if($pengaduan->tanggal_proses)
+
+                                        <i class="bi bi-hourglass-split"></i>
+
+                                    @else
+
+                                        <i class="bi bi-circle"></i>
+
+                                    @endif
+
                                 </div>
 
                                 <div class="tracking-content">
 
-                                    <h6>Ditindaklanjuti BNNK</h6>
+                                    <h6>Diproses BNNK</h6>
 
-                                    <small>
-                                        <i class="bi bi-calendar-event me-1"></i>
-                                        10 Juli 2026
-                                    </small>
+                                    @if($pengaduan->tanggal_proses)
 
-                                    <button type="button" class="btn-detail-admin" data-bs-toggle="modal"
-                                        data-bs-target="#detailLaporanModal">
+                                        <small class="d-block mb-2">
 
-                                        <i class="bi bi-eye-fill"></i>
-                                        Lihat Bukti & Catatan
+                                            <i class="bi bi-calendar-event me-1"></i>
 
-                                    </button>
+                                            {{ \Carbon\Carbon::parse($pengaduan->tanggal_proses)->translatedFormat('d F Y H:i') }}
+
+                                        </small>
+
+                                        <button class="btn btn-sm btn-outline-warning" data-bs-toggle="modal"
+                                            data-bs-target="#modalProses">
+
+                                            <i class="bi bi-eye-fill"></i>
+
+                                            Lihat Detail
+
+                                        </button>
+
+                                    @endif
 
                                 </div>
 
                             </div>
 
-                            <!-- =========================
-                 SELESAI
-            ========================== -->
-                            <div class="tracking-item selesai">
+
+
+                            {{-- ================= SELESAI ================= --}}
+                            <div class="tracking-item {{ $pengaduan->tanggal_selesai ? 'selesai' : '' }}">
 
                                 <div class="tracking-icon">
-                                    <i class="bi bi-flag-fill"></i>
+
+                                    @if($pengaduan->tanggal_selesai)
+
+                                        <i class="bi bi-flag-fill"></i>
+
+                                    @else
+
+                                        <i class="bi bi-circle"></i>
+
+                                    @endif
+
                                 </div>
 
                                 <div class="tracking-content">
 
                                     <h6>Selesai</h6>
 
-                                    <small>
-                                        <i class="bi bi-calendar-event me-1"></i>
-                                        15 Juli 2026
-                                    </small>
+                                    @if($pengaduan->tanggal_selesai)
 
-                                    <button type="button" class="btn-detail-admin" data-bs-toggle="modal"
-                                        data-bs-target="#detailLaporanModal">
+                                        <small class="d-block mb-2">
 
-                                        <i class="bi bi-eye-fill"></i>
-                                        Lihat Bukti & Catatan
+                                            <i class="bi bi-calendar-event me-1"></i>
 
-                                    </button>
+                                            {{ \Carbon\Carbon::parse($pengaduan->tanggal_selesai)->translatedFormat('d F Y H:i') }}
+
+                                        </small>
+
+                                        <button class="btn btn-sm btn-outline-success" data-bs-toggle="modal"
+                                            data-bs-target="#modalSelesai">
+
+                                            <i class="bi bi-eye-fill"></i>
+
+                                            Lihat Detail
+
+                                        </button>
+
+                                    @endif
 
                                 </div>
 
                             </div>
 
                         </div>
+
 
                         <div class="mt-4">
 
@@ -309,8 +376,6 @@
 
                     </aside>
 
-
-
                 </div>
 
             </div>
@@ -319,112 +384,93 @@
 
     </section>
 
-    <!-- Modal Bukti & Catatan -->
-    <div class="modal fade" id="detailLaporanModal" tabindex="-1" aria-hidden="true">
 
-        <div class="modal-dialog modal-lg modal-dialog-centered">
+    <!-- Modal Verifikasi -->
+<div class="modal fade" id="modalVerifikasi" tabindex="-1">
 
-            <div class="modal-content shadow">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
 
-                <div class="modal-header">
+        <div class="modal-content">
 
-                    <h5 class="modal-title">
+            <div class="modal-header bg-primary text-white">
 
-                        <i class="bi bi-folder2-open me-2"></i>
+                <h5 class="modal-title">
+                    <i class="bi bi-patch-check-fill"></i>
+                    Detail Verifikasi Admin
+                </h5>
 
-                        Detail Tindak Lanjut Aduan
+                <button class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
 
-                    </h5>
+            </div>
 
-                    <button type="button" class="btn-close" data-bs-dismiss="modal">
-                    </button>
+            <div class="modal-body">
 
-                </div>
+                <div class="row">
 
-                <div class="modal-body">
+                    <div class="col-md-5">
 
-                    <div class="row g-4">
+                        @if($pengaduan->foto_verifikasi)
 
-                        <!-- Foto -->
-                        <div class="col-md-5">
+                            <img src="{{ asset('storage/'.$pengaduan->foto_verifikasi) }}"
+                                 class="img-fluid rounded shadow">
 
-                            <img src="{{ asset('images/bukti-default.jpg') }}" class="img-fluid rounded shadow-sm border"
-                                alt="Bukti">
+                        @else
 
-                        </div>
+                            <div class="alert alert-light text-center">
 
-                        <!-- Informasi -->
-                        <div class="col-md-7">
+                                <i class="bi bi-image fs-1"></i>
 
-                            <h4 class="fw-bold">
-
-                                Dugaan Penyalahgunaan Narkotika
-
-                            </h4>
-
-                            <hr>
-
-                            <p>
-
-                                <strong>Status :</strong>
-
-                                <span class="badge bg-warning text-dark">
-
-                                    Diverifikasi
-
-                                </span>
-
-                            </p>
-
-                            <p>
-
-                                <strong>Admin :</strong>
-
-                                Admin BNNK Tulungagung
-
-                            </p>
-
-                            <p>
-
-                                <strong>Tanggal Penanganan :</strong>
-
-                                10 Juli 2026
-
-                            </p>
-
-                            <div class="mt-3">
-
-                                <label class="fw-bold mb-2">
-
-                                    Catatan Admin
-
-                                </label>
-
-                                <div class="border rounded p-3 bg-light">
-
-                                    Tim telah melakukan verifikasi awal
-                                    terhadap laporan yang diterima.
-                                    Saat ini laporan sedang dalam proses
-                                    pendalaman informasi sebelum dilakukan
-                                    tindak lanjut lapangan.
-
-                                </div>
+                                <p class="mb-0">
+                                    Belum ada foto verifikasi
+                                </p>
 
                             </div>
+
+                        @endif
+
+                    </div>
+
+                    <div class="col-md-7">
+
+                        <h5>{{ $pengaduan->judul_aduan }}</h5>
+
+                        <hr>
+
+                        <p>
+
+                            <strong>Status :</strong>
+
+                            <span class="badge bg-primary">
+
+                                Diverifikasi
+
+                            </span>
+
+                        </p>
+
+                        <p>
+
+                            <strong>Tanggal :</strong>
+
+                            {{ $pengaduan->tanggal_verifikasi
+                                ? \Carbon\Carbon::parse($pengaduan->tanggal_verifikasi)->translatedFormat('d F Y H:i')
+                                : '-' }}
+
+                        </p>
+
+                        <label class="fw-bold">
+
+                            Catatan Admin
+
+                        </label>
+
+                        <div class="border rounded p-3 bg-light">
+
+                            {!! nl2br(e($pengaduan->catatan_verifikasi ?? 'Belum ada catatan.')) !!}
 
                         </div>
 
                     </div>
-
-                </div>
-
-                <div class="modal-footer">
-
-                    <button class="btn btn-secondary" data-bs-dismiss="modal">
-
-                        Tutup
-
-                    </button>
 
                 </div>
 
@@ -434,4 +480,209 @@
 
     </div>
 
+</div>
+
+<!-- Modal Diproses -->
+<div class="modal fade" id="modalProses" tabindex="-1">
+
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+
+        <div class="modal-content">
+
+            <div class="modal-header bg-warning">
+
+                <h5 class="modal-title">
+
+                    <i class="bi bi-hourglass-split"></i>
+
+                    Detail Proses Penanganan
+
+                </h5>
+
+                <button class="btn-close" data-bs-dismiss="modal"></button>
+
+            </div>
+
+            <div class="modal-body">
+
+                <div class="row">
+
+                    <div class="col-md-5">
+
+                        @if($pengaduan->foto_proses)
+
+                            <img src="{{ asset('storage/'.$pengaduan->foto_proses) }}"
+                                 class="img-fluid rounded shadow">
+
+                        @else
+
+                            <div class="alert alert-light text-center">
+
+                                <i class="bi bi-image fs-1"></i>
+
+                                <p class="mb-0">
+
+                                    Belum ada foto proses
+
+                                </p>
+
+                            </div>
+
+                        @endif
+
+                    </div>
+
+                    <div class="col-md-7">
+
+                        <h5>{{ $pengaduan->judul_aduan }}</h5>
+
+                        <hr>
+
+                        <p>
+
+                            <strong>Status :</strong>
+
+                            <span class="badge bg-warning">
+
+                                Diproses
+
+                            </span>
+
+                        </p>
+
+                        <p>
+
+                            <strong>Tanggal :</strong>
+
+                            {{ $pengaduan->tanggal_proses
+                                ? \Carbon\Carbon::parse($pengaduan->tanggal_proses)->translatedFormat('d F Y H:i')
+                                : '-' }}
+
+                        </p>
+
+                        <label class="fw-bold">
+
+                            Catatan Admin
+
+                        </label>
+
+                        <div class="border rounded p-3 bg-light">
+
+                            {!! nl2br(e($pengaduan->catatan_proses ?? 'Belum ada catatan.')) !!}
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- Modal Selesai -->
+<div class="modal fade" id="modalSelesai" tabindex="-1">
+
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+
+        <div class="modal-content">
+
+            <div class="modal-header bg-success text-white">
+
+                <h5 class="modal-title">
+
+                    <i class="bi bi-check-circle-fill"></i>
+
+                    Pengaduan Telah Selesai
+
+                </h5>
+
+                <button class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+
+            </div>
+
+            <div class="modal-body">
+
+                <div class="row">
+
+                    <div class="col-md-5">
+
+                        @if($pengaduan->foto_selesai)
+
+                            <img src="{{ asset('storage/'.$pengaduan->foto_selesai) }}"
+                                 class="img-fluid rounded shadow">
+
+                        @else
+
+                            <div class="alert alert-light text-center">
+
+                                <i class="bi bi-image fs-1"></i>
+
+                                <p class="mb-0">
+
+                                    Belum ada foto penyelesaian
+
+                                </p>
+
+                            </div>
+
+                        @endif
+
+                    </div>
+
+                    <div class="col-md-7">
+
+                        <h5>{{ $pengaduan->judul_aduan }}</h5>
+
+                        <hr>
+
+                        <p>
+
+                            <strong>Status :</strong>
+
+                            <span class="badge bg-success">
+
+                                Selesai
+
+                            </span>
+
+                        </p>
+
+                        <p>
+
+                            <strong>Tanggal :</strong>
+
+                            {{ $pengaduan->tanggal_selesai
+                                ? \Carbon\Carbon::parse($pengaduan->tanggal_selesai)->translatedFormat('d F Y H:i')
+                                : '-' }}
+
+                        </p>
+
+                        <label class="fw-bold">
+
+                            Catatan Admin
+
+                        </label>
+
+                        <div class="border rounded p-3 bg-light">
+
+                            {!! nl2br(e($pengaduan->catatan_selesai ?? 'Belum ada catatan.')) !!}
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
 @endsection
