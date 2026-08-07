@@ -4,223 +4,201 @@
 
 @section('content')
 
-    <section class="pengaduan-page">
+<section class="pengaduan-page">
+    <div class="container">
+        <div class="permohonan-wrapper">
 
-        <div class="container">
+            <div class="pengaduan-card">
 
-            <div class="permohonan-wrapper">
+                <div class="pengaduan-header">
+                    <h4>Form Permohonan</h4>
+                    <p>
+                        Sampaikan permohonan kegiatan kepada BNNK Tulungagung
+                        dengan melengkapi seluruh data berikut.
+                    </p>
+                </div>
 
-                <!-- ================================================= -->
-                <!-- FORM -->
-                <!-- ================================================= -->
+                <div class="pengaduan-body">
 
-                <div class="pengaduan-card">
+                    <form action="{{ route('permohonan.konfirmasi') }}"
+                        method="POST"
+                        enctype="multipart/form-data">
 
-                    <div class="pengaduan-header">
+                        @csrf
 
-                        <h4>Form Permohonan</h4>
+                        <div class="row">
 
-                        <p>
-                            Sampaikan permohonan kegiatan kepada BNNK Tulungagung
-                            dengan melengkapi seluruh data berikut.
-                        </p>
-
-                    </div>
-
-                    <div class="pengaduan-body">
-
-                        <form action="#" method="POST" enctype="multipart/form-data">
-
-                            @csrf
-
-                            <div class="row">
-
-                                <div class="col-md-4 mb-3">
-                                    <label class="form-label">
-                                        Jenis Permohonan
-                                    </label>
-                                </div>
-
-                                <div class="col-md-8 mb-3">
-
-                                    <select class="form-select">
-
-                                        <option selected disabled>
-                                            Pilih Jenis Permohonan
-                                        </option>
-
-                                        <option>Permohonan Sosialisasi</option>
-
-                                        <option>Permohonan Rehabilitasi</option>
-
-
-                                    </select>
-
-                                </div>
-
-                                <div class="col-md-4 mb-3">
-
-                                    <label class="form-label">
-                                        Nama Penyelenggara
-                                    </label>
-
-                                </div>
-
-                                <div class="col-md-8 mb-3">
-
-                                    <input type="text" class="form-control" placeholder="Masukkan nama penyelenggara">
-
-                                </div>
-
-                                <div class="col-md-4 mb-3">
-
-                                    <label class="form-label">
-                                        Tanggal Kegiatan
-                                    </label>
-
-                                </div>
-
-                                <div class="col-md-8 mb-3">
-
-                                    <input type="date" class="form-control">
-
-                                </div>
-
-                                <div class="col-md-4 mb-3">
-
-                                    <label class="form-label">
-                                        Waktu Kegiatan
-                                    </label>
-
-                                </div>
-
-                                <div class="col-md-8 mb-3">
-
-                                    <input type="time" class="form-control">
-
-                                </div>
-
-                                <div class="col-md-4 mb-3">
-
-                                    <label class="form-label">
-                                        Tempat Penyelenggara
-                                    </label>
-
-                                </div>
-
-                                <div class="col-md-8 mb-3">
-
-                                    <input type="text" class="form-control" placeholder="Masukkan lokasi kegiatan">
-
-                                </div>
-
-                                <div class="col-md-4 mb-3">
-
-                                    <label class="form-label">
-                                        Nama Penanggung Jawab
-                                    </label>
-
-                                </div>
-
-                                <div class="col-md-8 mb-3">
-
-                                    <input type="text" class="form-control" placeholder="Nama penanggung jawab">
-
-                                </div>
-
-                                <div class="col-md-4 mb-3">
-
-                                    <label class="form-label">
-                                        No HP Penanggung Jawab
-                                    </label>
-
-                                </div>
-
-                                <div class="col-md-8 mb-3">
-
-                                    <input type="text" class="form-control" placeholder="08xxxxxxxxxx">
-
-                                </div>
-
-                                <div class="col-md-4 mb-3">
-
-                                    <label class="form-label">
-                                        Jumlah Peserta
-                                    </label>
-
-                                </div>
-
-                                <div class="col-md-8 mb-3">
-
-                                    <input type="number" class="form-control" placeholder="Jumlah peserta">
-
-                                </div>
-
-                                <div class="col-md-4 mb-3">
-
-                                    <label class="form-label">
-                                        Keterangan
-                                    </label>
-
-                                </div>
-
-                                <div class="col-md-8 mb-3">
-
-                                    <textarea class="form-control" rows="5"
-                                        placeholder="Tuliskan keterangan kegiatan"></textarea>
-
-                                </div>
-
-                                <div class="col-md-4 mb-3">
-
-                                    <label class="form-label">
-
-                                        Lampiran Surat Undangan
-
-                                    </label>
-
-                                </div>
-
-                                <div class="col-md-8 mb-3">
-
-                                    <input type="file" class="form-control">
-
-                                    <div class="form-note">
-
-                                        Format PDF / JPG / PNG maksimal 5 MB.
-
-                                    </div>
-
-                                </div>
-
+                            <!-- Jenis Permohonan -->
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Jenis Permohonan</label>
                             </div>
 
-                            <div class="form-navigation">
+                            <div class="col-md-8 mb-3">
+                                <select class="form-select" name="jenis_permohonan" required>
+                                    <option value="" selected disabled>
+                                        Pilih Jenis Permohonan
+                                    </option>
 
-                                <a href="{{ route('home') }}" class="btn-prev">
+                                    <option value="Permohonan Sosialisasi">
+                                        Permohonan Sosialisasi
+                                    </option>
 
-                                    Sebelumnya
-
-                                </a>
-
-                                <button class="btn-next">
-
-                                    Kirim Permohonan
-
-                                </button>
-
+                                    <option value="Permohonan Rehabilitasi">
+                                        Permohonan Rehabilitasi
+                                    </option>
+                                </select>
                             </div>
 
-                        </form>
+                            <!-- Nama Penyelenggara -->
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Nama Penyelenggara</label>
+                            </div>
 
-                    </div>
+                            <div class="col-md-8 mb-3">
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    name="nama_penyelenggara"
+                                    placeholder="Masukkan nama penyelenggara"
+                                    required>
+                            </div>
+
+                            <!-- Tanggal -->
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Tanggal Kegiatan</label>
+                            </div>
+
+                            <div class="col-md-8 mb-3">
+                                <input
+                                    type="date"
+                                    class="form-control"
+                                    name="tanggal_kegiatan"
+                                    required>
+                            </div>
+
+                            <!-- Waktu -->
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Waktu Kegiatan</label>
+                            </div>
+
+                            <div class="col-md-8 mb-3">
+                                <input
+                                    type="time"
+                                    class="form-control"
+                                    name="waktu_kegiatan"
+                                    required>
+                            </div>
+
+                            <!-- Tempat -->
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Tempat Penyelenggara</label>
+                            </div>
+
+                            <div class="col-md-8 mb-3">
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    name="tempat"
+                                    placeholder="Masukkan lokasi kegiatan"
+                                    required>
+                            </div>
+
+                            <!-- Penanggung Jawab -->
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Nama Penanggung Jawab</label>
+                            </div>
+
+                            <div class="col-md-8 mb-3">
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    name="penanggung_jawab"
+                                    placeholder="Nama penanggung jawab"
+                                    required>
+                            </div>
+
+                            <!-- No HP -->
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">No HP Penanggung Jawab</label>
+                            </div>
+
+                            <div class="col-md-8 mb-3">
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    name="no_hp"
+                                    placeholder="08xxxxxxxxxx"
+                                    required>
+                            </div>
+
+                            <!-- Jumlah Peserta -->
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Jumlah Peserta</label>
+                            </div>
+
+                            <div class="col-md-8 mb-3">
+                                <input
+                                    type="number"
+                                    class="form-control"
+                                    name="jumlah_peserta"
+                                    placeholder="Jumlah peserta"
+                                    required>
+                            </div>
+
+                            <!-- Keterangan -->
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Keterangan</label>
+                            </div>
+
+                            <div class="col-md-8 mb-3">
+                                <textarea
+                                    class="form-control"
+                                    name="keterangan"
+                                    rows="5"
+                                    placeholder="Tuliskan keterangan kegiatan"></textarea>
+                            </div>
+
+                            <!-- Lampiran -->
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">
+                                    Lampiran Surat Undangan
+                                </label>
+                            </div>
+
+                            <div class="col-md-8 mb-3">
+                                <input
+                                    type="file"
+                                    class="form-control"
+                                    name="lampiran"
+                                    accept=".pdf,.jpg,.jpeg,.png">
+
+                                <div class="form-note">
+                                    Format PDF / JPG / PNG maksimal 5 MB.
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="form-navigation">
+
+                            <a href="{{ route('home') }}" class="btn-prev">
+                                Sebelumnya
+                            </a>
+
+                            <button type="submit" class="btn-next">
+                                Selanjutnya
+                            </button>
+
+                        </div>
+
+                    </form>
 
                 </div>
 
             </div>
 
         </div>
-
-    </section>
+    </div>
+</section>
 
 @endsection

@@ -209,6 +209,9 @@ Route::prefix('permohonan')
         Route::get('/', [PermohonanController::class, 'create'])
             ->name('create');
 
+        Route::post('/konfirmasi', [PermohonanController::class, 'konfirmasi'])
+            ->name('konfirmasi');
+
         Route::post('/store', [PermohonanController::class, 'store'])
             ->name('store');
 
