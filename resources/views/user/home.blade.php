@@ -77,12 +77,12 @@
 
                     <div class="info-item">
                         <small>Total Aduan</small>
-                        <h3>500</h3>
+                        <h3>{{ $totalAduan }}</h3>
                     </div>
 
                     <div class="info-item">
                         <small>Total Permohonan</small>
-                        <h3>276</h3>
+                        <h3>{{ $totalPermohonan }}</h3>
                     </div>
 
                 </div>
