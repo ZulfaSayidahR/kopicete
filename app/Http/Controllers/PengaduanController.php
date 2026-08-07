@@ -26,9 +26,12 @@ class PengaduanController extends Controller
 
     public function create()
     {
-        return view('user.pengaduan.create');
-    }
+        $aduanTerbaru = Pengaduan::latest()
+            ->take(5)
+            ->get();
 
+        return view('user.pengaduan.create', compact('aduanTerbaru'));
+    }
     public function storeStep1(Request $request)
     {
         $request->validate([

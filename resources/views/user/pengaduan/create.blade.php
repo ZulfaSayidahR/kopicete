@@ -180,100 +180,78 @@
 
                 <aside class="sidebar-aduan">
 
-                    <div class="sidebar-header">
+                  <div class="sidebar-header">
 
-                        <h5>Aduan Terbaru</h5>
+    <h5>Aduan Terbaru</h5>
 
-                        <button class="btn-sidebar">
+    <a href="{{ route('pengaduan.tracking', $item->kode_aduan) }}"
+   class="btn-detail-laporan">
 
-                            <i class="bi bi-search"></i>
+    <i class="bi bi-search"></i>
+    Lacak Aduan
 
-                            Jelajah
+</a>
+</div>
 
-                        </button>
+@forelse($aduanTerbaru as $item)
 
-                    </div>
+<div class="aduan-item">
 
-                    <div class="aduan-item">
+    <span class="status
+        @if($item->status=='Menunggu') menunggu
+        @elseif($item->status=='Diproses') proses
+        @elseif($item->status=='Selesai') selesai
+        @elseif($item->status=='Ditolak') ditolak
+        @else verifikasi
+        @endif">
 
-                        <span class="status verifikasi">
-                            Verifikasi
-                        </span>
+        {{ $item->status }}
 
-                        <h6>
-                            Dugaan Penyalahgunaan Narkotika
-                        </h6>
+    </span>
 
-                        <small>
+    <h6>
 
-                            <i class="bi bi-geo-alt-fill"></i>
+        {{ Str::limit($item->judul_aduan,40) }}
 
-                            Terminal Gayatri
+    </h6>
 
-                        </small>
-                        <small>
-                            <i class="bi bi-calendar-event-fill"></i>
-                            09 Juli 2026
-                        </small>
+    <small>
 
-                        <button class="btn-detail-laporan" data-bs-toggle="modal" data-bs-target="#detailLaporanModal">
+        <i class="bi bi-geo-alt-fill"></i>
 
-                            <i class="bi bi-eye-fill"></i>
-                            Lihat Detail
+        {{ $item->kecamatan->nama_kecamatan ?? '-' }}
 
-                        </button>
+    </small>
 
-                    </div>
+    <small>
 
-                    <div class="aduan-item">
+        <i class="bi bi-calendar-event-fill"></i>
 
-                        <span class="status selesai">
-                            Selesai
-                        </span>
+        {{ $item->created_at->translatedFormat('d F Y') }}
 
-                        <h6>
-                            Dugaan Peredaran Gelap
-                        </h6>
+    </small>
 
-                        <small>
+    <a href="{{ route('pengaduan.tracking',$item->kode_aduan) }}"
+class="btn-detail-laporan">
 
-                            <i class="bi bi-geo-alt-fill"></i>
+    <i class="bi bi-eye-fill"></i>
 
-                            Kecamatan Campurdarat
+    Lihat Tracking
 
-                        </small>
-                        <small>
-                            <i class="bi bi-calendar-event-fill"></i>
-                            01 Juli 2026
-                        </small>
+</a>
 
-                    </div>
+</div>
 
-                    <div class="aduan-item">
+@empty
 
-                        <span class="status proses">
-                            Diproses
-                        </span>
+<div class="alert alert-light">
 
-                        <h6>
-                            Dugaan Penyalahgunaan
-                        </h6>
+    Belum ada aduan.
 
-                        <small>
+</div>
 
-                            <small>
-                                <i class="bi bi-geo-alt-fill"></i>
-                                Kecamatan Bandung
-                            </small>
+@endforelse
 
-                            <small>
-                                <i class="bi bi-calendar-event-fill"></i>
-                                09 Juli 2026
-                            </small>
-
-                        </small>
-
-                    </div>
 
                 </aside>
 
