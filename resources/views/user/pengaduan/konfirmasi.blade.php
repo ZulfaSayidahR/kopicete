@@ -11,8 +11,8 @@
             <div class="pengaduan-wrapper">
 
                 <!-- ==========================================
-                                                                                                FORM KONFIRMASI
-                                                                                        =========================================== -->
+                                                                                                    FORM KONFIRMASI
+                                                                                            =========================================== -->
 
                 <div class="pengaduan-card">
 
@@ -214,13 +214,9 @@
                                     </h6>
 
 
-                                    <p>
+                                    <strong>Alamat :</strong>
 
-                                        <strong>Alamat :</strong>
-
-                                        {{ $pengaduan->alamat_kejadian ?? '-' }}
-
-                                    </p>
+                                    {{ $step2['alamat_kejadian'] ?? '-' }}
 
 
 
@@ -340,8 +336,8 @@
                 </div>
 
                 <!-- ==========================================
-                                                                                                SIDEBAR
-                                                                                        =========================================== -->
+                                                                                                    SIDEBAR
+                                                                                            =========================================== -->
 
                 <aside class="sidebar-aduan">
 
