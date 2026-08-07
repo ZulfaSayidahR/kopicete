@@ -11,8 +11,8 @@
             <div class="pengaduan-wrapper">
 
                 <!-- ==========================================
-                                                                        FORM PENGADUAN
-                                                                =========================================== -->
+                                                                            FORM PENGADUAN
+                                                                    =========================================== -->
 
                 <div class="pengaduan-card">
 
@@ -76,7 +76,7 @@
 
                         <!-- FORM -->
                         <form action="{{ route('pengaduan.storeStep1') }}" method="POST">
-    
+
                             @csrf
 
                             <div class="row">
@@ -100,74 +100,66 @@
                                 </div>
                                 <div class="mb-3">
 
-    <label class="form-label">
+                                    <label class="form-label">
 
-        Topik Aduan
+                                        Topik Aduan
 
-    </label>
+                                    </label>
 
-    <select
-        class="form-select"
-        name="topik_aduan">
+                                    <select class="form-select" name="topik_aduan">
 
-        <option value="">-- Pilih Topik --</option>
+                                        <option value="">-- Pilih Topik --</option>
 
-        <option value="Penyalahgunaan Narkotika"
-            {{ session('pengaduan.step1.topik_aduan')=='Penyalahgunaan Narkotika'?'selected':'' }}>
-            Penyalahgunaan Narkotika
-        </option>
+                                        <option value="Penyalahgunaan Narkotika" {{ session('pengaduan.step1.topik_aduan') == 'Penyalahgunaan Narkotika' ? 'selected' : '' }}>
+                                            Penyalahgunaan Narkotika
+                                        </option>
 
-        <option value="Peredaran Gelap Narkotika"
-            {{ session('pengaduan.step1.topik_aduan')=='Peredaran Gelap Narkotika'?'selected':'' }}>
-            Peredaran Gelap Narkotika
-        </option>
+                                        <option value="Peredaran Gelap Narkotika" {{ session('pengaduan.step1.topik_aduan') == 'Peredaran Gelap Narkotika' ? 'selected' : '' }}>
+                                            Peredaran Gelap Narkotika
+                                        </option>
 
-        <option value="Pelanggaran Internal"
-            {{ session('pengaduan.step1.topik_aduan')=='Pelanggaran Internal'?'selected':'' }}>
-            Pelanggaran Internal
-        </option>
+                                        <option value="Pelanggaran Internal" {{ session('pengaduan.step1.topik_aduan') == 'Pelanggaran Internal' ? 'selected' : '' }}>
+                                            Pelanggaran Internal
+                                        </option>
 
-    </select>
+                                    </select>
 
-    @error('topik_aduan')
-        <small class="text-danger">{{ $message }}</small>
-    @enderror
+                                    @error('topik_aduan')
+                                        <small class="text-danger">{{ $message }}</small>
+                                    @enderror
 
-</div>
+                                </div>
 
                             </div>
 
-                           <div class="mb-3">
+                            <div class="mb-3">
 
-    <label class="form-label">
+                                <label class="form-label">
 
-        Detail Aduan
+                                    Detail Aduan
 
-    </label>
+                                </label>
 
-    <textarea
-        name="detail_aduan"
-        rows="6"
-        class="form-control"
-        placeholder="Jelaskan kronologi kejadian secara lengkap">{{ old('detail_aduan', session('pengaduan.step1.detail_aduan')) }}</textarea>
+                                <textarea name="detail_aduan" rows="6" class="form-control"
+                                    placeholder="Jelaskan kronologi kejadian secara lengkap">{{ old('detail_aduan', session('pengaduan.step1.detail_aduan')) }}</textarea>
 
-    @error('detail_aduan')
-        <small class="text-danger">{{ $message }}</small>
-    @enderror
+                                @error('detail_aduan')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
 
-</div>
+                            </div>
 
-                          <div class="form-navigation">
+                            <div class="form-navigation">
 
-    <button type="submit" class="btn-next">
+                                <button type="submit" class="btn-next">
 
-        Selanjutnya
+                                    Selanjutnya
 
-    </button>
+                                </button>
 
-</div>
+                            </div>
 
-</form>
+                        </form>
                         </form>
 
                     </div>
@@ -175,8 +167,8 @@
                 </div>
 
                 <!-- ==========================================
-                                                                        SIDEBAR
-                                                                =========================================== -->
+                                                                            SIDEBAR
+                                                                    =========================================== -->
 
                 <aside class="sidebar-aduan">
 
@@ -184,96 +176,74 @@
 
                         <h5>Aduan Terbaru</h5>
 
-                        <button class="btn-sidebar">
+                        <a href="#tracking-section" class="btn-sidebar">
 
                             <i class="bi bi-search"></i>
 
-                            Jelajah
+                            Lacak Aduan
 
-                        </button>
-
-                    </div>
-
-                    <div class="aduan-item">
-
-                        <span class="status verifikasi">
-                            Verifikasi
-                        </span>
-
-                        <h6>
-                            Dugaan Penyalahgunaan Narkotika
-                        </h6>
-
-                        <small>
-
-                            <i class="bi bi-geo-alt-fill"></i>
-
-                            Terminal Gayatri
-
-                        </small>
-                        <small>
-                            <i class="bi bi-calendar-event-fill"></i>
-                            09 Juli 2026
-                        </small>
-
-                        <button class="btn-detail-laporan" data-bs-toggle="modal" data-bs-target="#detailLaporanModal">
-
-                            <i class="bi bi-eye-fill"></i>
-                            Lihat Detail
-
-                        </button>
+                        </a>
 
                     </div>
 
-                    <div class="aduan-item">
+                    @forelse($aduanTerbaru as $item)
 
-                        <span class="status selesai">
-                            Selesai
-                        </span>
+                                <div class="aduan-item">
 
-                        <h6>
-                            Dugaan Peredaran Gelap
-                        </h6>
+                                    <span class="status
+                        @if($item->status == 'Menunggu') menunggu
+                        @elseif($item->status == 'Diproses') proses
+                        @elseif($item->status == 'Selesai') selesai
+                        @elseif($item->status == 'Ditolak') ditolak
+                        @else verifikasi
+                        @endif">
 
-                        <small>
+                                        {{ $item->status }}
 
-                            <i class="bi bi-geo-alt-fill"></i>
+                                    </span>
 
-                            Kecamatan Campurdarat
+                                    <h6>
 
-                        </small>
-                        <small>
-                            <i class="bi bi-calendar-event-fill"></i>
-                            01 Juli 2026
-                        </small>
+                                        {{ Str::limit($item->judul_aduan, 40) }}
 
-                    </div>
+                                    </h6>
 
-                    <div class="aduan-item">
+                                    <small>
 
-                        <span class="status proses">
-                            Diproses
-                        </span>
+                                        <i class="bi bi-geo-alt-fill"></i>
 
-                        <h6>
-                            Dugaan Penyalahgunaan
-                        </h6>
+                                        {{ $item->kecamatan->nama_kecamatan ?? '-' }}
 
-                        <small>
+                                    </small>
 
-                            <small>
-                                <i class="bi bi-geo-alt-fill"></i>
-                                Kecamatan Bandung
-                            </small>
+                                    <small>
 
-                            <small>
-                                <i class="bi bi-calendar-event-fill"></i>
-                                09 Juli 2026
-                            </small>
+                                        <i class="bi bi-calendar-event-fill"></i>
 
-                        </small>
+                                        {{ $item->created_at->translatedFormat('d F Y') }}
 
-                    </div>
+                                    </small>
+
+                                    <a href="{{ route('pengaduan.tracking', $item->kode_aduan) }}" class="btn-detail-laporan">
+
+                                        <i class="bi bi-eye-fill"></i>
+
+                                        Lihat Tracking
+
+                                    </a>
+
+                                </div>
+
+                    @empty
+
+                        <div class="alert alert-light">
+
+                            Belum ada aduan.
+
+                        </div>
+
+                    @endforelse
+
 
                 </aside>
 
