@@ -11,8 +11,8 @@
             <div class="pengaduan-wrapper">
 
                 <!-- =========================================
-                                                                FORM STEP 2
-                                                        ========================================== -->
+                                                                        FORM STEP 2
+                                                                ========================================== -->
 
                 <div class="pengaduan-card">
 
@@ -135,21 +135,45 @@
 
                             </div>
 
-                            <div class="mb-3">
+                            <div class="mb-4">
 
-                                <label class="form-label">
+                                <label class="form-label fw-semibold">
 
-                                    Lampiran Gambar
+                                    <i class="bi bi-paperclip"></i>
+                                    Lampiran Bukti
 
                                 </label>
 
-                                <input type="file" class="form-control file-upload" name="lampiran"
-                                    accept=".jpg,.jpeg,.png">
+                                <input type="file" name="lampiran" id="lampiran"
+                                    class="form-control @error('lampiran') is-invalid @enderror" accept=".jpg,.jpeg,.png">
 
-                                <div class="form-note">
+                                @error('lampiran')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
 
-                                    Maksimal 5MB.
-                                    Format JPG, JPEG, PNG.
+                                <small class="text-muted d-block mt-2">
+
+                                    Maksimal <strong>5 MB</strong>.<br>
+                                    Format yang diperbolehkan:
+                                    <strong>JPG, JPEG, PNG</strong>.
+
+                                </small>
+
+                                <div id="previewLampiran" class="mt-3 d-none">
+
+                                    <div class="card shadow-sm">
+
+                                        <div class="card-body text-center">
+
+                                            <img id="previewImage" class="img-fluid rounded" style="max-height:300px;">
+
+                                            <p id="namaFile" class="mt-3 mb-0 text-secondary fw-semibold"></p>
+
+                                        </div>
+
+                                    </div>
 
                                 </div>
 
@@ -174,29 +198,29 @@
                             </div>
                             <!-- <div class="mb-4">
 
-                                        <label class="form-label">
+                                                <label class="form-label">
 
-                                            Verifikasi Keamanan
-
-                                        </label>
-
-                                        <div class="border rounded p-3">
-
-                                            <div class="form-check">
-
-                                                <input class="form-check-input" type="checkbox" required>
-
-                                                <label class="form-check-label">
-
-                                                    Saya bukan robot
+                                                    Verifikasi Keamanan
 
                                                 </label>
 
-                                            </div>
+                                                <div class="border rounded p-3">
 
-                                        </div>
+                                                    <div class="form-check">
 
-                                    </div> -->
+                                                        <input class="form-check-input" type="checkbox" required>
+
+                                                        <label class="form-check-label">
+
+                                                            Saya bukan robot
+
+                                                        </label>
+
+                                                    </div>
+
+                                                </div>
+
+                                            </div> -->
 
                             <div class="form-navigation">
 
@@ -221,8 +245,8 @@
                 </div>
 
                 <!-- ==========================================
-                                                                                                SIDEBAR
-                                                                                        =========================================== -->
+                                                                                                        SIDEBAR
+                                                                                                =========================================== -->
 
                 <aside class="sidebar-aduan">
 
@@ -337,20 +361,20 @@
 
 
                 desa.innerHTML = `
-                                <option>
-                                    Memuat desa...
-                                </option>
-                            `;
+                                        <option>
+                                            Memuat desa...
+                                        </option>
+                                    `;
 
 
 
                 if (idKecamatan == '') {
 
                     desa.innerHTML = `
-                                    <option>
-                                        Pilih Kecamatan Terlebih Dahulu
-                                    </option>
-                                `;
+                                            <option>
+                                                Pilih Kecamatan Terlebih Dahulu
+                                            </option>
+                                        `;
 
                     return;
 
@@ -371,10 +395,10 @@
 
 
                         desa.innerHTML = `
-                                    <option value="">
-                                        Pilih Desa
-                                    </option>
-                                `;
+                                            <option value="">
+                                                Pilih Desa
+                                            </option>
+                                        `;
 
 
 
@@ -383,13 +407,13 @@
 
                             desa.innerHTML += `
 
-                                        <option value="${item.id_desa}">
+                                                <option value="${item.id_desa}">
 
-                                            ${item.nama_desa}
+                                                    ${item.nama_desa}
 
-                                        </option>
+                                                </option>
 
-                                    `;
+                                            `;
 
 
                         });
@@ -402,6 +426,28 @@
 
             });
 
+
+        document.getElementById('lampiran').addEventListener('change', function (e) {
+
+            const file = e.target.files[0];
+
+            if (!file) return;
+
+            document.getElementById('namaFile').innerHTML = file.name;
+
+            const reader = new FileReader();
+
+            reader.onload = function (event) {
+
+                document.getElementById('previewImage').src = event.target.result;
+
+                document.getElementById('previewLampiran').classList.remove('d-none');
+
+            }
+
+            reader.readAsDataURL(file);
+
+        });
 
     </script>
 

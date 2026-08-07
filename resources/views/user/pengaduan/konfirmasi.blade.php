@@ -11,8 +11,8 @@
             <div class="pengaduan-wrapper">
 
                 <!-- ==========================================
-                                                                                                    FORM KONFIRMASI
-                                                                                            =========================================== -->
+                                                                                                        FORM KONFIRMASI
+                                                                                                =========================================== -->
 
                 <div class="pengaduan-card">
 
@@ -240,23 +240,51 @@
 
 
 
-                                @if(isset($step2['lampiran']))
-
+                                @if(!empty($step2['lampiran']))
 
                                     <div class="mt-4">
 
-
-                                        <h6>
-                                            Lampiran
+                                        <h6 class="fw-bold mb-3">
+                                            <i class="bi bi-paperclip"></i>
+                                            Lampiran Bukti
                                         </h6>
 
+                                        <div class="card border-0 shadow-sm">
 
-                                        <img src="{{ asset('storage/' . $step2['lampiran']) }}" class="img-fluid rounded"
-                                            width="250">
+                                            <div class="card-body text-center">
 
+                                                @if(Storage::disk('public')->exists($step2['lampiran']))
+
+                                                    <img src="{{ asset('storage/' . $step2['lampiran']) }}" alt="Lampiran Bukti"
+                                                        class="img-fluid rounded shadow-sm"
+                                                        style="max-height:350px; object-fit:contain;">
+
+                                                    <div class="mt-3">
+                                                        <a href="{{ asset('storage/' . $step2['lampiran']) }}" target="_blank"
+                                                            class="btn btn-primary btn-sm">
+
+                                                            <i class="bi bi-arrows-fullscreen"></i>
+                                                            Lihat Ukuran Penuh
+
+                                                        </a>
+                                                    </div>
+
+                                                @else
+
+                                                    <div class="alert alert-warning mb-0">
+
+                                                        <i class="bi bi-exclamation-triangle-fill"></i>
+                                                        File lampiran tidak ditemukan.
+
+                                                    </div>
+
+                                                @endif
+
+                                            </div>
+
+                                        </div>
 
                                     </div>
-
 
                                 @endif
 
@@ -336,8 +364,8 @@
                 </div>
 
                 <!-- ==========================================
-                                                                                                    SIDEBAR
-                                                                                            =========================================== -->
+                                                                                                        SIDEBAR
+                                                                                                =========================================== -->
 
                 <aside class="sidebar-aduan">
 

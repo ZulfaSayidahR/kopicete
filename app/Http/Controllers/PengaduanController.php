@@ -96,9 +96,7 @@ class PengaduanController extends Controller
         $lampiran = null;
 
         if ($request->hasFile('lampiran')) {
-
-            $lampiran = $request
-                ->file('lampiran')
+            $lampiran = $request->file('lampiran')
                 ->store('lampiran', 'public');
         }
 
