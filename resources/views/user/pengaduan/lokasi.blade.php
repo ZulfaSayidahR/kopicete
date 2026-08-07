@@ -11,8 +11,8 @@
             <div class="pengaduan-wrapper">
 
                 <!-- =========================================
-                                                                        FORM STEP 2
-                                                                ========================================== -->
+                                                                            FORM STEP 2
+                                                                    ========================================== -->
 
                 <div class="pengaduan-card">
 
@@ -198,29 +198,29 @@
                             </div>
                             <!-- <div class="mb-4">
 
-                                                <label class="form-label">
+                                                    <label class="form-label">
 
-                                                    Verifikasi Keamanan
+                                                        Verifikasi Keamanan
 
-                                                </label>
+                                                    </label>
 
-                                                <div class="border rounded p-3">
+                                                    <div class="border rounded p-3">
 
-                                                    <div class="form-check">
+                                                        <div class="form-check">
 
-                                                        <input class="form-check-input" type="checkbox" required>
+                                                            <input class="form-check-input" type="checkbox" required>
 
-                                                        <label class="form-check-label">
+                                                            <label class="form-check-label">
 
-                                                            Saya bukan robot
+                                                                Saya bukan robot
 
-                                                        </label>
+                                                            </label>
+
+                                                        </div>
 
                                                     </div>
 
-                                                </div>
-
-                                            </div> -->
+                                                </div> -->
 
                             <div class="form-navigation">
 
@@ -245,8 +245,8 @@
                 </div>
 
                 <!-- ==========================================
-                                                                                                        SIDEBAR
-                                                                                                =========================================== -->
+                                                                                                            SIDEBAR
+                                                                                                    =========================================== -->
 
                 <aside class="sidebar-aduan">
 
@@ -254,91 +254,181 @@
 
                         <h5>Aduan Terbaru</h5>
 
-                        <button class="btn-sidebar">
+                        <a href="#tracking-section" class="btn-sidebar">
 
                             <i class="bi bi-search"></i>
 
-                            Jelajah
+                            Lacak Aduan
 
-                        </button>
-
-                    </div>
-
-                    <div class="aduan-item">
-
-                        <span class="status verifikasi">
-                            Verifikasi
-                        </span>
-
-                        <h6>
-                            Dugaan Penyalahgunaan Narkotika
-                        </h6>
-
-                        <small>
-
-                            <i class="bi bi-geo-alt-fill"></i>
-
-                            Terminal Gayatri
-
-                        </small>
-                        <small>
-                            <i class="bi bi-calendar-event-fill"></i>
-                            09 Juli 2026
-                        </small>
+                        </a>
 
                     </div>
 
-                    <div class="aduan-item">
+                    @forelse($aduanTerbaru as $item)
 
-                        <span class="status selesai">
-                            Selesai
-                        </span>
+                        <div class="aduan-item">
 
-                        <h6>
-                            Dugaan Peredaran Gelap
-                        </h6>
+                            <span class="status
+                                @if($item->status == 'Menunggu') menunggu
+                                @elseif($item->status == 'Diproses') proses
+                                @elseif($item->status == 'Selesai') selesai
+                                @elseif($item->status == 'Ditolak') ditolak
+                                @else verifikasi
+                                @endif">
 
-                        <small>
+                                {{ $item->status }}
 
-                            <i class="bi bi-geo-alt-fill"></i>
+                            </span>
 
-                            Kecamatan Campurdarat
+                            <h6>
 
-                        </small>
-                        <small>
-                            <i class="bi bi-calendar-event-fill"></i>
-                            01 Juli 2026
-                        </small>
+                                {{ Str::limit($item->judul_aduan, 40) }}
 
-                    </div>
-
-                    <div class="aduan-item">
-
-                        <span class="status proses">
-                            Diproses
-                        </span>
-
-                        <h6>
-                            Dugaan Penyalahgunaan
-                        </h6>
-
-                        <small>
+                            </h6>
 
                             <small>
+
                                 <i class="bi bi-geo-alt-fill"></i>
-                                Kecamatan Bandung
+
+                                {{ $item->kecamatan->nama_kecamatan ?? '-' }}
+
                             </small>
 
                             <small>
+
                                 <i class="bi bi-calendar-event-fill"></i>
-                                09 Juli 2026
+
+                                {{ $item->created_at->translatedFormat('d F Y') }}
+
                             </small>
 
-                        </small>
+                            <a href="{{ route('pengaduan.tracking', $item->kode_aduan) }}" class="btn-detail-laporan">
 
-                    </div>
+                                <i class="bi bi-eye-fill"></i>
+
+                                Lihat Tracking
+
+                            </a>
+
+                        </div>
+
+                    @empty
+
+                        <div class="alert alert-light">
+
+                            Belum ada aduan.
+
+                        </div>
+
+                    @endforelse
+
 
                 </aside>
+
+                <!-- Modal Detail Aduan -->
+                <div class="modal fade" id="detailLaporanModal" tabindex="-1">
+
+                    <div class="modal-dialog modal-lg modal-dialog-centered">
+
+                        <div class="modal-content">
+
+                            <div class="modal-header">
+
+                                <h5 class="modal-title">
+                                    Detail Tindak Lanjut Aduan
+                                </h5>
+
+                                <button type="button" class="btn-close" data-bs-dismiss="modal">
+                                </button>
+
+                            </div>
+
+                            <div class="modal-body">
+
+                                <div class="row">
+
+                                    <!-- Gambar -->
+                                    <div class="col-md-5">
+
+                                        <img src="{{ asset('images/bukti-default.jpg') }}" class="img-fluid rounded shadow"
+                                            alt="Bukti">
+
+                                    </div>
+
+                                    <!-- Informasi -->
+                                    <div class="col-md-7">
+
+                                        <h5>
+                                            Dugaan Penyalahgunaan Narkotika
+                                        </h5>
+
+                                        <hr>
+
+                                        <p>
+
+                                            <strong>Status :</strong>
+
+                                            <span class="badge bg-warning text-dark">
+
+                                                Verifikasi
+
+                                            </span>
+
+                                        </p>
+
+                                        <p>
+
+                                            <strong>Admin :</strong>
+
+                                            Admin BNNK Tulungagung
+
+                                        </p>
+
+                                        <p>
+
+                                            <strong>Tanggal Penanganan :</strong>
+
+                                            10 Juli 2026
+
+                                        </p>
+
+                                        <label class="fw-bold">
+
+                                            Catatan Admin
+
+                                        </label>
+
+                                        <div class="border rounded p-3 bg-light">
+
+                                            Tim telah melakukan verifikasi awal
+                                            terhadap laporan yang diterima.
+                                            Saat ini laporan sedang dalam proses
+                                            pendalaman informasi sebelum dilakukan
+                                            tindak lanjut lapangan.
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="modal-footer">
+
+                                <button class="btn btn-secondary" data-bs-dismiss="modal">
+
+                                    Tutup
+
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
 
 
             </div>
@@ -361,20 +451,20 @@
 
 
                 desa.innerHTML = `
-                                        <option>
-                                            Memuat desa...
-                                        </option>
-                                    `;
+                                            <option>
+                                                Memuat desa...
+                                            </option>
+                                        `;
 
 
 
                 if (idKecamatan == '') {
 
                     desa.innerHTML = `
-                                            <option>
-                                                Pilih Kecamatan Terlebih Dahulu
-                                            </option>
-                                        `;
+                                                <option>
+                                                    Pilih Kecamatan Terlebih Dahulu
+                                                </option>
+                                            `;
 
                     return;
 
@@ -395,10 +485,10 @@
 
 
                         desa.innerHTML = `
-                                            <option value="">
-                                                Pilih Desa
-                                            </option>
-                                        `;
+                                                <option value="">
+                                                    Pilih Desa
+                                                </option>
+                                            `;
 
 
 
@@ -407,13 +497,13 @@
 
                             desa.innerHTML += `
 
-                                                <option value="${item.id_desa}">
+                                                    <option value="${item.id_desa}">
 
-                                                    ${item.nama_desa}
+                                                        ${item.nama_desa}
 
-                                                </option>
+                                                    </option>
 
-                                            `;
+                                                `;
 
 
                         });

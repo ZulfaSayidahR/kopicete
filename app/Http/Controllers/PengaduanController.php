@@ -27,7 +27,7 @@ class PengaduanController extends Controller
     public function create()
     {
         $aduanTerbaru = Pengaduan::latest()
-            ->take(5)
+
             ->get();
 
         return view('user.pengaduan.create', compact('aduanTerbaru'));
@@ -59,9 +59,13 @@ class PengaduanController extends Controller
     {
         $kecamatan = Kecamatan::all();
 
+        $aduanTerbaru = Pengaduan::with('kecamatan')
+            ->latest()
+            ->get();
+
         return view(
             'user.pengaduan.lokasi',
-            compact('kecamatan')
+            compact('kecamatan', 'aduanTerbaru')
         );
     }
 
@@ -123,9 +127,12 @@ class PengaduanController extends Controller
 
     public function dataPribadi()
     {
-        return view('user.pengaduan.datapribadi');
-    }
+        $aduanTerbaru = Pengaduan::latest()
+            ->latest()
+            ->get();
 
+        return view('user.pengaduan.datapribadi', compact('aduanTerbaru'));
+    }
     public function storeStep3(Request $request)
     {
         $request->validate([
@@ -155,6 +162,12 @@ class PengaduanController extends Controller
 
     public function konfirmasi()
     {
+        // Ambil data aduan terbaru untuk sidebar
+        $aduanTerbaru = Pengaduan::with('kecamatan')
+            ->latest()
+            ->get();
+
+        // Ambil data dari session
         $step1 = Session::get('pengaduan.step1');
         $step2 = Session::get('pengaduan.step2');
         $step3 = Session::get('pengaduan.step3');
@@ -172,7 +185,8 @@ class PengaduanController extends Controller
             'step2',
             'step3',
             'kecamatan',
-            'desa'
+            'desa',
+            'aduanTerbaru'
         ));
     }
     /*

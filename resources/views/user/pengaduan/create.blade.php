@@ -11,8 +11,8 @@
             <div class="pengaduan-wrapper">
 
                 <!-- ==========================================
-                                                                        FORM PENGADUAN
-                                                                =========================================== -->
+                                                                            FORM PENGADUAN
+                                                                    =========================================== -->
 
                 <div class="pengaduan-card">
 
@@ -76,7 +76,7 @@
 
                         <!-- FORM -->
                         <form action="{{ route('pengaduan.storeStep1') }}" method="POST">
-    
+
                             @csrf
 
                             <div class="row">
@@ -100,74 +100,66 @@
                                 </div>
                                 <div class="mb-3">
 
-    <label class="form-label">
+                                    <label class="form-label">
 
-        Topik Aduan
+                                        Topik Aduan
 
-    </label>
+                                    </label>
 
-    <select
-        class="form-select"
-        name="topik_aduan">
+                                    <select class="form-select" name="topik_aduan">
 
-        <option value="">-- Pilih Topik --</option>
+                                        <option value="">-- Pilih Topik --</option>
 
-        <option value="Penyalahgunaan Narkotika"
-            {{ session('pengaduan.step1.topik_aduan')=='Penyalahgunaan Narkotika'?'selected':'' }}>
-            Penyalahgunaan Narkotika
-        </option>
+                                        <option value="Penyalahgunaan Narkotika" {{ session('pengaduan.step1.topik_aduan') == 'Penyalahgunaan Narkotika' ? 'selected' : '' }}>
+                                            Penyalahgunaan Narkotika
+                                        </option>
 
-        <option value="Peredaran Gelap Narkotika"
-            {{ session('pengaduan.step1.topik_aduan')=='Peredaran Gelap Narkotika'?'selected':'' }}>
-            Peredaran Gelap Narkotika
-        </option>
+                                        <option value="Peredaran Gelap Narkotika" {{ session('pengaduan.step1.topik_aduan') == 'Peredaran Gelap Narkotika' ? 'selected' : '' }}>
+                                            Peredaran Gelap Narkotika
+                                        </option>
 
-        <option value="Pelanggaran Internal"
-            {{ session('pengaduan.step1.topik_aduan')=='Pelanggaran Internal'?'selected':'' }}>
-            Pelanggaran Internal
-        </option>
+                                        <option value="Pelanggaran Internal" {{ session('pengaduan.step1.topik_aduan') == 'Pelanggaran Internal' ? 'selected' : '' }}>
+                                            Pelanggaran Internal
+                                        </option>
 
-    </select>
+                                    </select>
 
-    @error('topik_aduan')
-        <small class="text-danger">{{ $message }}</small>
-    @enderror
+                                    @error('topik_aduan')
+                                        <small class="text-danger">{{ $message }}</small>
+                                    @enderror
 
-</div>
+                                </div>
 
                             </div>
 
-                           <div class="mb-3">
+                            <div class="mb-3">
 
-    <label class="form-label">
+                                <label class="form-label">
 
-        Detail Aduan
+                                    Detail Aduan
 
-    </label>
+                                </label>
 
-    <textarea
-        name="detail_aduan"
-        rows="6"
-        class="form-control"
-        placeholder="Jelaskan kronologi kejadian secara lengkap">{{ old('detail_aduan', session('pengaduan.step1.detail_aduan')) }}</textarea>
+                                <textarea name="detail_aduan" rows="6" class="form-control"
+                                    placeholder="Jelaskan kronologi kejadian secara lengkap">{{ old('detail_aduan', session('pengaduan.step1.detail_aduan')) }}</textarea>
 
-    @error('detail_aduan')
-        <small class="text-danger">{{ $message }}</small>
-    @enderror
+                                @error('detail_aduan')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
 
-</div>
+                            </div>
 
-                          <div class="form-navigation">
+                            <div class="form-navigation">
 
-    <button type="submit" class="btn-next">
+                                <button type="submit" class="btn-next">
 
-        Selanjutnya
+                                    Selanjutnya
 
-    </button>
+                                </button>
 
-</div>
+                            </div>
 
-</form>
+                        </form>
                         </form>
 
                     </div>
@@ -175,82 +167,82 @@
                 </div>
 
                 <!-- ==========================================
-                                                                        SIDEBAR
-                                                                =========================================== -->
+                                                                            SIDEBAR
+                                                                    =========================================== -->
 
                 <aside class="sidebar-aduan">
 
-                  <div class="sidebar-header">
+                    <div class="sidebar-header">
 
-    <h5>Aduan Terbaru</h5>
+                        <h5>Aduan Terbaru</h5>
 
-    <a href="{{ route('pengaduan.tracking', $item->kode_aduan) }}"
-   class="btn-detail-laporan">
+                        <a href="#tracking-section" class="btn-sidebar">
 
-    <i class="bi bi-search"></i>
-    Lacak Aduan
+                            <i class="bi bi-search"></i>
 
-</a>
-</div>
+                            Lacak Aduan
 
-@forelse($aduanTerbaru as $item)
+                        </a>
 
-<div class="aduan-item">
+                    </div>
 
-    <span class="status
-        @if($item->status=='Menunggu') menunggu
-        @elseif($item->status=='Diproses') proses
-        @elseif($item->status=='Selesai') selesai
-        @elseif($item->status=='Ditolak') ditolak
-        @else verifikasi
-        @endif">
+                    @forelse($aduanTerbaru as $item)
 
-        {{ $item->status }}
+                                <div class="aduan-item">
 
-    </span>
+                                    <span class="status
+                        @if($item->status == 'Menunggu') menunggu
+                        @elseif($item->status == 'Diproses') proses
+                        @elseif($item->status == 'Selesai') selesai
+                        @elseif($item->status == 'Ditolak') ditolak
+                        @else verifikasi
+                        @endif">
 
-    <h6>
+                                        {{ $item->status }}
 
-        {{ Str::limit($item->judul_aduan,40) }}
+                                    </span>
 
-    </h6>
+                                    <h6>
 
-    <small>
+                                        {{ Str::limit($item->judul_aduan, 40) }}
 
-        <i class="bi bi-geo-alt-fill"></i>
+                                    </h6>
 
-        {{ $item->kecamatan->nama_kecamatan ?? '-' }}
+                                    <small>
 
-    </small>
+                                        <i class="bi bi-geo-alt-fill"></i>
 
-    <small>
+                                        {{ $item->kecamatan->nama_kecamatan ?? '-' }}
 
-        <i class="bi bi-calendar-event-fill"></i>
+                                    </small>
 
-        {{ $item->created_at->translatedFormat('d F Y') }}
+                                    <small>
 
-    </small>
+                                        <i class="bi bi-calendar-event-fill"></i>
 
-    <a href="{{ route('pengaduan.tracking',$item->kode_aduan) }}"
-class="btn-detail-laporan">
+                                        {{ $item->created_at->translatedFormat('d F Y') }}
 
-    <i class="bi bi-eye-fill"></i>
+                                    </small>
 
-    Lihat Tracking
+                                    <a href="{{ route('pengaduan.tracking', $item->kode_aduan) }}" class="btn-detail-laporan">
 
-</a>
+                                        <i class="bi bi-eye-fill"></i>
 
-</div>
+                                        Lihat Tracking
 
-@empty
+                                    </a>
 
-<div class="alert alert-light">
+                                </div>
 
-    Belum ada aduan.
+                    @empty
 
-</div>
+                        <div class="alert alert-light">
 
-@endforelse
+                            Belum ada aduan.
+
+                        </div>
+
+                    @endforelse
 
 
                 </aside>
