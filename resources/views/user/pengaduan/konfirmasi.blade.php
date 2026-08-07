@@ -11,8 +11,8 @@
             <div class="pengaduan-wrapper">
 
                 <!-- ==========================================
-                                                                                                            FORM KONFIRMASI
-                                                                                                    =========================================== -->
+                                                                                                                                    FORM KONFIRMASI
+                                                                                                                            =========================================== -->
 
                 <div class="pengaduan-card">
 
@@ -295,55 +295,87 @@
 
                         </div>
 
-                        <!-- PERSETUJUAN -->
+                        <form action="{{ route('pengaduan.kirimOtp') }}" method="POST">
 
-                        <div class="form-check mt-4">
+                            @csrf
 
-                            <input class="form-check-input" type="checkbox" name="persetujuan" value="setuju" id="setuju"
-                                required>
+                            <!-- PERSETUJUAN -->
 
+                            <div class="card border-0 shadow-sm mt-4">
 
-                            <label class="form-check-label" for="setuju">
+                                <div class="card-body">
 
-                                Saya menyatakan bahwa seluruh data yang saya isi
-                                adalah benar dan dapat dipertanggungjawabkan.
+                                    <div class="form-check d-flex align-items-start">
 
-                            </label>
+                                        <input class="form-check-input mt-1" type="checkbox" name="persetujuan"
+                                            id="persetujuan" value="1" required>
 
+                                        <div class="ms-3">
 
-                        </div>
+                                            <label for="persetujuan" class="fw-bold mb-2 d-block">
 
-                        <div class="mb-4">
+                                                Saya menyatakan bahwa:
 
-                            <label class="form-label">
+                                            </label>
 
-                                Verifikasi Keamanan
+                                            <ul class="mb-0">
 
-                            </label>
+                                                <li>Data yang saya isi adalah benar dan dapat dipertanggungjawabkan.</li>
 
-                            <div class="border rounded p-3">
+                                                <li>Saya bersedia dilakukan proses verifikasi oleh BNNK Tulungagung.</li>
 
-                                <div class="form-check">
+                                                <li>Saya memahami bahwa memberikan laporan palsu dapat dikenakan sanksi
+                                                    sesuai
+                                                    ketentuan yang berlaku.</li>
 
-                                    <input class="form-check-input" type="checkbox" required>
+                                            </ul>
 
-                                    <label class="form-check-label">
+                                        </div>
 
-                                        Saya bukan robot
+                                    </div>
 
-                                    </label>
+                                    @error('persetujuan')
+
+                                        <small class="text-danger d-block mt-2">
+
+                                            {{ $message }}
+
+                                        </small>
+
+                                    @enderror
 
                                 </div>
 
                             </div>
 
-                        </div>
+                            <div class="mb-4">
 
-                        <!-- BUTTON -->
+                                <label class="form-label">
 
-                        <form action="{{ route('pengaduan.kirimOtp') }}" method="POST">
+                                    Verifikasi Keamanan
 
-                            @csrf
+                                </label>
+
+                                <div class="mb-3">
+
+                                    {!! NoCaptcha::display() !!}
+
+                                    @error('g-recaptcha-response')
+
+                                        <small class="text-danger">
+
+                                            {{ $message }}
+
+                                        </small>
+
+                                    @enderror
+
+                                </div>
+
+                            </div>
+
+                            <!-- BUTTON -->
+
 
                             <div class="form-navigation">
 
@@ -364,8 +396,8 @@
                 </div>
 
                 <!-- ==========================================
-                                                                                                            SIDEBAR
-                                                                                                    =========================================== -->
+                                                                                                                                    SIDEBAR
+                                                                                                                            =========================================== -->
 
                 <aside class="sidebar-aduan">
 
@@ -388,12 +420,12 @@
                         <div class="aduan-item">
 
                             <span class="status
-                                @if($item->status == 'Menunggu') menunggu
-                                @elseif($item->status == 'Diproses') proses
-                                @elseif($item->status == 'Selesai') selesai
-                                @elseif($item->status == 'Ditolak') ditolak
-                                @else verifikasi
-                                @endif">
+                                                                                @if($item->status == 'Menunggu') menunggu
+                                                                                @elseif($item->status == 'Diproses') proses
+                                                                                @elseif($item->status == 'Selesai') selesai
+                                                                                @elseif($item->status == 'Ditolak') ditolak
+                                                                                @else verifikasi
+                                                                                @endif">
 
                                 {{ $item->status }}
 

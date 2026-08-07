@@ -11,8 +11,8 @@
             <div class="pengaduan-wrapper">
 
                 <!-- ==========================================
-                                                                            FORM PENGADUAN
-                                                                    =========================================== -->
+                                                                                FORM PENGADUAN
+                                                                        =========================================== -->
 
                 <div class="pengaduan-card">
 
@@ -167,8 +167,8 @@
                 </div>
 
                 <!-- ==========================================
-                                                                            SIDEBAR
-                                                                    =========================================== -->
+                                                                                SIDEBAR
+                                                                        =========================================== -->
 
                 <aside class="sidebar-aduan">
 
@@ -188,51 +188,51 @@
 
                     @forelse($aduanTerbaru as $item)
 
-                                <div class="aduan-item">
+                        <div class="aduan-item">
 
-                                    <span class="status
-                        @if($item->status == 'Menunggu') menunggu
-                        @elseif($item->status == 'Diproses') proses
-                        @elseif($item->status == 'Selesai') selesai
-                        @elseif($item->status == 'Ditolak') ditolak
-                        @else verifikasi
-                        @endif">
+                            <span class="status
+                                @if($item->status == 'Menunggu') menunggu
+                                @elseif($item->status == 'Diproses') proses
+                                @elseif($item->status == 'Selesai') selesai
+                                @elseif($item->status == 'Ditolak') ditolak
+                                @else verifikasi
+                                @endif">
 
-                                        {{ $item->status }}
+                                {{ $item->status }}
 
-                                    </span>
+                            </span>
 
-                                    <h6>
+                            <h6>
 
-                                        {{ Str::limit($item->judul_aduan, 40) }}
+                                {{ Str::limit($item->judul_aduan, 40) }}
 
-                                    </h6>
+                            </h6>
 
-                                    <small>
+                            <small>
 
-                                        <i class="bi bi-geo-alt-fill"></i>
+                                <i class="bi bi-geo-alt-fill"></i>
 
-                                        {{ $item->kecamatan->nama_kecamatan ?? '-' }}
+                                {{ $item->kecamatan->nama_kecamatan ?? '-' }}
 
-                                    </small>
+                            </small>
 
-                                    <small>
+                            <small>
 
-                                        <i class="bi bi-calendar-event-fill"></i>
+                                <i class="bi bi-calendar-event-fill"></i>
 
-                                        {{ $item->created_at->translatedFormat('d F Y') }}
+                                {{ $item->created_at->translatedFormat('d F Y') }}
 
-                                    </small>
+                            </small>
 
-                                    <a href="{{ route('pengaduan.tracking', $item->kode_aduan) }}" class="btn-detail-laporan">
+                            <a href="{{ route('pengaduan.tracking', $item->kode_aduan) }}" class="btn-detail-laporan">
 
-                                        <i class="bi bi-eye-fill"></i>
+                                <i class="bi bi-eye-fill"></i>
 
-                                        Lihat Tracking
+                                Lihat Tracking
 
-                                    </a>
+                            </a>
 
-                                </div>
+                        </div>
 
                     @empty
 

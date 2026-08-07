@@ -188,6 +188,7 @@ class PengaduanController extends Controller
             'desa',
             'aduanTerbaru'
         ));
+
     }
     /*
     |--------------------------------------------------------------------------
@@ -197,6 +198,19 @@ class PengaduanController extends Controller
 
     public function kirimOtp(Request $request)
     {
+        $request->validate([
+            'persetujuan' => 'accepted',
+        ], [
+            'persetujuan.accepted' => 'Anda harus menyetujui pernyataan sebelum melanjutkan.',
+        ]);
+        // VALIDASI RECAPTCHA
+        $request->validate([
+            'g-recaptcha-response' => 'required|captcha',
+        ], [
+            'g-recaptcha-response.required' => 'Silakan centang "Saya bukan robot".',
+            'g-recaptcha-response.captcha' => 'Verifikasi reCAPTCHA gagal.',
+        ]);
+
         $step3 = Session::get('pengaduan.step3');
 
         if (!$step3) {

@@ -28,6 +28,8 @@
 
     @stack('styles')
 
+    {!! NoCaptcha::renderJs() !!}
+
 </head>
 
 <body>
