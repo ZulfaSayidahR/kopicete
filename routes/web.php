@@ -201,32 +201,30 @@ Route::get('/lacak/{kode}', [PengaduanController::class, 'tracking'])
 // PERMOHONAN LAYANAN
 // ==========================
 
+Route::prefix('permohonan')->name('permohonan.')->group(function () {
 
-Route::prefix('permohonan')
-    ->name('permohonan.')
-    ->group(function () {
+    Route::get('/', [PermohonanController::class, 'create'])
+        ->name('create');
 
-        Route::get('/', [PermohonanController::class, 'create'])
-            ->name('create');
+    Route::post('/konfirmasi', [PermohonanController::class, 'konfirmasi'])
+        ->name('konfirmasi');
 
-        Route::post('/konfirmasi', [PermohonanController::class, 'konfirmasi'])
-            ->name('konfirmasi');
+    Route::post('/kirim', [PermohonanController::class, 'kirim'])
+        ->name('kirim');
 
-        Route::post('/store', [PermohonanController::class, 'store'])
-            ->name('store');
+    Route::get('/otp', [PermohonanController::class, 'otp'])
+        ->name('otp');
 
+    Route::post('/otp/verifikasi', [PermohonanController::class, 'verifyOtp'])
+        ->name('verifyOtp');
+    // Kirim ulang OTP
+    Route::post('/otp/kirim-ulang', [PermohonanController::class, 'kirimUlangOtp'])
+        ->name('kirimUlangOtp');
 
-        // detail permohonan
-    
-        Route::get(
-            '/detail/{id}',
-            [PermohonanController::class, 'show']
-        )
-            ->name('detail');
+    Route::get('/berhasil/{kode}', [PermohonanController::class, 'success'])
+        ->name('success');
 
-
-    });
-
+});
 
 
 

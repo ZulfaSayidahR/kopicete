@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Pengaduan Berhasil')
+@section('title', 'Permohonan Berhasil')
 
 @section('content')
 
@@ -14,18 +14,14 @@
                 <div class="pengaduan-header text-center">
 
                     <div class="mb-3">
-
                         <i class="bi bi-check-circle-fill" style="font-size: 70px; color: #198754;">
                         </i>
-
                     </div>
 
-                    <h2>
-                        Pengaduan Berhasil Dikirim
-                    </h2>
+                    <h2>Permohonan Berhasil Dikirim</h2>
 
                     <p>
-                        Terima kasih, pengaduan Anda telah berhasil
+                        Terima kasih, permohonan Anda telah berhasil
                         dikirim dan masuk ke sistem BNNK Tulungagung.
                     </p>
 
@@ -38,26 +34,20 @@
                     <div class="text-center">
 
                         <p class="text-muted mb-2">
-
-                            Simpan kode pengaduan berikut untuk
-                            memantau proses pengaduan Anda.
-
+                            Simpan kode permohonan berikut untuk
+                            memantau proses permohonan Anda.
                         </p>
 
 
-                        {{-- KODE PENGADUAN --}}
+                        {{-- KODE PERMOHONAN --}}
                         <div class="border rounded p-4 bg-light mb-4">
 
                             <small class="text-muted d-block mb-2">
-
-                                KODE PENGADUAN
-
+                                KODE PERMOHONAN
                             </small>
 
                             <h2 class="fw-bold text-primary mb-0">
-
-                                {{ $kode }}
-
+                                {{ $permohonan->kode_permohonan }}
                             </h2>
 
                         </div>
@@ -71,11 +61,9 @@
                             <strong>Informasi:</strong>
 
                             <p class="mb-0 mt-2">
-
-                                Gunakan kode pengaduan tersebut untuk
-                                melakukan pelacakan status pengaduan.
+                                Gunakan kode permohonan tersebut untuk
+                                melakukan pelacakan status permohonan.
                                 Jangan membagikan kode ini kepada orang lain.
-
                             </p>
 
                         </div>
@@ -87,19 +75,24 @@
                             <div class="row mb-2">
 
                                 <div class="col-md-5">
-
-                                    <strong>Status Pengaduan</strong>
-
+                                    <strong>Jenis Permohonan</strong>
                                 </div>
 
                                 <div class="col-md-7">
+                                    {{ $permohonan->jenis_permohonan }}
+                                </div>
 
-                                    <span class="badge bg-secondary">
+                            </div>
 
-                                        Menunggu
 
-                                    </span>
+                            <div class="row mb-2">
 
+                                <div class="col-md-5">
+                                    <strong>Nama Penyelenggara</strong>
+                                </div>
+
+                                <div class="col-md-7">
+                                    {{ $permohonan->nama_penyelenggara }}
                                 </div>
 
                             </div>
@@ -108,14 +101,14 @@
                             <div class="row">
 
                                 <div class="col-md-5">
-
-                                    <strong>Kode Pengaduan</strong>
-
+                                    <strong>Status</strong>
                                 </div>
 
                                 <div class="col-md-7">
 
-                                    {{ $kode }}
+                                    <span class="badge bg-secondary">
+                                        {{ $permohonan->status }}
+                                    </span>
 
                                 </div>
 
@@ -134,6 +127,20 @@
                                 Kembali ke Beranda
 
                             </a>
+
+                            {{-- Jika route tracking permohonan sudah dibuat --}}
+                            @if(Route::has('permohonan.tracking'))
+
+                                <a href="{{ route('permohonan.tracking', $permohonan->kode_permohonan) }}"
+                                    class="btn btn-outline-primary">
+
+                                    <i class="bi bi-search me-2"></i>
+
+                                    Lacak Permohonan
+
+                                </a>
+
+                            @endif
 
                         </div>
 

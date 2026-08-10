@@ -75,6 +75,23 @@
 
                 <div class="info-card">
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    
+
                     <div class="info-item">
                         <small>Total Aduan</small>
                         <h3>{{ $totalAduan }}</h3>
