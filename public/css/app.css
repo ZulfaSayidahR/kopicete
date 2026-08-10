@@ -74,7 +74,7 @@ input {
     background: linear-gradient(90deg, #06264f, #075a93);
     min-height: 80px;
     padding: 12px 0;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, .15);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
 .navbar-bnn .container {
@@ -106,7 +106,7 @@ input {
 .nav-link {
     color: #fff !important;
     font-weight: 500;
-    transition: .3s;
+    transition: 0.3s;
 }
 
 .nav-link:hover {
@@ -118,7 +118,6 @@ input {
 ======================= */
 
 .navbar-toggler {
-
     width: 52px;
     height: 52px;
 
@@ -128,77 +127,58 @@ input {
 
     border: 0;
     border-radius: 12px;
-    background: rgba(255, 255, 255, .12);
-    transition: .25s;
+    background: rgba(255, 255, 255, 0.12);
+    transition: 0.25s;
     padding: 0;
-
 }
 
 .navbar-toggler:hover {
-
-    background: rgba(255, 255, 255, .2);
-
+    background: rgba(255, 255, 255, 0.2);
 }
 
 .navbar-toggler:focus {
-
     box-shadow: none;
-
 }
 
 .navbar-toggler:active {
-
-    transform: scale(.96);
-
+    transform: scale(0.96);
 }
 
 .navbar-toggler-icon {
-
     width: 1.6rem;
     height: 1.6rem;
 
     filter: invert(1);
-
 }
 
 /* =====================================
 RESPONSIVE NAVBAR
 ===================================== */
 
-@media (max-width:991px) {
-
+@media (max-width: 991px) {
     .navbar-bnn {
-
         padding: 10px 0;
-
     }
 
     .logo-group {
-
         gap: 6px;
-
     }
 
     .logo-bnn,
     .logo-war,
     .logo-kopicete {
-
         width: 38px;
         height: 38px;
-
     }
 
     .navbar-toggler {
-
         width: 50px;
         height: 50px;
 
         margin-left: auto;
-
     }
 
     .navbar-collapse {
-
         margin-top: 15px;
 
         background: #06264f;
@@ -207,40 +187,31 @@ RESPONSIVE NAVBAR
 
         padding: 18px;
 
-        box-shadow: 0 10px 25px rgba(0, 0, 0, .25);
-
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
     }
 
     .navbar-nav {
-
         align-items: stretch;
 
         gap: 5px;
-
     }
 
     .nav-item {
-
         width: 100%;
-
     }
 
     .nav-link {
-
         width: 100%;
 
         padding: 14px 8px;
 
-        border-bottom: 1px solid rgba(255, 255, 255, .08);
-
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     }
 
     .btn-yellow {
-
         width: 100%;
         margin-top: 15px;
     }
-
 }
 
 /* =====================================================
@@ -285,7 +256,7 @@ RESPONSIVE NAVBAR
    FORM
 ===================================================== */
 
-.form-control {
+/* .form-control {
     height: 45px;
 
     border-radius: 12px;
@@ -297,6 +268,35 @@ RESPONSIVE NAVBAR
     border-color: var(--primary);
 
     box-shadow: 0 0 0 0.2rem rgba(11, 115, 181, 0.2);
+} */
+
+.form-control {
+    height: 45px;
+    border-radius: 12px;
+    border: 1px solid #ddd;
+}
+
+.form-control:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 0.2rem rgba(11, 115, 181, 0.2);
+}
+
+input[type="file"].form-control {
+    height: 45px;
+    padding: 0;
+    overflow: hidden;
+    border-radius: 12px;
+}
+
+input[type="file"].form-control::file-selector-button {
+    height: 45px;
+    padding: 0 20px;
+    margin: 0;
+    margin-right: 15px;
+    border: 0;
+    border-right: 1px solid #ddd;
+    background-color: #f8f9fa;
+    cursor: pointer;
 }
 
 /* =====================================================
@@ -373,8 +373,8 @@ main {
     border-radius: 50%;
 }
 
-.aduan-box>*,
-.tracking-box>* {
+.aduan-box > *,
+.tracking-box > * {
     position: relative;
 
     z-index: 2;
@@ -517,7 +517,6 @@ main {
 }
 
 @media (max-width: 480px) {
-
     .aduan-box,
     .tracking-box {
         padding: 25px;

@@ -247,7 +247,11 @@
                                             {{ \Carbon\Carbon::parse($pengaduan->tanggal_verifikasi)->translatedFormat('d F Y H:i') }}
 
                                         </small>
-                                        <button type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal"
+
+                                        <button
+                                            type="button"
+                                            class="btn btn-sm btn-outline-primary"
+                                            data-bs-toggle="modal"
                                             data-bs-target="#detailLaporanModal">
 
                                             <i class="bi bi-eye-fill"></i>
@@ -260,7 +264,6 @@
                                 </div>
 
                             </div>
-
 
 
                             {{-- ================= DIPROSES ================= --}}
@@ -293,19 +296,23 @@
                                             {{ \Carbon\Carbon::parse($pengaduan->tanggal_proses)->translatedFormat('d F Y H:i') }}
 
                                         </small>
-                                        <button type="button" class="btn btn-sm btn-outline-warning" data-bs-toggle="modal"
+
+                                        <button
+                                            type="button"
+                                            class="btn btn-sm btn-outline-warning"
+                                            data-bs-toggle="modal"
                                             data-bs-target="#detailLaporanModal">
 
                                             <i class="bi bi-eye-fill"></i>
                                             Lihat Detail
 
                                         </button>
+
                                     @endif
 
                                 </div>
 
                             </div>
-
 
 
                             {{-- ================= SELESAI ================= --}}
@@ -339,13 +346,17 @@
 
                                         </small>
 
-                                        <button type="button" class="btn btn-sm btn-outline-success" data-bs-toggle="modal"
+                                        <button
+                                            type="button"
+                                            class="btn btn-sm btn-outline-success"
+                                            data-bs-toggle="modal"
                                             data-bs-target="#detailLaporanModal">
 
                                             <i class="bi bi-eye-fill"></i>
                                             Lihat Detail
 
                                         </button>
+
                                     @endif
 
                                 </div>
