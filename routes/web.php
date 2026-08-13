@@ -181,7 +181,9 @@ Route::prefix('pengaduan')->name('pengaduan.')->group(function () {
     // BERHASIL
     Route::get('/berhasil/{kode}', [PengaduanController::class, 'success'])->name('success');
 
-
+    // CARI
+    Route::get('/cari', [PengaduanController::class, 'cari'])
+    ->name('cari');
 
 });
 

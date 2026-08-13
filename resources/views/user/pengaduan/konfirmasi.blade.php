@@ -401,17 +401,44 @@
 
                 <aside class="sidebar-aduan">
 
-                    <div class="sidebar-header">
+                    <div class="aduan-terbaru-header">
 
-                        <h5>Aduan Terbaru</h5>
+                        <h4>Aduan Terbaru</h4>
 
-                        <a href="#tracking-section" class="btn-sidebar">
+                    </div>
 
-                            <i class="bi bi-search"></i>
+                    {{-- SEARCH ADUAN --}}
+                    <div class="search-adukan-box">
 
-                            Lacak Aduan
+                        <form action="{{ route('pengaduan.cari') }}" method="GET">
 
-                        </a>
+                            <div class="search-adukan-wrapper">
+
+                                <div class="search-input-wrapper">
+
+                                    <i class="bi bi-search"></i>
+
+                                    <input
+                                        type="text"
+                                        name="topik"
+                                        value="{{ request('topik') }}"
+                                        placeholder="Cari berdasarkan topik aduan..."
+                                        autocomplete="off"
+                                    >
+
+                                </div>
+
+                                <button type="submit" class="btn-search-adukan">
+
+                                    <i class="bi bi-search"></i>
+
+                                    Cari
+
+                                </button>
+
+                            </div>
+
+                        </form>
 
                     </div>
 

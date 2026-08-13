@@ -417,4 +417,25 @@ class PengaduanController extends Controller
             compact('kode')
         );
     }
+
+     /*
+    |--------------------------------------------------------------------------
+    | CARI
+    |--------------------------------------------------------------------------
+    */
+    public function cari(Request $request)
+{
+    $topik = $request->input('topik');
+
+    $aduanTerbaru = Pengaduan::query()
+        ->when($topik, function ($query) use ($topik) {
+            $query->where('topik_aduan', 'like', '%' . $topik . '%');
+        })
+        ->latest()
+        ->get();
+
+    return view('user.pengaduan.create', [
+        'aduanTerbaru' => $aduanTerbaru,
+    ]);
+}
 }
