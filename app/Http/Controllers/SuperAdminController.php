@@ -2,27 +2,215 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\View\View;
+use App\Models\Pengaduan;
+use App\Models\Permohonan;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class SuperAdminController extends Controller
 {
-    /**
-     * Menampilkan halaman dashboard Super Admin.
-     */
-    public function dashboard(): View
+    public function dashboard(Request $request)
     {
-        return view('superadmin.dashboard');
-    }
-    public function data_pengaduan()
-    {
-        return view('superadmin.data_pengaduan');
-    }
-    /**
-     * Menampilkan halaman Data Admin.
-     */
-    public function dataAdmin(): View
-    {
-        // Sesuai nama file: data_admin.blade.php
-        return view('superadmin.data_admin');
+        /*
+        |--------------------------------------------------------------------------
+        | TAHUN YANG DIPILIH
+        |--------------------------------------------------------------------------
+        */
+
+        $tahun = $request->get('tahun', date('Y'));
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | STATISTIK UTAMA
+        |--------------------------------------------------------------------------
+        */
+
+        // Total seluruh pengaduan
+        $totalPengaduan = Pengaduan::count();
+
+        // Pengaduan yang sedang diproses
+        $pengaduanDiproses = Pengaduan::where('status', 'diproses')
+            ->count();
+
+        // Total seluruh permohonan
+        $totalPermohonan = Permohonan::count();
+
+        // Pengaduan yang sudah selesai
+        $laporanSelesai = Pengaduan::where('status', 'selesai')
+            ->count();
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | STATISTIK BERDASARKAN TAHUN
+        |--------------------------------------------------------------------------
+        */
+
+        // Total pengaduan pada tahun yang dipilih
+        $totalPengaduanTahun = Pengaduan::whereYear(
+            'created_at',
+            $tahun
+        )->count();
+
+
+        // Total permohonan pada tahun yang dipilih
+        $totalPermohonanTahun = Permohonan::whereYear(
+            'created_at',
+            $tahun
+        )->count();
+
+
+        // Pengaduan diproses pada tahun yang dipilih
+        $pengaduanDiprosesTahun = Pengaduan::whereYear(
+            'created_at',
+            $tahun
+        )
+            ->where('status', 'diproses')
+            ->count();
+
+
+        // Pengaduan selesai pada tahun yang dipilih
+        $laporanSelesaiTahun = Pengaduan::whereYear(
+            'created_at',
+            $tahun
+        )
+            ->where('status', 'selesai')
+            ->count();
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | DATA GRAFIK PENGADUAN PER BULAN
+        |--------------------------------------------------------------------------
+        */
+
+        $dataPengaduan = Pengaduan::select(
+            DB::raw('MONTH(created_at) as bulan'),
+            DB::raw('COUNT(*) as jumlah')
+        )
+            ->whereYear('created_at', $tahun)
+            ->groupBy(DB::raw('MONTH(created_at)'))
+            ->orderBy('bulan')
+            ->get();
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | DATA GRAFIK PERMOHONAN PER BULAN
+        |--------------------------------------------------------------------------
+        */
+
+        $dataPermohonan = Permohonan::select(
+            DB::raw('MONTH(created_at) as bulan'),
+            DB::raw('COUNT(*) as jumlah')
+        )
+            ->whereYear('created_at', $tahun)
+            ->groupBy(DB::raw('MONTH(created_at)'))
+            ->orderBy('bulan')
+            ->get();
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | SIAPKAN 12 BULAN
+        |--------------------------------------------------------------------------
+        */
+
+        $grafikPengaduan = array_fill(1, 12, 0);
+
+        $grafikPermohonan = array_fill(1, 12, 0);
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | MASUKKAN DATA PENGADUAN KE BULAN
+        |--------------------------------------------------------------------------
+        */
+
+        foreach ($dataPengaduan as $data) {
+
+            $grafikPengaduan[$data->bulan] = $data->jumlah;
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | MASUKKAN DATA PERMOHONAN KE BULAN
+        |--------------------------------------------------------------------------
+        */
+
+        foreach ($dataPermohonan as $data) {
+
+            $grafikPermohonan[$data->bulan] = $data->jumlah;
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | DATA JUDUL PENGADUAN
+        |--------------------------------------------------------------------------
+        */
+
+        $judulAduan = Pengaduan::select(
+            'judul_aduan',
+            DB::raw('COUNT(*) as jumlah')
+        )
+            ->whereYear('created_at', $tahun)
+            ->groupBy('judul_aduan')
+            ->orderByDesc('jumlah')
+            ->get();
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | DATA JENIS PERMOHONAN
+        |--------------------------------------------------------------------------
+        */
+
+        $jenisPermohonan = Permohonan::select(
+            'jenis_permohonan',
+            DB::raw('COUNT(*) as jumlah')
+        )
+            ->whereYear('created_at', $tahun)
+            ->groupBy('jenis_permohonan')
+            ->orderByDesc('jumlah')
+            ->get();
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | KIRIM SEMUA DATA KE VIEW
+        |--------------------------------------------------------------------------
+        */
+
+        return view(
+            'superadmin.dashboard',
+            compact(
+
+                // Statistik keseluruhan
+                'totalPengaduan',
+                'pengaduanDiproses',
+                'totalPermohonan',
+                'laporanSelesai',
+
+                // Tahun
+                'tahun',
+
+                // Statistik berdasarkan tahun
+                'totalPengaduanTahun',
+                'totalPermohonanTahun',
+                'pengaduanDiprosesTahun',
+                'laporanSelesaiTahun',
+
+                // Grafik
+                'grafikPengaduan',
+                'grafikPermohonan',
+
+                // Data kategori
+                'judulAduan',
+                'jenisPermohonan'
+            )
+        );
     }
 }

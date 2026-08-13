@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Pengaduan;
+use App\Models\Permohonan;
 
 class HomeController extends Controller
 {
@@ -11,7 +12,7 @@ class HomeController extends Controller
     {
         $totalAduan = Pengaduan::count();
 
-        $totalPermohonan = 0; // sementara jika tabel permohonan belum ada
+        $totalPermohonan = Permohonan::count();
 
 
         return view('user.home', compact(

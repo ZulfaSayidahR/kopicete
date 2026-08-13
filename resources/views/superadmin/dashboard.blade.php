@@ -66,27 +66,7 @@
             ================================================== --}}
             <section class="sa-statistics">
 
-                {{-- <article class="sa-stat-card">
-
-                    <div class="sa-stat-icon sa-stat-blue">
-                        <i class="bi bi-people-fill"></i>
-                    </div>
-
-                    <div class="sa-stat-content">
-
-                        <span>Total Admin</span>
-
-                        <h2>15</h2>
-
-                        <small>
-                            <i class="bi bi-arrow-up-short"></i>
-                            2 akun baru
-                        </small>
-
-                    </div>
-
-                </article> --}}
-
+                {{-- TOTAL PENGADUAN --}}
                 <article class="sa-stat-card">
 
                     <div class="sa-stat-icon sa-stat-green">
@@ -97,17 +77,19 @@
 
                         <span>Total Pengaduan</span>
 
-                        <h2>530</h2>
+                        <h2>{{ $totalPengaduan }}</h2>
 
                         <small>
                             <i class="bi bi-clock"></i>
-                            18 sedang diproses
+                            {{ $pengaduanDiproses }} sedang diproses
                         </small>
 
                     </div>
 
                 </article>
 
+
+                {{-- TOTAL PERMOHONAN --}}
                 <article class="sa-stat-card">
 
                     <div class="sa-stat-icon sa-stat-yellow">
@@ -118,7 +100,7 @@
 
                         <span>Total Permohonan</span>
 
-                        <h2>200</h2>
+                        <h2>{{ $totalPermohonan }}</h2>
 
                         <small>
                             <i class="bi bi-envelope-check"></i>
@@ -129,6 +111,8 @@
 
                 </article>
 
+
+                {{-- LAPORAN SELESAI --}}
                 <article class="sa-stat-card">
 
                     <div class="sa-stat-icon sa-stat-green">
@@ -139,7 +123,7 @@
 
                         <span>Laporan Selesai</span>
 
-                        <h2>176</h2>
+                        <h2>{{ $laporanSelesai }}</h2>
 
                         <small>
                             <i class="bi bi-check2-all"></i>
@@ -155,370 +139,375 @@
             {{-- =================================================
             DATA ADMIN
             ================================================== --}}
-            {{-- <section class="sa-panel sa-admin-panel">
 
-                <div class="sa-panel-header">
+            <section class="row mt-4">
 
-                    <div>
+                {{-- =========================================================
+                GRAFIK LAPORAN
+                ========================================================== --}}
+                <div class="col-lg-9">
 
-                        <h3>Data Admin Terdaftar</h3>
+                    <section class="sa-panel h-100">
 
-                        <p>
-                            Daftar akun admin yang pernah masuk ke sistem.
-                        </p>
+                        {{-- HEADER --}}
+                        <div class="sa-panel-header d-flex justify-content-between align-items-center">
 
-                    </div>
+                            <div>
 
-                    <div class="sa-table-tools">
+                                <h3>Statistik Laporan Tahunan</h3>
 
-                        <div class="sa-search-box">
+                                <p>
+                                    Jumlah laporan berdasarkan kategori setiap bulan
+                                    pada tahun {{ $tahun }}.
+                                </p>
 
-                            <i class="bi bi-search"></i>
+                            </div>
 
-                            <input type="search" id="adminSearch" placeholder="Cari nama atau email..." autocomplete="off">
+
+                            {{-- FILTER TAHUN --}}
+                            <form method="GET" action="{{ route('superadmin.dashboard') }}">
+
+                                <select name="tahun" class="form-select" style="width:120px" onchange="this.form.submit()">
+
+                                    <option value="2026" {{ $tahun == 2026 ? 'selected' : '' }}>
+                                        2026
+                                    </option>
+
+                                    <option value="2025" {{ $tahun == 2025 ? 'selected' : '' }}>
+                                        2025
+                                    </option>
+
+                                    <option value="2024" {{ $tahun == 2024 ? 'selected' : '' }}>
+                                        2024
+                                    </option>
+
+                                </select>
+
+                            </form>
 
                         </div>
 
-                        <a href="{{ route('superadmin.data_admin') }}" class="sa-filter-button">
 
-                            <i class="bi bi-people-fill"></i>
+                        {{-- AREA GRAFIK --}}
+                        <div class="p-4">
 
-                            <span>Lihat Semua</span>
+                            <div style="height:400px">
 
-                        </a>
+                                <canvas id="chartLaporan"></canvas>
 
-                    </div>
+                            </div>
+
+                        </div>
+
+                    </section>
 
                 </div>
 
-                <div class="sa-table-responsive">
 
-                    <table class="sa-table" id="adminTable">
 
-                        <thead>
+                {{-- =========================================================
+                RINGKASAN
+                ========================================================== --}}
+                <div class="col-lg-3">
 
-                            <tr>
-                                <th>Admin</th>
-                                <th>Email</th>
-                                <th>Metode Login</th>
-                                <th>Tanggal Terdaftar</th>
-                                <th>Status</th>
-                                <th class="sa-action-column">Aksi</th>
-                            </tr>
+                    <section class="sa-panel h-100">
 
-                        </thead>
+                        <div class="sa-panel-header">
 
-                        <tbody>
+                            <h3>
+                                Ringkasan {{ $tahun }}
+                            </h3>
 
-                            <tr>
+                        </div>
 
-                                <td>
+                        <div class="p-4">
 
-                                    <div class="sa-admin-user">
+                            {{-- TOTAL PENGADUAN --}}
+                            <div class="mb-4">
 
-                                        <div class="sa-admin-avatar">
-                                            A
-                                        </div>
+                                <small class="text-muted">
+                                    Total Pengaduan
+                                </small>
 
-                                        <div>
-                                            <strong>Andi Saputra</strong>
-                                            <small>Admin Pengaduan</small>
-                                        </div>
+                                <h3 class="fw-bold text-primary mb-0">
+                                    {{ number_format(
+        $totalPengaduanTahun,
+        0,
+        ',',
+        '.'
+    ) }}
+                                </h3>
 
-                                    </div>
+                            </div>
 
-                                </td>
 
-                                <td>
+                            {{-- TOTAL PERMOHONAN --}}
+                            <div class="mb-4">
 
-                                    <span class="sa-email-text">
-                                        andi@gmail.com
-                                    </span>
+                                <small class="text-muted">
+                                    Total Permohonan
+                                </small>
 
-                                </td>
+                                <h3 class="fw-bold text-warning mb-0">
+                                    {{ number_format(
+        $totalPermohonanTahun,
+        0,
+        ',',
+        '.'
+    ) }}
+                                </h3>
 
-                                <td>
+                            </div>
 
-                                    <span class="sa-login-badge">
 
-                                        <i class="bi bi-google"></i>
+                            {{-- PENGADUAN DIPROSES --}}
+                            <div class="mb-4">
 
-                                        Google
+                                <small class="text-muted">
+                                    Pengaduan Diproses
+                                </small>
 
-                                    </span>
+                                <h3 class="fw-bold text-info mb-0">
+                                    {{ number_format(
+        $pengaduanDiprosesTahun,
+        0,
+        ',',
+        '.'
+    ) }}
+                                </h3>
 
-                                </td>
+                            </div>
 
-                                <td>15 Juli 2026</td>
 
-                                <td>
+                            {{-- LAPORAN SELESAI --}}
+                            <div>
 
-                                    <span class="sa-status-badge active">
+                                <small class="text-muted">
+                                    Laporan Selesai
+                                </small>
 
-                                        <span></span>
+                                <h3 class="fw-bold text-success mb-0">
+                                    {{ number_format(
+        $laporanSelesaiTahun,
+        0,
+        ',',
+        '.'
+    ) }}
+                                </h3>
 
-                                        Aktif
+                            </div>
 
-                                    </span>
+                        </div>
 
-                                </td>
-
-                                <td>
-
-                                    <div class="sa-action-buttons">
-
-                                        <button type="button" class="sa-action-button sa-detail-button"
-                                            title="Lihat detail admin" aria-label="Lihat detail Andi Saputra">
-
-                                            <i class="bi bi-eye-fill"></i>
-
-                                        </button>
-
-                                        <button type="button" class="sa-action-button sa-key-button"
-                                            title="Reset password admin" aria-label="Reset password Andi Saputra">
-
-                                            <i class="bi bi-key-fill"></i>
-
-                                        </button>
-
-                                    </div>
-
-                                </td>
-
-                            </tr>
-
-                            <tr>
-
-                                <td>
-
-                                    <div class="sa-admin-user">
-
-                                        <div class="sa-admin-avatar purple">
-                                            S
-                                        </div>
-
-                                        <div>
-                                            <strong>Siti Rahma</strong>
-                                            <small>Admin Permohonan</small>
-                                        </div>
-
-                                    </div>
-
-                                </td>
-
-                                <td>
-
-                                    <span class="sa-email-text">
-                                        siti@gmail.com
-                                    </span>
-
-                                </td>
-
-                                <td>
-
-                                    <span class="sa-login-badge">
-
-                                        <i class="bi bi-google"></i>
-
-                                        Google
-
-                                    </span>
-
-                                </td>
-
-                                <td>10 Juli 2026</td>
-
-                                <td>
-
-                                    <span class="sa-status-badge active">
-
-                                        <span></span>
-
-                                        Aktif
-
-                                    </span>
-
-                                </td>
-
-                                <td>
-
-                                    <div class="sa-action-buttons">
-
-                                        <button type="button" class="sa-action-button sa-detail-button"
-                                            title="Lihat detail admin" aria-label="Lihat detail Siti Rahma">
-
-                                            <i class="bi bi-eye-fill"></i>
-
-                                        </button>
-
-                                        <button type="button" class="sa-action-button sa-key-button"
-                                            title="Reset password admin" aria-label="Reset password Siti Rahma">
-
-                                            <i class="bi bi-key-fill"></i>
-
-                                        </button>
-
-                                    </div>
-
-                                </td>
-
-                            </tr>
-
-                        </tbody>
-
-                    </table>
+                    </section>
 
                 </div>
 
-                <div class="sa-table-footer">
+            </section>
 
-                    <span>Menampilkan 2 dari 15 admin</span>
 
-                    <div class="sa-pagination">
 
-                        <button type="button" disabled aria-label="Halaman sebelumnya">
+            {{-- =========================================================
+            CHART.JS
+            ========================================================= --}}
 
-                            <i class="bi bi-chevron-left"></i>
+          
 
-                        </button>
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-                        <button type="button" class="active" aria-label="Halaman 1">
+            <script>
 
-                            1
+                document.addEventListener('DOMContentLoaded', function () {
 
-                        </button>
+                    const canvas = document.getElementById('chartLaporan');
 
-                        <button type="button" aria-label="Halaman 2">
+                    if (!canvas) {
+                        return;
+                    }
 
-                            2
 
-                        </button>
+                    /*
+                    |--------------------------------------------------------------------------
+                    | DATA DARI CONTROLLER
+                    |--------------------------------------------------------------------------
+                    */
 
-                        <button type="button" aria-label="Halaman selanjutnya">
+                    const grafikPengaduan =
+                        @json(array_values($grafikPengaduan));
 
-                            <i class="bi bi-chevron-right"></i>
+                    const grafikPermohonan =
+                        @json(array_values($grafikPermohonan));
 
-                        </button>
 
-                    </div>
+                    /*
+                    |--------------------------------------------------------------------------
+                    | LABEL BULAN
+                    |--------------------------------------------------------------------------
+                    */
 
-                </div>
+                    const bulan = [
+                        'Januari',
+                        'Februari',
+                        'Maret',
+                        'April',
+                        'Mei',
+                        'Juni',
+                        'Juli',
+                        'Agustus',
+                        'September',
+                        'Oktober',
+                        'November',
+                        'Desember'
+                    ];
 
-            </section> --}}
 
-<section class="row mt-4">
+                    /*
+                    |--------------------------------------------------------------------------
+                    | GRAFIK
+                    |--------------------------------------------------------------------------
+                    */
 
-    {{-- Grafik --}}
-    <div class="col-lg-9">
+                    new Chart(canvas, {
 
-        <section class="sa-panel h-100">
+                        type: 'line',
 
-            <div class="sa-panel-header d-flex justify-content-between align-items-center">
+                        data: {
 
-                <div>
+                            labels: bulan,
 
-                    <h3>Statistik Laporan Tahunan</h3>
+                            datasets: [
 
-                    <p>
-                        Jumlah laporan berdasarkan kategori setiap bulan.
-                    </p>
+                                {
+                                    label: 'Pengaduan',
 
-                </div>
+                                    data: grafikPengaduan,
 
-                <select class="form-select"
-                        style="width:120px">
+                                    borderWidth: 3,
 
-                    <option>2026</option>
-                    <option>2025</option>
-                    <option>2024</option>
+                                    tension: 0.4,
 
-                </select>
+                                    fill: false,
 
-            </div>
+                                    pointRadius: 4,
 
-            <div class="p-4">
+                                    pointHoverRadius: 6
+                                },
 
-                <div style="height:400px">
+                                {
+                                    label: 'Permohonan',
 
-                    <canvas id="chartLaporan"></canvas>
+                                    data: grafikPermohonan,
 
-                </div>
+                                    borderWidth: 3,
 
-            </div>
+                                    tension: 0.4,
 
-        </section>
+                                    fill: false,
 
-    </div>
+                                    pointRadius: 4,
 
-    {{-- Ringkasan --}}
-    <div class="col-lg-3">
+                                    pointHoverRadius: 6
+                                }
 
-        <section class="sa-panel h-100">
+                            ]
 
-            <div class="sa-panel-header">
+                        },
 
-                <h3>Ringkasan 2026</h3>
 
-            </div>
+                        /*
+                        |--------------------------------------------------------------------------
+                        | OPTIONS
+                        |--------------------------------------------------------------------------
+                        */
 
-            <div class="p-4">
+                        options: {
 
-                <div class="mb-4">
+                            responsive: true,
 
-                    <small class="text-muted">
-                        Pengaduan Narkoba
-                    </small>
+                            maintainAspectRatio: false,
 
-                    <h3 class="fw-bold text-primary">
-                        260
-                    </h3>
+                            interaction: {
 
-                </div>
+                                mode: 'index',
 
-                <div class="mb-4">
+                                intersect: false
 
-                    <small class="text-muted">
-                        WBS
-                    </small>
+                            },
 
-                    <h3 class="fw-bold text-warning">
-                        95
-                    </h3>
 
-                </div>
+                            plugins: {
 
-                <div class="mb-4">
+                                legend: {
 
-                    <small class="text-muted">
-                        Sosialisasi
-                    </small>
+                                    display: true,
 
-                    <h3 class="fw-bold text-success">
-                        82
-                    </h3>
+                                    position: 'top'
 
-                </div>
+                                },
 
-                <div>
 
-                    <small class="text-muted">
-                        Rehabilitasi
-                    </small>
+                                tooltip: {
 
-                    <h3 class="fw-bold text-danger">
-                        73
-                    </h3>
+                                    callbacks: {
 
-                </div>
+                                        label: function (context) {
 
-            </div>
+                                            return context.dataset.label
+                                                + ': '
+                                                + context.parsed.y
+                                                + ' laporan';
 
-        </section>
+                                        }
 
-    </div>
+                                    }
 
-</section>
+                                }
 
+                            },
+
+
+                            scales: {
+
+                                x: {
+
+                                    grid: {
+
+                                        display: false
+
+                                    }
+
+                                },
+
+
+                                y: {
+
+                                    beginAtZero: true,
+
+                                    ticks: {
+
+                                        precision: 0
+
+                                    },
+
+                                    title: {
+
+                                        display: true,
+
+                                        text: 'Jumlah Laporan'
+
+                                    }
+
+                                }
+
+                            }
+
+                        }
+
+                    });
+
+                });
+
+            </script>
 
 
 
@@ -534,97 +523,97 @@
     <script>
         const ctx = document.getElementById('chartLaporan');
 
-new Chart(ctx, {
+        new Chart(ctx, {
 
-    type: 'bar',
+            type: 'bar',
 
-    data: {
+            data: {
 
-        labels: ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'],
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'],
 
-        datasets: [
+                datasets: [
 
-            {
-                label: 'Pengaduan Narkoba',
-                data: [15,18,21,17,22,24,20,19,25,27,24,28],
-                backgroundColor:'#0B63CE',
-                borderRadius:8,
-                barThickness:12
-            },
+                    {
+                        label: 'Pengaduan Narkoba',
+                        data: [15, 18, 21, 17, 22, 24, 20, 19, 25, 27, 24, 28],
+                        backgroundColor: '#0B63CE',
+                        borderRadius: 8,
+                        barThickness: 12
+                    },
 
-            {
-                label:'WBS',
-                data:[5,6,7,8,6,7,9,10,8,7,9,11],
-                backgroundColor:'#FFC107',
-                borderRadius:8,
-                barThickness:12
-            },
+                    {
+                        label: 'WBS',
+                        data: [5, 6, 7, 8, 6, 7, 9, 10, 8, 7, 9, 11],
+                        backgroundColor: '#FFC107',
+                        borderRadius: 8,
+                        barThickness: 12
+                    },
 
-            {
-                label:'Sosialisasi',
-                data:[3,5,4,6,5,7,8,7,9,8,10,11],
-                backgroundColor:'#36B37E',
-                borderRadius:8,
-                barThickness:12
-            },
+                    {
+                        label: 'Sosialisasi',
+                        data: [3, 5, 4, 6, 5, 7, 8, 7, 9, 8, 10, 11],
+                        backgroundColor: '#36B37E',
+                        borderRadius: 8,
+                        barThickness: 12
+                    },
 
-            {
-                label:'Rehabilitasi',
-                data:[4,5,6,7,8,6,9,8,10,9,11,12],
-                backgroundColor:'#F45D48',
-                borderRadius:8,
-                barThickness:12
-            }
-
-        ]
-
-    },
-
-    options:{
-
-        responsive:true,
-
-        maintainAspectRatio:false,
-
-        plugins:{
-
-            legend:{
-                position:'bottom',
-                labels:{
-                    usePointStyle:true,
-                    pointStyle:'circle',
-                    padding:20,
-                    font:{
-                        size:13
+                    {
+                        label: 'Rehabilitasi',
+                        data: [4, 5, 6, 7, 8, 6, 9, 8, 10, 9, 11, 12],
+                        backgroundColor: '#F45D48',
+                        borderRadius: 8,
+                        barThickness: 12
                     }
-                }
-            }
 
-        },
+                ]
 
-        scales:{
-
-            x:{
-                grid:{
-                    display:false
-                }
             },
 
-            y:{
-                beginAtZero:true,
-                grid:{
-                    color:'#eef2f7'
+            options: {
+
+                responsive: true,
+
+                maintainAspectRatio: false,
+
+                plugins: {
+
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            usePointStyle: true,
+                            pointStyle: 'circle',
+                            padding: 20,
+                            font: {
+                                size: 13
+                            }
+                        }
+                    }
+
                 },
-                ticks:{
-                    stepSize:5
+
+                scales: {
+
+                    x: {
+                        grid: {
+                            display: false
+                        }
+                    },
+
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            color: '#eef2f7'
+                        },
+                        ticks: {
+                            stepSize: 5
+                        }
+                    }
+
                 }
+
             }
 
-        }
-
-    }
-
-});
+        });
 
 
         document.addEventListener('DOMContentLoaded', function () {

@@ -3,27 +3,152 @@
 namespace App\Http\Controllers\SuperAdmin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Pengaduan;
+use App\Models\Kecamatan;
 use Illuminate\Http\Request;
 
 class DataPengaduanController extends Controller
 {
-    public function dataPengaduan()
+    /*
+    |--------------------------------------------------------------------------
+    | DAFTAR PENGADUAN
+    |--------------------------------------------------------------------------
+    */
+    public function dataPengaduan(Request $request)
     {
-        return view('superadmin.data_pengaduan');
+        $kecamatans = Kecamatan::orderBy('nama_kecamatan')->get();
+
+        $query = Pengaduan::with([
+            'kecamatan',
+            'desa'
+        ]);
+
+        // Search kode / judul
+        if ($request->filled('search')) {
+
+            $search = trim($request->search);
+
+            $query->where(function ($q) use ($search) {
+
+                $q->where('kode_aduan', 'like', "%{$search}%")
+                    ->orWhere('judul_aduan', 'like', "%{$search}%");
+
+            });
+        }
+
+        // Filter topik aduan
+        if ($request->filled('topik_aduan')) {
+
+            $query->where(
+                'topik_aduan',
+                $request->topik_aduan
+            );
+        }
+
+        // Filter kecamatan
+        if ($request->filled('kecamatan')) {
+
+            $query->where(
+                'id_kecamatan',
+                $request->kecamatan
+            );
+        }
+
+        // Filter status
+        if ($request->filled('status')) {
+
+            $query->where(
+                'status',
+                $request->status
+            );
+        }
+
+        $pengaduans = $query
+            ->latest()
+            ->paginate(10);
+
+        return view(
+            'superadmin.data_pengaduan',
+            compact(
+                'pengaduans',
+                'kecamatans'
+            )
+        );
     }
 
-    public function detailPengaduan()
+    /*
+    |--------------------------------------------------------------------------
+    | DETAIL PENGADUAN
+    |--------------------------------------------------------------------------
+    */
+    public function detailPengaduan($id)
     {
-        return view('superadmin.detail_pengaduan');
+        $pengaduan = Pengaduan::with([
+            'kecamatan',
+            'desa'
+        ])->findOrFail($id);
+
+        return view(
+            'superadmin.detail_pengaduan',
+            compact('pengaduan')
+        );
     }
 
-    public function updateStatus(Request $request)
+    /*
+    |--------------------------------------------------------------------------
+    | UPDATE STATUS PENGADUAN
+    |--------------------------------------------------------------------------
+    */
+    public function updateStatus(Request $request, $id)
     {
-        // Karena belum memakai database,
-        // hanya redirect dengan pesan berhasil.
+        $request->validate([
+            'status' => 'required|in:Menunggu,Diproses,Selesai,Ditolak',
+        ]);
+
+        $pengaduan = Pengaduan::findOrFail($id);
+
+        $pengaduan->status = $request->status;
+
+        /*
+        |--------------------------------------------------------------------------
+        | SIMPAN TANGGAL BERDASARKAN STATUS
+        |--------------------------------------------------------------------------
+        */
+        if ($request->status === 'Diproses') {
+            $pengaduan->tanggal_proses = now();
+        } elseif ($request->status === 'Selesai') {
+            $pengaduan->tanggal_selesai = now();
+        }
+
+        $pengaduan->save();
+
+        return redirect()
+            ->route(
+                'superadmin.detail_pengaduan',
+                $pengaduan->id
+            )
+            ->with(
+                'success',
+                'Status pengaduan berhasil diperbarui.'
+            );
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | HAPUS PENGADUAN
+    |--------------------------------------------------------------------------
+    */
+    public function destroy($id)
+    {
+        $pengaduan = Pengaduan::findOrFail($id);
+
+        $pengaduan->delete();
 
         return redirect()
             ->route('superadmin.data_pengaduan')
-            ->with('success', 'Status pengaduan berhasil diperbarui.');
+            ->with(
+                'success',
+                'Data pengaduan berhasil dihapus.'
+            );
     }
 }
