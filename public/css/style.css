@@ -839,7 +839,6 @@
 }
 
 @media (max-width: 520px) {
-
     .aduan-box,
     .tracking-box {
         border-radius: 21px;
@@ -954,11 +953,13 @@
 }
 
 .permohonan-wrapper {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 430px;
+    gap: 30px;
+
+    align-items: start;
+
     width: 100%;
-    max-width: 1400px;
-    margin: 40px auto;
-    display: flex;
-    justify-content: center;
 }
 
 .pengaduan-card {
@@ -2531,7 +2532,7 @@ body {
     min-width: 0;
 }
 
-.sa-stat-content>span {
+.sa-stat-content > span {
     display: block;
     color: #778697;
     font-size: 11px;
@@ -2587,7 +2588,7 @@ body {
 
 .sa-panel-header p,
 .sa-panel-title p,
-.sa-reset-panel>p {
+.sa-reset-panel > p {
     margin: 0;
     color: #8391a1;
     font-size: 10px;
@@ -3426,9 +3427,8 @@ body {
 
 /* Tablet */
 @media (max-width: 991.98px) {
-
-    .navbar>.container,
-    .navbar>.container-fluid {
+    .navbar > .container,
+    .navbar > .container-fluid {
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -3867,7 +3867,7 @@ VERIFIKASI OTP
 }
 
 /* =========================================================
-   BOX SEARCH
+   BOX SEARCH ADUAN
 ========================================================= */
 
 .search-adukan-box {
@@ -4064,6 +4064,172 @@ VERIFIKASI OTP
     }
 }
 
+/* =========================================================
+   SEARCH PERMOHONAN
+========================================================= */
+
+.search-permohonan-box {
+    display: block;
+
+    margin-bottom: 20px;
+    padding: 0;
+
+    background: transparent;
+
+    border-radius: 0;
+
+    box-shadow: none;
+}
+
+/* =========================================================
+   FORM SEARCH
+========================================================= */
+
+.search-permohonan-box form {
+    width: 100%;
+}
+
+/* =========================================================
+   WRAPPER INPUT + BUTTON
+========================================================= */
+
+.search-permohonan-wrapper {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    width: 100%;
+}
+
+/* =========================================================
+   INPUT SEARCH
+========================================================= */
+
+.search-permohonan-input-wrapper {
+    position: relative;
+
+    flex: 1;
+}
+
+.search-permohonan-input-wrapper i {
+    position: absolute;
+
+    left: 15px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    color: #0878c1;
+
+    font-size: 17px;
+
+    z-index: 2;
+}
+
+.search-permohonan-input-wrapper input {
+    width: 100%;
+
+    padding: 12px 15px 12px 42px;
+
+    border: 1px solid #d9e2ec;
+
+    border-radius: 10px;
+
+    outline: none;
+
+    font-size: 14px;
+
+    font-family: inherit;
+
+    box-sizing: border-box;
+}
+
+.search-permohonan-input-wrapper input:focus {
+    border-color: #0878c1;
+
+    box-shadow: 0 0 0 3px rgba(8, 120, 193, 0.12);
+}
+
+/* =========================================================
+   BUTTON CARI
+========================================================= */
+
+.btn-search-permohonan {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 6px;
+
+    padding: 12px 18px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background: #0878c1;
+
+    color: #ffffff;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    font-family: inherit;
+
+    cursor: pointer;
+
+    white-space: nowrap;
+
+    transition: 0.25s ease;
+}
+
+.btn-search-permohonan:hover {
+    background: #0569aa;
+
+    color: #ffffff;
+
+    transform: translateY(-1px);
+}
+
+.btn-search-permohonan i {
+    font-size: 14px;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 768px) {
+    .search-permohonan-box {
+        padding: 15px;
+    }
+
+    .search-permohonan-wrapper {
+        flex-direction: row;
+
+        gap: 8px;
+    }
+
+    .search-permohonan-input-wrapper {
+        width: 100%;
+    }
+
+    .search-permohonan-input-wrapper input {
+        padding: 11px 10px 11px 40px;
+
+        font-size: 13px;
+    }
+
+    .btn-search-permohonan {
+        padding: 11px 15px;
+
+        font-size: 13px;
+    }
+}
 
 /* DETAIL FORM PERMOHONAN DAN PENGADUAN */
 .detail-form {

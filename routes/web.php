@@ -230,6 +230,10 @@ Route::prefix('permohonan')->name('permohonan.')->group(function () {
     Route::get('/berhasil/{kode}', [PermohonanController::class, 'success'])
         ->name('success');
 
+    // CARI
+    Route::get('/cari', [PermohonanController::class, 'cari'])
+        ->name('cari');
+
 });
 
 

@@ -447,12 +447,12 @@
                         <div class="aduan-item">
 
                             <span class="status
-                                                                                @if($item->status == 'Menunggu') menunggu
-                                                                                @elseif($item->status == 'Diproses') proses
-                                                                                @elseif($item->status == 'Selesai') selesai
-                                                                                @elseif($item->status == 'Ditolak') ditolak
-                                                                                @else verifikasi
-                                                                                @endif">
+                                @if($item->status == 'Menunggu') menunggu
+                                @elseif($item->status == 'Diproses') proses
+                                @elseif($item->status == 'Selesai') selesai
+                                @elseif($item->status == 'Ditolak') ditolak
+                                @else verifikasi
+                                @endif">
 
                                 {{ $item->status }}
 

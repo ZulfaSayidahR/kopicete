@@ -258,19 +258,44 @@
 
                 <aside class="sidebar-aduan">
 
-                    <div class="sidebar-header">
+                    <div class="aduan-terbaru-header">
 
-                        <h5>
-                            Permohonan Terbaru
-                        </h5>
+                        <h4>Permohonan Terbaru</h4>
 
-                        <a href="#tracking-section" class="btn-sidebar">
+                    </div>
 
-                            <i class="bi bi-search"></i>
+                    {{-- SEARCH PERMOHONAN --}}
+                    <div class="search-permohonan-box">
 
-                            Lacak Permohonan
+                        <form action="{{ route('permohonan.cari') }}" method="GET">
 
-                        </a>
+                            <div class="search-permohonan-wrapper">
+
+                                <div class="search-permohonan-input-wrapper">
+
+                                    <i class="bi bi-search"></i>
+
+                                    <input
+                                        type="text"
+                                        name="jenis_permohonan"
+                                        value="{{ request('jenis_permohonan') }}"
+                                        placeholder="Cari berdasarkan jenis permohonan..."
+                                        autocomplete="off"
+                                    >
+
+                                </div>
+
+                                <button type="submit" class="btn-search-permohonan">
+
+                                    <i class="bi bi-search"></i>
+
+                                    Cari
+
+                                </button>
+
+                            </div>
+
+                        </form>
 
                     </div>
 
