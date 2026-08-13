@@ -8,134 +8,171 @@
 
         <div class="container">
 
-            <div class="pengaduan-card">
+            <div class="pengaduan-card text-center">
 
-                {{-- HEADER --}}
-                <div class="pengaduan-header text-center">
+                <div class="pengaduan-header">
 
-                    <div class="mb-3">
-
-                        <i class="bi bi-check-circle-fill" style="font-size: 70px; color: #198754;">
-                        </i>
-
+                    <div class="header-icon">
+                        <i class="bi bi-check-circle-fill"></i>
                     </div>
 
-                    <h2>
-                        Pengaduan Berhasil Dikirim
-                    </h2>
+                    <h2>Pengaduan Berhasil Dikirim</h2>
 
                     <p>
-                        Terima kasih, pengaduan Anda telah berhasil
-                        dikirim dan masuk ke sistem BNNK Tulungagung.
+                        Terima kasih, laporan Anda sudah berhasil
+                        masuk ke sistem BNNK Tulungagung.
                     </p>
 
                 </div>
 
-
-                {{-- BODY --}}
                 <div class="pengaduan-body">
 
-                    <div class="text-center">
+                    <div class="mb-4">
 
-                        <p class="text-muted mb-2">
+                        <i class="bi bi-check-circle-fill text-success" style="font-size: 70px;">
+                        </i>
 
-                            Simpan kode pengaduan berikut untuk
-                            memantau proses pengaduan Anda.
+                    </div>
 
-                        </p>
+                    <h4 class="fw-bold">
+                        Pengaduan Anda telah berhasil dikirim
+                    </h4>
 
+                    <p class="text-muted">
+                        Simpan kode pengaduan berikut untuk memantau
+                        perkembangan laporan Anda.
+                    </p>
 
-                        {{-- KODE PENGADUAN --}}
-                        <div class="border rounded p-4 bg-light mb-4">
+                    <div class="card border-0 bg-light shadow-sm mt-4">
 
-                            <small class="text-muted d-block mb-2">
+                        <div class="card-body">
 
-                                KODE PENGADUAN
+                            <p class="mb-2 text-muted">
+                                Kode Pengaduan
+                            </p>
 
-                            </small>
-
-                            <h2 class="fw-bold text-primary mb-0">
-
+                            <h2 class="fw-bold text-primary">
                                 {{ $kode }}
-
                             </h2>
 
                         </div>
 
+                    </div>
 
-                        {{-- INFORMASI --}}
-                        <div class="alert alert-info text-start">
+                    <div class="alert alert-info mt-4 text-start">
 
-                            <i class="bi bi-info-circle-fill me-2"></i>
+                        <i class="bi bi-info-circle-fill me-2"></i>
 
-                            <strong>Informasi:</strong>
+                        <strong>Penting:</strong>
 
-                            <p class="mb-0 mt-2">
+                        Simpan kode pengaduan ini karena kode tersebut
+                        dapat digunakan untuk melihat status dan perkembangan
+                        pengaduan Anda.
 
-                                Gunakan kode pengaduan tersebut untuk
-                                melakukan pelacakan status pengaduan.
-                                Jangan membagikan kode ini kepada orang lain.
+                    </div>
 
+                    <div class="mt-4">
+
+                        <a href="{{ route('home') }}" class="btn btn-primary">
+
+                            <i class="bi bi-house-fill me-2"></i>
+
+                            Kembali ke Beranda
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+@endsection@extends('layouts.app')
+
+@section('title', 'Pengaduan Berhasil')
+
+@section('content')
+
+    <section class="pengaduan-page">
+
+        <div class="container">
+
+            <div class="pengaduan-card text-center">
+
+                <div class="pengaduan-header">
+
+                    <div class="header-icon">
+                        <i class="bi bi-check-circle-fill"></i>
+                    </div>
+
+                    <h2>Pengaduan Berhasil Dikirim</h2>
+
+                    <p>
+                        Terima kasih, laporan Anda sudah berhasil
+                        masuk ke sistem BNNK Tulungagung.
+                    </p>
+
+                </div>
+
+                <div class="pengaduan-body">
+
+                    <div class="mb-4">
+
+                        <i class="bi bi-check-circle-fill text-success" style="font-size: 70px;">
+                        </i>
+
+                    </div>
+
+                    <h4 class="fw-bold">
+                        Pengaduan Anda telah berhasil dikirim
+                    </h4>
+
+                    <p class="text-muted">
+                        Simpan kode pengaduan berikut untuk memantau
+                        perkembangan laporan Anda.
+                    </p>
+
+                    <div class="card border-0 bg-light shadow-sm mt-4">
+
+                        <div class="card-body">
+
+                            <p class="mb-2 text-muted">
+                                Kode Pengaduan
                             </p>
 
-                        </div>
-
-
-                        {{-- DETAIL SINGKAT --}}
-                        <div class="text-start border rounded p-3 mb-4">
-
-                            <div class="row mb-2">
-
-                                <div class="col-md-5">
-
-                                    <strong>Status Pengaduan</strong>
-
-                                </div>
-
-                                <div class="col-md-7">
-
-                                    <span class="badge bg-secondary">
-
-                                        Menunggu
-
-                                    </span>
-
-                                </div>
-
-                            </div>
-
-
-                            <div class="row">
-
-                                <div class="col-md-5">
-
-                                    <strong>Kode Pengaduan</strong>
-
-                                </div>
-
-                                <div class="col-md-7">
-
-                                    {{ $kode }}
-
-                                </div>
-
-                            </div>
+                            <h2 class="fw-bold text-primary">
+                                {{ $kode }}
+                            </h2>
 
                         </div>
 
+                    </div>
 
-                        {{-- BUTTON --}}
-                        <div class="d-flex justify-content-center gap-2">
+                    <div class="alert alert-info mt-4 text-start">
 
-                            <a href="{{ route('home') }}" class="btn btn-primary">
+                        <i class="bi bi-info-circle-fill me-2"></i>
 
-                                <i class="bi bi-house-fill me-2"></i>
+                        <strong>Penting:</strong>
 
-                                Kembali ke Beranda
+                        Simpan kode pengaduan ini karena kode tersebut
+                        dapat digunakan untuk melihat status dan perkembangan
+                        pengaduan Anda.
 
-                            </a>
+                    </div>
 
-                        </div>
+                    <div class="mt-4">
+
+                        <a href="{{ route('home') }}" class="btn btn-primary">
+
+                            <i class="bi bi-house-fill me-2"></i>
+
+                            Kembali ke Beranda
+
+                        </a>
 
                     </div>
 

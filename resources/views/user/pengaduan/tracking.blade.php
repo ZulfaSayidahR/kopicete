@@ -33,8 +33,8 @@
                 <div class="tracking-grid">
 
                     <!-- ==============================
-                                                                                                                                            KOLOM KIRI
-                                                                                                                                    =============================== -->
+                                                                                                                                                KOLOM KIRI
+                                                                                                                                        =============================== -->
 
                     <div class="tracking-left">
 
@@ -48,15 +48,15 @@
                                 </h5>
 
                                 <span class="badge
-                                                                                            @if($pengaduan->status == 'Menunggu')
-                                                                                                bg-warning
-                                                                                            @elseif($pengaduan->status == 'Diproses')
-                                                                                                bg-primary
-                                                                                            @elseif($pengaduan->status == 'Selesai')
-                                                                                                bg-success
-                                                                                            @else
-                                                                                                bg-secondary
-                                                                                            @endif">
+                                                                                                @if($pengaduan->status == 'Menunggu')
+                                                                                                    bg-warning
+                                                                                                @elseif($pengaduan->status == 'Diproses')
+                                                                                                    bg-primary
+                                                                                                @elseif($pengaduan->status == 'Selesai')
+                                                                                                    bg-success
+                                                                                                @else
+                                                                                                    bg-secondary
+                                                                                                @endif">
 
                                     {{ $pengaduan->status }}
 
@@ -184,8 +184,8 @@
                     </div>
 
                     <!-- ==============================
-                                                                                                                                            KOLOM KANAN
-                                                                                                                                    =============================== -->
+                                                                                                                                                KOLOM KANAN
+                                                                                                                                        =============================== -->
 
                     <aside class="tracking-card status-card">
 
@@ -248,10 +248,7 @@
 
                                         </small>
 
-                                        <button
-                                            type="button"
-                                            class="btn btn-sm btn-outline-primary"
-                                            data-bs-toggle="modal"
+                                        <button type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal"
                                             data-bs-target="#detailLaporanModal">
 
                                             <i class="bi bi-eye-fill"></i>
@@ -297,10 +294,7 @@
 
                                         </small>
 
-                                        <button
-                                            type="button"
-                                            class="btn btn-sm btn-outline-warning"
-                                            data-bs-toggle="modal"
+                                        <button type="button" class="btn btn-sm btn-outline-warning" data-bs-toggle="modal"
                                             data-bs-target="#detailLaporanModal">
 
                                             <i class="bi bi-eye-fill"></i>
@@ -346,10 +340,7 @@
 
                                         </small>
 
-                                        <button
-                                            type="button"
-                                            class="btn btn-sm btn-outline-success"
-                                            data-bs-toggle="modal"
+                                        <button type="button" class="btn btn-sm btn-outline-success" data-bs-toggle="modal"
                                             data-bs-target="#detailLaporanModal">
 
                                             <i class="bi bi-eye-fill"></i>
@@ -440,9 +431,9 @@
 
                 {{-- HEADER --}}
                 <div class="modal-header bg-{{ $warna }}
-                                                    @if($warna != 'warning')
-                                                        text-white
-                                                    @endif">
+                                                        @if($warna != 'warning')
+                                                            text-white
+                                                        @endif">
 
                     <h5 class="modal-title fw-bold">
 
@@ -453,9 +444,9 @@
                     </h5>
 
                     <button class="btn-close
-                                                @if($warna != 'warning')
-                                                    btn-close-white
-                                                @endif" data-bs-dismiss="modal">
+                                                    @if($warna != 'warning')
+                                                        btn-close-white
+                                                    @endif" data-bs-dismiss="modal">
                     </button>
 
                 </div>
@@ -494,78 +485,86 @@
                         {{-- INFORMASI --}}
                         <div class="col-lg-7">
 
+                            {{-- JUDUL --}}
                             <h3 class="fw-bold mb-1">
-
                                 {{ $pengaduan->judul_aduan }}
-
                             </h3>
 
+                            {{-- KODE --}}
                             <span class="text-muted">
-
                                 {{ $pengaduan->kode_aduan }}
-
                             </span>
 
                             <hr>
 
-                            <table class="table table-borderless align-middle">
+                            <div class="detail-info">
 
-                                <tr>
-
-                                    <th width="170" class="bg-transparent text-dark fw-bold">
+                                {{-- STATUS --}}
+                                <div class="detail-row">
+                                    <div class="detail-label">
                                         Status
-                                    </th>
+                                    </div>
 
-                                    <td>
+                                    <div class="detail-separator">
+                                        :
+                                    </div>
 
+                                    <div class="detail-value">
                                         <span class="badge bg-{{ $warna }} px-3 py-2">
-
                                             {{ $status }}
-
                                         </span>
+                                    </div>
+                                </div>
 
-                                    </td>
 
-                                </tr>
+                                {{-- TOPIK --}}
+                                <div class="detail-row">
+                                    <div class="detail-label">
+                                        Topik Aduan
+                                    </div>
 
-                                <tr>
+                                    <div class="detail-separator">
+                                        :
+                                    </div>
 
-                                    <th width="170" class="bg-transparent text-dark fw-bold">
-                                        Topik
-                                    </th>
+                                    <div class="detail-value">
+                                        {{ $pengaduan->topik_aduan ?? '-' }}
+                                    </div>
+                                </div>
 
-                                    <td>
 
-                                        {{ $pengaduan->topik_aduan }}
-
-                                    </td>
-
-                                </tr>
-
-                                <tr>
-
-                                    <th width="170" class="bg-transparent text-dark fw-bold">
+                                {{-- KECAMATAN --}}
+                                <div class="detail-row">
+                                    <div class="detail-label">
                                         Kecamatan
-                                    </th>
+                                    </div>
 
-                                    <td>
+                                    <div class="detail-separator">
+                                        :
+                                    </div>
 
+                                    <div class="detail-value">
                                         {{ $pengaduan->kecamatan->nama_kecamatan ?? '-' }}
+                                    </div>
+                                </div>
 
-                                    </td>
 
-                                </tr>
+                                {{-- TANGGAL UPDATE --}}
+                                <div class="detail-row">
+                                    <div class="detail-label">
+                                        Tanggal Update
+                                    </div>
 
-                                <tr>
+                                    <div class="detail-separator">
+                                        :
+                                    </div>
 
-                                    <th width="170" class="bg-transparent text-dark fw-bold">
-                                        Tanggal
-                                    </th>
-                                    <td>
+                                    <div class="detail-value">
 
                                         @if($tanggal)
 
-                                            {{ \Carbon\Carbon::parse($tanggal)->translatedFormat('d F Y H:i') }}
+                                                                        {{ \Carbon\Carbon::parse($tanggal)
+                                            ->translatedFormat('d F Y H:i') }}
 
                                         @else
 
@@ -573,32 +572,34 @@
 
                                         @endif
 
-                                    </td>
+                                    </div>
+                                </div>
 
-                                </tr>
 
-                                <tr>
-
-                                    <th width="170" class="bg-transparent text-dark fw-bold">
+                                {{-- ADMIN --}}
+                                <div class="detail-row">
+                                    <div class="detail-label">
                                         Diupdate Oleh
-                                    </th>
+                                    </div>
 
-                                    <td>
+                                    <div class="detail-separator">
+                                        :
+                                    </div>
 
-                                        {{ $pengaduan->admin->nama ?? 'Admin BNNK Tulungagung' }}
+                                    <div class="detail-value">
+                                        {{ $pengaduan->admin->nama
+        ?? 'Admin BNNK Tulungagung' }}
+                                    </div>
+                                </div>
 
-                                    </td>
+                            </div>
 
-                                </tr>
 
-                            </table>
-
+                            {{-- CATATAN ADMIN --}}
                             <div class="mt-4">
 
                                 <h6 class="fw-bold">
-
                                     Catatan Admin
-
                                 </h6>
 
                                 <div class="border rounded-4 bg-light p-3">
@@ -610,9 +611,7 @@
                                     @else
 
                                         <span class="text-muted">
-
                                             Belum ada catatan dari admin.
-
                                         </span>
 
                                     @endif

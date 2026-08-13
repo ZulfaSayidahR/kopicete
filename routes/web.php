@@ -223,6 +223,10 @@ Route::prefix('permohonan')->name('permohonan.')->group(function () {
     Route::post('/otp/kirim-ulang', [PermohonanController::class, 'kirimUlangOtp'])
         ->name('kirimUlangOtp');
 
+    // TRACKING
+    Route::get('/tracking/{kode}', [PermohonanController::class, 'tracking'])
+        ->name('tracking');
+
     Route::get('/berhasil/{kode}', [PermohonanController::class, 'success'])
         ->name('success');
 

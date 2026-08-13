@@ -19,9 +19,12 @@ class PermohonanController extends Controller
 
     public function create()
     {
-        return view('user.permohonan.create');
-    }
+        $permohonanTerbaru = Permohonan::latest()
+            ->take(5)
+            ->get();
 
+        return view('user.permohonan.create', compact('permohonanTerbaru'));
+    }
 
     /*
     |--------------------------------------------------------------------------
@@ -519,6 +522,45 @@ class PermohonanController extends Controller
 
 
     /*
+|--------------------------------------------------------------------------
+| TRACKING PERMOHONAN
+|--------------------------------------------------------------------------
+*/
+
+    public function tracking($kode)
+    {
+        $permohonan = Permohonan::where(
+            'kode_permohonan',
+            $kode
+        )->firstOrFail();
+
+        return view(
+            'user.permohonan.tracking',
+            compact('permohonan')
+        );
+    }
+    /*
+    |--------------------------------------------------------------------------
+    | HALAMAN BERHASIL
+    |--------------------------------------------------------------------------
+    */
+
+    public function success($kode)
+    {
+        $permohonan = Permohonan::where(
+            'kode_permohonan',
+            $kode
+        )->firstOrFail();
+
+        return view(
+            'user.permohonan.success',
+            compact('permohonan')
+        );
+    }
+
+
+
+    /*
     |--------------------------------------------------------------------------
     | KIRIM ULANG OTP
     |--------------------------------------------------------------------------
@@ -666,24 +708,5 @@ class PermohonanController extends Controller
     }
 
 
-    /*
-    |--------------------------------------------------------------------------
-    | HALAMAN BERHASIL
-    |--------------------------------------------------------------------------
-    */
 
-    public function success($kode)
-    {
-        $permohonan =
-            Permohonan::where(
-                'kode_permohonan',
-                $kode
-            )->firstOrFail();
-
-
-        return view(
-            'user.permohonan.success',
-            compact('permohonan')
-        );
-    }
 }
