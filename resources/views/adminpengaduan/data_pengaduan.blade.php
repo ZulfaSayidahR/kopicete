@@ -4,7 +4,7 @@
 
 @section('content')
 
-    <section class="sa-dashboard" id="superAdminDashboard">
+    <section class="sa-dashboard" id="AdminPengaduanDashboard">
 
         @include('layouts.sidebar_admin_pengaduan')
 
@@ -70,315 +70,319 @@
 
             {{-- ================= FILTER ================= --}}
 
+            
             <section class="sa-panel mt-4">
 
                 <div class="sa-panel-header">
 
                     <div>
 
-                        <h3>Filter Pengaduan</h3>
+                        <h3>
+                            Filter Pengaduan
+                        </h3>
 
-                        <p>Cari berdasarkan token, kategori, kecamatan maupun status.</p>
+                        <p>
+                            Cari berdasarkan kode, judul, kategori,
+                            kecamatan maupun status.
+                        </p>
 
                     </div>
 
                 </div>
 
+
                 <div class="p-4">
 
-                    <div class="row g-3">
+                    <form action="{{ route('adminpengaduan.data_pengaduan') }}" method="GET">
 
-                        <div class="col-lg-6">
+                        <div class="row g-3">
 
-                            <div class="sa-search-box w-100">
 
-                                <i class="bi bi-search"></i>
+                            {{-- =================================================
+                            | PENCARIAN KODE / JUDUL
+                            ================================================== --}}
 
-                                <input type="text" placeholder="Cari Token atau Judul Aduan">
+                            <div class="col-lg-6">
+
+                                <div class="sa-search-box w-100">
+
+                                    <i class="bi bi-search"></i>
+
+                                    <input type="text" name="search" value="{{ request('search') }}"
+                                        placeholder="Cari Kode atau Judul Aduan">
+
+                                </div>
+
+                            </div>
+
+
+
+                            {{-- =================================================
+                            | FILTER KATEGORI
+                            ================================================== --}}
+
+                            <div class="col-lg-6">
+
+                                <select name="topik_aduan" class="form-select">
+
+                                    <option value="">
+                                        Semua Topik Aduan
+                                    </option>
+
+                                    <option value="Penyalahgunaan Narkotika" {{ request('topik_aduan') == 'Penyalahgunaan Narkotika' ? 'selected' : '' }}>
+                                        Penyalahgunaan Narkotika
+                                    </option>
+
+                                    <option value="Peredaran Gelap Narkotika" {{ request('topik_aduan') == 'Peredaran Gelap Narkotika' ? 'selected' : '' }}>
+                                        Peredaran Gelap Narkotika
+                                    </option>
+
+                                    <option value="Pelanggaran Internal" {{ request('topik_aduan') == 'Pelanggaran Internal' ? 'selected' : '' }}>
+                                        Pelanggaran Internal
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                            {{-- =================================================
+                            | FILTER KECAMATAN
+                            ================================================== --}}
+
+                            <div class="col-lg-6">
+
+                            <select name="kecamatan" class="form-select">
+
+    <option value="">
+        Semua Kecamatan
+    </option>
+
+    @foreach($kecamatans as $kecamatan)
+
+        <option
+            value="{{ $kecamatan->id_kecamatan }}"
+            {{ request('kecamatan') == $kecamatan->id_kecamatan ? 'selected' : '' }}
+        >
+            {{ $kecamatan->nama_kecamatan }}
+        </option>
+
+    @endforeach
+
+</select>
+
+                            </div>
+
+
+
+                            {{-- =================================================
+                            | FILTER STATUS
+                            ================================================== --}}
+
+                            <div class="col-lg-6">
+
+                                <select name="status" class="form-select">
+
+                                    <option value="">
+                                        Semua Status
+                                    </option>
+
+                                    <option value="Menunggu" {{ request('status') == 'Menunggu' ? 'selected' : '' }}>
+                                        Menunggu
+                                    </option>
+
+                                    <option value="Diproses" {{ request('status') == 'Diproses' ? 'selected' : '' }}>
+                                        Diproses
+                                    </option>
+
+                                    <option value="Selesai" {{ request('status') == 'Selesai' ? 'selected' : '' }}>
+                                        Selesai
+                                    </option>
+
+                                    <option value="Ditolak" {{ request('status') == 'Ditolak' ? 'selected' : '' }}>
+                                        Ditolak
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+
+                            {{-- =================================================
+                            | BUTTON
+                            ================================================== --}}
+
+                            <div class="col-12">
+
+                                <div class="d-flex gap-2">
+
+                                    <button type="submit" class="btn btn-primary">
+
+                                        <i class="bi bi-search"></i>
+
+                                        Cari
+
+                                    </button>
+
+
+                                    <a href="{{ route('adminpengaduan.data_pengaduan') }}" class="btn btn-secondary">
+
+                                        <i class="bi bi-arrow-clockwise"></i>
+
+                                        Reset
+
+                                    </a>
+
+                                </div>
 
                             </div>
 
                         </div>
 
-                        <div class="col-lg-6">
-
-                            <select class="form-select">
-
-                                <option>Semua Kategori</option>
-
-                                <option>Aduan Penyalahgunaan Narkoba dan Peredaran Gelap Narkotika</option>
-
-                                <option>Aduan Pelanggaran Grativikasi (WBS)</option>
-
-                            </select>
-
-                        </div>
-
-                        <div class="col-lg-6">
-
-                            <select class="form-select">
-
-                                <option>Semua Kecamatan</option>
-
-                                <option>Campurdarat</option>
-
-                                <option>Kauman</option>
-
-                                <option>Tulungagung</option>
-
-                            </select>
-
-                        </div>
-
-                        <div class="col-lg-6">
-
-                            <select class="form-select">
-
-                                <option>Semua Status</option>
-
-                                <option>Diajukan</option>
-
-                                <option>Diverifikasi</option>
-
-                                <option>Diproses</option>
-
-                                <option>Selesai</option>
-
-                            </select>
-
-                        </div>
-
-                    </div>
+                    </form>
 
                 </div>
 
             </section>
-
 
 
             {{-- ================= TABEL ================= --}}
 
-            <section class="sa-panel mt-4">
+           <section class="sa-panel mt-4">
 
-                <div class="sa-panel-header">
+    <div class="sa-panel-header">
 
-                    <div>
+        <div>
 
-                        <h3>Daftar Pengaduan</h3>
+            <h3>Daftar Pengaduan</h3>
 
-                        <p>Data pengaduan masyarakat yang masuk ke sistem.</p>
+            <p>Data pengaduan masyarakat yang masuk ke sistem.</p>
 
-                    </div>
+        </div>
 
-                </div>
+    </div>
 
-                <div class="sa-table-responsive">
+    <div class="sa-table-responsive">
 
-                    <table class="sa-table">
+        <table class="sa-table">
 
-                        <thead>
+            <thead>
 
-                            <tr>
+                <tr>
 
-                                <th>Kode Aduan</th>
+                    <th>Kode Aduan</th>
+                    <th>Kategori</th>
+                    <th>Kecamatan</th>
+                    <th>Tanggal</th>
+                    <th>Status</th>
+                    <th class="sa-action-column">Aksi</th>
 
-                                <th>Kategori</th>
+                </tr>
 
-                                <th>Kecamatan</th>
+            </thead>
 
-                                <th>Tanggal</th>
+            <tbody>
 
-                                <th>Status</th>
+                @forelse($pengaduans as $item)
 
-                                <th class="sa-action-column">Aksi</th>
+                    <tr>
 
-                            </tr>
+                        <td>{{ $item->kode_aduan }}</td>
 
-                        </thead>
+                        <td>{{ $item->topik_aduan }}</td>
 
-                        <tbody>
+                        <td>
+                            {{ $item->kecamatan->nama_kecamatan ?? '-' }}
+                        </td>
 
-                            <tr>
+                        <td>
+                            {{ $item->created_at ? $item->created_at->format('d/m/Y') : '-' }}
+                        </td>
 
-                                <td>PHGSHJBJ</td>
-                                <td>Penyalahgunaan</td>
-                                <td>Campurdarat</td>
-                                <td>21/12/2025</td>
+                        <td>
 
-                                <td>
-                                    <span class="sa-status-badge active">
-                                        <span></span>
-                                        Selesai
-                                    </span>
-                                </td>
+                            <span class="sa-status-badge">
 
-                                <td>
+                                <span></span>
 
-                                    <div class="sa-action-buttons">
+                                {{ $item->status }}
 
-                                        {{-- Detail / Edit --}}
-                                        <a href="{{ route('adminpengaduan.detail_pengaduan') }}"
-                                            class="sa-action-button sa-key-button" title="Lihat Detail">
+                            </span>
 
-                                            <i class="bi bi-pencil-square"></i>
+                        </td>
 
-                                        </a>
+                        <td>
 
-                                        {{-- Hapus --}}
-                                        <button class="sa-action-button sa-delete-button"
-                                            onclick="return confirm('Yakin ingin menghapus data ini?')" title="Hapus">
+                            <div class="sa-action-buttons">
 
-                                            <i class="bi bi-trash-fill"></i>
+                                {{-- DETAIL --}}
+                                <a href="{{ route('adminpengaduan.detail_pengaduan', $item->id) }}"
+                                    class="sa-action-button sa-key-button"
+                                    title="Lihat Detail">
 
-                                        </button>
+                                    <i class="bi bi-pencil-square"></i>
 
-                                    </div>
+                                </a>
 
-                                </td>
+                                {{-- HAPUS --}}
+                                <form action="{{ route('adminpengaduan.delete_pengaduan', $item->id) }}"
+                                    method="POST"
+                                    style="display:inline"
+                                    onsubmit="return confirm('Yakin ingin menghapus data pengaduan ini?')">
 
-                            </tr>
+                                    @csrf
+                                    @method('DELETE')
 
-                            <tr>
+                                    <button type="submit"
+                                        class="sa-action-button sa-delete-button"
+                                        title="Hapus">
 
-                                <td>PHGSHJBJ</td>
-                                <td>WBS</td>
-                                <td>Kauman</td>
-                                <td>23/05/2026</td>
+                                        <i class="bi bi-trash-fill"></i>
 
-                                <td>
-                                    <span class="sa-status-badge">
-                                        <span style="background:#ffc107"></span>
-                                        Diverifikasi
-                                    </span>
-                                </td>
+                                    </button>
 
-                                <td>
+                                </form>
 
-                                    <div class="sa-action-buttons">
+                            </div>
 
-                                        <a href="{{ route('adminpengaduan.detail_pengaduan') }}"
-                                            class="sa-action-button sa-key-button" title="Lihat Detail">
+                        </td>
 
-                                            <i class="bi bi-pencil-square"></i>
+                    </tr>
 
-                                        </a>
+                @empty
 
-                                        <button class="sa-action-button sa-delete-button"
-                                            onclick="return confirm('Yakin ingin menghapus data ini?')" title="Hapus">
+                    <tr>
 
-                                            <i class="bi bi-trash-fill"></i>
+                        <td colspan="6" class="text-center py-4">
 
-                                        </button>
+                            Belum ada data pengaduan.
 
-                                    </div>
+                        </td>
 
-                                </td>
+                    </tr>
 
-                            </tr>
+                @endforelse
 
-                            <tr>
+            </tbody>
 
-                                <td>SAAFDGD</td>
-                                <td>WBS</td>
-                                <td>Tulungagung</td>
-                                <td>22/03/2026</td>
+        </table>
 
-                                <td>
-                                    <span class="sa-status-badge">
-                                        <span style="background:#0d6efd"></span>
-                                        Diajukan
-                                    </span>
-                                </td>
+    </div>
 
-                                <td>
+    <div class="sa-table-footer">
 
-                                    <div class="sa-action-buttons">
+        <span>
+            Menampilkan {{ $pengaduans->count() }}
+            dari {{ $pengaduans->total() }} pengaduan
+        </span>
 
-                                        <a href="{{ route('adminpengaduan.detail_pengaduan') }}"
-                                            class="sa-action-button sa-key-button" title="Lihat Detail">
+        <div>
+            {{ $pengaduans->links() }}
+        </div>
 
-                                            <i class="bi bi-pencil-square"></i>
+    </div>
 
-                                        </a>
-
-                                        <button class="sa-action-button sa-delete-button"
-                                            onclick="return confirm('Yakin ingin menghapus data ini?')" title="Hapus">
-
-                                            <i class="bi bi-trash-fill"></i>
-
-                                        </button>
-
-                                    </div>
-
-                                </td>
-
-                            </tr>
-
-                            <tr>
-
-                                <td>BNNK001</td>
-                                <td>Penyalahgunaan</td>
-                                <td>Bandung</td>
-                                <td>01/07/2026</td>
-
-                                <td>
-                                    <span class="sa-status-badge">
-                                        <span style="background:#fd7e14"></span>
-                                        Diproses
-                                    </span>
-                                </td>
-
-                                <td>
-
-                                    <div class="sa-action-buttons">
-
-                                        <a href="{{ route('adminpengaduan.detail_pengaduan') }}"
-                                            class="sa-action-button sa-key-button" title="Lihat Detail">
-
-                                            <i class="bi bi-pencil-square"></i>
-
-                                        </a>
-
-                                        <button class="sa-action-button sa-delete-button"
-                                            onclick="return confirm('Yakin ingin menghapus data ini?')" title="Hapus">
-
-                                            <i class="bi bi-trash-fill"></i>
-
-                                        </button>
-
-                                    </div>
-
-                                </td>
-
-                            </tr>
-
-                        </tbody>
-
-                    </table>
-
-                </div>
-
-                <div class="sa-table-footer">
-
-                    <span>Menampilkan 4 dari 4 pengaduan</span>
-
-                    <div class="sa-pagination">
-
-                        <button disabled>
-                            <i class="bi bi-chevron-left"></i>
-                        </button>
-
-                        <button class="active">1</button>
-
-                        <button>
-                            <i class="bi bi-chevron-right"></i>
-                        </button>
-
-                    </div>
-
-                </div>
-
-            </section>
+</section>
 
         </main>
 

@@ -4,148 +4,124 @@
 
 @section('content')
 
-<section class="sa-dashboard" id="superAdminDashboard">
+    <section class="sa-dashboard" id="superAdminDashboard">
 
-    {{-- Sidebar --}}
-    @include('layouts.sidebar_admin_permohonan')
+        {{-- Sidebar --}}
+        @include('layouts.sidebar_admin_permohonan')
 
-    <main class="sa-main">
+        <main class="sa-main">
 
-        {{-- HEADER --}}
-        <header class="sa-topbar">
+            {{-- HEADER --}}
+            <header class="sa-topbar">
 
-            <div class="sa-topbar-left">
+                <div class="sa-topbar-left">
 
-                <button type="button"
-                        class="sa-toggle-sidebar"
-                        id="toggleSidebar">
+                    <button type="button" class="sa-toggle-sidebar" id="toggleSidebar">
 
-                    <i class="bi bi-list"></i>
+                        <i class="bi bi-list"></i>
 
-                </button>
+                    </button>
 
-                <div class="sa-page-heading">
+                    <div class="sa-page-heading">
 
-                    <h1>Dashboard Admin Permohonan</h1>
+                        <h1>Dashboard Admin Permohonan</h1>
 
-                    <p>
-                        Monitoring seluruh permohonan masyarakat
-                        BNNK Tulungagung
-                    </p>
+                        <p>
+                            Monitoring seluruh permohonan masyarakat
+                            BNNK Tulungagung
+                        </p>
 
-                </div>
-
-            </div>
-
-            <div class="sa-profile">
-
-                <div class="sa-profile-avatar">
-
-                    <i class="bi bi-person-fill"></i>
+                    </div>
 
                 </div>
 
-                <div class="sa-profile-info">
+                <div class="sa-profile">
 
-                    <strong>{{ auth()->user()->name ?? 'Admin Permohonan' }}</strong>
+                    <div class="sa-profile-avatar">
 
-                    <small>Administrator</small>
+                        <i class="bi bi-person-fill"></i>
 
-                </div>
+                    </div>
 
-                <i class="bi bi-chevron-down sa-profile-arrow"></i>
+                    <div class="sa-profile-info">
 
-            </div>
+                        <strong>{{ auth()->user()->name ?? 'Admin Permohonan' }}</strong>
 
-        </header>
+                        <small>Administrator</small>
 
-        {{-- CARD STATISTIK --}}
-        <section class="sa-statistics">
+                    </div>
 
-            <article class="sa-stat-card">
-
-                <div class="sa-stat-icon sa-stat-blue">
-
-                    <i class="bi bi-envelope-paper-fill"></i>
+                    <i class="bi bi-chevron-down sa-profile-arrow"></i>
 
                 </div>
 
-                <div class="sa-stat-content">
+            </header>
 
-                    <span>Total Permohonan</span>
 
-                    <h2>200</h2>
+            {{-- statisik --}}
 
-                    <small>Seluruh permohonan masyarakat</small>
+            <section class="sa-statistics">
 
-                </div>
+                <article class="sa-stat-card">
 
-            </article>
+                    <div class="sa-stat-icon sa-stat-blue">
+                        <i class="bi bi-envelope-paper-fill"></i>
+                    </div>
 
-            <article class="sa-stat-card">
+                    <div class="sa-stat-content">
+                        <span>Total Permohonan</span>
+                        <h2>{{ $totalPermohonan }}</h2>
+                        <small>Seluruh permohonan masyarakat</small>
+                    </div>
 
-                <div class="sa-stat-icon sa-stat-yellow">
+                </article>
 
-                    <i class="bi bi-hourglass-split"></i>
+                <article class="sa-stat-card">
 
-                </div>
+                    <div class="sa-stat-icon sa-stat-yellow">
+                        <i class="bi bi-hourglass-split"></i>
+                    </div>
 
-                <div class="sa-stat-content">
+                    <div class="sa-stat-content">
+                        <span>Menunggu Verifikasi</span>
+                        <h2>{{ $diverifikasi }}</h2>
+                        <small>Belum diverifikasi</small>
+                    </div>
 
-                    <span>Menunggu Verifikasi</span>
+                </article>
 
-                    <h2>15</h2>
+                <article class="sa-stat-card">
 
-                    <small>Belum diverifikasi</small>
+                    <div class="sa-stat-icon sa-stat-blue">
+                        <i class="bi bi-arrow-repeat"></i>
+                    </div>
 
-                </div>
+                    <div class="sa-stat-content">
+                        <span>Sedang Diproses</span>
+                        <h2>{{ $diproses }}</h2>
+                        <small>Sedang ditindaklanjuti</small>
+                    </div>
 
-            </article>
+                </article>
 
-            <article class="sa-stat-card">
+                <article class="sa-stat-card">
 
-                <div class="sa-stat-icon sa-stat-blue">
+                    <div class="sa-stat-icon sa-stat-green">
+                        <i class="bi bi-check-circle-fill"></i>
+                    </div>
 
-                    <i class="bi bi-arrow-repeat"></i>
+                    <div class="sa-stat-content">
+                        <span>Selesai</span>
+                        <h2>{{ $selesai }}</h2>
+                        <small>Permohonan selesai</small>
+                    </div>
 
-                </div>
+                </article>
 
-                <div class="sa-stat-content">
+            </section>
 
-                    <span>Sedang Diproses</span>
-
-                    <h2>28</h2>
-
-                    <small>Sedang ditindaklanjuti</small>
-
-                </div>
-
-            </article>
-
-            <article class="sa-stat-card">
-
-                <div class="sa-stat-icon sa-stat-green">
-
-                    <i class="bi bi-check-circle-fill"></i>
-
-                </div>
-
-                <div class="sa-stat-content">
-
-                    <span>Selesai</span>
-
-                    <h2>157</h2>
-
-                    <small>Permohonan selesai</small>
-
-                </div>
-
-            </article>
-
-        </section>
-
-        {{-- TABEL --}}
-         <section class="sa-panel mt-4">
+            {{-- TABEL --}}
+            <section class="sa-panel mt-4">
 
                 <div class="sa-panel-header">
 
@@ -181,121 +157,99 @@
 
                         <tbody>
 
-                            <tr>
+                            @forelse($permohonans as $permohonan)
 
-                                <td>PMH-001</td>
-                                <td>Permohonan Rehabilitasi</td>
-                                <td>Ahmad Fauzi</td>
-                                <td>Campurdarat</td>
-                                <td>16 Juli 2026</td>
+                                <tr>
 
-                                <td>
-                                    <span class="sa-status-badge">
-                                        <span style="background:#ffc107"></span>
-                                        Menunggu Verifikasi
-                                    </span>
-                                </td>
+                                    <td>{{ $permohonan->kode_permohonan }}</td>
 
-                                <td>
+                                    <td>{{ $permohonan->jenis_permohonan }}</td>
 
-                                    <div class="sa-action-buttons">
+                                    <td>{{ $permohonan->nama_penyelenggara }}</td>
 
-                                        {{-- Detail / Edit --}}
-                                        <a href="{{ route('adminpermohonan.detail_permohonan') }}"
-                                            class="sa-action-button sa-key-button" title="Detail Permohonan">
-                                            <i class="bi bi-pencil-square"></i>
-                                        </a>
+                                    <td>{{ $permohonan->tempat }}</td>
 
-                                        {{-- Delete --}}
-                                        <button class="sa-action-button sa-delete-button"
-                                            onclick="return confirm('Yakin ingin menghapus data permohonan ini?')"
-                                            title="Hapus">
+                                    <td>
+                                        {{ \Carbon\Carbon::parse($permohonan->created_at)->translatedFormat('d F Y') }}
+                                    </td>
 
-                                            <i class="bi bi-trash-fill"></i>
+                                    <td>
 
-                                        </button>
+                                        @php
 
-                                    </div>
+                                            $warna = '#ffc107';
 
-                                </td>
+                                            if ($permohonan->status == 'Diproses') {
+                                                $warna = '#0d6efd';
+                                            }
 
-                            </tr>
+                                            if ($permohonan->status == 'Selesai') {
+                                                $warna = '#198754';
+                                            }
 
-                            <tr>
+                                            if ($permohonan->status == 'Ditolak') {
+                                                $warna = '#dc3545';
+                                            }
 
-                                <td>PMH-002</td>
-                                <td>Permohonan Sosialisasi</td>
-                                <td>SMAN 1 Tulungagung</td>
-                                <td>Tulungagung</td>
-                                <td>18 Juli 2026</td>
+                                        @endphp
 
-                                <td>
-                                    <span class="sa-status-badge">
-                                        <span style="background:#0d6efd"></span>
-                                        Diproses
-                                    </span>
-                                </td>
+                                        <span class="sa-status-badge">
 
-                                <td>
+                                            <span style="background:{{ $warna }}"></span>
 
-                                    <div class="sa-action-buttons">
+                                            {{ $permohonan->status }}
 
-                                        <a href="{{ route('adminpermohonan.detail_permohonan') }}"
-                                            class="sa-action-button sa-key-button" title="Detail Permohonan">
-                                            <i class="bi bi-pencil-square"></i>
-                                        </a>
+                                        </span>
 
-                                        <button class="sa-action-button sa-delete-button"
-                                            onclick="return confirm('Yakin ingin menghapus data permohonan ini?')"
-                                            title="Hapus">
+                                    </td>
 
-                                            <i class="bi bi-trash-fill"></i>
+                                    <td>
 
-                                        </button>
+                                        <div class="sa-action-buttons">
 
-                                    </div>
+                                            {{-- DETAIL --}}
+                                            <a href="{{ route('adminpermohonan.detail_permohonan', $permohonan->id) }}"
+                                                class="sa-action-button sa-key-button" title="Detail Permohonan">
 
-                                </td>
+                                                <i class="bi bi-pencil-square"></i>
 
-                            </tr>
+                                            </a>
 
-                            <tr>
+                                            {{-- HAPUS --}}
+                                            <form action="{{ route('adminpermohonan.delete_permohonan', $permohonan->id) }}"
+                                                method="POST" style="display:inline;">
 
-                                <td>PMH-003</td>
-                                <td>Permohonan Rehabilitasi</td>
-                                <td>Siti Aminah</td>
-                                <td>Kauman</td>
-                                <td>20 Juli 2026</td>
+                                                @csrf
+                                                @method('DELETE')
 
-                                <td>
-                                    <span class="sa-status-badge active">
-                                        <span></span>
-                                        Selesai
-                                    </span>
-                                </td>
+                                                <button type="submit" class="sa-action-button sa-delete-button"
+                                                    onclick="return confirm('Yakin ingin menghapus data permohonan ini?')">
 
-                                <td>
+                                                    <i class="bi bi-trash-fill"></i>
 
-                                    <div class="sa-action-buttons">
+                                                </button>
 
-                                        <a href="{{ route('adminpermohonan.detail_permohonan') }}"
-                                            class="sa-action-button sa-key-button" title="Detail Permohonan">
-                                            <i class="bi bi-pencil-square"></i>
-                                        </a>
+                                            </form>
 
-                                        <button class="sa-action-button sa-delete-button"
-                                            onclick="return confirm('Yakin ingin menghapus data permohonan ini?')"
-                                            title="Hapus">
+                                        </div>
 
-                                            <i class="bi bi-trash-fill"></i>
+                                    </td>
 
-                                        </button>
+                                </tr>
 
-                                    </div>
+                            @empty
 
-                                </td>
+                                <tr>
 
-                            </tr>
+                                    <td colspan="7" class="text-center py-4">
+
+                                        Tidak ada data permohonan.
+
+                                    </td>
+
+                                </tr>
+
+                            @endforelse
 
                         </tbody>
 
@@ -305,55 +259,52 @@
 
                 <div class="sa-table-footer">
 
-                    <span>Menampilkan 3 dari 3 permohonan</span>
+                    <span>
+                        Menampilkan
+                        {{ $permohonans->firstItem() ?? 0 }}
+                        -
+                        {{ $permohonans->lastItem() ?? 0 }}
+                        dari
+                        {{ $permohonans->total() }}
+                        data
+                    </span>
 
                     <div class="sa-pagination">
-
-                        <button disabled>
-                            <i class="bi bi-chevron-left"></i>
-                        </button>
-
-                        <button class="active">1</button>
-
-                        <button disabled>
-                            <i class="bi bi-chevron-right"></i>
-                        </button>
-
+                        {{ $permohonans->links() }}
                     </div>
-
                 </div>
 
             </section>
 
-    </main>
+        </main>
 
-</section>
+    </section>
 
 @endsection
 
 @push('scripts')
-<script>
-document.addEventListener('DOMContentLoaded', function () {
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
 
-    const searchInput = document.getElementById('permohonanSearch');
-    const table = document.getElementById('permohonanTable');
+            const searchInput = document.getElementById('permohonanSearch');
+            const table = document.getElementById('permohonanTable');
 
-    if (!searchInput || !table) return;
+            if (!searchInput || !table) return;
 
-    searchInput.addEventListener('input', function () {
+            searchInput.addEventListener('input', function () {
 
-        const keyword = this.value.toLowerCase().trim();
+                const keyword = this.value.toLowerCase().trim();
 
-        table.querySelectorAll('tbody tr').forEach(function (row) {
+                table.querySelectorAll('tbody tr').forEach(function (row) {
 
-            row.style.display = row.textContent.toLowerCase().includes(keyword)
-                ? ''
-                : 'none';
+                    row.style.display = row.textContent.toLowerCase().includes(keyword)
+                        ? ''
+                        : 'none';
+
+                });
+
+            });
 
         });
-
-    });
-
-});
-</script>
+    </script>
 @endpush

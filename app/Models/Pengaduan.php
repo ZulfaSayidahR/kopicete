@@ -26,12 +26,20 @@ class Pengaduan extends Model
         'otp_verified_at',
         'status',
 
-        // tracking
+        // Verifikasi
         'tanggal_verifikasi',
+        'catatan_verifikasi',
+        'foto_verifikasi',
+
+        // Proses
         'tanggal_proses',
+        'catatan_proses',
+        'foto_proses',
+
+        // Selesai
         'tanggal_selesai',
-        'catatan_admin',
-        'foto_tindak_lanjut',
+        'catatan_selesai',
+        'foto_selesai',
 
     ];
 

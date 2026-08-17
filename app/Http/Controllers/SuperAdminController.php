@@ -6,6 +6,8 @@ use App\Models\Pengaduan;
 use App\Models\Permohonan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class SuperAdminController extends Controller
 {
@@ -212,5 +214,141 @@ class SuperAdminController extends Controller
                 'jenisPermohonan'
             )
         );
+
+    }
+    public function updatePengaduan(Request $request, $id)
+    {
+        $pengaduan = Pengaduan::findOrFail($id);
+
+
+        // ==========================================
+        // VALIDASI
+        // ==========================================
+
+        $validated = $request->validate([
+
+            'status' => [
+                'required',
+                'in:Diajukan,Diverifikasi,Diproses Lapangan,Selesai,Ditolak'
+            ],
+
+            'catatan' => [
+                'nullable',
+                'string'
+            ],
+
+            'bukti' => [
+                'nullable',
+                'image',
+                'mimes:jpg,jpeg,png',
+                'max:2048'
+            ],
+
+        ]);
+
+
+        // ==========================================
+        // STATUS BARU
+        // ==========================================
+
+        $status = $request->status;
+
+
+        // ==========================================
+        // UPDATE STATUS
+        // ==========================================
+
+        $pengaduan->status = $status;
+
+
+        // ==========================================
+        // SIMPAN ADMIN YANG MELAKUKAN UPDATE
+        // ==========================================
+
+        if (Auth::check()) {
+
+            $pengaduan->admin_id = Auth::id();
+
+        }
+
+
+        // ==========================================
+        // CATATAN + FOTO SESUAI STATUS
+        // ==========================================
+
+        if ($status === 'Diverifikasi') {
+
+            $pengaduan->catatan_verifikasi =
+                $request->catatan;
+
+            $pengaduan->tanggal_verifikasi =
+                now();
+
+
+            if ($request->hasFile('bukti')) {
+
+                $pengaduan->foto_verifikasi =
+                    $request->file('bukti')
+                        ->store('pengaduan/verifikasi', 'public');
+
+            }
+
+        } elseif ($status === 'Diproses Lapangan') {
+
+            $pengaduan->catatan_proses =
+                $request->catatan;
+
+            $pengaduan->tanggal_proses =
+                now();
+
+
+            if ($request->hasFile('bukti')) {
+
+                $pengaduan->foto_proses =
+                    $request->file('bukti')
+                        ->store('pengaduan/proses', 'public');
+
+            }
+
+        } elseif ($status === 'Selesai') {
+
+            $pengaduan->catatan_selesai =
+                $request->catatan;
+
+            $pengaduan->tanggal_selesai =
+                now();
+
+
+            if ($request->hasFile('bukti')) {
+
+                $pengaduan->foto_selesai =
+                    $request->file('bukti')
+                        ->store('pengaduan/selesai', 'public');
+
+            }
+
+        }
+
+
+        // ==========================================
+        // SIMPAN KE DATABASE
+        // ==========================================
+
+        $pengaduan->save();
+
+
+        // ==========================================
+        // KEMBALI KE DETAIL
+        // ==========================================
+
+        return redirect()
+            ->route(
+                'superadmin.detail_pengaduan',
+                $pengaduan->id
+            )
+            ->with(
+                'success',
+                'Data pengaduan berhasil diperbarui.'
+            );
     }
 }

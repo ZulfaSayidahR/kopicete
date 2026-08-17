@@ -50,32 +50,48 @@
 
                                 <div class="col-md-6 mb-3">
                                     <strong>Kode Permohonan</strong>
-                                    <p>PMH-001</p>
+                                    <p>{{ $permohonan->kode_permohonan }}</p>
                                 </div>
 
                                 <div class="col-md-6 mb-3">
                                     <strong>Jenis Permohonan</strong>
-                                    <p>Permohonan Rehabilitasi</p>
+                                    <p>{{ $permohonan->jenis_permohonan }}</p>
                                 </div>
 
                                 <div class="col-md-6 mb-3">
                                     <strong>Nama Pemohon</strong>
-                                    <p>Ahmad Fauzi</p>
+                                    <p>{{ $permohonan->nama_penyelenggara }}</p>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <strong>Penanggung Jawab</strong>
+                                    <p>{{ $permohonan->penanggung_jawab }}</p>
                                 </div>
 
                                 <div class="col-md-6 mb-3">
                                     <strong>No. Telepon</strong>
-                                    <p>085612345678</p>
-                                </div>
-
-                                <div class="col-md-6 mb-3">
-                                    <strong>Email</strong>
-                                    <p>ahmad@gmail.com</p>
+                                    <p>{{ $permohonan->no_hp }}</p>
                                 </div>
 
                                 <div class="col-md-6 mb-3">
                                     <strong>Tanggal Permohonan</strong>
-                                    <p>16 Juli 2026</p>
+                                    <p>
+                                        {{ \Carbon\Carbon::parse($permohonan->created_at)->translatedFormat('d F Y') }}
+                                    </p>
+                                </div>
+
+                                @if(isset($permohonan->email))
+                                    <div class="col-md-6 mb-3">
+                                        <strong>Email</strong>
+                                        <p>{{ $permohonan->email }}</p>
+                                    </div>
+                                @endif
+
+                                <div class="col-md-6 mb-3">
+                                    <strong>Tanggal Kegiatan</strong>
+                                    <p>
+                                        {{ \Carbon\Carbon::parse($permohonan->tanggal_kegiatan)->translatedFormat('d F Y') }}
+                                    </p>
                                 </div>
 
                             </div>
@@ -85,11 +101,7 @@
                             <strong>Tujuan Permohonan</strong>
 
                             <p>
-
-                                Pemohon mengajukan permohonan rehabilitasi bagi anggota keluarga
-                                yang diduga mengalami ketergantungan narkotika agar mendapatkan
-                                penanganan dan pendampingan dari BNNK Tulungagung.
-
+                                {{ $permohonan->keterangan }}
                             </p>
 
                         </div>
@@ -106,21 +118,28 @@
 
                         <div class="p-4 text-center">
 
-                            <img src="{{ asset('images/contoh.jpg') }}" class="img-fluid rounded shadow-sm"
-                                style="max-height:350px;">
+                            @if($permohonan->lampiran)
 
-                            <p class="mt-3 text-muted">
+                                <img src="{{ asset('storage/' . $permohonan->lampiran) }}" class="img-fluid rounded shadow-sm"
+                                    style="max-height:350px;">
 
-                                Dokumen Pendukung / Surat Permohonan
+                                <p class="mt-3 text-muted">
+                                    Dokumen Pendukung / Surat Permohonan
+                                </p>
 
-                            </p>
+                            @else
+
+                                <div class="alert alert-warning">
+                                    Belum ada dokumen yang diunggah.
+                                </div>
+
+                            @endif
 
                         </div>
 
                     </div>
 
                 </div>
-
 
 
                 {{-- ================= KANAN ================= --}}
@@ -140,7 +159,7 @@
 
                             <div class="admin-tracking-timeline">
 
-                                <!-- Permohonan Diajukan -->
+                                {{-- DIAJUKAN --}}
                                 <div class="admin-tracking-item selesai">
 
                                     <div class="admin-tracking-icon">
@@ -153,23 +172,18 @@
 
                                         <small>
                                             <i class="bi bi-calendar-event me-1"></i>
-                                            16 Juli 2026 • 09:30 WIB
+
+                                            {{ \Carbon\Carbon::parse($permohonan->created_at)->translatedFormat('d F Y H:i') }}
+                                            WIB
                                         </small>
-
-                                        <button type="button" class="btn-detail-admin mt-2" data-bs-toggle="modal"
-                                            data-bs-target="#detailPermohonanModal">
-
-                                            <i class="bi bi-eye-fill me-1"></i>
-                                            Lihat Bukti & Catatan
-
-                                        </button>
 
                                     </div>
 
                                 </div>
 
-                                <!-- Diverifikasi -->
-                                <div class="admin-tracking-item selesai">
+                                {{-- DIVERIFIKASI --}}
+                                <div
+                                    class="admin-tracking-item {{ $permohonan->tanggal_verifikasi ? 'selesai' : 'pending' }}">
 
                                     <div class="admin-tracking-icon">
                                         <i class="bi bi-check-lg"></i>
@@ -180,24 +194,28 @@
                                         <h6>Diverifikasi Admin BNNK</h6>
 
                                         <small>
-                                            <i class="bi bi-calendar-event me-1"></i>
-                                            16 Juli 2026 • 10:45 WIB
+
+                                            @if($permohonan->tanggal_verifikasi)
+
+                                                <i class="bi bi-calendar-event me-1"></i>
+
+                                                {{ \Carbon\Carbon::parse($permohonan->tanggal_verifikasi)->translatedFormat('d F Y H:i') }}
+                                                WIB
+
+                                            @else
+
+                                                Menunggu Verifikasi
+
+                                            @endif
+
                                         </small>
-
-                                        <button type="button" class="btn-detail-admin mt-2" data-bs-toggle="modal"
-                                            data-bs-target="#detailPermohonanModal">
-
-                                            <i class="bi bi-eye-fill me-1"></i>
-                                            Lihat Bukti & Catatan
-
-                                        </button>
 
                                     </div>
 
                                 </div>
 
-                                <!-- Diproses -->
-                                <div class="admin-tracking-item proses">
+                                {{-- DIPROSES --}}
+                                <div class="admin-tracking-item {{ $permohonan->tanggal_proses ? 'proses' : 'pending' }}">
 
                                     <div class="admin-tracking-icon">
                                         <i class="bi bi-hourglass-split"></i>
@@ -208,24 +226,28 @@
                                         <h6>Diproses Bidang Rehabilitasi</h6>
 
                                         <small>
-                                            <i class="bi bi-calendar-event me-1"></i>
-                                            Sedang Diproses
+
+                                            @if($permohonan->tanggal_proses)
+
+                                                <i class="bi bi-calendar-event me-1"></i>
+
+                                                {{ \Carbon\Carbon::parse($permohonan->tanggal_proses)->translatedFormat('d F Y H:i') }}
+                                                WIB
+
+                                            @else
+
+                                                Menunggu Proses
+
+                                            @endif
+
                                         </small>
-
-                                        <button type="button" class="btn-detail-admin mt-2" data-bs-toggle="modal"
-                                            data-bs-target="#detailPermohonanModal">
-
-                                            <i class="bi bi-eye-fill me-1"></i>
-                                            Lihat Bukti & Catatan
-
-                                        </button>
 
                                     </div>
 
                                 </div>
 
-                                <!-- Selesai -->
-                                <div class="admin-tracking-item pending">
+                                {{-- SELESAI --}}
+                                <div class="admin-tracking-item {{ $permohonan->tanggal_selesai ? 'selesai' : 'pending' }}">
 
                                     <div class="admin-tracking-icon">
                                         <i class="bi bi-flag"></i>
@@ -236,8 +258,20 @@
                                         <h6>Permohonan Selesai</h6>
 
                                         <small>
-                                            <i class="bi bi-calendar-event me-1"></i>
-                                            Menunggu
+
+                                            @if($permohonan->tanggal_selesai)
+
+                                                <i class="bi bi-calendar-event me-1"></i>
+
+                                                {{ \Carbon\Carbon::parse($permohonan->tanggal_selesai)->translatedFormat('d F Y H:i') }}
+                                                WIB
+
+                                            @else
+
+                                                Menunggu
+
+                                            @endif
+
                                         </small>
 
                                     </div>
@@ -262,9 +296,11 @@
 
                         <div class="p-4">
 
-                            <form action="{{ route('adminpermohonan.update_permohonan') }}" method="POST">
+                            <form action="{{ route('adminpermohonan.update_permohonan', $permohonan->id) }}" method="POST"
+                                enctype="multipart/form-data">
+
                                 @csrf
-                                @csrf
+                                @method('PUT')
 
                                 <div class="mb-3">
 
@@ -353,8 +389,8 @@
     </section>
 
     <!-- ==========================================
-         MODAL DETAIL TINDAK LANJUT PERMOHONAN
-    ========================================== -->
+                     MODAL DETAIL TINDAK LANJUT PERMOHONAN
+                ========================================== -->
     <div class="modal fade" id="detailPermohonanModal" tabindex="-1" aria-labelledby="detailPermohonanModalLabel"
         aria-hidden="true">
 

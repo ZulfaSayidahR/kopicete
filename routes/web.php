@@ -11,6 +11,7 @@ use App\Http\Controllers\KontakController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\SuperAdminController;
 use App\Http\Controllers\AdminPengaduanController;
+use App\Http\Controllers\AdminPermohonanController;
 use App\Http\Controllers\SuperAdmin\AdminController;
 use App\Http\Controllers\SuperAdmin\DataPengaduanController;
 use App\Http\Controllers\SuperAdmin\DataPermohonanController;
@@ -56,6 +57,16 @@ Route::prefix('superadmin')
             [DataPengaduanController::class, 'detailPengaduan']
         )->name('detail_pengaduan');
 
+        Route::post(
+            '/data-pengaduan/{id}/update',
+            [DataPengaduanController::class, 'update']
+        )->name('detail_pengaduan.update');
+
+        Route::put(
+            '/data-pengaduan/{id}/update',
+            [DataPengaduanController::class, 'updatePengaduan']
+        )->name('update_pengaduan');
+
         Route::put(
             '/data-pengaduan/{id}/status',
             [DataPengaduanController::class, 'updateStatus']
@@ -69,26 +80,24 @@ Route::prefix('superadmin')
         // Data Permohonan
         Route::get(
             '/data-permohonan',
-            [DataPermohonanController::class, 'index']
+            [DataPermohonanController::class, 'dataPermohonan']
         )->name('data_permohonan');
 
         Route::get(
             '/data-permohonan/{id}',
-            [DataPermohonanController::class, 'show']
+            [DataPermohonanController::class, 'detailPermohonan']
         )->name('detail_permohonan');
-
-        Route::put(
-            '/data-permohonan/{id}/status',
-            [DataPermohonanController::class, 'updateStatus']
-        )->name('update_status_permohonan');
 
         Route::delete(
             '/data-permohonan/{id}',
             [DataPermohonanController::class, 'destroy']
         )->name('delete_permohonan');
-    });
 
-// ADMIN PENGADUAN
+        Route::put(
+            '/data-permohonan/{id}/update',
+            [DataPermohonanController::class, 'updatePermohonan']
+        )->name('update_permohonan');
+    });
 
 
 
@@ -96,27 +105,34 @@ Route::prefix('adminpengaduan')
     ->name('adminpengaduan.')
     ->group(function () {
 
-        // Dashboard
-        Route::get('/dashboard', function () {
-            return view('adminpengaduan.dashboard');
-        })->name('dashboard');
+        Route::get(
+            '/dashboard',
+            [AdminPengaduanController::class, 'dashboard']
+        )->name('dashboard');
 
-        // Data Pengaduan
-        Route::get('/data-pengaduan', function () {
-            return view('adminpengaduan.data_pengaduan');
-        })->name('data_pengaduan');
+        Route::get(
+            '/data-pengaduan',
+            [AdminPengaduanController::class, 'dataPengaduan']
+        )->name('data_pengaduan');
 
-        Route::get('/detail-pengaduan', [AdminPengaduanController::class, 'detailPengaduan'])
-            ->name('detail_pengaduan');
+        Route::get(
+            '/detail-pengaduan/{id}',
+            [AdminPengaduanController::class, 'detailPengaduan']
+        )->name('detail_pengaduan');
 
-        // UPDATE STATUS
-        Route::post('/update-pengaduan', [AdminPengaduanController::class, 'updatePengaduan'])
-            ->name('update_pengaduan');
+        Route::put(
+            '/data-pengaduan/{id}/update',
+            [AdminPengaduanController::class, 'updatePengaduan']
+        )->name('update_pengaduan');
 
+        Route::delete(
+            '/data-pengaduan/{id}',
+            [AdminPengaduanController::class, 'destroy']
+        )->name('delete_pengaduan');
     });
 
 // ADMIN PERMOHONANNNN
-use App\Http\Controllers\AdminPermohonanController;
+
 
 Route::prefix('adminpermohonan')
     ->name('adminpermohonan.')
@@ -125,26 +141,27 @@ Route::prefix('adminpermohonan')
         Route::get(
             '/dashboard',
             [AdminPermohonanController::class, 'dashboard']
-        )
-            ->name('dashboard');
+        )->name('dashboard');
 
         Route::get(
             '/data-permohonan',
             [AdminPermohonanController::class, 'dataPermohonan']
-        )
-            ->name('data_permohonan');
+        )->name('data_permohonan');
 
         Route::get(
-            '/detail-permohonan',
+            '/detail-permohonan/{id}',
             [AdminPermohonanController::class, 'detailPermohonan']
-        )
-            ->name('detail_permohonan');
+        )->name('detail_permohonan');
 
-        Route::post(
-            '/update-permohonan',
+        Route::put(
+            '/data-permohonan/{id}/update',
             [AdminPermohonanController::class, 'updatePermohonan']
-        )
-            ->name('update_permohonan');
+        )->name('update_permohonan');
+
+        Route::delete(
+            '/data-permohonan/{id}',
+            [AdminPermohonanController::class, 'destroy']
+        )->name('delete_permohonan');
 
     });
 

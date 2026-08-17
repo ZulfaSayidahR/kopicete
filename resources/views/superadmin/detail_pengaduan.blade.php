@@ -49,57 +49,89 @@
 
                             <div class="row">
 
+                                {{-- TOKEN / KODE ADUAN --}}
                                 <div class="col-md-6 mb-3">
 
                                     <strong>Token</strong>
 
-                                    <p>PHGSHJBJ</p>
+                                    <p>
+                                        {{ $pengaduan->kode_aduan ?? '-' }}
+                                    </p>
 
                                 </div>
 
+
+                                {{-- KATEGORI / TOPIK --}}
                                 <div class="col-md-6 mb-3">
 
                                     <strong>Kategori</strong>
 
-                                    <p>Penyalahgunaan Narkoba</p>
+                                    <p>
+                                        {{ $pengaduan->topik_aduan ?? '-' }}
+                                    </p>
 
                                 </div>
 
+
+                                {{-- KECAMATAN --}}
                                 <div class="col-md-6 mb-3">
 
                                     <strong>Kecamatan</strong>
 
-                                    <p>Campurdarat</p>
+                                    <p>
+                                        {{ $pengaduan->kecamatan->nama_kecamatan ?? '-' }}
+                                    </p>
 
                                 </div>
 
+
+                                {{-- TANGGAL --}}
                                 <div class="col-md-6 mb-3">
 
                                     <strong>Tanggal</strong>
 
-                                    <p>4 Juli 2026</p>
+                                    <p>
+
+                                        @if($pengaduan->created_at)
+
+                                            {{ $pengaduan->created_at->translatedFormat('d F Y') }}
+
+                                        @else
+
+                                            -
+
+                                        @endif
+
+                                    </p>
 
                                 </div>
 
+
+                                {{-- NOMOR PELAPOR --}}
                                 <div class="col-md-6 mb-3">
 
                                     <strong>Nomor Pelapor</strong>
 
-                                    <p>085612345678</p>
+                                    <p>
+
+                                        {{ $pengaduan->no_whatsapp ?? '-' }}
+
+                                    </p>
 
                                 </div>
 
                             </div>
 
+
                             <hr>
 
+
+                            {{-- KRONOLOGI --}}
                             <strong>Kronologi</strong>
 
                             <p>
 
-                                Pelapor melihat aktivitas yang diduga
-                                merupakan transaksi narkoba di sekitar
-                                wilayah Campurdarat.
+                                {{ $pengaduan->detail_aduan ?? '-' }}
 
                             </p>
 
@@ -120,12 +152,39 @@
 
                         <div class="p-4 text-center">
 
-                            <img src="{{ asset('images/contoh.jpg') }}" class="img-fluid rounded">
+                            @if($pengaduan->lampiran)
+
+                                <img src="{{ asset('storage/' . $pengaduan->lampiran) }}" alt="Lampiran Bukti Pengaduan"
+                                    class="img-fluid rounded shadow"
+                                    style="max-height: 500px; max-width: 100%; object-fit: contain;">
+
+                                <div class="mt-3">
+
+                                    <a href="{{ asset('storage/' . $pengaduan->lampiran) }}" target="_blank"
+                                        class="btn btn-primary">
+                                        <i class="bi bi-eye-fill"></i>
+                                        Lihat Lampiran
+                                    </a>
+
+                                </div>
+
+                            @else
+
+                                <div class="py-5 text-muted">
+
+                                    <i class="bi bi-image" style="font-size: 50px;"></i>
+
+                                    <p class="mt-3 mb-0">
+                                        Tidak ada lampiran bukti.
+                                    </p>
+
+                                </div>
+
+                            @endif
 
                         </div>
 
                     </div>
-
                 </div>
 
 
@@ -134,7 +193,7 @@
                 <div class="col-lg-5">
 
                     {{-- ================= RIWAYAT STATUS ================= --}}
-                  <div class="sa-panel">
+                    <div class="sa-panel">
 
                         <div class="sa-panel-header">
                             <h3>
@@ -147,7 +206,9 @@
 
                             <div class="admin-tracking-timeline">
 
-                                <!-- Diajukan -->
+                                {{-- =====================================================
+                                1. DIAJUKAN
+                                ====================================================== --}}
                                 <div class="admin-tracking-item selesai">
 
                                     <div class="admin-tracking-icon">
@@ -160,98 +221,248 @@
 
                                         <small>
                                             <i class="bi bi-calendar-event me-1"></i>
-                                            04 Juli 2026 • 09:40 WIB
+
+                                            @if($pengaduan->created_at)
+
+                                                {{ $pengaduan->created_at->translatedFormat('d F Y • H:i') }}
+                                                WIB
+
+                                            @else
+
+                                                -
+
+                                            @endif
+
                                         </small>
-
-
 
                                     </div>
 
                                 </div>
 
-                                <!-- Diverifikasi -->
-                                <div class="admin-tracking-item selesai">
+
+
+                                {{-- =====================================================
+                                2. DIVERIFIKASI
+                                ====================================================== --}}
+                                @php
+                                    $verifikasiAktif = !empty($pengaduan->tanggal_verifikasi);
+                                @endphp
+
+                                <div class="admin-tracking-item {{ $verifikasiAktif ? 'selesai' : 'pending' }}">
 
                                     <div class="admin-tracking-icon">
-                                        <i class="bi bi-check-lg"></i>
+
+                                        @if($verifikasiAktif)
+
+                                            <i class="bi bi-check-lg"></i>
+
+                                        @else
+
+                                            <i class="bi bi-circle"></i>
+
+                                        @endif
+
                                     </div>
+
 
                                     <div class="admin-tracking-content">
 
-                                        <h6>Diverifikasi Admin BNNK</h6>
+                                        <h6>
+                                            Diverifikasi Admin BNNK
+                                        </h6>
 
-                                        <small>
-                                            <i class="bi bi-calendar-event me-1"></i>
-                                            04 Juli 2026 • 11:15 WIB
-                                        </small>
 
-                                        <button type="button" class="btn-detail-admin mt-2" data-bs-toggle="modal"
-                                            data-bs-target="#detailAdminModal">
+                                        @if($verifikasiAktif)
 
-                                            <i class="bi bi-eye-fill me-1"></i>
-                                            Lihat Bukti & Catatan
+                                                                            <small>
+                                                                                <i class="bi bi-calendar-event me-1"></i>
 
-                                        </button>
+                                                                                {{ \Carbon\Carbon::parse(
+                                                $pengaduan->tanggal_verifikasi
+                                            )->translatedFormat('d F Y • H:i') }}
+
+                                                                                WIB
+                                                                            </small>
+
+
+                                                                            <div>
+
+                                                                                <button type="button" class="btn-detail-admin mt-2" data-bs-toggle="modal"
+                                                                                    data-bs-target="#detailAdminModal">
+
+                                                                                    <i class="bi bi-eye-fill me-1"></i>
+
+                                                                                    Lihat Bukti & Catatan
+
+                                                                                </button>
+
+                                                                            </div>
+
+                                        @else
+
+                                            <small class="text-muted">
+
+                                                Menunggu verifikasi admin.
+
+                                            </small>
+
+                                        @endif
 
                                     </div>
 
                                 </div>
 
-                                <!-- Diproses -->
-                                <div class="admin-tracking-item proses">
+
+
+                                {{-- =====================================================
+                                3. DIPROSES LAPANGAN
+                                ====================================================== --}}
+                                @php
+                                    $prosesAktif = !empty($pengaduan->tanggal_proses);
+                                @endphp
+
+                                <div class="admin-tracking-item {{ $prosesAktif ? 'selesai' : 'pending' }}">
 
                                     <div class="admin-tracking-icon">
-                                        <i class="bi bi-hourglass-split"></i>
+
+                                        @if($prosesAktif)
+
+                                            <i class="bi bi-check-lg"></i>
+
+                                        @else
+
+                                            <i class="bi bi-hourglass-split"></i>
+
+                                        @endif
+
                                     </div>
+
 
                                     <div class="admin-tracking-content">
 
-                                        <h6>Diproses Lapangan</h6>
-
-                                        <small>
-                                            <i class="bi bi-calendar-event me-1"></i>
-                                            05 Juli 2026 • 14:30 WIB
-                                        </small>
+                                        <h6>
+                                            Diproses Lapangan
+                                        </h6>
 
 
-                                        <button type="button" class="btn-detail-admin mt-2" data-bs-toggle="modal"
-                                            data-bs-target="#detailAdminModal">
+                                        @if($prosesAktif)
 
-                                            <i class="bi bi-eye-fill me-1"></i>
-                                            Lihat Bukti & Catatan
+                                                                            <small>
 
-                                        </button>
+                                                                                <i class="bi bi-calendar-event me-1"></i>
+
+                                                                                {{ \Carbon\Carbon::parse(
+                                                $pengaduan->tanggal_proses
+                                            )->translatedFormat('d F Y • H:i') }}
+
+                                                                                WIB
+
+                                                                            </small>
+
+
+                                                                            <div>
+
+                                                                                <button type="button" class="btn-detail-admin mt-2" data-bs-toggle="modal"
+                                                                                    data-bs-target="#detailAdminModal">
+
+                                                                                    <i class="bi bi-eye-fill me-1"></i>
+
+                                                                                    Lihat Bukti & Catatan
+
+                                                                                </button>
+
+                                                                            </div>
+
+                                        @else
+
+                                            <small class="text-muted">
+
+                                                Menunggu proses lapangan.
+
+                                            </small>
+
+                                        @endif
 
                                     </div>
 
                                 </div>
 
-                                <!-- Selesai -->
-                                <div class="admin-tracking-item pending">
+
+
+                                {{-- =====================================================
+                                4. SELESAI
+                                ====================================================== --}}
+                                @php
+                                    $selesaiAktif = !empty($pengaduan->tanggal_selesai);
+                                @endphp
+
+                                <div class="admin-tracking-item {{ $selesaiAktif ? 'selesai' : 'pending' }}">
 
                                     <div class="admin-tracking-icon">
-                                        <i class="bi bi-flag"></i>
+
+                                        @if($selesaiAktif)
+
+                                            <i class="bi bi-check-lg"></i>
+
+                                        @else
+
+                                            <i class="bi bi-flag"></i>
+
+                                        @endif
+
                                     </div>
+
 
                                     <div class="admin-tracking-content">
 
-                                        <h6>Selesai / Diteruskan BNNK</h6>
+                                        <h6>
+                                            Selesai / Diteruskan BNNK
+                                        </h6>
 
-                                        <small>Menunggu</small>
-                                        <button type="button" class="btn-detail-admin mt-2" data-bs-toggle="modal"
-                                            data-bs-target="#detailAdminModal">
 
-                                            <i class="bi bi-eye-fill me-1"></i>
-                                            Lihat Bukti & Catatan
+                                        @if($selesaiAktif)
 
-                                        </button>
+                                                                            <small>
+
+                                                                                <i class="bi bi-calendar-event me-1"></i>
+
+                                                                                {{ \Carbon\Carbon::parse(
+                                                $pengaduan->tanggal_selesai
+                                            )->translatedFormat('d F Y • H:i') }}
+
+                                                                                WIB
+
+                                                                            </small>
+
+
+                                                                            <div>
+
+                                                                                <button type="button" class="btn-detail-admin mt-2" data-bs-toggle="modal"
+                                                                                    data-bs-target="#detailAdminModal">
+
+                                                                                    <i class="bi bi-eye-fill me-1"></i>
+
+                                                                                    Lihat Bukti & Catatan
+
+                                                                                </button>
+
+                                                                            </div>
+
+                                        @else
+
+                                            <small class="text-muted">
+
+                                                Belum selesai.
+
+                                            </small>
+
+                                        @endif
 
                                     </div>
 
                                 </div>
 
                             </div>
-
                         </div>
 
                     </div>
@@ -269,30 +480,42 @@
 
                         <div class="p-4">
 
-                            <form action="{{ route('superadmin.detail_pengaduan.update') }}" method="POST"
+                            <form action="{{ route('superadmin.update_pengaduan', $pengaduan->id) }}" method="POST"
                                 enctype="multipart/form-data">
 
                                 @csrf
+                                @method('PUT')
 
-                                {{-- Status --}}
+                                {{-- STATUS --}}
                                 <div class="mb-3">
 
                                     <label class="form-label fw-semibold">
                                         Status
                                     </label>
 
-                                    <select class="form-select" name="status">
+                                    <select class="form-select" name="status" required>
 
-                                        <option value="Diajukan">Diajukan</option>
-                                        <option value="Diverifikasi">Diverifikasi</option>
-                                        <option value="Diproses Lapangan">Diproses Lapangan</option>
-                                        <option value="Selesai">Selesai</option>
+                                        <option value="Diverifikasi" {{ $pengaduan->status == 'Diverifikasi' ? 'selected' : '' }}>
+                                            Diverifikasi
+                                        </option>
+
+                                        <option value="Diproses" {{ $pengaduan->status == 'Diproses' ? 'selected' : '' }}>
+                                            Diproses Lapangan
+                                        </option>
+
+                                        <option value="Selesai" {{ $pengaduan->status == 'Selesai' ? 'selected' : '' }}>
+                                            Selesai / Diteruskan BNNK
+                                        </option>
+
+                                        <option value="Ditolak" {{ $pengaduan->status == 'Ditolak' ? 'selected' : '' }}>
+                                            Ditolak
+                                        </option>
 
                                     </select>
 
                                 </div>
 
-                                {{-- Catatan --}}
+                                {{-- CATATAN --}}
                                 <div class="mb-3">
 
                                     <label class="form-label fw-semibold">
@@ -300,31 +523,22 @@
                                     </label>
 
                                     <textarea class="form-control" name="catatan" rows="4"
-                                        placeholder="Masukkan catatan hasil verifikasi..."></textarea>
+                                        placeholder="Masukkan catatan hasil tindak lanjut...">{{ old('catatan') }}</textarea>
 
                                 </div>
 
-                                {{-- Upload Bukti --}}
+                                {{-- BUKTI --}}
                                 <div class="mb-4">
 
                                     <label class="form-label fw-semibold">
                                         Upload Bukti Tindak Lanjut
                                     </label>
 
-                                    <input type="file" name="bukti" id="bukti" class="form-control file-upload"
-                                        accept="image/*">
+                                    <input type="file" name="bukti" class="form-control" accept=".jpg,.jpeg,.png">
 
                                     <small class="text-muted">
-                                        Format: JPG, JPEG, PNG. Maksimal 2 MB.
+                                        Format JPG, JPEG, PNG. Maksimal 2 MB.
                                     </small>
-
-                                    {{-- Preview --}}
-                                    <div class="mt-3">
-
-                                        <img id="previewBukti" src="#" alt="Preview Bukti" class="img-fluid rounded shadow"
-                                            style="display:none; max-height:250px;">
-
-                                    </div>
 
                                 </div>
 
@@ -333,7 +547,6 @@
                                     <button type="submit" class="btn btn-primary">
 
                                         <i class="bi bi-check-circle-fill"></i>
-
                                         Simpan Perubahan
 
                                     </button>
@@ -343,106 +556,362 @@
                             </form>
 
                         </div>
-
                     </div>
                 </div>
+            </div>
 
             </div>
 
         </main>
 
     </section>
-     <!-- ==========================================
-                         MODAL DETAIL TINDAK LANJUT ADMIN
-                    ========================================== -->
+
+    {{-- =========================================================
+    MODAL DETAIL TINDAK LANJUT ADUAN
+    ========================================================= --}}
+
+    @php
+
+        $status = $pengaduan->status ?? 'Menunggu';
+
+        $warna = 'secondary';
+        $foto = null;
+        $catatan = null;
+        $tanggal = null;
+
+        switch ($status) {
+
+            case 'Diverifikasi':
+
+                $warna = 'primary';
+
+                $foto = $pengaduan->foto_verifikasi;
+
+                $catatan = $pengaduan->catatan_verifikasi;
+
+                $tanggal = $pengaduan->tanggal_verifikasi;
+
+                break;
+
+
+            case 'Diproses':
+
+                $warna = 'warning';
+
+                $foto = $pengaduan->foto_proses;
+
+                $catatan = $pengaduan->catatan_proses;
+
+                $tanggal = $pengaduan->tanggal_proses;
+
+                break;
+
+
+            case 'Selesai':
+
+                $warna = 'success';
+
+                $foto = $pengaduan->foto_selesai;
+
+                $catatan = $pengaduan->catatan_selesai;
+
+                $tanggal = $pengaduan->tanggal_selesai;
+
+                break;
+
+
+            case 'Ditolak':
+
+                $warna = 'danger';
+
+                break;
+
+        }
+
+    @endphp
+
+
     <div class="modal fade" id="detailAdminModal" tabindex="-1" aria-labelledby="detailAdminModalLabel" aria-hidden="true">
 
         <div class="modal-dialog modal-lg modal-dialog-centered">
 
             <div class="modal-content border-0 shadow-lg rounded-4">
 
-                <!-- Header -->
-                <div class="modal-header">
+
+                {{-- =====================================================
+                HEADER
+                ====================================================== --}}
+
+                <div class="modal-header bg-{{ $warna }}
+                                                    @if($warna != 'warning')
+                                                        text-white
+                                                    @endif
+                                                ">
 
                     <h5 class="modal-title fw-bold" id="detailAdminModalLabel">
+
                         <i class="bi bi-file-earmark-medical me-2"></i>
+
                         Detail Tindak Lanjut Aduan
+
                     </h5>
 
-                    <button type="button" class="btn-close" data-bs-dismiss="modal">
+
+                    <button type="button" class="btn-close
+                                                            @if($warna != 'warning')
+                                                                btn-close-white
+                                                            @endif
+                                                        " data-bs-dismiss="modal" aria-label="Close">
                     </button>
 
                 </div>
 
-                <!-- Body -->
+
+
+                {{-- =====================================================
+                BODY
+                ====================================================== --}}
+
                 <div class="modal-body p-4">
 
                     <div class="row g-4 align-items-start">
 
-                        <!-- Bukti -->
+
+                        {{-- =================================================
+                        FOTO TINDAK LANJUT
+                        ================================================== --}}
+
                         <div class="col-md-5">
 
-                            <img src="{{ asset('images/bukti-default.jpg') }}" class="img-fluid rounded-3 shadow-sm border"
-                                alt="Bukti Tindak Lanjut">
+                            @if($foto)
+
+                                <div class="text-center">
+
+                                    <img src="{{ asset('storage/' . $foto) }}" alt="Bukti Tindak Lanjut"
+                                        class="img-fluid rounded-3 shadow-sm border" style="
+                                                                                            max-width: 100%;
+                                                                                            max-height: 350px;
+                                                                                            object-fit: contain;
+                                                                                        ">
+
+                                    <div class="mt-3">
+
+                                        <a href="{{ asset('storage/' . $foto) }}" target="_blank"
+                                            class="btn btn-sm btn-outline-primary">
+                                            <i class="bi bi-eye-fill me-1"></i>
+                                            Lihat Foto
+                                        </a>
+
+                                    </div>
+
+                                </div>
+
+                            @else
+
+                                <div class="border rounded-3 bg-light d-flex flex-column justify-content-center align-items-center text-muted"
+                                    style="height:300px;">
+
+                                    <i class="bi bi-image" style="font-size:60px;"></i>
+
+                                    <span class="mt-2">
+                                        Belum ada foto tindak lanjut
+                                    </span>
+
+                                </div>
+
+                            @endif
+
 
                         </div>
 
-                        <!-- Informasi -->
+
+
+                        {{-- =================================================
+                        INFORMASI TINDAK LANJUT
+                        ================================================== --}}
+
                         <div class="col-md-7">
 
-                            <h4 class="fw-bold mb-3">
-                                Dugaan Penyalahgunaan Narkotika
+
+                            {{-- JUDUL ADUAN --}}
+
+                            <h4 class="fw-bold mb-1">
+
+                                {{ $pengaduan->judul_aduan ?? '-' }}
+
                             </h4>
+
+
+                            {{-- KODE ADUAN --}}
+
+                            <span class="text-muted">
+
+                                {{ $pengaduan->kode_aduan ?? '-' }}
+
+                            </span>
+
 
                             <hr>
 
-                            <p class="mb-3">
 
-                                <strong>Status :</strong>
 
-                                <span class="badge bg-warning text-dark px-3 py-2">
-                                    Diverifikasi
-                                </span>
+                            {{-- STATUS --}}
 
-                            </p>
+                            <div class="detail-row mb-3">
 
-                            <p class="mb-3">
+                                <div class="detail-label fw-bold">
+                                    Status
+                                </div>
 
-                                <strong>Petugas/Admin :</strong>
+                                <div class="detail-colon">
+                                    :
+                                </div>
 
-                                Admin BNNK Tulungagung
+                                <div class="detail-value">
 
-                            </p>
+                                    <span class="badge bg-{{ $warna }} px-3 py-2">
 
-                            <p class="mb-3">
+                                        {{ $status }}
 
-                                <strong>Tanggal Penanganan :</strong>
+                                    </span>
 
-                                10 Juli 2026 • 10:35 WIB
-
-                            </p>
-
-                            <label class="fw-bold mb-2">
-
-                                <i class="bi bi-journal-text me-1"></i>
-
-                                Catatan Admin
-
-                            </label>
-
-                            <div class="border rounded-3 bg-light p-3">
-
-                                Tim telah melakukan verifikasi awal terhadap
-                                laporan yang diterima.
-
-                                <br><br>
-
-                                Berdasarkan hasil pemeriksaan sementara,
-                                laporan dinyatakan valid dan akan diteruskan
-                                ke tim lapangan untuk dilakukan pendalaman
-                                informasi.
+                                </div>
 
                             </div>
+
+
+
+                            {{-- TOPIK --}}
+
+                            <div class="detail-row mb-3">
+
+                                <div class="detail-label fw-bold">
+                                    Topik Aduan
+                                </div>
+
+                                <div class="detail-colon">
+                                    :
+                                </div>
+
+                                <div class="detail-value">
+
+                                    {{ $pengaduan->topik_aduan ?? '-' }}
+
+                                </div>
+
+                            </div>
+
+
+
+                            {{-- KECAMATAN --}}
+
+                            <div class="detail-row mb-3">
+
+                                <div class="detail-label fw-bold">
+                                    Kecamatan
+                                </div>
+
+                                <div class="detail-colon">
+                                    :
+                                </div>
+
+                                <div class="detail-value">
+
+                                    {{ $pengaduan->kecamatan->nama_kecamatan ?? '-' }}
+
+                                </div>
+
+                            </div>
+
+
+
+                            {{-- TANGGAL PENANGANAN --}}
+
+                            <div class="detail-row mb-3">
+
+                                <div class="detail-label fw-bold">
+                                    Tanggal Penanganan
+                                </div>
+
+                                <div class="detail-colon">
+                                    :
+                                </div>
+
+                                <div class="detail-value">
+
+                                    @if($tanggal)
+
+                                        {{ \Carbon\Carbon::parse($tanggal)->translatedFormat('d F Y H:i') }}
+
+                                    @else
+
+                                        -
+
+                                    @endif
+
+                                </div>
+
+                            </div>
+
+
+
+                            {{-- ADMIN --}}
+
+                            <div class="detail-row mb-3">
+
+                                <div class="detail-label fw-bold">
+                                    Petugas/Admin
+                                </div>
+
+                                <div class="detail-colon">
+                                    :
+                                </div>
+
+                                <div class="detail-value">
+
+                                    {{ $pengaduan->admin->nama ?? 'Admin BNNK Tulungagung' }}
+
+                                </div>
+
+                            </div>
+
+
+
+                            {{-- =================================================
+                            CATATAN ADMIN
+                            ================================================== --}}
+
+                            <div class="mt-4">
+
+                                <label class="fw-bold mb-2">
+
+                                    <i class="bi bi-journal-text me-1"></i>
+
+                                    Catatan Admin
+
+                                </label>
+
+
+                                <div class="border rounded-3 bg-light p-3">
+
+                                    @if($catatan)
+
+                                        {!! nl2br(e($catatan)) !!}
+
+                                    @else
+
+                                        <span class="text-muted">
+
+                                            Belum ada catatan dari admin.
+
+                                        </span>
+
+                                    @endif
+
+                                </div>
+
+                            </div>
+
 
                         </div>
 
@@ -450,10 +919,15 @@
 
                 </div>
 
-                <!-- Footer -->
+
+
+                {{-- =====================================================
+                FOOTER
+                ====================================================== --}}
+
                 <div class="modal-footer">
 
-                    <button class="btn btn-secondary" data-bs-dismiss="modal">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
 
                         <i class="bi bi-x-circle me-1"></i>
 

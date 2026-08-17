@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Kecamatan;
 
 class Permohonan extends Model
 {
@@ -59,4 +60,22 @@ class Permohonan extends Model
         'tanggal_selesai' => 'datetime',
 
     ];
+
+    public function kecamatan()
+    {
+        return $this->belongsTo(
+            Kecamatan::class,
+            'id_kecamatan',
+            'id_kecamatan'
+        );
+    }
+
+     public function desa()
+    {
+        return $this->belongsTo(
+            Desa::class,
+            'id_desa',
+            'id_desa'
+        );
+    }
 }
