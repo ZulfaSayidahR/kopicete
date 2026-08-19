@@ -459,23 +459,17 @@
                                         Status Permohonan
                                     </label>
 
-                                    <select class="form-select" name="status" required>
+                                    <select class="form-select" name="status">
 
-                                        <option value="Menunggu" {{ $permohonan->status == 'Menunggu' ? 'selected' : '' }}>
-                                            Menunggu
-                                        </option>
+                                        <option>Menunggu Verifikasi</option>
 
-                                        <option value="Diproses" {{ $permohonan->status == 'Diproses' ? 'selected' : '' }}>
-                                            Diproses
-                                        </option>
+                                        <option>Diverifikasi</option>
 
-                                        <option value="Selesai" {{ $permohonan->status == 'Selesai' ? 'selected' : '' }}>
-                                            Selesai
-                                        </option>
+                                        <option>Diproses</option>
 
-                                        <option value="Ditolak" {{ $permohonan->status == 'Ditolak' ? 'selected' : '' }}>
-                                            Ditolak
-                                        </option>
+                                        <option>Ditolak</option>
+
+                                        <option>Selesai</option>
 
                                     </select>
 
