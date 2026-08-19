@@ -169,121 +169,159 @@
 
                         <tbody>
 
-                            <tr>
+                            @forelse($permohonans as $permohonan)
 
-                                <td>PMH-001</td>
-                                <td>Permohonan Rehabilitasi</td>
-                                <td>Ahmad Fauzi</td>
-                                <td>Campurdarat</td>
-                                <td>16 Juli 2026</td>
+                                <tr>
 
-                                <td>
-                                    <span class="sa-status-badge">
-                                        <span style="background:#ffc107"></span>
-                                        Menunggu Verifikasi
-                                    </span>
-                                </td>
+                                    {{-- TOKEN --}}
+                                    <td>
+                                        <strong>
+                                            {{ $permohonan->kode_permohonan ?? '-' }}
+                                        </strong>
+                                    </td>
 
-                                <td>
 
-                                    <div class="sa-action-buttons">
+                                    {{-- JENIS PERMOHONAN --}}
+                                    <td>
+                                        {{ $permohonan->jenis_permohonan ?? '-' }}
+                                    </td>
 
-                                        {{-- Detail / Edit --}}
-                                        <a href="{{ route('adminpermohonan.detail_permohonan') }}"
-                                            class="sa-action-button sa-key-button" title="Detail Permohonan">
-                                            <i class="bi bi-pencil-square"></i>
-                                        </a>
 
-                                        {{-- Delete --}}
-                                        <button class="sa-action-button sa-delete-button"
-                                            onclick="return confirm('Yakin ingin menghapus data permohonan ini?')"
-                                            title="Hapus">
+                                    {{-- NAMA PEMOHON --}}
+                                    <td>
+                                        {{ $permohonan->nama_penyelenggara ?? '-' }}
+                                    </td>
 
-                                            <i class="bi bi-trash-fill"></i>
 
-                                        </button>
+                                    {{-- KECAMATAN / TEMPAT --}}
+                                    <td>
+                                        {{ $permohonan->tempat ?? '-' }}
+                                    </td>
 
-                                    </div>
 
-                                </td>
+                                    {{-- TANGGAL --}}
+                                    <td>
 
-                            </tr>
+                                        @if($permohonan->created_at)
 
-                            <tr>
+                                            {{ \Carbon\Carbon::parse($permohonan->created_at)->translatedFormat('d F Y') }}
 
-                                <td>PMH-002</td>
-                                <td>Permohonan Sosialisasi</td>
-                                <td>SMAN 1 Tulungagung</td>
-                                <td>Tulungagung</td>
-                                <td>18 Juli 2026</td>
+                                        @else
 
-                                <td>
-                                    <span class="sa-status-badge">
-                                        <span style="background:#0d6efd"></span>
-                                        Diproses
-                                    </span>
-                                </td>
+                                            -
 
-                                <td>
+                                        @endif
 
-                                    <div class="sa-action-buttons">
+                                    </td>
 
-                                        <a href="{{ route('adminpermohonan.detail_permohonan') }}"
-                                            class="sa-action-button sa-key-button" title="Detail Permohonan">
-                                            <i class="bi bi-pencil-square"></i>
-                                        </a>
 
-                                        <button class="sa-action-button sa-delete-button"
-                                            onclick="return confirm('Yakin ingin menghapus data permohonan ini?')"
-                                            title="Hapus">
+                                    {{-- STATUS --}}
+                                    <td>
 
-                                            <i class="bi bi-trash-fill"></i>
+                                        @php
 
-                                        </button>
+                                            $status = $permohonan->status ?? '-';
 
-                                    </div>
+                                            $warna = match ($status) {
 
-                                </td>
+                                                'Menunggu',
+                                                'Menunggu Verifikasi',
+                                                'Diverifikasi'
+                                                    => '#0d6efd',
 
-                            </tr>
+                                                'Diproses',
+                                                'Diproses Lapangan'
+                                                    => '#fd7e14',
 
-                            <tr>
+                                                'Selesai'
+                                                    => '#198754',
 
-                                <td>PMH-003</td>
-                                <td>Permohonan Rehabilitasi</td>
-                                <td>Siti Aminah</td>
-                                <td>Kauman</td>
-                                <td>20 Juli 2026</td>
+                                                'Ditolak'
+                                                    => '#dc3545',
 
-                                <td>
-                                    <span class="sa-status-badge active">
-                                        <span></span>
-                                        Selesai
-                                    </span>
-                                </td>
+                                                default
+                                                    => '#6c757d',
 
-                                <td>
+                                            };
 
-                                    <div class="sa-action-buttons">
+                                        @endphp
 
-                                        <a href="{{ route('adminpermohonan.detail_permohonan') }}"
-                                            class="sa-action-button sa-key-button" title="Detail Permohonan">
-                                            <i class="bi bi-pencil-square"></i>
-                                        </a>
 
-                                        <button class="sa-action-button sa-delete-button"
-                                            onclick="return confirm('Yakin ingin menghapus data permohonan ini?')"
-                                            title="Hapus">
+                                        <span class="sa-status-badge">
 
-                                            <i class="bi bi-trash-fill"></i>
+                                            <span style="background: {{ $warna }}"></span>
 
-                                        </button>
+                                            {{ $status }}
 
-                                    </div>
+                                        </span>
 
-                                </td>
+                                    </td>
 
-                            </tr>
+
+                                    {{-- AKSI --}}
+                                    <td>
+
+                                        <div class="sa-action-buttons">
+
+                                            {{-- EDIT --}}
+                                            <a href="{{ route(
+                                                'adminpermohonan.detail_permohonan',
+                                                $permohonan->id
+                                            ) }}"
+                                            class="sa-action-button sa-key-button"
+                                            title="Edit Permohonan">
+
+                                                <i class="bi bi-pencil-square"></i>
+
+                                            </a>
+
+
+                                            {{-- DELETE --}}
+                                            <form
+                                                action="{{ route(
+                                                    'adminpermohonan.delete_permohonan',
+                                                    $permohonan->id
+                                                ) }}"
+                                                method="POST"
+                                                style="display:inline;"
+                                            >
+
+                                                @csrf
+
+                                                @method('DELETE')
+
+                                                <button
+                                                    type="submit"
+                                                    class="sa-action-button sa-delete-button"
+                                                    title="Hapus Permohonan"
+                                                    onclick="return confirm('Yakin ingin menghapus data permohonan ini?')"
+                                                >
+
+                                                    <i class="bi bi-trash-fill"></i>
+
+                                                </button>
+
+                                            </form>
+
+                                        </div>
+
+                                    </td>
+
+                                </tr>
+
+                            @empty
+
+                                <tr>
+
+                                    <td colspan="7" class="text-center text-muted py-4">
+
+                                        Belum ada data permohonan.
+
+                                    </td>
+
+                                </tr>
+
+                            @endforelse
 
                         </tbody>
 

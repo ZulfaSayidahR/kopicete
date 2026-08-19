@@ -177,27 +177,37 @@
 
                                         @php
 
-                                            $warna = '#ffc107';
+                                            $status = $permohonan->status ?? '-';
 
-                                            if ($permohonan->status == 'Diproses') {
-                                                $warna = '#0d6efd';
-                                            }
+                                            $warna = match ($status) {
 
-                                            if ($permohonan->status == 'Selesai') {
-                                                $warna = '#198754';
-                                            }
+                                                'Menunggu',
+                                                'Menunggu Verifikasi',
+                                                'Diverifikasi'
+                                                    => '#0d6efd',
 
-                                            if ($permohonan->status == 'Ditolak') {
-                                                $warna = '#dc3545';
-                                            }
+                                                'Diproses',
+                                                'Diproses Lapangan'
+                                                    => '#fd7e14',
+
+                                                'Selesai'
+                                                    => '#198754',
+
+                                                'Ditolak'
+                                                    => '#dc3545',
+
+                                                default
+                                                    => '#6c757d',
+
+                                            };
 
                                         @endphp
 
                                         <span class="sa-status-badge">
 
-                                            <span style="background:{{ $warna }}"></span>
+                                            <span style="background: {{ $warna }}"></span>
 
-                                            {{ $permohonan->status }}
+                                            {{ $status }}
 
                                         </span>
 
@@ -207,29 +217,19 @@
 
                                         <div class="sa-action-buttons">
 
-                                            {{-- DETAIL --}}
-                                            <a href="{{ route('adminpermohonan.detail_permohonan', $permohonan->id) }}"
-                                                class="sa-action-button sa-key-button" title="Detail Permohonan">
+                                            {{-- LIHAT DETAIL --}}
+                                            <a
+                                                href="{{ route(
+                                                    'adminpermohonan.detail_permohonan',
+                                                    $permohonan->id
+                                                ) }}"
+                                                class="sa-action-button sa-key-button"
+                                                title="Lihat Detail Permohonan"
+                                            >
 
-                                                <i class="bi bi-pencil-square"></i>
+                                                <i class="bi bi-eye-fill"></i>
 
                                             </a>
-
-                                            {{-- HAPUS --}}
-                                            <form action="{{ route('adminpermohonan.delete_permohonan', $permohonan->id) }}"
-                                                method="POST" style="display:inline;">
-
-                                                @csrf
-                                                @method('DELETE')
-
-                                                <button type="submit" class="sa-action-button sa-delete-button"
-                                                    onclick="return confirm('Yakin ingin menghapus data permohonan ini?')">
-
-                                                    <i class="bi bi-trash-fill"></i>
-
-                                                </button>
-
-                                            </form>
 
                                         </div>
 
