@@ -278,16 +278,36 @@
                                     <span class="sa-status-badge">
 
                                         @if($item->status == 'Menunggu')
-                                            <span style="background:#ffc107"></span>
-                                        @elseif($item->status == 'Diproses')
+
                                             <span style="background:#0d6efd"></span>
+
+                                        @elseif($item->status == 'Diverifikasi')
+
+                                            <span style="background:#0d6efd"></span>
+
+                                        @elseif($item->status == 'Diproses')
+
+                                            <span style="background:#fd7e14"></span>
+
+                                        @elseif($item->status == 'Diproses Lapangan')
+
+                                            <span style="background:#fd7e14"></span>
+
                                         @elseif($item->status == 'Selesai')
+
                                             <span style="background:#198754"></span>
-                                        @else
+
+                                        @elseif($item->status == 'Ditolak')
+
                                             <span style="background:#dc3545"></span>
+
+                                        @else
+
+                                            <span style="background:#6c757d"></span>
+
                                         @endif
 
-                                        {{ $item->status }}
+                                        {{ $item->status ?? '-' }}
 
                                     </span>
 
