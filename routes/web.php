@@ -100,6 +100,7 @@ Route::prefix('superadmin')
     });
 
 
+// ADMIN PENGADUAN
 
 Route::prefix('adminpengaduan')
     ->name('adminpengaduan.')
@@ -131,8 +132,8 @@ Route::prefix('adminpengaduan')
         )->name('delete_pengaduan');
     });
 
-// ADMIN PERMOHONANNNN
 
+// ADMIN PERMOHONANNNN
 
 Route::prefix('adminpermohonan')
     ->name('adminpermohonan.')

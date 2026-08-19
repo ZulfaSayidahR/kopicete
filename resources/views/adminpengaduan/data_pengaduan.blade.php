@@ -301,13 +301,56 @@
 
                         <td>
 
-                            <span class="sa-status-badge">
+                            @if($item->status === 'Menunggu')
 
-                                <span></span>
+                                <span class="sa-status-badge">
+                                    <span style="background:#0d6efd"></span>
+                                    Menunggu
+                                </span>
 
-                                {{ $item->status }}
+                            @elseif($item->status === 'Diverifikasi')
 
-                            </span>
+                                <span class="sa-status-badge">
+                                    <span style="background:#0d6efd"></span>
+                                    Diverifikasi
+                                </span>
+
+                            @elseif($item->status === 'Diproses')
+
+                                <span class="sa-status-badge">
+                                    <span style="background:#fd7e14"></span>
+                                    Diproses
+                                </span>
+
+                            @elseif($item->status === 'Diproses Lapangan')
+
+                                <span class="sa-status-badge">
+                                    <span style="background:#fd7e14"></span>
+                                    Diproses Lapangan
+                                </span>
+
+                            @elseif($item->status === 'Selesai')
+
+                                <span class="sa-status-badge active">
+                                    <span></span>
+                                    Selesai
+                                </span>
+
+                            @elseif($item->status === 'Ditolak')
+
+                                <span class="sa-status-badge">
+                                    <span style="background:#dc3545"></span>
+                                    Ditolak
+                                </span>
+
+                            @else
+
+                                <span class="sa-status-badge">
+                                    <span></span>
+                                    {{ $item->status ?? '-' }}
+                                </span>
+
+                            @endif
 
                         </td>
 
