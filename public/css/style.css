@@ -839,6 +839,7 @@
 }
 
 @media (max-width: 520px) {
+
     .aduan-box,
     .tracking-box {
         border-radius: 21px;
@@ -1313,6 +1314,44 @@ html {
     .step-title {
         font-size: 11px;
     }
+}
+
+/* ==========================================
+   BUTTON REGISTER ADMIN
+========================================== */
+
+.btn-admin-register {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    margin-top: 15px;
+    padding: 12px 20px;
+
+    border: 1px solid #0d6efd;
+    border-radius: 10px;
+
+    background: #ffffff;
+    color: #0d6efd;
+
+    text-decoration: none;
+
+    font-weight: 600;
+
+    transition: all 0.3s ease;
+}
+
+.btn-admin-register:hover {
+    background: #0d6efd;
+    color: #ffffff;
+
+    transform: translateY(-1px);
+}
+
+.btn-admin-register i {
+    font-size: 17px;
 }
 
 /* =====================================================
@@ -2532,7 +2571,7 @@ body {
     min-width: 0;
 }
 
-.sa-stat-content > span {
+.sa-stat-content>span {
     display: block;
     color: #778697;
     font-size: 11px;
@@ -2588,7 +2627,7 @@ body {
 
 .sa-panel-header p,
 .sa-panel-title p,
-.sa-reset-panel > p {
+.sa-reset-panel>p {
     margin: 0;
     color: #8391a1;
     font-size: 10px;
@@ -3427,8 +3466,9 @@ body {
 
 /* Tablet */
 @media (max-width: 991.98px) {
-    .navbar > .container,
-    .navbar > .container-fluid {
+
+    .navbar>.container,
+    .navbar>.container-fluid {
         display: flex;
         justify-content: space-between;
         align-items: center;

@@ -99,6 +99,15 @@
                 Masuk dengan Google
             </a>
 
+            {{-- DAFTAR ADMIN --}}
+            <a href="{{ route('register') }}" class="btn-admin-register">
+
+                <i class="bi bi-person-plus-fill"></i>
+
+                Daftar Admin
+
+            </a>
+
             <a href="{{ route('home') }}" class="btn-back">
 
                 ← Kembali ke Beranda
