@@ -55,7 +55,7 @@
                                     <i class="bi bi-check-lg"></i>
                                 </div>
                                 <div class="step-title">
-                                    Data Pribadi
+                                    Data Pelapor
                                 </div>
                             </div>
 

@@ -4231,67 +4231,99 @@ VERIFIKASI OTP
     }
 }
 
-/* DETAIL FORM PERMOHONAN DAN PENGADUAN */
+/* =========================================================
+    DETAIL FORM PERMOHONAN DAN PENGADUAN
+    ========================================================= */
+
 .detail-form {
     width: 100%;
     margin-top: 10px;
-}
-
-.detail-row {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    margin-bottom: 14px;
-}
-
-.detail-label {
-    width: 160px;
-    flex-shrink: 0;
-    font-weight: 700;
-    color: #292929;
-    white-space: nowrap;
-}
-
-.detail-colon {
-    width: 20px;
-    flex-shrink: 0;
-    font-weight: 700;
-    color: #292929;
-    text-align: center;
-}
-
-.detail-value {
-    flex: 1;
-    color: #292929;
-    padding-left: 0;
-    line-height: 1.5;
 }
 
 .detail-info {
     width: 100%;
 }
 
+/* Setiap baris detail */
 .detail-row {
-    display: flex;
+    display: grid;
+    grid-template-columns: 230px 20px minmax(0, 1fr);
     align-items: center;
+    width: 100%;
     margin-bottom: 14px;
 }
 
+/* Label sebelah kiri */
 .detail-label {
-    width: 155px;
+    width: auto;
+    min-width: 0;
     font-weight: 700;
     color: #292929;
-    flex-shrink: 0;
+    white-space: nowrap;
 }
 
-.detail-separator {
-    width: 20px;
+/* Tanda titik dua */
+.detail-colon {
+    width: auto;
     font-weight: 700;
     color: #292929;
-    flex-shrink: 0;
+    text-align: center;
 }
 
+/* Nilai di sebelah kanan */
 .detail-value {
-    flex: 1;
+    width: auto;
+    min-width: 0;
     color: #292929;
+    line-height: 1.5;
+    overflow-wrap: break-word;
+}
+
+/* =========================================================
+   BADGE STATUS
+   ========================================================= */
+
+.detail-value .badge {
+    display: inline-block;
+    white-space: nowrap;
+}
+
+/* =========================================================
+   CATATAN ADMIN
+   ========================================================= */
+
+.detail-form .bg-light {
+    line-height: 1.6;
+    word-break: break-word;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 768px) {
+    .detail-row {
+        grid-template-columns: 180px 20px minmax(0, 1fr);
+    }
+}
+
+@media (max-width: 576px) {
+    .detail-row {
+        grid-template-columns: 1fr;
+        align-items: start;
+        row-gap: 3px;
+        margin-bottom: 16px;
+    }
+
+    .detail-colon {
+        display: none;
+    }
+
+    .detail-label {
+        white-space: normal;
+    }
+
+    .detail-value {
+        padding-left: 0;
+    }
 }
