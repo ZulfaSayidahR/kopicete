@@ -305,6 +305,12 @@ Route::get('/forgot-password', [AuthController::class, 'forgotPassword'])
 Route::post('/forgot-password', [AuthController::class, 'sendResetLink'])
     ->name('forgot.password.send');
 
+Route::get('/register', [AuthController::class, 'register'])
+    ->name('register');
+
+Route::post('/register', [AuthController::class, 'registerProses'])
+    ->name('register.proses');
+
 
 
 
