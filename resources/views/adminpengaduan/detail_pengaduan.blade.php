@@ -487,7 +487,7 @@
                                 | 2. VERIFIKASI
                                 ================================================== --}}
                                 <div class="admin-tracking-item
-                                            {{ $pengaduan->tanggal_verifikasi ? 'selesai' : 'pending' }}">
+                                                {{ $pengaduan->tanggal_verifikasi ? 'selesai' : 'pending' }}">
 
                                     <div class="admin-tracking-icon">
 
@@ -557,7 +557,7 @@
                                 | 3. DIPROSES
                                 ================================================== --}}
                                 <div class="admin-tracking-item
-                                            {{ $pengaduan->tanggal_proses ? 'selesai' : 'pending' }}">
+                                                {{ $pengaduan->tanggal_proses ? 'selesai' : 'pending' }}">
 
                                     <div class="admin-tracking-icon">
 
@@ -627,7 +627,7 @@
                                 | 4. SELESAI
                                 ================================================== --}}
                                 <div class="admin-tracking-item
-                                            {{ $pengaduan->tanggal_selesai ? 'selesai' : 'pending' }}">
+                                                {{ $pengaduan->tanggal_selesai ? 'selesai' : 'pending' }}">
 
                                     <div class="admin-tracking-icon">
 
