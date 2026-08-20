@@ -112,14 +112,15 @@
                     dan progres penanganan.
                 </p>
 
-                <form action="{{ route('pengaduan.search') }}" method="GET" class="tracking-form">
+                <form action="{{ route('tracking.search') }}" method="GET" class="tracking-form">
 
                     <div class="tracking-input-wrapper">
 
                         <i class="bi bi-search"></i>
 
-                        <input type="text" name="kode" class="tracking-input" placeholder="Masukkan kode aduan..."
-                            value="{{ request('kode') }}" required>
+                        <input type="text" name="kode" class="tracking-input"
+                            placeholder="Masukkan kode aduan atau kode permohonan..." value="{{ request('kode') }}"
+                            required>
 
                     </div>
 

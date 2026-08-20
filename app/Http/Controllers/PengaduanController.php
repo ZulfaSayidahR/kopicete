@@ -16,7 +16,7 @@ use Carbon\Carbon;
 
 class PengaduanController extends Controller
 {
-    
+
     /*
     |--------------------------------------------------------------------------
     | STEP 1 : DATA ADUAN
@@ -191,102 +191,146 @@ class PengaduanController extends Controller
         ));
 
     }
-    /*
-    |--------------------------------------------------------------------------
-    | KIRIM OTP
-    |--------------------------------------------------------------------------
-    */
 
+    /*
+|--------------------------------------------------------------------------
+| KIRIM OTP
+|--------------------------------------------------------------------------
+*/
     public function kirimOtp(Request $request)
     {
         $request->validate([
             'persetujuan' => 'accepted',
-        ], [
-            'persetujuan.accepted' => 'Anda harus menyetujui pernyataan sebelum melanjutkan.',
-        ]);
-        // VALIDASI RECAPTCHA
-        $request->validate([
             'g-recaptcha-response' => 'required|captcha',
         ], [
-            'g-recaptcha-response.required' => 'Silakan centang "Saya bukan robot".',
-            'g-recaptcha-response.captcha' => 'Verifikasi reCAPTCHA gagal.',
+            'persetujuan.accepted' =>
+                'Anda harus menyetujui pernyataan sebelum melanjutkan.',
+
+            'g-recaptcha-response.required' =>
+                'Silakan centang "Saya bukan robot".',
+
+            'g-recaptcha-response.captcha' =>
+                'Verifikasi reCAPTCHA gagal.',
         ]);
 
         $step3 = Session::get('pengaduan.step3');
 
         if (!$step3) {
-            return redirect()->route('pengaduan.datapribadi');
+            return redirect()
+                ->route('pengaduan.datapribadi')
+                ->with('error', 'Data pribadi tidak ditemukan.');
         }
 
         $nomor = $step3['no_whatsapp'];
 
-        // ubah 08 menjadi 628
-        if (substr($nomor, 0, 1) == '0') {
+        // Ubah 08xxxxxxxx menjadi 628xxxxxxxx
+        if (substr($nomor, 0, 1) === '0') {
             $nomor = '62' . substr($nomor, 1);
         }
 
-        // Generate OTP
-        $otp = rand(100000, 999999);
+        // Hapus OTP lama
+        Session::forget('otp');
+        Session::forget('otp_expired');
+
+        // Generate OTP 6 digit
+        $otp = random_int(100000, 999999);
+
+        // Expired 5 menit
+        $expired = now()->addMinutes(5);
 
         // Simpan OTP
         Session::put('otp', $otp);
-
-        // Simpan waktu kadaluarsa
-        $expired = now()->addMinutes(5);
-
         Session::put('otp_expired', $expired);
 
-        Http::withHeaders([
+        // Kirim WhatsApp
+        $response = Http::withHeaders([
             'Authorization' => env('FONNTE_TOKEN')
         ])->post('https://api.fonnte.com/send', [
-
                     'target' => $nomor,
-
                     'message' =>
                         "Kode OTP Pengaduan BNNK Tulungagung\n\n" .
-                        "Kode OTP Anda : $otp\n\n" .
+                        "Kode OTP Anda : {$otp}\n\n" .
                         "Berlaku selama 5 menit.\n\n" .
                         "Jangan berikan kode ini kepada siapa pun."
-
                 ]);
 
-        return redirect()->route('pengaduan.verifikasiOtp');
+        // Jika pengiriman gagal
+        if (!$response->successful()) {
+
+            Session::forget('otp');
+            Session::forget('otp_expired');
+
+            return back()->with(
+                'error',
+                'OTP gagal dikirim ke WhatsApp. Silakan coba lagi.'
+            );
+        }
+
+        return redirect()
+            ->route('pengaduan.verifikasiOtp')
+            ->with('success', 'Kode OTP berhasil dikirim ke WhatsApp Anda.');
     }
     /*
-    |--------------------------------------------------------------------------
-    | HALAMAN OTP
-    |--------------------------------------------------------------------------
-    */
+  |--------------------------------------------------------------------------
+  | HALAMAN OTP
+  |--------------------------------------------------------------------------
+  */
     public function verifikasiOtp()
     {
         $expired = Session::get('otp_expired');
 
+        // Jika OTP tidak ada, jangan biarkan user masuk ke halaman OTP
+        if (!$expired || !Session::has('otp')) {
+            return redirect()
+                ->route('pengaduan.datapribadi')
+                ->with('error', 'OTP tidak ditemukan. Silakan kirim OTP kembali.');
+        }
+
+        // Jika OTP sudah expired
+        if (Carbon::now()->greaterThanOrEqualTo($expired)) {
+            Session::forget('otp');
+            Session::forget('otp_expired');
+
+            return redirect()
+                ->route('pengaduan.datapribadi')
+                ->with('error', 'OTP telah kedaluwarsa. Silakan kirim OTP kembali.');
+        }
+
         return view('user.pengaduan.verifikasiotp', [
-            'expired' => $expired
-                ? $expired->timestamp * 1000
-                : 0
+            'expired' => Carbon::parse($expired)->timestamp * 1000,
         ]);
     }
     /*
-    |--------------------------------------------------------------------------
-    | VERIFIKASI OTP
-    |--------------------------------------------------------------------------
-    */
+ |--------------------------------------------------------------------------
+ | VERIFIKASI OTP
+ |--------------------------------------------------------------------------
+ */
     public function verifyOtp(Request $request)
     {
         $request->validate([
-            'otp' => 'required|digits:6'
+            'otp' => [
+                'required',
+                'digits:6',
+            ],
+        ], [
+            'otp.required' => 'Silakan masukkan kode OTP.',
+            'otp.digits' => 'Kode OTP harus terdiri dari 6 digit.',
         ]);
 
-        if (!Session::has('otp') || !Session::has('otp_expired')) {
+        $sessionOtp = Session::get('otp');
+        $expired = Session::get('otp_expired');
+
+        // OTP tidak ditemukan
+        if (!$sessionOtp || !$expired) {
 
             return back()->with(
                 'error',
-                'OTP tidak ditemukan.'
+                'OTP tidak ditemukan. Silakan kirim ulang OTP.'
             );
         }
 
-        if (Carbon::now()->gt(Session::get('otp_expired'))) {
+        // Cek expired
+        if (Carbon::now()->greaterThanOrEqualTo(Carbon::parse($expired))) {
 
             Session::forget('otp');
             Session::forget('otp_expired');
@@ -297,7 +341,8 @@ class PengaduanController extends Controller
             );
         }
 
-        if ($request->otp != Session::get('otp')) {
+        // Cek OTP
+        if ((string) $request->otp !== (string) $sessionOtp) {
 
             return back()->with(
                 'error',
@@ -305,6 +350,7 @@ class PengaduanController extends Controller
             );
         }
 
+        // OTP benar
         return $this->store();
     }
 
@@ -336,33 +382,19 @@ class PengaduanController extends Controller
         $kode = 'BNNK-' . date('Ymd') . '-' . strtoupper(Str::random(5));
 
         Pengaduan::create([
-
             'kode_aduan' => $kode,
-
             'judul_aduan' => $step1['judul_aduan'],
-
             'topik_aduan' => $step1['topik_aduan'],
-
             'detail_aduan' => $step1['detail_aduan'],
-
             'id_kecamatan' => $step2['id_kecamatan'],
-
             'id_desa' => $step2['id_desa'],
-
             'lampiran' => $step2['lampiran'],
-
             'nama_lengkap' => $step3['nama_lengkap'],
-
             'no_whatsapp' => $step3['no_whatsapp'],
-
             'email' => $step3['email'],
-
             'alamat_domisili' => $step3['alamat_domisili'],
-
             'otp_verified_at' => now(),
-
-            'status' => 'Menunggu'
-
+            'status' => 'Diverifikasi'
         ]);
 
         // Bersihkan session
@@ -418,24 +450,46 @@ class PengaduanController extends Controller
         );
     }
 
-     /*
-    |--------------------------------------------------------------------------
-    | CARI
-    |--------------------------------------------------------------------------
-    */
+    public function trackingDetail($kode)
+    {
+        $pengaduan = Pengaduan::where(
+            'kode_aduan',
+            $kode
+        )->first();
+
+        if (!$pengaduan) {
+
+            return redirect('/')
+                ->with(
+                    'error',
+                    'Pengaduan tidak ditemukan.'
+                );
+        }
+
+        return view(
+            'user.pengaduan.tracking',
+            compact('pengaduan')
+        );
+    }
+
+    /*
+   |--------------------------------------------------------------------------
+   | CARI
+   |--------------------------------------------------------------------------
+   */
     public function cari(Request $request)
-{
-    $topik = $request->input('topik');
+    {
+        $topik = $request->input('topik');
 
-    $aduanTerbaru = Pengaduan::query()
-        ->when($topik, function ($query) use ($topik) {
-            $query->where('topik_aduan', 'like', '%' . $topik . '%');
-        })
-        ->latest()
-        ->get();
+        $aduanTerbaru = Pengaduan::query()
+            ->when($topik, function ($query) use ($topik) {
+                $query->where('topik_aduan', 'like', '%' . $topik . '%');
+            })
+            ->latest()
+            ->get();
 
-    return view('user.pengaduan.create', [
-        'aduanTerbaru' => $aduanTerbaru,
-    ]);
-}
+        return view('user.pengaduan.create', [
+            'aduanTerbaru' => $aduanTerbaru,
+        ]);
+    }
 }

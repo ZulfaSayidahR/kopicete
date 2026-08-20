@@ -106,9 +106,9 @@ class PermohonanController extends Controller
             'user.permohonan.konfirmasi',
             [
                 'data' => $data,
-        'permohonanTerbaru' => Permohonan::latest()
-            ->take(5)
-            ->get()
+                'permohonanTerbaru' => Permohonan::latest()
+                    ->take(5)
+                    ->get()
             ]
         );
     }
@@ -492,7 +492,7 @@ class PermohonanController extends Controller
                 $data['lampiran'] ?? null,
 
             'status' =>
-                'Menunggu'
+                'Diverifikasi'
 
         ]);
 
@@ -710,28 +710,50 @@ class PermohonanController extends Controller
             );
     }
 
-     /*
-    |--------------------------------------------------------------------------
-    | CARI
-    |--------------------------------------------------------------------------
-    */
-    public function cari(Request $request)
-{
-    $query = Permohonan::query();
 
-    if ($request->filled('jenis_permohonan')) {
-        $query->where(
-            'jenis_permohonan',
-            'like',
-            '%' . $request->jenis_permohonan . '%'
+    public function trackingDetail($kode)
+    {
+        $permohonan = Permohonan::where(
+            'kode_permohonan',
+            $kode
+        )->first();
+
+        if (!$permohonan) {
+
+            return redirect('/')
+                ->with(
+                    'error',
+                    'Permohonan tidak ditemukan.'
+                );
+        }
+
+        return view(
+            'user.permohonan.tracking',
+            compact('permohonan')
         );
     }
+    /*
+   |--------------------------------------------------------------------------
+   | CARI
+   |--------------------------------------------------------------------------
+   */
+    public function cari(Request $request)
+    {
+        $query = Permohonan::query();
 
-    $permohonanTerbaru = $query
-        ->latest()
-        ->get();
+        if ($request->filled('jenis_permohonan')) {
+            $query->where(
+                'jenis_permohonan',
+                'like',
+                '%' . $request->jenis_permohonan . '%'
+            );
+        }
 
-    return view('user.permohonan.create', compact('permohonanTerbaru'));
-}
+        $permohonanTerbaru = $query
+            ->latest()
+            ->get();
+
+        return view('user.permohonan.create', compact('permohonanTerbaru'));
+    }
 
 }

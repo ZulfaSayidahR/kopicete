@@ -10,7 +10,10 @@
 
             <div class="pengaduan-card">
 
+                {{-- ===================================================== --}}
                 {{-- HEADER --}}
+                {{-- ===================================================== --}}
+
                 <div class="pengaduan-header">
 
                     <div class="header-icon">
@@ -29,14 +32,37 @@
 
                 </div>
 
+
+                {{-- ===================================================== --}}
                 {{-- BODY --}}
+                {{-- ===================================================== --}}
+
                 <div class="pengaduan-body">
 
                     @php
 
+                        /*
+                        |--------------------------------------------------------------------------
+                        | DATA PERMOHONAN
+                        |--------------------------------------------------------------------------
+                        */
+
                         $data = session('permohonan.data');
 
+                        /*
+                        |--------------------------------------------------------------------------
+                        | NOMOR WHATSAPP
+                        |--------------------------------------------------------------------------
+                        */
+
                         $wa = $data['no_hp'] ?? null;
+
+
+                        /*
+                        |--------------------------------------------------------------------------
+                        | MASKING NOMOR WHATSAPP
+                        |--------------------------------------------------------------------------
+                        */
 
                         if ($wa) {
 
@@ -53,6 +79,11 @@
 
                     @endphp
 
+
+                    {{-- ================================================= --}}
+                    {{-- INFORMASI OTP --}}
+                    {{-- ================================================= --}}
+
                     <div class="text-center mb-4">
 
                         <div class="otp-icon">
@@ -61,11 +92,13 @@
 
                         </div>
 
+
                         <h4 class="mt-3">
 
                             Kode OTP Telah Dikirim
 
                         </h4>
+
 
                         <p class="text-muted">
 
@@ -79,6 +112,8 @@
 
                         </p>
 
+
+                        {{-- COUNTDOWN --}}
                         <small class="text-danger fw-bold">
 
                             OTP akan berakhir dalam
@@ -92,45 +127,85 @@
                     </div>
 
 
+                    {{-- ================================================= --}}
                     {{-- SUCCESS --}}
+                    {{-- ================================================= --}}
+
                     @if(session('success'))
 
-                        <div class="alert alert-success">
+                        <div class="alert alert-success alert-dismissible fade show">
+
+                            <i class="bi bi-check-circle-fill me-2"></i>
 
                             {{ session('success') }}
 
+                            <button type="button" class="btn-close" data-bs-dismiss="alert">
+                            </button>
+
                         </div>
 
                     @endif
 
 
+                    {{-- ================================================= --}}
                     {{-- ERROR --}}
+                    {{-- ================================================= --}}
+
                     @if(session('error'))
 
-                        <div class="alert alert-danger">
+                        <div class="alert alert-danger alert-dismissible fade show">
+
+                            <i class="bi bi-exclamation-triangle-fill me-2"></i>
 
                             {{ session('error') }}
 
+                            <button type="button" class="btn-close" data-bs-dismiss="alert">
+                            </button>
+
                         </div>
 
                     @endif
 
 
-                    {{-- FORM OTP --}}
-                    <form action="{{ route('permohonan.verifyOtp') }}" method="POST">
+                    {{-- ================================================= --}}
+                    {{-- VALIDATION ERROR --}}
+                    {{-- ================================================= --}}
+
+                    @if($errors->any())
+
+                        <div class="alert alert-danger">
+
+                            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+
+                            {{ $errors->first() }}
+
+                        </div>
+
+                    @endif
+
+
+                    {{-- ================================================= --}}
+                    {{-- FORM VERIFIKASI OTP --}}
+                    {{-- ================================================= --}}
+
+                    <form action="{{ route('permohonan.verifyOtp') }}" method="POST" id="otpForm">
 
                         @csrf
 
+
                         <div class="mb-4">
 
-                            <label class="form-label fw-bold">
+                            <label for="otp" class="form-label fw-bold">
 
                                 Masukkan Kode OTP
 
                             </label>
 
-                            <input type="text" name="otp" maxlength="6" minlength="6" pattern="[0-9]{6}" inputmode="numeric"
-                                class="form-control text-center fs-4" placeholder="123456" autocomplete="off" required>
+
+                            <input type="text" name="otp" id="otp" maxlength="6" minlength="6" pattern="[0-9]{6}"
+                                inputmode="numeric" class="form-control text-center fs-4" placeholder="123456"
+                                autocomplete="one-time-code" required>
+
 
                             @error('otp')
 
@@ -144,6 +219,8 @@
 
                         </div>
 
+
+                        {{-- BUTTON VERIFIKASI --}}
                         <button type="submit" id="btnVerify" class="btn btn-primary w-100">
 
                             <i class="bi bi-check-circle-fill me-2"></i>
@@ -154,7 +231,13 @@
 
                     </form>
 
+
                     <hr>
+
+
+                    {{-- ================================================= --}}
+                    {{-- KIRIM ULANG OTP --}}
+                    {{-- ================================================= --}}
 
                     <div class="text-center">
 
@@ -164,9 +247,11 @@
 
                         </small>
 
-                        <form action="{{ route('permohonan.kirimUlangOtp') }}" method="POST" class="mt-2">
+
+                        <form action="{{ route('permohonan.kirimUlangOtp') }}" method="POST" class="mt-2" id="resendForm">
 
                             @csrf
+
 
                             <button type="submit" id="btnResend" class="btn btn-link" disabled>
 
@@ -191,24 +276,93 @@
     </section>
 
 
+    {{-- ============================================================= --}}
+    {{-- JAVASCRIPT COUNTDOWN OTP --}}
+    {{-- ============================================================= --}}
+
     <script>
 
         document.addEventListener("DOMContentLoaded", function () {
 
-            const expiredTime = Number("{{ $expired }}");
+            /*
+            |--------------------------------------------------------------------------
+            | WAKTU EXPIRED DARI SERVER
+            |--------------------------------------------------------------------------
+            |
+            | Controller mengirim:
+            |
+            | $expired->timestamp * 1000
+            |
+            | sehingga JavaScript menerima waktu dalam milliseconds.
+            |
+            */
+
+            const expiredTime = Number(@json($expired));
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | ELEMENT HTML
+            |--------------------------------------------------------------------------
+            */
 
             const countdown =
                 document.getElementById("countdown");
 
-            const verify =
+            const btnVerify =
                 document.getElementById("btnVerify");
 
-            const resend =
+            const btnResend =
                 document.getElementById("btnResend");
 
             const resendText =
                 document.getElementById("resendText");
 
+            const otpInput =
+                document.getElementById("otp");
+
+            const otpForm =
+                document.getElementById("otpForm");
+
+            const resendForm =
+                document.getElementById("resendForm");
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | TIMER
+            |--------------------------------------------------------------------------
+            */
+
+            let timer = null;
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | CEK APAKAH WAKTU VALID
+            |--------------------------------------------------------------------------
+            */
+
+            if (
+                !expiredTime ||
+                isNaN(expiredTime) ||
+                expiredTime <= 0
+            ) {
+
+                countdown.textContent = "00:00";
+
+                btnVerify.disabled = true;
+
+                btnResend.disabled = false;
+
+            }
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | UPDATE TIMER
+            |--------------------------------------------------------------------------
+            */
 
             function updateTimer() {
 
@@ -218,25 +372,73 @@
                     expiredTime - now;
 
 
+                /*
+                |--------------------------------------------------------------------------
+                | OTP SUDAH EXPIRED
+                |--------------------------------------------------------------------------
+                */
+
                 if (distance <= 0) {
 
-                    countdown.innerHTML = "00:00";
+                    countdown.textContent = "00:00";
 
-                    verify.disabled = true;
 
-                    resend.disabled = false;
+                    /*
+                    | Matikan tombol verifikasi
+                    */
 
-                    resendText.innerHTML = "";
+                    btnVerify.disabled = true;
 
-                    clearInterval(timer);
+
+                    /*
+                    | Aktifkan tombol kirim ulang
+                    */
+
+                    btnResend.disabled = false;
+
+
+                    /*
+                    | Hapus countdown pada tombol resend
+                    */
+
+                    resendText.textContent = "";
+
+
+                    /*
+                    | Hentikan interval
+                    */
+
+                    if (timer !== null) {
+
+                        clearInterval(timer);
+
+                        timer = null;
+
+                    }
+
 
                     return;
+
                 }
 
 
-                const minutes =
-                    Math.floor(distance / 60000);
+                /*
+                |--------------------------------------------------------------------------
+                | HITUNG MENIT
+                |--------------------------------------------------------------------------
+                */
 
+                const minutes =
+                    Math.floor(
+                        distance / 60000
+                    );
+
+
+                /*
+                |--------------------------------------------------------------------------
+                | HITUNG DETIK
+                |--------------------------------------------------------------------------
+                */
 
                 const seconds =
                     Math.floor(
@@ -244,27 +446,171 @@
                     );
 
 
+                /*
+                |--------------------------------------------------------------------------
+                | FORMAT MM:SS
+                |--------------------------------------------------------------------------
+                */
+
                 const time =
                     String(minutes).padStart(2, '0')
                     + ":"
                     + String(seconds).padStart(2, '0');
 
 
-                countdown.innerHTML = time;
+                /*
+                |--------------------------------------------------------------------------
+                | TAMPILKAN COUNTDOWN
+                |--------------------------------------------------------------------------
+                */
 
-                resend.disabled = true;
+                countdown.textContent = time;
 
-                resendText.innerHTML =
+
+                /*
+                |--------------------------------------------------------------------------
+                | OTP MASIH AKTIF
+                |--------------------------------------------------------------------------
+                */
+
+                btnVerify.disabled = false;
+
+                btnResend.disabled = true;
+
+
+                /*
+                |--------------------------------------------------------------------------
+                | TAMPILKAN WAKTU PADA TOMBOL RESEND
+                |--------------------------------------------------------------------------
+                */
+
+                resendText.textContent =
                     " (" + time + ")";
 
             }
 
 
-            updateTimer();
+            /*
+            |--------------------------------------------------------------------------
+            | JALANKAN TIMER PERTAMA KALI
+            |--------------------------------------------------------------------------
+            */
+
+            if (
+                expiredTime &&
+                !isNaN(expiredTime)
+            ) {
+
+                updateTimer();
 
 
-            const timer =
-                setInterval(updateTimer, 1000);
+                /*
+                |--------------------------------------------------------------------------
+                | UPDATE SETIAP 1 DETIK
+                |--------------------------------------------------------------------------
+                */
+
+                timer = setInterval(
+                    updateTimer,
+                    1000
+                );
+
+            }
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | INPUT OTP HANYA ANGKA
+            |--------------------------------------------------------------------------
+            */
+
+            otpInput.addEventListener(
+                "input",
+                function () {
+
+                    this.value =
+                        this.value
+                            .replace(/\D/g, '')
+                            .slice(0, 6);
+
+                }
+            );
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | FORM VERIFIKASI
+            |--------------------------------------------------------------------------
+            */
+
+            otpForm.addEventListener(
+                "submit",
+                function (event) {
+
+                    /*
+                    | Pastikan OTP 6 digit
+                    */
+
+                    if (
+                        otpInput.value.length !== 6
+                    ) {
+
+                        event.preventDefault();
+
+                        alert(
+                            "Kode OTP harus terdiri dari 6 digit."
+                        );
+
+                        otpInput.focus();
+
+                        return;
+
+                    }
+
+
+                    /*
+                    | Disable tombol supaya
+                    | tidak diklik berkali-kali
+                    */
+
+                    btnVerify.disabled = true;
+
+
+                    btnVerify.innerHTML =
+                        '<span class="spinner-border spinner-border-sm me-2"></span>' +
+                        'Memverifikasi...';
+
+                }
+            );
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | FORM KIRIM ULANG
+            |--------------------------------------------------------------------------
+            */
+
+            resendForm.addEventListener(
+                "submit",
+                function () {
+
+                    /*
+                    | Cegah klik berkali-kali
+                    */
+
+                    btnResend.disabled = true;
+
+
+                    /*
+                    | Tampilkan proses pengiriman
+                    */
+
+                    btnResend.innerHTML =
+                        '<span class="spinner-border spinner-border-sm me-2"></span>' +
+                        'Mengirim OTP...';
+
+                }
+            );
 
         });
 

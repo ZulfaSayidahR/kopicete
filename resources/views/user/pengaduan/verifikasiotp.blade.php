@@ -18,27 +18,32 @@
                     </div>
 
                     <div>
-
                         <h2>Verifikasi Nomor WhatsApp</h2>
 
                         <p>
                             Masukkan kode OTP yang telah dikirim ke nomor WhatsApp Anda.
                         </p>
-
                     </div>
 
                 </div>
 
+
                 {{-- BODY --}}
                 <div class="pengaduan-body">
 
+                    {{-- DATA WHATSAPP --}}
                     @php
 
-                        $wa = session('pengaduan.step3.whatsapp');
+                        $step3 = session('pengaduan.step3');
+
+                        $wa = $step3['no_whatsapp'] ?? null;
 
                         if ($wa) {
 
-                            $waTampil = substr($wa, 0, 4) . '******' . substr($wa, -3);
+                            $waTampil =
+                                substr($wa, 0, 4)
+                                . '******'
+                                . substr($wa, -3);
 
                         } else {
 
@@ -48,6 +53,8 @@
 
                     @endphp
 
+
+                    {{-- INFORMASI OTP --}}
                     <div class="text-center mb-4">
 
                         <div class="otp-icon">
@@ -56,11 +63,13 @@
 
                         </div>
 
+
                         <h4 class="mt-3">
 
                             Kode OTP Telah Dikirim
 
                         </h4>
+
 
                         <p class="text-muted">
 
@@ -69,12 +78,11 @@
                             <br>
 
                             <strong>
-
                                 {{ $waTampil }}
-
                             </strong>
 
                         </p>
+
 
                         <small class="text-danger fw-bold">
 
@@ -85,15 +93,21 @@
                             </span>
 
                         </small>
+
                     </div>
 
 
                     {{-- SUCCESS --}}
                     @if(session('success'))
 
-                        <div class="alert alert-success">
+                        <div class="alert alert-success alert-dismissible fade show">
+
+                            <i class="bi bi-check-circle-fill me-2"></i>
 
                             {{ session('success') }}
+
+                            <button type="button" class="btn-close" data-bs-dismiss="alert">
+                            </button>
 
                         </div>
 
@@ -103,19 +117,39 @@
                     {{-- ERROR --}}
                     @if(session('error'))
 
-                        <div class="alert alert-danger">
+                        <div class="alert alert-danger alert-dismissible fade show">
+
+                            <i class="bi bi-exclamation-triangle-fill me-2"></i>
 
                             {{ session('error') }}
+
+                            <button type="button" class="btn-close" data-bs-dismiss="alert">
+                            </button>
 
                         </div>
 
                     @endif
 
 
-                    {{-- FORM OTP --}}
-                    <form action="{{ route('pengaduan.verifyOtp') }}" method="POST">
+                    {{-- ERROR VALIDASI --}}
+                    @if($errors->any())
+
+                        <div class="alert alert-danger">
+
+                            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+
+                            {{ $errors->first() }}
+
+                        </div>
+
+                    @endif
+
+
+                    {{-- FORM VERIFIKASI OTP --}}
+                    <form action="{{ route('pengaduan.verifyOtp') }}" method="POST" id="otpForm">
 
                         @csrf
+
 
                         <div class="mb-4">
 
@@ -125,8 +159,11 @@
 
                             </label>
 
-                            <input type="text" name="otp" maxlength="6" minlength="6" pattern="[0-9]{6}" inputmode="numeric"
-                                class="form-control text-center fs-4" placeholder="123456" autocomplete="off" required>
+
+                            <input type="text" name="otp" id="otp" maxlength="6" minlength="6" pattern="[0-9]{6}"
+                                inputmode="numeric" class="form-control text-center fs-4" placeholder="123456"
+                                autocomplete="one-time-code" required>
+
 
                             @error('otp')
 
@@ -140,6 +177,8 @@
 
                         </div>
 
+
+                        {{-- BUTTON VERIFIKASI --}}
                         <button type="submit" id="btnVerify" class="btn btn-primary w-100">
 
                             <i class="bi bi-check-circle-fill me-2"></i>
@@ -150,8 +189,11 @@
 
                     </form>
 
+
                     <hr>
 
+
+                    {{-- KIRIM ULANG OTP --}}
                     <div class="text-center">
 
                         <small class="text-muted">
@@ -160,15 +202,18 @@
 
                         </small>
 
-                        <form action="{{ route('pengaduan.kirimOtp') }}" method="POST" class="mt-2">
+
+                        <form action="{{ route('pengaduan.kirimOtp') }}" method="POST" class="mt-2" id="resendForm">
 
                             @csrf
+
 
                             <button type="submit" id="btnResend" class="btn btn-link" disabled>
 
                                 <i class="bi bi-arrow-repeat"></i>
 
                                 Kirim ulang OTP
+
                                 <span id="resendText"></span>
 
                             </button>
@@ -184,59 +229,262 @@
         </div>
 
     </section>
+
+
+    {{-- ========================================================= --}}
+    {{-- JAVASCRIPT COUNTDOWN OTP --}}
+    {{-- ========================================================= --}}
+
     <script>
 
         document.addEventListener("DOMContentLoaded", function () {
 
-            const expiredTime = Number("{{ $expired }}");
+            /*
+            |--------------------------------------------------------------------------
+            | Ambil waktu expired dari Laravel
+            |--------------------------------------------------------------------------
+            */
 
-            const countdown = document.getElementById("countdown");
-            const verify = document.getElementById("btnVerify");
-            const resend = document.getElementById("btnResend");
-            const resendText = document.getElementById("resendText");
+            const expiredTime = Number(@json($expired));
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | Element HTML
+            |--------------------------------------------------------------------------
+            */
+
+            const countdown =
+                document.getElementById("countdown");
+
+            const verify =
+                document.getElementById("btnVerify");
+
+            const resend =
+                document.getElementById("btnResend");
+
+            const resendText =
+                document.getElementById("resendText");
+
+            const otp =
+                document.getElementById("otp");
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | Timer
+            |--------------------------------------------------------------------------
+            */
+
+            let timer = null;
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | Fungsi Countdown
+            |--------------------------------------------------------------------------
+            */
 
             function updateTimer() {
 
                 const now = Date.now();
 
-                const distance = expiredTime - now;
+                const distance =
+                    expiredTime - now;
+
+
+                /*
+                |--------------------------------------------------------------------------
+                | OTP EXPIRED
+                |--------------------------------------------------------------------------
+                */
 
                 if (distance <= 0) {
 
-                    countdown.innerHTML = "00:00";
+                    countdown.textContent = "00:00";
 
+
+                    // OTP tidak bisa diverifikasi
                     verify.disabled = true;
 
+
+                    // Tombol kirim ulang aktif
                     resend.disabled = false;
 
-                    resendText.innerHTML = "";
 
-                    clearInterval(timer);
+                    // Hilangkan countdown dari tombol resend
+                    resendText.textContent = "";
+
+
+                    // Hentikan timer
+                    if (timer !== null) {
+
+                        clearInterval(timer);
+
+                        timer = null;
+
+                    }
+
 
                     return;
+
                 }
 
-                const minutes = Math.floor(distance / 60000);
 
-                const seconds = Math.floor((distance % 60000) / 1000);
+                /*
+                |--------------------------------------------------------------------------
+                | Hitung menit
+                |--------------------------------------------------------------------------
+                */
+
+                const minutes =
+                    Math.floor(distance / 60000);
+
+
+                /*
+                |--------------------------------------------------------------------------
+                | Hitung detik
+                |--------------------------------------------------------------------------
+                */
+
+                const seconds =
+                    Math.floor(
+                        (distance % 60000) / 1000
+                    );
+
+
+                /*
+                |--------------------------------------------------------------------------
+                | Format MM:SS
+                |--------------------------------------------------------------------------
+                */
 
                 const time =
-                    String(minutes).padStart(2, '0') +
-                    ":" +
-                    String(seconds).padStart(2, '0');
+                    String(minutes).padStart(2, '0')
+                    + ":"
+                    + String(seconds).padStart(2, '0');
 
-                countdown.innerHTML = time;
+
+                /*
+                |--------------------------------------------------------------------------
+                | Tampilkan countdown
+                |--------------------------------------------------------------------------
+                */
+
+                countdown.textContent = time;
+
+
+                /*
+                |--------------------------------------------------------------------------
+                | OTP masih aktif
+                |--------------------------------------------------------------------------
+                */
+
+                verify.disabled = false;
 
                 resend.disabled = true;
 
-                resendText.innerHTML = " (" + time + ")";
+
+                resendText.textContent =
+                    " (" + time + ")";
+
             }
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | Jalankan timer langsung
+            |--------------------------------------------------------------------------
+            */
 
             updateTimer();
 
-            const timer = setInterval(updateTimer, 1000);
 
-        });
+            /*
+            |--------------------------------------------------------------------------
+            | Jalankan setiap 1 detik
+            |--------------------------------------------------------------------------
+            */
 
-    </script>
+            timer = setInterval(
+                updateTimer,
+                1000
+            );
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | Hanya izinkan angka pada input OTP
+            |--------------------------------------------------------------------------
+            */
+
+            otp.addEventListener(
+                "input",
+                function () {
+
+                    this.value =
+                        this.value
+                            .replace(/\D/g, '')
+                            .slice(0, 6);
+
+                }
+            );
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | Cegah submit OTP jika belum 6 digit
+            |--------------------------------------------------------------------------
+            */
+
+            document
+                .getElementById("otpForm")
+                .addEventListener(
+                    "submit",
+                    function (event) {
+
+                        if (otp.value.length !== 6) {
+
+                            event.preventDefault();
+
+                            alert(
+                                "Kode OTP harus terdiri dari 6 digit."
+                            );
+
+                            otp.focus();
+
+                        }
+
+                    }
+                );
+
+
+        /*|--------------------------------------------------------------------------
+                | Saat kirim ulang OTP
+                |--------------------------------------------------------------------------
+                */
+
+                document
+                    .getElementById("resendForm")
+                    .addEventListener(
+                        "submit",
+                        function () {
+
+                            /*
+                            | Disable tombol supaya tidak
+                            | diklik berkali-kali
+                            */
+
+                            resend.disabled = true;
+
+                            resend.innerHTML =
+                                '<i class="bi bi-arrow-repeat"></i> Mengirim OTP...';
+
+                        }
+                    );
+
+            });
+
+        </script>
+
 @endsection

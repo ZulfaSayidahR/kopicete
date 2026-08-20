@@ -215,11 +215,53 @@ Route::prefix('pengaduan')->name('pengaduan.')->group(function () {
 // LACAK ADUAN
 // =========================
 
-Route::get('/lacak', [PengaduanController::class, 'search'])
-    ->name('pengaduan.search');
+// Route::get('/lacak', [PengaduanController::class, 'search'])
+//     ->name('pengaduan.search');
 
-Route::get('/lacak/{kode}', [PengaduanController::class, 'tracking'])
-    ->name('pengaduan.tracking');
+// Route::get('/lacak/{kode}', [PengaduanController::class, 'tracking'])
+//     ->name('pengaduan.tracking');
+
+// Route::get('/lacak', [PermohonanController::class, 'search'])
+//     ->name('permohonan.search');
+
+// Route::get('/lacak/{kode}', [PermohonanController::class, 'tracking'])
+//     ->name('permohonan.tracking');
+
+/*
+|--------------------------------------------------------------------------
+| TRACKING
+|--------------------------------------------------------------------------
+*/
+
+Route::get(
+    '/tracking/search',
+    [TrackingController::class, 'search']
+)->name('tracking.search');
+
+
+/*
+|--------------------------------------------------------------------------
+| DETAIL PENGADUAN
+|--------------------------------------------------------------------------
+*/
+
+Route::get(
+    '/pengaduan/tracking/{kode}',
+    [PengaduanController::class, 'trackingDetail']
+)->name('pengaduan.tracking.detail');
+
+
+/*
+|--------------------------------------------------------------------------
+| DETAIL PERMOHONAN
+|--------------------------------------------------------------------------
+*/
+
+Route::get(
+    '/permohonan/tracking/{kode}',
+    [PermohonanController::class, 'trackingDetail']
+)->name('permohonan.tracking.detail');
+
 
 // ==========================
 // PERMOHONAN LAYANAN
