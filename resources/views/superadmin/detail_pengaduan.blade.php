@@ -37,22 +37,31 @@
 
                 {{-- KIRI --}}
                 <div class="col-lg-7">
-
-                    {{-- Informasi --}}
+                    {{-- =================================================
+                    | INFORMASI PENGADUAN
+                    ================================================== --}}
                     <div class="sa-panel">
 
                         <div class="sa-panel-header">
-                            <h3>Informasi Pengaduan</h3>
+
+                            <h3>
+                                Informasi Pengaduan
+                            </h3>
+
                         </div>
+
 
                         <div class="p-4">
 
                             <div class="row">
 
-                                {{-- TOKEN / KODE ADUAN --}}
+
+                                {{-- KODE --}}
                                 <div class="col-md-6 mb-3">
 
-                                    <strong>Token</strong>
+                                    <strong>
+                                        Kode Aduan
+                                    </strong>
 
                                     <p>
                                         {{ $pengaduan->kode_aduan ?? '-' }}
@@ -61,10 +70,26 @@
                                 </div>
 
 
-                                {{-- KATEGORI / TOPIK --}}
+                                {{-- JUDUL --}}
                                 <div class="col-md-6 mb-3">
 
-                                    <strong>Kategori</strong>
+                                    <strong>
+                                        Judul Aduan
+                                    </strong>
+
+                                    <p>
+                                        {{ $pengaduan->judul_aduan ?? '-' }}
+                                    </p>
+
+                                </div>
+
+
+                                {{-- KATEGORI --}}
+                                <div class="col-md-6 mb-3">
+
+                                    <strong>
+                                        Kategori
+                                    </strong>
 
                                     <p>
                                         {{ $pengaduan->topik_aduan ?? '-' }}
@@ -73,10 +98,101 @@
                                 </div>
 
 
+                                {{-- STATUS --}}
+                                <div class="col-md-6 mb-3">
+
+                                    <strong>
+                                        Status
+                                    </strong>
+
+                                    <p>
+
+                                        @php
+
+                                            $statusClass = match ($pengaduan->status) {
+
+                                                'Diajukan' =>
+                                                'bg-secondary',
+
+                                                'Diverifikasi' =>
+                                                'bg-primary',
+
+                                                'Diproses Lapangan' =>
+                                                'bg-warning text-dark',
+
+                                                'Selesai' =>
+                                                'bg-success',
+
+                                                'Ditolak' =>
+                                                'bg-danger',
+
+                                                default =>
+                                                'bg-secondary',
+
+                                            };
+
+                                        @endphp
+
+
+                                        <span class="badge {{ $statusClass }} px-3 py-2">
+
+                                            {{ $pengaduan->status ?? 'Diajukan' }}
+
+                                        </span>
+
+                                    </p>
+
+                                </div>
+
+
+                                {{-- NAMA --}}
+                                <div class="col-md-6 mb-3">
+
+                                    <strong>
+                                        Nama Pelapor
+                                    </strong>
+
+                                    <p>
+                                        {{ $pengaduan->nama_lengkap ?? 'Anonim' }}
+                                    </p>
+
+                                </div>
+
+
+                                {{-- WHATSAPP --}}
+                                <div class="col-md-6 mb-3">
+
+                                    <strong>
+                                        No. WhatsApp
+                                    </strong>
+
+                                    <p>
+                                        {{ $pengaduan->no_whatsapp ?? '-' }}
+                                    </p>
+
+                                </div>
+
+
+                                {{-- EMAIL --}}
+                                <div class="col-md-6 mb-3">
+
+                                    <strong>
+                                        Email
+                                    </strong>
+
+                                    <p>
+                                        {{ $pengaduan->email ?? '-' }}
+                                    </p>
+
+                                </div>
+
+
                                 {{-- KECAMATAN --}}
                                 <div class="col-md-6 mb-3">
 
-                                    <strong>Kecamatan</strong>
+                                    <strong>
+                                        Kecamatan
+                                    </strong>
 
                                     <p>
                                         {{ $pengaduan->kecamatan->nama_kecamatan ?? '-' }}
@@ -85,16 +201,33 @@
                                 </div>
 
 
+                                {{-- DESA --}}
+                                <div class="col-md-6 mb-3">
+
+                                    <strong>
+                                        Desa
+                                    </strong>
+
+                                    <p>
+                                        {{ $pengaduan->desa->nama_desa ?? '-' }}
+                                    </p>
+
+                                </div>
+
+
                                 {{-- TANGGAL --}}
                                 <div class="col-md-6 mb-3">
 
-                                    <strong>Tanggal</strong>
+                                    <strong>
+                                        Tanggal Pengaduan
+                                    </strong>
 
                                     <p>
 
                                         @if($pengaduan->created_at)
 
-                                            {{ $pengaduan->created_at->translatedFormat('d F Y') }}
+                                            {{ $pengaduan->created_at->translatedFormat('d F Y H:i') }}
+                                            WIB
 
                                         @else
 
@@ -107,15 +240,15 @@
                                 </div>
 
 
-                                {{-- NOMOR PELAPOR --}}
-                                <div class="col-md-6 mb-3">
+                                {{-- ALAMAT --}}
+                                <div class="col-md-12 mb-3">
 
-                                    <strong>Nomor Pelapor</strong>
+                                    <strong>
+                                        Alamat Kejadian
+                                    </strong>
 
                                     <p>
-
-                                        {{ $pengaduan->no_whatsapp ?? '-' }}
-
+                                        {{ $pengaduan->alamat_kejadian ?? '-' }}
                                     </p>
 
                                 </div>
@@ -126,10 +259,16 @@
                             <hr>
 
 
-                            {{-- KRONOLOGI --}}
-                            <strong>Kronologi</strong>
+                            {{-- DETAIL --}}
+                            <div class="mb-2">
 
-                            <p>
+                                <strong>
+                                    Detail Pengaduan
+                                </strong>
+
+                            </div>
+
+                            <p class="mb-0">
 
                                 {{ $pengaduan->detail_aduan ?? '-' }}
 
@@ -138,7 +277,6 @@
                         </div>
 
                     </div>
-
 
 
                     {{-- Lampiran --}}
@@ -318,7 +456,13 @@
                                 3. DIPROSES LAPANGAN
                                 ====================================================== --}}
                                 @php
-                                    $prosesAktif = !empty($pengaduan->tanggal_proses);
+                                    $prosesAktif = in_array(
+                                        $pengaduan->status,
+                                        [
+                                            'Diproses',
+                                            'Selesai'
+                                        ]
+                                    );
                                 @endphp
 
                                 <div class="admin-tracking-item {{ $prosesAktif ? 'selesai' : 'pending' }}">
@@ -393,7 +537,7 @@
                                 4. SELESAI
                                 ====================================================== --}}
                                 @php
-                                    $selesaiAktif = !empty($pengaduan->tanggal_selesai);
+                                    $selesaiAktif = $pengaduan->status == 'Selesai';
                                 @endphp
 
                                 <div class="admin-tracking-item {{ $selesaiAktif ? 'selesai' : 'pending' }}">
@@ -495,21 +639,26 @@
 
                                     <select class="form-select" name="status" required>
 
+
                                         <option value="Diverifikasi" {{ $pengaduan->status == 'Diverifikasi' ? 'selected' : '' }}>
                                             Diverifikasi
                                         </option>
+
 
                                         <option value="Diproses" {{ $pengaduan->status == 'Diproses' ? 'selected' : '' }}>
                                             Diproses Lapangan
                                         </option>
 
+
                                         <option value="Selesai" {{ $pengaduan->status == 'Selesai' ? 'selected' : '' }}>
-                                            Selesai / Diteruskan BNNK
+                                            Selesai
                                         </option>
+
 
                                         <option value="Ditolak" {{ $pengaduan->status == 'Ditolak' ? 'selected' : '' }}>
                                             Ditolak
                                         </option>
+
 
                                     </select>
 
@@ -643,10 +792,10 @@
                 ====================================================== --}}
 
                 <div class="modal-header bg-{{ $warna }}
-                                                    @if($warna != 'warning')
-                                                        text-white
-                                                    @endif
-                                                ">
+                                                                        @if($warna != 'warning')
+                                                                            text-white
+                                                                        @endif
+                                                                    ">
 
                     <h5 class="modal-title fw-bold" id="detailAdminModalLabel">
 
@@ -658,10 +807,10 @@
 
 
                     <button type="button" class="btn-close
-                                                            @if($warna != 'warning')
-                                                                btn-close-white
-                                                            @endif
-                                                        " data-bs-dismiss="modal" aria-label="Close">
+                                                                                @if($warna != 'warning')
+                                                                                    btn-close-white
+                                                                                @endif
+                                                                            " data-bs-dismiss="modal" aria-label="Close">
                     </button>
 
                 </div>
@@ -688,11 +837,12 @@
                                 <div class="text-center">
 
                                     <img src="{{ asset('storage/' . $foto) }}" alt="Bukti Tindak Lanjut"
-                                        class="img-fluid rounded-3 shadow-sm border" style="
-                                                                                            max-width: 100%;
-                                                                                            max-height: 350px;
-                                                                                            object-fit: contain;
-                                                                                        ">
+                                        class="img-fluid rounded-3 shadow-sm border"
+                                        style="
+                                                                                                                                    max-width: 100%;
+                                                                                                                                    max-height: 350px;
+                                                                                                                                    object-fit: contain;
+                                                                                                                                ">
 
                                     <div class="mt-3">
 
@@ -756,7 +906,6 @@
 
 
                             {{-- STATUS --}}
-
                             <div class="detail-row mb-3">
 
                                 <div class="detail-label fw-bold">
@@ -767,18 +916,79 @@
                                     :
                                 </div>
 
+
                                 <div class="detail-value">
 
-                                    <span class="badge bg-{{ $warna }} px-3 py-2">
+                                    @php
 
-                                        {{ $status }}
+                                        $status = $pengaduan->status;
+
+
+                                        $warnaStatus = match ($status) {
+
+                                            'Diverifikasi' => 'success',
+
+                                            'Diproses' => 'warning',
+
+                                            'Selesai' => 'primary',
+
+                                            'Ditolak' => 'danger',
+
+                                            default => 'secondary'
+
+                                        };
+
+
+                                        $labelStatus = match ($status) {
+
+                                            'Diverifikasi' =>
+                                            'Diverifikasi Admin BNNK',
+
+                                            'Diproses' =>
+                                            'Sedang Diproses Lapangan',
+
+                                            'Selesai' =>
+                                            'Selesai / Diteruskan BNNK',
+
+                                            'Ditolak' =>
+                                            'Pengaduan Ditolak',
+
+                                            default =>
+                                            'Belum Diproses'
+
+                                        };
+
+                                    @endphp
+
+
+
+                                    <span class="badge bg-{{ $warnaStatus }} px-3 py-2">
+
+                                        <i class="bi 
+                        @if($status == 'Diverifikasi')
+                            bi-check-circle
+                        @elseif($status == 'Diproses')
+                            bi-hourglass-split
+                        @elseif($status == 'Selesai')
+                            bi-check-all
+                        @elseif($status == 'Ditolak')
+                            bi-x-circle
+                        @else
+                            bi-clock
+                        @endif
+                    me-1">
+                                        </i>
+
+
+                                        {{ $labelStatus }}
+
 
                                     </span>
+
 
                                 </div>
 
                             </div>
-
 
 
                             {{-- TOPIK --}}

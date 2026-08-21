@@ -137,81 +137,159 @@ class DataPengaduanController extends Controller
     public function updatePengaduan(Request $request, $id)
     {
         $request->validate([
-            'status' => 'required',
+            'status' => 'required|in:Diverifikasi,Diproses,Selesai,Ditolak',
             'catatan' => 'nullable|string',
             'bukti' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
+
         $pengaduan = Pengaduan::findOrFail($id);
+
 
         $data = [
             'status' => $request->status,
         ];
+
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | STATUS DIVERIFIKASI
+        |--------------------------------------------------------------------------
+        */
+
+        if ($request->status == 'Diverifikasi') {
+
+
+            $data['tanggal_verifikasi'] = now();
+
+
+            $data['catatan_verifikasi'] = $request->catatan;
+
+
+
+            if ($request->hasFile('bukti')) {
+
+
+                $file = $request->file('bukti')
+                    ->store('pengaduan/verifikasi', 'public');
+
+
+                $data['foto_verifikasi'] = $file;
+
+            }
+
+        }
+
+
 
         /*
         |--------------------------------------------------------------------------
         | STATUS DIPROSES
         |--------------------------------------------------------------------------
         */
+
         if ($request->status == 'Diproses') {
 
+
             $data['tanggal_proses'] = now();
+
+
             $data['catatan_proses'] = $request->catatan;
 
+
+
             if ($request->hasFile('bukti')) {
+
 
                 $file = $request->file('bukti')
                     ->store('pengaduan/proses', 'public');
 
+
                 $data['foto_proses'] = $file;
+
             }
+
         }
+
+
 
         /*
         |--------------------------------------------------------------------------
         | STATUS SELESAI
         |--------------------------------------------------------------------------
         */
+
         if ($request->status == 'Selesai') {
 
+
             $data['tanggal_selesai'] = now();
+
+
             $data['catatan_selesai'] = $request->catatan;
 
+
+
             if ($request->hasFile('bukti')) {
+
 
                 $file = $request->file('bukti')
                     ->store('pengaduan/selesai', 'public');
 
+
                 $data['foto_selesai'] = $file;
+
             }
+
         }
+
+
 
         /*
         |--------------------------------------------------------------------------
-        | STATUS MENUNGGU
+        | STATUS DITOLAK
         |--------------------------------------------------------------------------
         */
-        if ($request->status == 'Menunggu') {
+
+        if ($request->status == 'Ditolak') {
+
 
             $data['tanggal_verifikasi'] = now();
+
+
             $data['catatan_verifikasi'] = $request->catatan;
 
+
+
             if ($request->hasFile('bukti')) {
+
 
                 $file = $request->file('bukti')
                     ->store('pengaduan/verifikasi', 'public');
 
+
                 $data['foto_verifikasi'] = $file;
+
             }
+
         }
+
+
 
         $pengaduan->update($data);
 
+
+
         return redirect()
-            ->route('superadmin.detail_pengaduan', $id)
+
+            ->route(
+                'superadmin.detail_pengaduan',
+                $pengaduan->id
+            )
+
             ->with(
                 'success',
-                'Data pengaduan berhasil diperbarui.'
+                'Status pengaduan berhasil diperbarui.'
             );
     }
     /*

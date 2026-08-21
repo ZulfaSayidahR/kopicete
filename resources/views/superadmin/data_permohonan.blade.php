@@ -214,181 +214,223 @@
         </section>
 
         {{-- TABEL --}}
-        <section class="sa-panel mt-4">
+       <section class="sa-panel mt-4">
 
-            <div class="sa-panel-header">
+                <div class="sa-panel-header">
 
-                <div>
+                    <div>
 
-                    <h3>
-                        Daftar Permohonan
-                    </h3>
+                        <h3>Daftar Permohonan</h3>
 
-                    <p>
-                        Seluruh data permohonan yang telah dikirim masyarakat.
-                    </p>
+                        <p>Seluruh data permohonan yang telah dikirim masyarakat.</p>
+
+                    </div>
 
                 </div>
 
-            </div>
+                <div class="sa-table-responsive">
 
-            <div class="sa-table-responsive">
+                    <table class="sa-table">
 
-                <table class="sa-table">
-
-                    <thead>
-
-                        <tr>
-
-                            <th>Kode Permohonan</th>
-                            <th>Jenis Permohonan</th>
-                            <th>Nama Penyelenggara</th>
-                            <th>Tanggal Kegiatan</th>
-                            <th>Status</th>
-                            <th class="sa-action-column">Aksi</th>
-
-                        </tr>
-
-                    </thead>
-
-                    <tbody>
-
-                        @forelse($permohonans as $item)
+                        <thead>
 
                             <tr>
 
-                                <td>
-                                    {{ $item->kode_permohonan }}
-                                </td>
+                                <th>Token</th>
+                                <th>Jenis Permohonan</th>
+                                <th>Nama Pemohon</th>
+                                <th>Kecamatan</th>
+                                <th>Tanggal</th>
+                                <th>Status</th>
+                                <th class="sa-action-column">Aksi</th>
 
-                                <td>
-                                    {{ $item->jenis_permohonan }}
-                                </td>
+                            </tr>
 
-                                <td>
-                                    {{ $item->nama_penyelenggara }}
-                                </td>
+                        </thead>
 
-                                <td>
-                                    {{ \Carbon\Carbon::parse($item->tanggal_kegiatan)->format('d-m-Y') }}
-                                </td>
+                        <tbody>
 
-                                <td>
+                            @forelse($permohonans as $permohonan)
 
-                                    <span class="sa-status-badge">
+                                <tr>
 
-                                        @if($item->status == 'Menunggu')
+                                    {{-- TOKEN --}}
+                                    <td>
+                                        <strong>
+                                            {{ $permohonan->kode_permohonan ?? '-' }}
+                                        </strong>
+                                    </td>
 
-                                            <span style="background:#0d6efd"></span>
 
-                                        @elseif($item->status == 'Diverifikasi')
+                                    {{-- JENIS PERMOHONAN --}}
+                                    <td>
+                                        {{ $permohonan->jenis_permohonan ?? '-' }}
+                                    </td>
 
-                                            <span style="background:#0d6efd"></span>
 
-                                        @elseif($item->status == 'Diproses')
+                                    {{-- NAMA PEMOHON --}}
+                                    <td>
+                                        {{ $permohonan->nama_penyelenggara ?? '-' }}
+                                    </td>
 
-                                            <span style="background:#fd7e14"></span>
 
-                                        @elseif($item->status == 'Diproses Lapangan')
+                                    {{-- KECAMATAN / TEMPAT --}}
+                                    <td>
+                                        {{ $permohonan->tempat ?? '-' }}
+                                    </td>
 
-                                            <span style="background:#fd7e14"></span>
 
-                                        @elseif($item->status == 'Selesai')
+                                    {{-- TANGGAL --}}
+                                    <td>
 
-                                            <span style="background:#198754"></span>
+                                        @if($permohonan->created_at)
 
-                                        @elseif($item->status == 'Ditolak')
-
-                                            <span style="background:#dc3545"></span>
+                                            {{ \Carbon\Carbon::parse($permohonan->created_at)->translatedFormat('d F Y') }}
 
                                         @else
 
-                                            <span style="background:#6c757d"></span>
+                                            -
 
                                         @endif
 
-                                        {{ $item->status ?? '-' }}
+                                    </td>
 
-                                    </span>
 
-                                </td>
+                                    {{-- STATUS --}}
+                                    <td>
 
-                                <td>
+                                        @php
 
-                                    <div class="sa-action-buttons">
+                                            $status = $permohonan->status ?? '-';
 
-                                        {{-- DETAIL --}}
-                                        <a href="{{ route('superadmin.detail_permohonan', $item->id) }}"
-                                           class="sa-action-button sa-key-button"
-                                           title="Detail Permohonan">
+                                            $warna = match ($status) {
 
-                                            <i class="bi bi-pencil-square"></i>
+                                                'Menunggu',
+                                                'Menunggu Verifikasi',
+                                                'Diverifikasi'
+                                                    => '#0d6efd',
 
-                                        </a>
+                                                'Diproses',
+                                                'Diproses Lapangan'
+                                                    => '#fd7e14',
 
-                                        {{-- DELETE --}}
-                                        <form action="{{ route('superadmin.delete_permohonan', $item->id) }}"
-                                              method="POST"
-                                              style="display:inline;"
-                                              onsubmit="return confirm('Yakin ingin menghapus data ini?')">
+                                                'Selesai'
+                                                    => '#198754',
 
-                                            @csrf
-                                            @method('DELETE')
+                                                'Ditolak'
+                                                    => '#dc3545',
 
-                                            <button type="submit"
+                                                default
+                                                    => '#6c757d',
+
+                                            };
+
+                                        @endphp
+
+
+                                        <span class="sa-status-badge">
+
+                                            <span style="background: {{ $warna }}"></span>
+
+                                            {{ $status }}
+
+                                        </span>
+
+                                    </td>
+
+
+                                    {{-- AKSI --}}
+                                    <td>
+
+                                        <div class="sa-action-buttons">
+
+                                            {{-- EDIT --}}
+                                            <a href="{{ route(
+                                                'superadmin.detail_permohonan',
+                                                $permohonan->id
+                                            ) }}"
+                                            class="sa-action-button sa-key-button"
+                                            title="Edit Permohonan">
+
+                                                <i class="bi bi-pencil-square"></i>
+
+                                            </a>
+
+
+                                            {{-- DELETE --}}
+                                            <form
+                                                action="{{ route(
+                                                    'superadmin.delete_permohonan',
+                                                    $permohonan->id
+                                                ) }}"
+                                                method="POST"
+                                                style="display:inline;"
+                                            >
+
+                                                @csrf
+
+                                                @method('DELETE')
+
+                                                <button
+                                                    type="submit"
                                                     class="sa-action-button sa-delete-button"
-                                                    title="Hapus">
+                                                    title="Hapus Permohonan"
+                                                    onclick="return confirm('Yakin ingin menghapus data permohonan ini?')"
+                                                >
 
-                                                <i class="bi bi-trash-fill"></i>
+                                                    <i class="bi bi-trash-fill"></i>
 
-                                            </button>
+                                                </button>
 
-                                        </form>
+                                            </form>
 
-                                    </div>
+                                        </div>
 
-                                </td>
+                                    </td>
 
-                            </tr>
+                                </tr>
 
-                        @empty
+                            @empty
 
-                            <tr>
+                                <tr>
 
-                                <td colspan="6"
-                                    class="text-center py-4">
+                                    <td colspan="7" class="text-center text-muted py-4">
 
-                                    Belum ada data permohonan.
+                                        Belum ada data permohonan.
 
-                                </td>
+                                    </td>
 
-                            </tr>
+                                </tr>
 
-                        @endforelse
+                            @endforelse
 
-                    </tbody>
+                        </tbody>
 
-                </table>
+                    </table>
 
-            </div>
-
-            <div class="sa-table-footer">
-
-                <span>
-                    Menampilkan
-                    {{ $permohonans->count() }}
-                    dari
-                    {{ $permohonans->total() }}
-                    data permohonan
-                </span>
-
-                <div class="sa-pagination">
-                    {{ $permohonans->links() }}
                 </div>
 
-            </div>
+                <div class="sa-table-footer">
 
-        </section>
+                    <span>Menampilkan 3 dari 3 permohonan</span>
+
+                    <div class="sa-pagination">
+
+                        <button disabled>
+                            <i class="bi bi-chevron-left"></i>
+                        </button>
+
+                        <button class="active">1</button>
+
+                        <button disabled>
+                            <i class="bi bi-chevron-right"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </section>
 
     </main>
 

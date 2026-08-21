@@ -161,7 +161,7 @@
 
 
                             <input type="text" name="otp" id="otp" maxlength="6" minlength="6" pattern="[0-9]{6}"
-                                inputmode="numeric" class="form-control text-center fs-4" placeholder="123456"
+                                inputmode="numeric" class="form-control text-center fs-4" placeholder="------"
                                 autocomplete="one-time-code" required>
 
 

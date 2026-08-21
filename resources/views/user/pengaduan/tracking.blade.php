@@ -33,8 +33,8 @@
                 <div class="tracking-grid">
 
                     <!-- ==============================
-                                                                                                                                                KOLOM KIRI
-                                                                                                                                        =============================== -->
+                                                                                                                                                        KOLOM KIRI
+                                                                                                                                                =============================== -->
 
                     <div class="tracking-left">
 
@@ -48,15 +48,15 @@
                                 </h5>
 
                                 <span class="badge
-                                                                                                @if($pengaduan->status == 'Menunggu')
-                                                                                                    bg-warning
-                                                                                                @elseif($pengaduan->status == 'Diproses')
-                                                                                                    bg-primary
-                                                                                                @elseif($pengaduan->status == 'Selesai')
-                                                                                                    bg-success
-                                                                                                @else
-                                                                                                    bg-secondary
-                                                                                                @endif">
+                                                                                                        @if($pengaduan->status == 'Menunggu')
+                                                                                                            bg-warning
+                                                                                                        @elseif($pengaduan->status == 'Diproses')
+                                                                                                            bg-primary
+                                                                                                        @elseif($pengaduan->status == 'Selesai')
+                                                                                                            bg-success
+                                                                                                        @else
+                                                                                                            bg-secondary
+                                                                                                        @endif">
 
                                     {{ $pengaduan->status }}
 
@@ -184,8 +184,8 @@
                     </div>
 
                     <!-- ==============================
-                                                                                                                                                KOLOM KANAN
-                                                                                                                                        =============================== -->
+                                                                                                                                                        KOLOM KANAN
+                                                                                                                                                =============================== -->
 
                     <aside class="tracking-card status-card">
 
@@ -196,20 +196,28 @@
 
                         <div class="tracking-timeline">
 
+
                             {{-- ================= DIAJUKAN ================= --}}
                             <div class="tracking-item selesai">
 
                                 <div class="tracking-icon">
+
                                     <i class="bi bi-check-lg"></i>
+
                                 </div>
+
 
                                 <div class="tracking-content">
 
-                                    <h6>Diajukan</h6>
+                                    <h6>Pengaduan Diajukan</h6>
+
 
                                     <small class="d-block">
+
                                         <i class="bi bi-calendar-event me-1"></i>
+
                                         {{ $pengaduan->created_at->translatedFormat('d F Y H:i') }}
+
                                     </small>
 
                                 </div>
@@ -217,12 +225,30 @@
                             </div>
 
 
+
                             {{-- ================= DIVERIFIKASI ================= --}}
-                            <div class="tracking-item {{ $pengaduan->tanggal_verifikasi ? 'selesai' : '' }}">
+
+                            @php
+
+                                $verifikasiSelesai = in_array(
+                                    $pengaduan->status,
+                                    [
+                                        'Diverifikasi',
+                                        'Diproses',
+                                        'Selesai'
+                                    ]
+                                );
+
+                            @endphp
+
+
+                            <div class="tracking-item {{ $verifikasiSelesai ? 'selesai' : '' }}">
+
 
                                 <div class="tracking-icon">
 
-                                    @if($pengaduan->tanggal_verifikasi)
+
+                                    @if($verifikasiSelesai)
 
                                         <i class="bi bi-check-lg"></i>
 
@@ -232,127 +258,254 @@
 
                                     @endif
 
+
                                 </div>
+
+
 
                                 <div class="tracking-content">
 
-                                    <h6>Diverifikasi Admin</h6>
+
+                                    <h6>
+                                        Diverifikasi Admin
+                                    </h6>
+
+
 
                                     @if($pengaduan->tanggal_verifikasi)
 
+
                                         <small class="d-block mb-2">
+
 
                                             <i class="bi bi-calendar-event me-1"></i>
 
+
                                             {{ \Carbon\Carbon::parse($pengaduan->tanggal_verifikasi)->translatedFormat('d F Y H:i') }}
 
+
                                         </small>
+
+
 
                                         <button type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal"
                                             data-bs-target="#detailLaporanModal">
 
+
                                             <i class="bi bi-eye-fill"></i>
+
                                             Lihat Detail
+
 
                                         </button>
 
+
+                                    @else
+
+                                        <small class="text-muted">
+
+                                            Menunggu verifikasi admin
+
+                                        </small>
+
+
                                     @endif
 
+
                                 </div>
+
 
                             </div>
 
 
+
+
+
                             {{-- ================= DIPROSES ================= --}}
-                            <div class="tracking-item {{ $pengaduan->tanggal_proses ? 'proses' : '' }}">
+
+                            @php
+
+                                $prosesSelesai = in_array(
+                                    $pengaduan->status,
+                                    [
+                                        'Diproses',
+                                        'Selesai'
+                                    ]
+                                );
+
+                            @endphp
+
+
+
+                            <div class="tracking-item {{ $prosesSelesai ? 'selesai' : '' }}">
+
 
                                 <div class="tracking-icon">
 
-                                    @if($pengaduan->tanggal_proses)
 
-                                        <i class="bi bi-hourglass-split"></i>
+                                    @if($prosesSelesai)
+
+                                        <i class="bi bi-check-lg"></i>
 
                                     @else
 
-                                        <i class="bi bi-circle"></i>
+                                        <i class="bi bi-hourglass-split"></i>
 
                                     @endif
 
+
                                 </div>
+
+
 
                                 <div class="tracking-content">
 
-                                    <h6>Diproses BNNK</h6>
+
+                                    <h6>
+                                        Diproses BNNK
+                                    </h6>
+
+
 
                                     @if($pengaduan->tanggal_proses)
 
+
                                         <small class="d-block mb-2">
+
 
                                             <i class="bi bi-calendar-event me-1"></i>
 
+
                                             {{ \Carbon\Carbon::parse($pengaduan->tanggal_proses)->translatedFormat('d F Y H:i') }}
 
+
                                         </small>
+
+
 
                                         <button type="button" class="btn btn-sm btn-outline-warning" data-bs-toggle="modal"
                                             data-bs-target="#detailLaporanModal">
 
+
                                             <i class="bi bi-eye-fill"></i>
+
                                             Lihat Detail
+
 
                                         </button>
 
+
+                                    @else
+
+
+                                        <small class="text-muted">
+
+                                            Menunggu proses BNNK
+
+                                        </small>
+
+
                                     @endif
 
+
+
                                 </div>
+
 
                             </div>
 
 
+
+
+
+
                             {{-- ================= SELESAI ================= --}}
-                            <div class="tracking-item {{ $pengaduan->tanggal_selesai ? 'selesai' : '' }}">
+
+
+                            @php
+
+                                $selesai = $pengaduan->status == 'Selesai';
+
+                            @endphp
+
+
+
+                            <div class="tracking-item {{ $selesai ? 'selesai' : '' }}">
+
 
                                 <div class="tracking-icon">
 
-                                    @if($pengaduan->tanggal_selesai)
 
-                                        <i class="bi bi-flag-fill"></i>
+                                    @if($selesai)
+
+                                        <i class="bi bi-check-circle-fill"></i>
 
                                     @else
 
-                                        <i class="bi bi-circle"></i>
+                                        <i class="bi bi-flag"></i>
 
                                     @endif
 
+
                                 </div>
+
+
 
                                 <div class="tracking-content">
 
-                                    <h6>Selesai</h6>
+
+                                    <h6>
+                                        Selesai
+                                    </h6>
+
+
 
                                     @if($pengaduan->tanggal_selesai)
 
+
                                         <small class="d-block mb-2">
+
 
                                             <i class="bi bi-calendar-event me-1"></i>
 
+
                                             {{ \Carbon\Carbon::parse($pengaduan->tanggal_selesai)->translatedFormat('d F Y H:i') }}
 
+
                                         </small>
+
+
 
                                         <button type="button" class="btn btn-sm btn-outline-success" data-bs-toggle="modal"
                                             data-bs-target="#detailLaporanModal">
 
+
                                             <i class="bi bi-eye-fill"></i>
+
                                             Lihat Detail
+
 
                                         </button>
 
+
+                                    @else
+
+
+                                        <small class="text-muted">
+
+                                            Belum selesai
+
+                                        </small>
+
+
                                     @endif
+
 
                                 </div>
 
+
                             </div>
+
 
                         </div>
 
@@ -431,9 +584,9 @@
 
                 {{-- HEADER --}}
                 <div class="modal-header bg-{{ $warna }}
-                                                        @if($warna != 'warning')
-                                                            text-white
-                                                        @endif">
+                                                                @if($warna != 'warning')
+                                                                    text-white
+                                                                @endif">
 
                     <h5 class="modal-title fw-bold">
 
@@ -444,9 +597,9 @@
                     </h5>
 
                     <button class="btn-close
-                                                    @if($warna != 'warning')
-                                                        btn-close-white
-                                                    @endif" data-bs-dismiss="modal">
+                                                            @if($warna != 'warning')
+                                                                btn-close-white
+                                                            @endif" data-bs-dismiss="modal">
                     </button>
 
                 </div>

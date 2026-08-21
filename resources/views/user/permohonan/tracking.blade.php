@@ -54,17 +54,17 @@
 
 
                                 <span class="badge
-                                                @if($permohonan->status == 'Menunggu')
-                                                    bg-warning
-                                                @elseif($permohonan->status == 'Diproses')
-                                                    bg-primary
-                                                @elseif($permohonan->status == 'Selesai')
-                                                    bg-success
-                                                @elseif($permohonan->status == 'Ditolak')
-                                                    bg-danger
-                                                @else
-                                                    bg-secondary
-                                                @endif">
+                                                    @if($permohonan->status == 'Menunggu')
+                                                        bg-warning
+                                                    @elseif($permohonan->status == 'Diproses')
+                                                        bg-primary
+                                                    @elseif($permohonan->status == 'Selesai')
+                                                        bg-success
+                                                    @elseif($permohonan->status == 'Ditolak')
+                                                        bg-danger
+                                                    @else
+                                                        bg-secondary
+                                                    @endif">
 
                                     {{ $permohonan->status }}
 
@@ -378,41 +378,62 @@
 
                         <div class="tracking-timeline">
 
+
                             {{-- =====================================================
                             DIAJUKAN
-                            ====================================================== --}}
+                            ===================================================== --}}
+
                             <div class="tracking-item selesai">
 
                                 <div class="tracking-icon">
                                     <i class="bi bi-check-lg"></i>
                                 </div>
 
+
                                 <div class="tracking-content">
 
                                     <h6>Diajukan</h6>
 
+
                                     <small class="d-block">
+
                                         <i class="bi bi-calendar-event me-1"></i>
 
                                         {{ $permohonan->created_at
         ? $permohonan->created_at->translatedFormat('d F Y H:i')
-        : '-' }}
+        : '-' 
+                }}
+
                                     </small>
+
 
                                 </div>
 
                             </div>
 
 
+
+
                             {{-- =====================================================
                             DIVERIFIKASI
-                            ====================================================== --}}
-                            <div class="tracking-item
-                    {{ $permohonan->tanggal_verifikasi ? 'selesai' : '' }}">
+                            ===================================================== --}}
+
+                            @php
+
+                                $verifikasi =
+                                    !empty($permohonan->tanggal_verifikasi);
+
+                            @endphp
+
+
+                            <div class="tracking-item 
+        {{ $verifikasi ? 'selesai' : '' }}">
+
 
                                 <div class="tracking-icon">
 
-                                    @if($permohonan->tanggal_verifikasi)
+
+                                    @if($verifikasi)
 
                                         <i class="bi bi-check-lg"></i>
 
@@ -422,177 +443,274 @@
 
                                     @endif
 
+
                                 </div>
+
+
 
                                 <div class="tracking-content">
 
+
                                     <h6>Diverifikasi Admin</h6>
 
-                                    @if($permohonan->tanggal_verifikasi)
+
+                                    @if($verifikasi)
+
 
                                                                     <small class="d-block">
 
                                                                         <i class="bi bi-calendar-event me-1"></i>
+
 
                                                                         {{ \Carbon\Carbon::parse(
                                             $permohonan->tanggal_verifikasi
                                         )->translatedFormat('d F Y H:i') }}
 
+
                                                                     </small>
 
-                                                                    {{-- TOMBOL DETAIL --}}
+
+
                                                                     <button type="button" class="btn btn-sm btn-light mt-2" data-bs-toggle="modal"
                                                                         data-bs-target="#detailPermohonanModal">
+
 
                                                                         <i class="bi bi-eye-fill"></i>
 
                                                                         Lihat Detail
 
+
                                                                     </button>
+
 
                                     @else
 
+
                                         <small class="text-muted">
 
-                                            Menunggu verifikasi dari admin BNNK.
+                                            Menunggu verifikasi admin.
 
                                         </small>
 
+
                                     @endif
 
+
                                 </div>
+
 
                             </div>
 
 
+
+
+
+
                             {{-- =====================================================
                             DIPROSES
-                            ====================================================== --}}
+                            ===================================================== --}}
+
+                            @php
+
+                                $proses =
+                                    !empty($permohonan->tanggal_proses);
+
+                            @endphp
+
+
+
                             <div class="tracking-item
-                    {{ $permohonan->tanggal_proses ? 'proses' : '' }}">
+        {{ $proses ? 'selesai' : '' }}">
+
 
                                 <div class="tracking-icon">
 
-                                    @if($permohonan->tanggal_proses)
 
-                                        <i class="bi bi-hourglass-split"></i>
+                                    @if($proses)
+
+                                        <i class="bi bi-check-lg"></i>
 
                                     @else
 
-                                        <i class="bi bi-circle"></i>
+                                        <i class="bi bi-hourglass-split"></i>
 
                                     @endif
 
+
                                 </div>
+
+
 
                                 <div class="tracking-content">
 
+
                                     <h6>Diproses BNNK</h6>
 
-                                    @if($permohonan->tanggal_proses)
+
+                                    @if($proses)
+
 
                                                                     <small class="d-block">
 
+
                                                                         <i class="bi bi-calendar-event me-1"></i>
+
 
                                                                         {{ \Carbon\Carbon::parse(
                                             $permohonan->tanggal_proses
                                         )->translatedFormat('d F Y H:i') }}
 
+
                                                                     </small>
 
-                                                                    {{-- TOMBOL DETAIL --}}
+
+
                                                                     <button type="button" class="btn btn-sm btn-light mt-2" data-bs-toggle="modal"
                                                                         data-bs-target="#detailPermohonanModal">
+
 
                                                                         <i class="bi bi-eye-fill"></i>
 
                                                                         Lihat Detail
 
+
                                                                     </button>
+
+
 
                                     @else
 
+
                                         <small class="text-muted">
 
-                                            Permohonan akan diproses setelah diverifikasi.
+                                            Menunggu proses BNNK.
 
                                         </small>
 
+
                                     @endif
 
+
                                 </div>
+
 
                             </div>
 
 
+
+
+
+
+
                             {{-- =====================================================
                             SELESAI
-                            ====================================================== --}}
+                            ===================================================== --}}
+
+
+                            @php
+
+                                $selesai =
+                                    !empty($permohonan->tanggal_selesai);
+
+                            @endphp
+
+
+
                             <div class="tracking-item
-                    {{ $permohonan->tanggal_selesai ? 'selesai' : '' }}">
+        {{ $selesai ? 'selesai' : '' }}">
+
+
 
                                 <div class="tracking-icon">
 
-                                    @if($permohonan->tanggal_selesai)
 
-                                        <i class="bi bi-flag-fill"></i>
+                                    @if($selesai)
+
+                                        <i class="bi bi-check-lg"></i>
 
                                     @else
 
-                                        <i class="bi bi-circle"></i>
+                                        <i class="bi bi-flag"></i>
 
                                     @endif
 
+
                                 </div>
+
+
 
                                 <div class="tracking-content">
 
+
                                     <h6>Selesai</h6>
 
-                                    @if($permohonan->tanggal_selesai)
+
+
+                                    @if($selesai)
+
 
                                                                     <small class="d-block">
 
+
                                                                         <i class="bi bi-calendar-event me-1"></i>
+
 
                                                                         {{ \Carbon\Carbon::parse(
                                             $permohonan->tanggal_selesai
                                         )->translatedFormat('d F Y H:i') }}
 
+
                                                                     </small>
 
-                                                                    {{-- TOMBOL DETAIL --}}
+
+
+
                                                                     <button type="button" class="btn btn-sm btn-light mt-2" data-bs-toggle="modal"
                                                                         data-bs-target="#detailPermohonanModal">
+
 
                                                                         <i class="bi bi-eye-fill"></i>
 
                                                                         Lihat Detail
 
+
                                                                     </button>
+
+
 
                                     @else
 
+
                                         <small class="text-muted">
 
-                                            Permohonan belum selesai diproses.
+                                            Permohonan belum selesai.
 
                                         </small>
 
+
                                     @endif
 
+
                                 </div>
+
 
                             </div>
 
 
+
+
+
+
                             {{-- =====================================================
                             DITOLAK
-                            ====================================================== --}}
+                            ===================================================== --}}
+
+
                             @if($permohonan->status == 'Ditolak')
 
+
                                 <div class="tracking-item selesai">
+
 
                                     <div class="tracking-icon">
 
@@ -600,38 +718,57 @@
 
                                     </div>
 
+
+
                                     <div class="tracking-content">
+
 
                                         <h6>Permohonan Ditolak</h6>
 
+
+
                                         @if($permohonan->tanggal_penolakan)
+
 
                                                                     <small class="d-block">
 
+
                                                                         <i class="bi bi-calendar-event me-1"></i>
+
 
                                                                         {{ \Carbon\Carbon::parse(
                                                 $permohonan->tanggal_penolakan
                                             )->translatedFormat('d F Y H:i') }}
 
+
                                                                     </small>
+
 
                                         @endif
 
+
+
+
                                         <button type="button" class="btn btn-sm btn-light mt-2" data-bs-toggle="modal"
                                             data-bs-target="#detailPermohonanModal">
+
 
                                             <i class="bi bi-eye-fill"></i>
 
                                             Lihat Detail
 
+
                                         </button>
+
 
                                     </div>
 
+
                                 </div>
 
+
                             @endif
+
 
                         </div>
 
@@ -739,9 +876,9 @@
 
                 {{-- HEADER --}}
                 <div class="modal-header bg-{{ $warna }}
-                            @if($warna != 'warning')
-                                text-white
-                            @endif">
+                                @if($warna != 'warning')
+                                    text-white
+                                @endif">
 
                     <h5 class="modal-title fw-bold">
 
@@ -753,9 +890,9 @@
 
 
                     <button type="button" class="btn-close
-                                    @if($warna != 'warning')
-                                        btn-close-white
-                                    @endif" data-bs-dismiss="modal" aria-label="Close">
+                                        @if($warna != 'warning')
+                                            btn-close-white
+                                        @endif" data-bs-dismiss="modal" aria-label="Close">
                     </button>
 
                 </div>
@@ -776,19 +913,19 @@
 
                                 <img src="{{ asset('storage/' . $foto) }}" class="img-fluid rounded-4 shadow border w-100"
                                     style="
-                                                        height:330px;
-                                                        object-fit:cover;
-                                                    " alt="Foto tindak lanjut">
+                                                                height:330px;
+                                                                object-fit:cover;
+                                                            " alt="Foto tindak lanjut">
 
                             @else
 
                                 <div class="border rounded-4 bg-light
-                                                    d-flex flex-column
-                                                    justify-content-center
-                                                    align-items-center" style="height:330px;">
+                                                            d-flex flex-column
+                                                            justify-content-center
+                                                            align-items-center" style="height:330px;">
 
                                     <i class="bi bi-image display-3
-                                                        text-secondary">
+                                                                text-secondary">
                                     </i>
 
                                     <h6 class="mt-3 text-muted">
@@ -872,7 +1009,7 @@
                                 <div class="detail-row">
 
                                     <div class="detail-label">
-                                        Penyelenggara 
+                                        Penyelenggara
                                     </div>
 
                                     <div class="detail-colon">
@@ -1048,13 +1185,13 @@
 
                                     @if($catatan)
 
-                                    {!! nl2br(e($catatan)) !!}
+                                        {!! nl2br(e($catatan)) !!}
 
                                     @else
 
-                                    <span class="text-muted">
-                                        Belum ada catatan dari admin.
-                                    </span>
+                                        <span class="text-muted">
+                                            Belum ada catatan dari admin.
+                                        </span>
 
                                     @endif
 

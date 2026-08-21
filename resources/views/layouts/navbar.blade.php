@@ -30,17 +30,6 @@
                     </a>
                 </li>
 
-                <!-- <li class="nav-item">
-                    <a class="nav-link" href="{{ route('') }}">
-                        About
-                    </a>
-                </li> -->
-
-                <!-- <li class="nav-item">
-                    <a class="nav-link" href="{{ route('permohonan.create') }}">
-                        Permohonan
-                    </a>
-                </li>  -->
 
                 <li class="nav-item ms-lg-3 mt-3 mt-lg-0">
                     <a href="{{ route('login') }}" class="btn btn-yellow w-100">
