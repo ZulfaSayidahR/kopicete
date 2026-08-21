@@ -129,9 +129,9 @@
                             </a>
 
                             {{-- Jika route tracking permohonan sudah dibuat --}}
-                            @if(Route::has('permohonan.tracking'))
+                            @if(Route::has('permohonan.tracking.detail'))
 
-                                <a href="{{ route('permohonan.tracking', $permohonan->kode_permohonan) }}"
+                                <a href="{{ route('permohonan.tracking.detail', $permohonan->kode_permohonan) }}"
                                     class="btn btn-outline-primary">
 
                                     <i class="bi bi-search me-2"></i>

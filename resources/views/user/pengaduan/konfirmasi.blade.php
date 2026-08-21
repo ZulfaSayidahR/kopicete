@@ -480,7 +480,7 @@
 
                             </small>
 
-                            <a href="{{ route('pengaduan.tracking', $item->kode_aduan) }}" class="btn-detail-laporan">
+                            <a href="{{ route('pengaduan.tracking.detail', $item->kode_aduan) }}" class="btn-detail-laporan">
 
                                 <i class="bi bi-eye-fill"></i>
 

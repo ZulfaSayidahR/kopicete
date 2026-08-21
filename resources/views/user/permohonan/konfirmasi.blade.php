@@ -5,35 +5,50 @@
 @section('content')
 
     <section class="pengaduan-page">
+
         <div class="container">
+
             <div class="permohonan-wrapper">
+
+                {{-- =====================================================
+                KONFIRMASI PERMOHONAN
+                ====================================================== --}}
 
                 <div class="pengaduan-card">
 
                     {{-- HEADER --}}
+
                     <div class="pengaduan-header">
 
-                        <h4>Konfirmasi Permohonan</h4>
+                        <h4>
+                            Konfirmasi Permohonan
+                        </h4>
 
                         <p>
-                            Pastikan seluruh data yang telah Anda masukkan sudah benar
-                            sebelum mengirim permohonan.
+                            Pastikan seluruh data yang telah Anda masukkan
+                            sudah benar sebelum mengirim permohonan.
                         </p>
 
                     </div>
 
 
                     {{-- BODY --}}
+
                     <div class="pengaduan-body">
 
-                        {{-- CEK DATA --}}
+                        {{-- =====================================================
+                        CEK DATA
+                        ====================================================== --}}
+
                         @if(empty($data))
 
                             <div class="alert alert-danger">
 
+                                <i class="bi bi-exclamation-triangle-fill me-2"></i>
+
                                 Data permohonan tidak ditemukan.
 
-                                <a href="{{ route('permohonan.create') }}">
+                                <a href="{{ route('permohonan.create') }}" class="ms-1">
                                     Kembali ke formulir
                                 </a>
 
@@ -41,204 +56,447 @@
 
                         @else
 
-                                        {{-- INFORMASI PERMOHONAN --}}
-                                        <table class="table table-borderless">
 
-                                            <tr>
-
-                                                <td width="35%">
-                                                    <strong>Jenis Permohonan</strong>
-                                                </td>
-
-                                                <td>
-                                                    {{ $data['jenis_permohonan'] ?? '-' }}
-                                                </td>
-
-                                            </tr>
-
-
-                                            <tr>
-
-                                                <td>
-                                                    <strong>Nama Penyelenggara</strong>
-                                                </td>
-
-                                                <td>
-                                                    {{ $data['nama_penyelenggara'] ?? '-' }}
-                                                </td>
-
-                                            </tr>
-
-
-                                            <tr>
-
-                                                <td>
-                                                    <strong>Tanggal Kegiatan</strong>
-                                                </td>
-
-                                                <td>
-                                                    {{ !empty($data['tanggal_kegiatan'])
-                            ? \Carbon\Carbon::parse($data['tanggal_kegiatan'])->translatedFormat('d F Y')
-                            : '-' }}
-                                                </td>
-
-                                            </tr>
-
-
-                                            <tr>
-
-                                                <td>
-                                                    <strong>Waktu Kegiatan</strong>
-                                                </td>
-
-                                                <td>
-                                                    {{ $data['waktu_kegiatan'] ?? '-' }}
-                                                </td>
-
-                                            </tr>
-
-
-                                            <tr>
-
-                                                <td>
-                                                    <strong>Tempat Penyelenggara</strong>
-                                                </td>
-
-                                                <td>
-                                                    {{ $data['tempat'] ?? '-' }}
-                                                </td>
-
-                                            </tr>
-
-
-                                            <tr>
-
-                                                <td>
-                                                    <strong>Nama Penanggung Jawab</strong>
-                                                </td>
-
-                                                <td>
-                                                    {{ $data['penanggung_jawab'] ?? '-' }}
-                                                </td>
-
-                                            </tr>
-
-
-                                            <tr>
-
-                                                <td>
-                                                    <strong>No. HP Penanggung Jawab</strong>
-                                                </td>
-
-                                                <td>
-                                                    {{ $data['no_hp'] ?? '-' }}
-                                                </td>
-
-                                            </tr>
-
-
-                                            <tr>
-
-                                                <td>
-                                                    <strong>Jumlah Peserta</strong>
-                                                </td>
-
-                                                <td>
-                                                    {{ $data['jumlah_peserta'] ?? '-' }} orang
-                                                </td>
-
-                                            </tr>
-
-
-                                            <tr>
-
-                                                <td>
-                                                    <strong>Keterangan</strong>
-                                                </td>
-
-                                                <td>
-                                                    {{ $data['keterangan'] ?? '-' }}
-                                                </td>
-
-                                            </tr>
-
-
-                                            {{-- LAMPIRAN --}}
-                                            <tr>
-
-                                                <td>
-                                                    <strong>Lampiran</strong>
-                                                </td>
-
-                                                <td>
-
-                                                    @if(!empty($data['lampiran']))
-
-                                                        <a href="{{ asset('storage/' . $data['lampiran']) }}" target="_blank"
-                                                            class="btn btn-sm btn-outline-primary">
-
-                                                            <i class="bi bi-file-earmark-text"></i>
-
-                                                            Lihat Lampiran
-
-                                                        </a>
-
-                                                    @else
-
-                                                        <span class="text-muted">
-                                                            Tidak ada lampiran
-                                                        </span>
-
-                                                    @endif
-
-                                                </td>
-
-                                            </tr>
-
-                                        </table>
-
-
-                                        {{-- PERINGATAN --}}
-                                        <div class="alert alert-warning mt-4">
-
-                                            <i class="bi bi-exclamation-triangle-fill me-2"></i>
-
-                                            <strong>Periksa kembali data Anda.</strong>
-
-                                            Pastikan seluruh informasi sudah benar sebelum
-                                            melanjutkan ke proses verifikasi OTP.
-
-                                        </div>
+                                        {{-- =================================================
+                                        INFORMASI JENIS PERMOHONAN
+                                        ================================================== --}}
 
                                         <div class="mb-4">
 
-                                            <label class="form-label">
+                                            <div class="alert alert-primary">
 
-                                                Verifikasi Keamanan
+                                                <i class="bi bi-file-earmark-text-fill me-2"></i>
 
-                                            </label>
-
-                                            <div class="mb-3">
-
-                                                {!! NoCaptcha::display() !!}
-
-                                                @error('g-recaptcha-response')
-
-                                                    <small class="text-danger">
-
-                                                        {{ $message }}
-
-                                                    </small>
-
-                                                @enderror
+                                                <strong>
+                                                    {{ $data['jenis_permohonan'] === 'Sosialisasi'
+                            ? 'Permohonan Sosialisasi'
+                            : 'Permohonan Rehabilitasi'
+                                                            }}
+                                                </strong>
 
                                             </div>
 
                                         </div>
 
 
-                                        {{-- NAVIGASI --}}
+                                        {{-- =================================================
+                                        DATA PERMOHONAN
+                                        ================================================== --}}
+
+                                        <div class="table-responsive">
+
+                                            <table class="table table-borderless align-middle">
+
+
+                                                {{-- =================================================
+                                                JENIS PERMOHONAN
+                                                ================================================== --}}
+
+                                                <tr>
+
+                                                    <td width="35%">
+
+                                                        <strong>
+                                                            Jenis Permohonan
+                                                        </strong>
+
+                                                    </td>
+
+                                                    <td>
+
+                                                        {{ $data['jenis_permohonan'] ?? '-' }}
+
+                                                    </td>
+
+                                                </tr>
+
+
+                                                {{-- =================================================
+                                                SOSIALISASI
+                                                ================================================== --}}
+
+                                                @if($data['jenis_permohonan'] === 'Sosialisasi')
+
+
+                                                    {{-- NAMA PENYELENGGARA --}}
+
+                                                    <tr>
+
+                                                        <td>
+
+                                                            <strong>
+                                                                Nama Penyelenggara
+                                                            </strong>
+
+                                                        </td>
+
+                                                        <td>
+
+                                                            {{ $data['nama_penyelenggara'] ?? '-' }}
+
+                                                        </td>
+
+                                                    </tr>
+
+
+                                                    {{-- TANGGAL KEGIATAN --}}
+
+                                                    <tr>
+
+                                                        <td>
+
+                                                            <strong>
+                                                                Tanggal Kegiatan
+                                                            </strong>
+
+                                                        </td>
+
+                                                        <td>
+
+                                                            @if(!empty($data['tanggal_kegiatan']))
+
+                                                                                        {{ \Carbon\Carbon::parse(
+                                                                    $data['tanggal_kegiatan']
+                                                                )->translatedFormat('d F Y') }}
+
+                                                            @else
+
+                                                                -
+
+                                                            @endif
+
+                                                        </td>
+
+                                                    </tr>
+
+
+                                                    {{-- WAKTU KEGIATAN --}}
+
+                                                    <tr>
+
+                                                        <td>
+
+                                                            <strong>
+                                                                Waktu Kegiatan
+                                                            </strong>
+
+                                                        </td>
+
+                                                        <td>
+
+                                                            {{ $data['waktu_kegiatan'] ?? '-' }}
+
+                                                        </td>
+
+                                                    </tr>
+
+
+                                                    {{-- TEMPAT --}}
+
+                                                    <tr>
+
+                                                        <td>
+
+                                                            <strong>
+                                                                Tempat Kegiatan
+                                                            </strong>
+
+                                                        </td>
+
+                                                        <td>
+
+                                                            {{ $data['tempat'] ?? '-' }}
+
+                                                        </td>
+
+                                                    </tr>
+
+
+                                                    {{-- PENANGGUNG JAWAB --}}
+
+                                                    <tr>
+
+                                                        <td>
+
+                                                            <strong>
+                                                                Penanggung Jawab
+                                                            </strong>
+
+                                                        </td>
+
+                                                        <td>
+
+                                                            {{ $data['penanggung_jawab'] ?? '-' }}
+
+                                                        </td>
+
+                                                    </tr>
+
+
+                                                    {{-- JUMLAH PESERTA --}}
+
+                                                    <tr>
+
+                                                        <td>
+
+                                                            <strong>
+                                                                Jumlah Peserta
+                                                            </strong>
+
+                                                        </td>
+
+                                                        <td>
+
+                                                            {{ $data['jumlah_peserta'] ?? '-' }}
+                                                            orang
+
+                                                        </td>
+
+                                                    </tr>
+
+
+                                                    {{-- =================================================
+                                                    REHABILITASI
+                                                    ================================================== --}}
+
+                                                @elseif($data['jenis_permohonan'] === 'Rehabilitasi')
+
+
+                                                    {{-- NAMA PEMOHON --}}
+
+                                                    <tr>
+
+                                                        <td>
+
+                                                            <strong>
+                                                                Nama Pemohon
+                                                            </strong>
+
+                                                        </td>
+
+                                                        <td>
+
+                                                            {{ $data['nama_pemohon'] ?? '-' }}
+
+                                                        </td>
+
+                                                    </tr>
+
+
+                                                    {{-- NIK --}}
+
+                                                    <tr>
+
+                                                        <td>
+
+                                                            <strong>
+                                                                NIK
+                                                            </strong>
+
+                                                        </td>
+
+                                                        <td>
+
+                                                            {{ $data['nik'] ?? '-' }}
+
+                                                        </td>
+
+                                                    </tr>
+
+
+                                                    {{-- ALAMAT --}}
+
+                                                    <tr>
+
+                                                        <td>
+
+                                                            <strong>
+                                                                Alamat Pemohon
+                                                            </strong>
+
+                                                        </td>
+
+                                                        <td>
+
+                                                            {{ $data['alamat_pemohon'] ?? '-' }}
+
+                                                        </td>
+
+                                                    </tr>
+
+
+                                                    {{-- JENIS REHABILITASI --}}
+
+                                                    <tr>
+
+                                                        <td>
+
+                                                            <strong>
+                                                                Jenis Rehabilitasi
+                                                            </strong>
+
+                                                        </td>
+
+                                                        <td>
+
+                                                            {{ $data['jenis_rehabilitasi'] ?? '-' }}
+
+                                                        </td>
+
+                                                    </tr>
+
+
+                                                @endif
+
+
+                                                {{-- =================================================
+                                                NO WHATSAPP
+                                                ================================================== --}}
+
+                                                <tr>
+
+                                                    <td>
+
+                                                        <strong>
+                                                            No. WhatsApp
+                                                        </strong>
+
+                                                    </td>
+
+                                                    <td>
+
+                                                        {{ $data['no_hp'] ?? '-' }}
+
+                                                    </td>
+
+                                                </tr>
+
+
+                                                {{-- =================================================
+                                                KETERANGAN
+                                                ================================================== --}}
+
+                                                <tr>
+
+                                                    <td>
+
+                                                        <strong>
+                                                            Keterangan
+                                                        </strong>
+
+                                                    </td>
+
+                                                    <td>
+
+                                                        @if(!empty($data['keterangan']))
+
+                                                                                        {!! nl2br(
+                                                                e($data['keterangan'])
+                                                            ) !!}
+
+                                                        @else
+
+                                                            <span class="text-muted">
+                                                                Tidak ada keterangan
+                                                            </span>
+
+                                                        @endif
+
+                                                    </td>
+
+                                                </tr>
+
+
+                                                {{-- =================================================
+                                                LAMPIRAN
+                                                ================================================== --}}
+
+                                                <tr>
+
+                                                    <td>
+
+                                                        <strong>
+                                                            Lampiran
+                                                        </strong>
+
+                                                    </td>
+
+                                                    <td>
+
+                                                        @if(!empty($data['lampiran']))
+
+                                                            <a href="{{ asset('storage/' . $data['lampiran']) }}" target="_blank"
+                                                                class="btn btn-sm btn-outline-primary">
+
+                                                                <i class="bi bi-file-earmark-text me-1"></i>
+
+                                                                Lihat Lampiran
+
+                                                            </a>
+
+                                                        @else
+
+                                                            <span class="text-muted">
+
+                                                                Tidak ada lampiran
+
+                                                            </span>
+
+                                                        @endif
+
+                                                    </td>
+
+                                                </tr>
+
+                                            </table>
+
+                                        </div>
+
+
+                                        {{-- =====================================================
+                                        PERINGATAN
+                                        ====================================================== --}}
+
+                                        <div class="alert alert-warning mt-4">
+
+                                            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+
+                                            <strong>
+                                                Periksa kembali data Anda.
+                                            </strong>
+
+                                            Pastikan seluruh informasi sudah benar sebelum
+                                            melanjutkan ke verifikasi OTP.
+
+                                        </div>
+
+
+                                        {{-- =====================================================
+                                        INFORMASI OTP
+                                        ====================================================== --}}
+
+                                        <div class="alert alert-info">
+
+                                            <i class="bi bi-whatsapp me-2"></i>
+
+                                            Setelah menekan tombol
+                                            <strong>Kirim Permohonan</strong>,
+                                            sistem akan mengirimkan kode OTP ke nomor WhatsApp:
+
+                                            <strong>
+                                                {{ $data['no_hp'] ?? '-' }}
+                                            </strong>
+
+                                        </div>
+
+
+                                        {{-- =====================================================
+                                        NAVIGASI
+                                        ====================================================== --}}
+
                                         <div class="form-navigation mt-4">
+
+                                            {{-- KEMBALI --}}
 
                                             <a href="{{ route('permohonan.create') }}" class="btn-prev">
 
@@ -249,22 +507,33 @@
                                             </a>
 
 
-                                            {{-- Lanjut ke OTP --}}
-                                            <a href="{{ route('permohonan.otp') }}" class="btn-next">
+                                            {{-- =================================================
+                                            KIRIM OTP
+                                            ================================================== --}}
 
-                                                Kirim Permohonan
+                                            <form action="{{ route('permohonan.kirim') }}" method="POST" class="d-inline">
 
-                                                <i class="bi bi-arrow-right"></i>
+                                                @csrf
 
-                                            </a>
+                                                <button type="submit" class="btn-next">
+
+                                                    Kirim Permohonan
+
+                                                    <i class="bi bi-arrow-right"></i>
+
+                                                </button>
+
+                                            </form>
 
                                         </div>
+
 
                         @endif
 
                     </div>
 
                 </div>
+
 
                 {{-- =====================================================
                 SIDEBAR PERMOHONAN TERBARU
@@ -274,11 +543,17 @@
 
                     <div class="aduan-terbaru-header">
 
-                        <h4>Permohonan Terbaru</h4>
+                        <h4>
+                            Permohonan Terbaru
+                        </h4>
 
                     </div>
 
-                    {{-- SEARCH PERMOHONAN --}}
+
+                    {{-- =====================================================
+                    SEARCH
+                    ====================================================== --}}
+
                     <div class="search-permohonan-box">
 
                         <form action="{{ route('permohonan.cari') }}" method="GET">
@@ -293,6 +568,7 @@
                                         placeholder="Cari berdasarkan jenis permohonan..." autocomplete="off">
 
                                 </div>
+
 
                                 <button type="submit" class="btn-search-permohonan">
 
@@ -309,31 +585,48 @@
                     </div>
 
 
-                    {{-- DATA PERMOHONAN --}}
+                    {{-- =====================================================
+                    DATA PERMOHONAN TERBARU
+                    ====================================================== --}}
+
                     @forelse($permohonanTerbaru as $item)
 
                                     <div class="aduan-item">
 
+
                                         {{-- STATUS --}}
+
                                         <span class="status
-                                                                    @if($item->status == 'Menunggu')
-                                                                        menunggu
-                                                                    @elseif($item->status == 'Diproses')
-                                                                        proses
-                                                                    @elseif($item->status == 'Selesai')
-                                                                        selesai
-                                                                    @elseif($item->status == 'Ditolak')
-                                                                        ditolak
-                                                                    @else
-                                                                        verifikasi
-                                                                    @endif">
+
+                                                    @if($item->status == 'Diajukan')
+                                                        menunggu
+
+                                                    @elseif($item->status == 'Diverifikasi')
+                                                        verifikasi
+
+                                                    @elseif($item->status == 'Diproses')
+                                                        proses
+
+                                                    @elseif($item->status == 'Selesai')
+                                                        selesai
+
+                                                    @elseif($item->status == 'Ditolak')
+                                                        ditolak
+
+                                                    @else
+                                                        verifikasi
+
+                                                    @endif
+
+                                                ">
 
                                             {{ $item->status }}
 
                                         </span>
 
 
-                                        {{-- JENIS PERMOHONAN --}}
+                                        {{-- JENIS --}}
+
                                         <h6>
 
                                             {{ \Illuminate\Support\Str::limit(
@@ -344,20 +637,37 @@
                                         </h6>
 
 
-                                        {{-- PENYELENGGARA --}}
+                                        {{-- NAMA --}}
+
                                         <small>
 
                                             <i class="bi bi-person-fill"></i>
 
-                                            {{ \Illuminate\Support\Str::limit(
-                            $item->nama_penyelenggara,
-                            30
-                        ) }}
+                                            @if($item->jenis_permohonan === 'Sosialisasi')
+
+                                                                {{ \Illuminate\Support\Str::limit(
+                                                    $item->nama_penyelenggara ?? '-',
+                                                    30
+                                                ) }}
+
+                                            @elseif($item->jenis_permohonan === 'Rehabilitasi')
+
+                                                                {{ \Illuminate\Support\Str::limit(
+                                                    $item->nama_pemohon ?? '-',
+                                                    30
+                                                ) }}
+
+                                            @else
+
+                                                -
+
+                                            @endif
 
                                         </small>
 
 
                                         {{-- TANGGAL --}}
+
                                         <small>
 
                                             <i class="bi bi-calendar-event-fill"></i>
@@ -368,6 +678,7 @@
 
 
                                         {{-- TRACKING --}}
+
                                         <a href="{{ route(
                             'permohonan.tracking',
                             $item->kode_permohonan
@@ -396,7 +707,9 @@
                 </aside>
 
             </div>
+
         </div>
+
     </section>
 
 @endsection
