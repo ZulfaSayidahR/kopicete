@@ -62,6 +62,12 @@
                         </a>
                     </li>
 
+                    <li>
+                        <a href="{{ route('about') }}">
+                           About
+                        </a>
+                    </li>
+
                 </ul>
 
             </div>
@@ -127,20 +133,6 @@
                 </div>
 
             </div>
-
-        </div>
-
-        <hr>
-
-        <div class="footer-bottom">
-
-            <span>
-                © {{ date('Y') }} BNNK Tulungagung
-            </span>
-
-            <span>
-                Dikembangkan oleh Tim BNNK Tulungagung
-            </span>
 
         </div>
 

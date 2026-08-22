@@ -565,7 +565,7 @@
                             <div class="col-md-4 mb-3">
 
                                 <label class="form-label">
-                                    Lampiran
+                                    Lampiran Surat Permohonan
                                 </label>
 
                             </div>

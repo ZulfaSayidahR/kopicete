@@ -26,6 +26,10 @@ use App\Http\Controllers\SuperAdmin\DataPermohonanController;
 Route::get('/', [HomeController::class, 'index'])
     ->name('home');
 
+Route::get('/about', function () {
+    return view('user.about');
+})->name('about');
+
 
 
 // SUPER ADMIN
