@@ -261,7 +261,7 @@
 
 
                             {{-- PENGADUAN DIPROSES --}}
-                            <div class="mb-4">
+                            {{-- <div class="mb-4">
 
                                 <small class="text-muted">
                                     Pengaduan Diproses
@@ -276,7 +276,7 @@
     ) }}
                                 </h3>
 
-                            </div>
+                            </div> --}}
 
 
                             {{-- LAPORAN SELESAI --}}
@@ -317,197 +317,167 @@
 
             <script>
 
-                document.addEventListener('DOMContentLoaded', function () {
+    const labelsBulan = [
+        'Januari',
+        'Februari',
+        'Maret',
+        'April',
+        'Mei',
+        'Juni',
+        'Juli',
+        'Agustus',
+        'September',
+        'Oktober',
+        'November',
+        'Desember'
+    ];
 
-                    const canvas = document.getElementById('chartLaporan');
 
-                    if (!canvas) {
-                        return;
+    const dataPengaduan = @json(array_values($grafikPengaduan));
+
+    const dataPermohonan = @json(array_values($grafikPermohonan));
+
+
+    const ctx = document
+        .getElementById('chartLaporan')
+        .getContext('2d');
+
+
+    new Chart(ctx, {
+
+        type: 'line',
+
+        data: {
+
+            labels: labelsBulan,
+
+            datasets: [
+
+                {
+                    label: 'Pengaduan',
+
+                    data: dataPengaduan,
+
+                    borderWidth: 3,
+
+                    tension: 0.35,
+
+                    fill: false,
+
+                    pointRadius: 4,
+
+                    pointHoverRadius: 6
+                },
+
+
+                {
+                    label: 'Permohonan',
+
+                    data: dataPermohonan,
+
+                    borderWidth: 3,
+
+                    tension: 0.35,
+
+                    fill: false,
+
+                    pointRadius: 4,
+
+                    pointHoverRadius: 6
+                }
+
+            ]
+
+        },
+
+
+        options: {
+
+            responsive: true,
+
+            maintainAspectRatio: false,
+
+
+            interaction: {
+
+                intersect: false,
+
+                mode: 'index'
+
+            },
+
+
+            scales: {
+
+                y: {
+
+                    beginAtZero: true,
+
+                    ticks: {
+
+                        stepSize: 1
+
+                    },
+
+                    title: {
+
+                        display: true,
+
+                        text: 'Jumlah'
+
                     }
 
+                },
 
-                    /*
-                    |--------------------------------------------------------------------------
-                    | DATA DARI CONTROLLER
-                    |--------------------------------------------------------------------------
-                    */
 
-                    const grafikPengaduan =
-                        @json(array_values($grafikPengaduan));
+                x: {
 
-                    const grafikPermohonan =
-                        @json(array_values($grafikPermohonan));
+                    title: {
 
+                        display: true,
 
-                    /*
-                    |--------------------------------------------------------------------------
-                    | LABEL BULAN
-                    |--------------------------------------------------------------------------
-                    */
+                        text: 'Bulan'
 
-                    const bulan = [
-                        'Januari',
-                        'Februari',
-                        'Maret',
-                        'April',
-                        'Mei',
-                        'Juni',
-                        'Juli',
-                        'Agustus',
-                        'September',
-                        'Oktober',
-                        'November',
-                        'Desember'
-                    ];
+                    }
 
+                }
 
-                    /*
-                    |--------------------------------------------------------------------------
-                    | GRAFIK
-                    |--------------------------------------------------------------------------
-                    */
+            },
 
-                    new Chart(canvas, {
 
-                        type: 'line',
+            plugins: {
 
-                        data: {
+                legend: {
 
-                            labels: bulan,
+                    position: 'bottom'
 
-                            datasets: [
+                },
 
-                                {
-                                    label: 'Pengaduan',
 
-                                    data: grafikPengaduan,
+                tooltip: {
 
-                                    borderWidth: 3,
+                    callbacks: {
 
-                                    tension: 0.4,
+                        label: function(context) {
 
-                                    fill: false,
-
-                                    pointRadius: 4,
-
-                                    pointHoverRadius: 6
-                                },
-
-                                {
-                                    label: 'Permohonan',
-
-                                    data: grafikPermohonan,
-
-                                    borderWidth: 3,
-
-                                    tension: 0.4,
-
-                                    fill: false,
-
-                                    pointRadius: 4,
-
-                                    pointHoverRadius: 6
-                                }
-
-                            ]
-
-                        },
-
-
-                        /*
-                        |--------------------------------------------------------------------------
-                        | OPTIONS
-                        |--------------------------------------------------------------------------
-                        */
-
-                        options: {
-
-                            responsive: true,
-
-                            maintainAspectRatio: false,
-
-                            interaction: {
-
-                                mode: 'index',
-
-                                intersect: false
-
-                            },
-
-
-                            plugins: {
-
-                                legend: {
-
-                                    display: true,
-
-                                    position: 'top'
-
-                                },
-
-
-                                tooltip: {
-
-                                    callbacks: {
-
-                                        label: function (context) {
-
-                                            return context.dataset.label
-                                                + ': '
-                                                + context.parsed.y
-                                                + ' laporan';
-
-                                        }
-
-                                    }
-
-                                }
-
-                            },
-
-
-                            scales: {
-
-                                x: {
-
-                                    grid: {
-
-                                        display: false
-
-                                    }
-
-                                },
-
-
-                                y: {
-
-                                    beginAtZero: true,
-
-                                    ticks: {
-
-                                        precision: 0
-
-                                    },
-
-                                    title: {
-
-                                        display: true,
-
-                                        text: 'Jumlah Laporan'
-
-                                    }
-
-                                }
-
-                            }
+                            return context.dataset.label
+                                + ': '
+                                + context.parsed.y
+                                + ' laporan';
 
                         }
 
-                    });
+                    }
 
-                });
+                }
 
-            </script>
+            }
+
+        }
+
+    });
+
+</script>
 
 
 
