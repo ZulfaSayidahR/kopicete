@@ -214,9 +214,11 @@
                                     </h6>
 
 
-                                    <strong>Alamat :</strong>
+                                   <p>
+                                     <strong>Alamat :</strong>
 
                                     {{ $step2['alamat_kejadian'] ?? '-' }}
+                                   </p>
 
 
 

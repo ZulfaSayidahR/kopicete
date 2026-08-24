@@ -839,7 +839,6 @@
 }
 
 @media (max-width: 520px) {
-
     .aduan-box,
     .tracking-box {
         border-radius: 21px;
@@ -947,25 +946,25 @@
 }
 
 .pengaduan-wrapper {
-    display: grid;
-    grid-template-columns: 2.2fr 1fr;
-    gap: 28px;
-    align-items: start;
-}
-
-.permohonan-wrapper {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) 430px;
-    gap: 30px;
-
-    align-items: start;
-
+    display: block;
     width: 100%;
 }
 
 .pengaduan-card {
     width: 100%;
-    max-width: 1200px;
+    max-width: 1050px;
+    margin: 0 auto;
+}
+
+.permohonan-wrapper {
+    display: block;
+    width: 100%;
+}
+
+.permohonan-card {
+    width: 100%;
+    max-width: 1050px;
+    margin: 0 auto;
 }
 
 /* =====================================================
@@ -1769,86 +1768,218 @@ html {
     color: #084f83;
 }
 
-@media (max-width: 576px) {
-    .pengaduan-header {
-        padding: 22px;
-    }
+/* ==============================
+   RINGKASAN ADUAN
+   ============================== */
 
-    .pengaduan-body {
-        padding: 20px;
-    }
+.summary-card {
+    margin-top: 35px;
+    width: 100%;
+    border-radius: 16px;
+    overflow: hidden;
 
-    .form-navigation {
-        flex-direction: column;
-    }
+    background: #ffffff;
+    border: 1px solid #d8e5ef;
 
-    .btn-prev,
-    .btn-next {
-        width: 100%;
-    }
+    box-shadow: 0 8px 24px rgba(6, 38, 79, 0.08);
+}
 
-    /* KONFIRMASI */
-    .summary-card {
-        margin-top: 35px;
-        border-radius: 14px;
-        overflow: hidden;
-        border: 1px solid #d6e9f7;
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+/* HEADER */
+
+.summary-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    padding: 18px 24px;
+
+    background: #0b73b9;
+    color: #ffffff;
+
+    font-size: 17px;
+    font-weight: 700;
+}
+
+.summary-header i {
+    font-size: 20px;
+}
+
+/* BODY */
+
+.summary-body {
+    padding: 28px 30px;
+
+    background: #f8fbfd;
+}
+
+/* JUDUL BAGIAN */
+
+.summary-body h6 {
+    margin: 0 0 18px;
+
+    padding-left: 12px;
+
+    border-left: 4px solid #0b73b9;
+
+    color: #06264f;
+
+    font-size: 16px;
+    font-weight: 700;
+}
+
+/* TEKS */
+
+.summary-body p {
+    margin-bottom: 12px;
+
+    color: #526579;
+
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+.summary-body p strong,
+.summary-body strong {
+    color: #16344d;
+    font-weight: 700;
+}
+
+/* ISI ADUAN */
+
+.summary-detail {
+    padding: 17px 18px;
+
+    min-height: 100px;
+
+    background: #ffffff;
+
+    border: 1px solid #d8e5ef;
+    border-radius: 10px;
+
+    color: #526579;
+
+    font-size: 14px;
+    line-height: 1.8;
+
+    box-shadow: 0 3px 8px rgba(6, 38, 79, 0.04);
+}
+
+/* PEMBATAS */
+
+.summary-body hr {
+    margin: 30px 0;
+
+    border: 0;
+    border-top: 1px solid #dce6ee;
+
+    opacity: 1;
+}
+
+/* LOKASI */
+
+.summary-body .mt-4 {
+    color: #526579;
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+/* LAMPIRAN */
+
+.summary-body .card {
+    margin-top: 10px;
+
+    border: 1px solid #d8e5ef !important;
+    border-radius: 12px !important;
+
+    background: #ffffff;
+
+    box-shadow: 0 5px 15px rgba(6, 38, 79, 0.06) !important;
+}
+
+.summary-body .card-body {
+    padding: 22px;
+}
+
+/* GAMBAR */
+
+.summary-body .card-body img {
+    max-width: 100%;
+
+    border: 1px solid #dce6ee;
+    border-radius: 10px;
+
+    padding: 5px;
+
+    background: #ffffff;
+}
+
+/* TOMBOL */
+
+.summary-body .btn-primary {
+    margin-top: 5px;
+
+    padding: 8px 16px;
+
+    background: #0b73b9 !important;
+    border-color: #0b73b9 !important;
+
+    border-radius: 8px;
+
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.summary-body .btn-primary:hover {
+    background: #085f99 !important;
+    border-color: #085f99 !important;
+}
+
+/* ALERT */
+
+.summary-body .alert-warning {
+    border-radius: 9px;
+
+    font-size: 14px;
+}
+
+/* ==============================
+   RESPONSIVE
+   ============================== */
+
+@media (max-width: 768px) {
+    .summary-body {
+        padding: 22px 18px;
     }
 
     .summary-header {
-        background: #0b73b9;
-        color: #fff;
-        padding: 14px 20px;
-        font-size: 17px;
-        font-weight: 700;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
-
-    .summary-body {
-        background: #bfe6f5;
-        padding: 25px;
+        padding: 16px 18px;
     }
 
     .summary-body h6 {
-        font-weight: 700;
-        color: #16344d;
-        margin-bottom: 15px;
+        font-size: 15px;
     }
 
-    .summary-body p {
-        margin-bottom: 10px;
-        font-size: 14px;
-        color: #20435c;
-    }
-
+    .summary-body p,
     .summary-detail {
-        background: #fff;
-        border: 1px solid #7b9eb6;
-        border-radius: 8px;
-        padding: 15px;
-        font-size: 14px;
-        color: #444;
-    }
-
-    .form-check {
-        margin-top: 25px;
-    }
-
-    .form-check-label {
         font-size: 13px;
-        color: #555;
     }
+}
 
-    .form-check-input {
-        margin-right: 8px;
-    }
+.form-check {
+    margin-top: 25px;
+}
 
-    .btn-next i {
-        margin-right: 6px;
-    }
+.form-check-label {
+    font-size: 13px;
+    color: #555;
+}
+
+.form-check-input {
+    margin-right: 8px;
+}
+
+.btn-next i {
+    margin-right: 6px;
 }
 
 .aduan-box,
@@ -2571,7 +2702,7 @@ body {
     min-width: 0;
 }
 
-.sa-stat-content>span {
+.sa-stat-content > span {
     display: block;
     color: #778697;
     font-size: 11px;
@@ -2627,7 +2758,7 @@ body {
 
 .sa-panel-header p,
 .sa-panel-title p,
-.sa-reset-panel>p {
+.sa-reset-panel > p {
     margin: 0;
     color: #8391a1;
     font-size: 10px;
@@ -3466,9 +3597,8 @@ body {
 
 /* Tablet */
 @media (max-width: 991.98px) {
-
-    .navbar>.container,
-    .navbar>.container-fluid {
+    .navbar > .container,
+    .navbar > .container-fluid {
         display: flex;
         justify-content: space-between;
         align-items: center;
