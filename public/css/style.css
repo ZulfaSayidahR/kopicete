@@ -4508,7 +4508,6 @@ VERIFIKASI OTP
     min-height: 80vh;
 }
 
-
 /* =========================================================
    HERO
 ========================================================= */
@@ -4526,22 +4525,18 @@ VERIFIKASI OTP
 
     border-radius: 24px;
 
-    background:
-        linear-gradient(135deg,
-            #075985,
-            #0e7490);
+    background: linear-gradient(135deg, #06264f, #075a93, #0b73b5);
 
-    color: white;
+    border-radius: 30px;
 
-    box-shadow:
-        0 15px 40px rgba(0, 0, 0, .12);
+    color: #fff;
+
+    box-shadow: 0 20px 50px rgba(6, 38, 79, 0.2);
 }
-
 
 .tracking-hero-content {
     max-width: 720px;
 }
-
 
 .tracking-badge {
     display: inline-flex;
@@ -4555,15 +4550,14 @@ VERIFIKASI OTP
 
     border-radius: 50px;
 
-    background: rgba(255, 255, 255, .15);
+    background: rgba(255, 255, 255, 0.15);
 
     font-size: 13px;
 
     font-weight: 700;
 
-    letter-spacing: .5px;
+    letter-spacing: 0.5px;
 }
-
 
 .tracking-hero h1 {
     margin-bottom: 12px;
@@ -4573,19 +4567,17 @@ VERIFIKASI OTP
     font-weight: 800;
 }
 
-
 .tracking-hero p {
     margin: 0;
 
     max-width: 650px;
 
-    color: rgba(255, 255, 255, .85);
+    color: rgba(255, 255, 255, 0.85);
 
     font-size: 16px;
 
     line-height: 1.7;
 }
-
 
 .tracking-hero-icon {
     display: flex;
@@ -4598,11 +4590,10 @@ VERIFIKASI OTP
 
     border-radius: 30px;
 
-    background: rgba(255, 255, 255, .12);
+    background: rgba(255, 255, 255, 0.12);
 
     font-size: 50px;
 }
-
 
 /* =========================================================
    SEARCH CARD
@@ -4615,12 +4606,10 @@ VERIFIKASI OTP
 
     border-radius: 22px;
 
-    box-shadow:
-        0 10px 35px rgba(0, 0, 0, .08);
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.08);
 
     margin-bottom: 55px;
 }
-
 
 .tracking-search-header {
     display: flex;
@@ -4631,7 +4620,6 @@ VERIFIKASI OTP
 
     margin-bottom: 25px;
 }
-
 
 .tracking-search-icon {
     display: flex;
@@ -4651,20 +4639,17 @@ VERIFIKASI OTP
     font-size: 26px;
 }
 
-
 .tracking-search-header h3 {
     margin: 0 0 5px;
 
     font-weight: 800;
 }
 
-
 .tracking-search-header p {
     margin: 0;
 
     color: #64748b;
 }
-
 
 /* =========================================================
    FORM
@@ -4676,13 +4661,11 @@ VERIFIKASI OTP
     gap: 12px;
 }
 
-
 .tracking-input-group {
     position: relative;
 
     flex: 1;
 }
-
 
 .tracking-input-group input {
     width: 100%;
@@ -4699,17 +4682,14 @@ VERIFIKASI OTP
 
     font-size: 15px;
 
-    transition: .2s;
+    transition: 0.2s;
 }
-
 
 .tracking-input-group input:focus {
     border-color: #0284c7;
 
-    box-shadow:
-        0 0 0 4px rgba(2, 132, 199, .1);
+    box-shadow: 0 0 0 4px rgba(2, 132, 199, 0.1);
 }
-
 
 .tracking-input-icon {
     position: absolute;
@@ -4725,7 +4705,6 @@ VERIFIKASI OTP
 
     z-index: 2;
 }
-
 
 .tracking-search-button {
     height: 58px;
@@ -4748,16 +4727,14 @@ VERIFIKASI OTP
 
     gap: 8px;
 
-    transition: .2s;
+    transition: 0.2s;
 }
-
 
 .tracking-search-button:hover {
     background: #0369a1;
 
     transform: translateY(-2px);
 }
-
 
 /* =========================================================
    ALERT
@@ -4779,7 +4756,6 @@ VERIFIKASI OTP
     font-size: 14px;
 }
 
-
 .tracking-alert-danger {
     background: #fef2f2;
 
@@ -4787,7 +4763,6 @@ VERIFIKASI OTP
 
     border: 1px solid #fecaca;
 }
-
 
 /* =========================================================
    HELP
@@ -4807,7 +4782,6 @@ VERIFIKASI OTP
     font-size: 13px;
 }
 
-
 /* =========================================================
    SECTION
 ========================================================= */
@@ -4816,15 +4790,13 @@ VERIFIKASI OTP
     margin-bottom: 40px;
 }
 
-
 .tracking-section-title {
     text-align: center;
 
     margin-bottom: 30px;
 }
 
-
-.tracking-section-title>span {
+.tracking-section-title > span {
     font-size: 12px;
 
     font-weight: 800;
@@ -4834,18 +4806,15 @@ VERIFIKASI OTP
     color: #0284c7;
 }
 
-
 .tracking-section-title h2 {
     margin: 7px 0;
 
     font-weight: 800;
 }
 
-
 .tracking-section-title p {
     color: #64748b;
 }
-
 
 /* =========================================================
    TRACKING SERVICE CARD
@@ -4865,7 +4834,6 @@ VERIFIKASI OTP
     transform: translateY(-4px);
     box-shadow: 0 16px 35px rgba(0, 0, 0, 0.09);
 }
-
 
 /* HEADER */
 
@@ -4888,7 +4856,6 @@ VERIFIKASI OTP
     font-size: 14px;
     line-height: 1.6;
 }
-
 
 /* ICON */
 
@@ -4916,31 +4883,232 @@ VERIFIKASI OTP
     color: #159447;
 }
 
-
-/* LIST */
+/* =========================================================
+   LIST
+========================================================= */
 
 .tracking-service-list {
+    width: 100%;
     margin-top: 20px;
+
+    display: flex;
+    flex-direction: column;
+
+    min-width: 0;
 }
+
+/* =========================================================
+   AREA SCROLL MASING-MASING LIST
+========================================================= */
+
+.tracking-list-scroll {
+    width: 100%;
+
+    max-height: 500px;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    padding-right: 8px;
+
+    scroll-behavior: smooth;
+
+    min-height: 0;
+}
+
+/* =========================================================
+   SCROLLBAR
+========================================================= */
+
+.tracking-list-scroll::-webkit-scrollbar {
+    width: 6px;
+}
+
+.tracking-list-scroll::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 10px;
+}
+
+.tracking-list-scroll::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 10px;
+}
+
+.tracking-list-scroll::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+/* Firefox */
+
+.tracking-list-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: #cbd5e1 #f1f5f9;
+}
+
+/* =========================================================
+   ITEM
+========================================================= */
+
+.tracking-list-scroll .tracking-service-item {
+    margin-bottom: 14px;
+}
+
+.tracking-list-scroll .tracking-service-item:last-child {
+    margin-bottom: 0;
+}
+
+/* =========================================================
+   PENTING:
+   PARENT YANG MEMUAT 2 CARD
+========================================================= */
+
+.tracking-services-row {
+    display: grid;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 24px;
+
+    width: 100%;
+
+    align-items: stretch;
+}
+
+/* =========================================================
+   CARD PENGADUAN & PERMOHONAN
+========================================================= */
+
+.tracking-service-card {
+    width: 100%;
+    min-width: 0;
+
+    height: 100%;
+
+    padding: 24px;
+
+    background: #ffffff;
+
+    border: 1px solid #e8edf3;
+
+    border-radius: 20px;
+
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+
+    transition: all 0.3s ease;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.tracking-service-card:hover {
+    transform: translateY(-4px);
+
+    box-shadow: 0 16px 35px rgba(0, 0, 0, 0.09);
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.tracking-service-header {
+    display: flex;
+
+    gap: 15px;
+
+    align-items: flex-start;
+
+    padding-bottom: 20px;
+
+    border-bottom: 1px solid #edf0f4;
+
+    flex-shrink: 0;
+}
+
+.tracking-service-header h4 {
+    margin: 0 0 5px;
+
+    font-weight: 700;
+}
+
+.tracking-service-header p {
+    margin: 0;
+
+    color: #6b7280;
+
+    font-size: 14px;
+
+    line-height: 1.6;
+}
+
+/* =========================================================
+   ICON
+========================================================= */
+
+.tracking-service-icon {
+    min-width: 52px;
+
+    width: 52px;
+
+    height: 52px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 14px;
+
+    font-size: 22px;
+
+    flex-shrink: 0;
+}
+
+.tracking-service-icon.pengaduan {
+    background: #eaf2ff;
+
+    color: #1769e0;
+}
+
+.tracking-service-icon.permohonan {
+    background: #eefbf4;
+
+    color: #159447;
+}
+
+/* =========================================================
+   TITLE LIST
+========================================================= */
 
 .tracking-list-title {
     margin-bottom: 12px;
+
     font-size: 13px;
+
     font-weight: 700;
+
     color: #6b7280;
+
     text-transform: uppercase;
+
     letter-spacing: 0.5px;
+
+    flex-shrink: 0;
 }
 
-
-/* ITEM */
+/* =========================================================
+   ITEM
+========================================================= */
 
 .tracking-service-item {
     padding: 16px;
+
     margin-bottom: 12px;
 
     background: #f8fafc;
+
     border: 1px solid #edf1f5;
+
     border-radius: 14px;
 
     transition: all 0.25s ease;
@@ -4948,12 +5116,15 @@ VERIFIKASI OTP
 
 .tracking-service-item:hover {
     background: #ffffff;
+
     border-color: #dce4ed;
+
     transform: translateY(-2px);
 }
 
-
-/* STATUS */
+/* =========================================================
+   STATUS
+========================================================= */
 
 .tracking-item-top {
     margin-bottom: 8px;
@@ -4961,6 +5132,7 @@ VERIFIKASI OTP
 
 .tracking-status {
     display: inline-flex;
+
     align-items: center;
 
     padding: 5px 10px;
@@ -4968,75 +5140,91 @@ VERIFIKASI OTP
     border-radius: 30px;
 
     font-size: 11px;
+
     font-weight: 700;
 }
 
-
-/* STATUS PENGADUAN / PERMOHONAN */
+/* STATUS */
 
 .tracking-status.menunggu {
     background: #fff4d6;
+
     color: #9a6700;
 }
 
 .tracking-status.verifikasi {
     background: #e8f1ff;
+
     color: #1769e0;
 }
 
 .tracking-status.proses {
     background: #eaf4ff;
+
     color: #2563eb;
 }
 
 .tracking-status.selesai {
     background: #e9f8ef;
+
     color: #15803d;
 }
 
 .tracking-status.ditolak {
     background: #fdecec;
+
     color: #dc2626;
 }
 
-
-/* TITLE */
+/* =========================================================
+   TITLE
+========================================================= */
 
 .tracking-service-item h6 {
     margin: 0 0 10px;
 
     font-size: 15px;
+
     font-weight: 700;
 
     color: #1f2937;
 }
 
-
-/* INFORMATION */
+/* =========================================================
+   INFORMATION
+========================================================= */
 
 .tracking-item-info {
     display: flex;
+
     flex-direction: column;
+
     gap: 5px;
 
     margin-bottom: 12px;
 
     font-size: 12px;
+
     color: #6b7280;
 }
 
 .tracking-item-info span {
     display: flex;
+
     align-items: center;
+
     gap: 6px;
 }
 
-
-/* BUTTON */
+/* =========================================================
+   BUTTON
+========================================================= */
 
 .tracking-item-button {
     display: inline-flex;
+
     align-items: center;
+
     gap: 6px;
 
     padding: 8px 13px;
@@ -5044,11 +5232,13 @@ VERIFIKASI OTP
     border-radius: 9px;
 
     background: #ffffff;
+
     border: 1px solid #dce3eb;
 
     color: #374151;
 
     font-size: 12px;
+
     font-weight: 600;
 
     text-decoration: none;
@@ -5058,27 +5248,35 @@ VERIFIKASI OTP
 
 .tracking-item-button:hover {
     background: #1769e0;
+
     border-color: #1769e0;
+
     color: #ffffff;
 }
 
-
-/* EMPTY */
+/* =========================================================
+   EMPTY
+========================================================= */
 
 .tracking-empty {
     padding: 25px;
+
     text-align: center;
+
     color: #9ca3af;
 }
 
 .tracking-empty i {
     display: block;
+
     margin-bottom: 8px;
+
     font-size: 28px;
 }
 
 .tracking-empty p {
     margin: 0;
+
     font-size: 13px;
 }
 
@@ -5102,7 +5300,6 @@ VERIFIKASI OTP
     border: 1px solid #bbf7d0;
 }
 
-
 .tracking-information-icon {
     display: flex;
 
@@ -5113,6 +5310,7 @@ VERIFIKASI OTP
     flex-shrink: 0;
 
     width: 55px;
+
     height: 55px;
 
     border-radius: 15px;
@@ -5124,7 +5322,6 @@ VERIFIKASI OTP
     font-size: 25px;
 }
 
-
 .tracking-information h4 {
     margin-bottom: 5px;
 
@@ -5133,49 +5330,44 @@ VERIFIKASI OTP
     color: #166534;
 }
 
-
 .tracking-information p {
     margin: 0;
 
     color: #166534;
 }
 
-
 /* =========================================================
    RESPONSIVE
 ========================================================= */
 
 @media (max-width: 768px) {
+    .tracking-services-row {
+        grid-template-columns: 1fr;
+    }
 
     .tracking-page {
         padding: 35px 0 50px;
     }
 
-
     .tracking-hero {
         padding: 30px 25px;
     }
-
 
     .tracking-hero h1 {
         font-size: 29px;
     }
 
-
     .tracking-hero-icon {
         display: none;
     }
-
 
     .tracking-search-card {
         padding: 25px 20px;
     }
 
-
     .tracking-search-form {
         flex-direction: column;
     }
-
 
     .tracking-search-button {
         width: 100%;
@@ -5183,9 +5375,11 @@ VERIFIKASI OTP
         justify-content: center;
     }
 
-
     .tracking-information {
         align-items: flex-start;
     }
 
+    .tracking-list-scroll {
+        max-height: 450px;
+    }
 }
