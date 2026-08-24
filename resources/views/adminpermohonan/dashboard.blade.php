@@ -123,18 +123,29 @@
             {{-- TABEL --}}
             <section class="sa-panel mt-4">
 
+                {{-- =========================================================
+                HEADER
+                ========================================================== --}}
                 <div class="sa-panel-header">
 
                     <div>
 
-                        <h3>Daftar Permohonan</h3>
+                        <h3>
+                            Daftar Permohonan
+                        </h3>
 
-                        <p>Seluruh data permohonan yang telah dikirim masyarakat.</p>
+                        <p>
+                            Seluruh data permohonan yang telah dikirim masyarakat.
+                        </p>
 
                     </div>
 
                 </div>
 
+
+                {{-- =========================================================
+                TABLE
+                ========================================================== --}}
                 <div class="sa-table-responsive">
 
                     <table class="sa-table">
@@ -143,111 +154,297 @@
 
                             <tr>
 
-                                <th>Token</th>
+                                <th>Kode Permohonan</th>
+
                                 <th>Jenis Permohonan</th>
-                                <th>Nama Pemohon</th>
-                                <th>Kecamatan</th>
-                                <th>Tanggal</th>
+
+                                <th>Nama Pemohon / Penyelenggara</th>
+
+                                <th>Tanggal Kegiatan</th>
+
+                                <th>Waktu</th>
+
+                                <th>Tempat</th>
+
+                                <th>Penanggung Jawab</th>
+
+                                <th>Jumlah Peserta</th>
+
                                 <th>Status</th>
-                                <th class="sa-action-column">Aksi</th>
+
+                                <th class="sa-action-column">
+                                    Aksi
+                                </th>
 
                             </tr>
 
                         </thead>
 
+
                         <tbody>
 
                             @forelse($permohonans as $permohonan)
 
-                                <tr>
+                                                    <tr>
 
-                                    <td>{{ $permohonan->kode_permohonan }}</td>
 
-                                    <td>{{ $permohonan->jenis_permohonan }}</td>
+                                                        {{-- =================================================
+                                                        KODE PERMOHONAN
+                                                        ================================================== --}}
 
-                                    <td>{{ $permohonan->nama_penyelenggara }}</td>
+                                                        <td>
 
-                                    <td>{{ $permohonan->tempat }}</td>
+                                                            <strong>
 
-                                    <td>
-                                        {{ \Carbon\Carbon::parse($permohonan->created_at)->translatedFormat('d F Y') }}
-                                    </td>
+                                                                {{ $permohonan->kode_permohonan ?? '-' }}
 
-                                    <td>
+                                                            </strong>
 
-                                        @php
+                                                        </td>
 
-                                            $status = $permohonan->status ?? '-';
 
-                                            $warna = match ($status) {
 
-                                                'Menunggu',
-                                                'Menunggu Verifikasi',
-                                                'Diverifikasi'
-                                                    => '#0d6efd',
+                                                        {{-- =================================================
+                                                        JENIS PERMOHONAN
+                                                        ================================================== --}}
 
-                                                'Diproses',
-                                                'Diproses Lapangan'
-                                                    => '#fd7e14',
+                                                        <td>
 
-                                                'Selesai'
-                                                    => '#198754',
+                                                            {{ $permohonan->jenis_permohonan ?? '-' }}
 
-                                                'Ditolak'
-                                                    => '#dc3545',
+                                                        </td>
 
-                                                default
-                                                    => '#6c757d',
 
-                                            };
 
-                                        @endphp
+                                                        {{-- =================================================
+                                                        NAMA PEMOHON / PENYELENGGARA
+                                                        ================================================== --}}
 
-                                        <span class="sa-status-badge">
+                                                        <td>
 
-                                            <span style="background: {{ $warna }}"></span>
+                                                            @if($permohonan->jenis_permohonan === 'Sosialisasi')
 
-                                            {{ $status }}
+                                                                {{ $permohonan->nama_penyelenggara ?? '-' }}
 
-                                        </span>
+                                                            @else
 
-                                    </td>
+                                                                {{ $permohonan->nama_pemohon ?? '-' }}
 
-                                    <td>
+                                                            @endif
 
-                                        <div class="sa-action-buttons">
+                                                        </td>
 
-                                            {{-- LIHAT DETAIL --}}
-                                            <a
-                                                href="{{ route(
-                                                    'adminpermohonan.detail_permohonan',
-                                                    $permohonan->id
-                                                ) }}"
-                                                class="sa-action-button sa-key-button"
-                                                title="Lihat Detail Permohonan"
-                                            >
 
-                                                <i class="bi bi-eye-fill"></i>
 
-                                            </a>
+                                                        {{-- =================================================
+                                                        TANGGAL KEGIATAN
+                                                        ================================================== --}}
 
-                                        </div>
+                                                        <td>
 
-                                    </td>
+                                                            @if($permohonan->tanggal_kegiatan)
 
-                                </tr>
+                                                                                    {{ \Carbon\Carbon::parse($permohonan->tanggal_kegiatan)
+                                                                ->translatedFormat('d F Y') }}
+
+                                                            @else
+
+                                                                -
+
+                                                            @endif
+
+                                                        </td>
+
+
+
+                                                        {{-- =================================================
+                                                        WAKTU KEGIATAN
+                                                        ================================================== --}}
+
+                                                        <td>
+
+                                                            @if($permohonan->waktu_kegiatan)
+
+                                                                                    {{ \Carbon\Carbon::parse($permohonan->waktu_kegiatan)
+                                                                ->format('H:i') }}
+
+                                                                                    WIB
+
+                                                            @else
+
+                                                                -
+
+                                                            @endif
+
+                                                        </td>
+
+
+
+                                                        {{-- =================================================
+                                                        TEMPAT
+                                                        ================================================== --}}
+
+                                                        <td>
+
+                                                            {{ $permohonan->tempat ?? '-' }}
+
+                                                        </td>
+
+
+
+                                                        {{-- =================================================
+                                                        PENANGGUNG JAWAB
+                                                        ================================================== --}}
+
+                                                        <td>
+
+                                                            {{ $permohonan->penanggung_jawab ?? '-' }}
+
+                                                        </td>
+
+
+
+                                                        {{-- =================================================
+                                                        JUMLAH PESERTA
+                                                        ================================================== --}}
+
+                                                        <td>
+
+                                                            @if($permohonan->jumlah_peserta !== null)
+
+                                                                {{ number_format($permohonan->jumlah_peserta, 0, ',', '.') }}
+
+                                                                orang
+
+                                                            @else
+
+                                                                -
+
+                                                            @endif
+
+                                                        </td>
+
+
+
+                                                        {{-- =================================================
+                                                        STATUS
+                                                        ================================================== --}}
+
+                                                        <td>
+
+                                                            @php
+
+                                                                $status = $permohonan->status ?? '-';
+
+                                                                $warna = match ($status) {
+
+                                                                    'Diajukan',
+                                                                    'Menunggu',
+                                                                    'Menunggu Verifikasi'
+                                                                    => '#0d6efd',
+
+                                                                    'Diverifikasi'
+                                                                    => '#6f42c1',
+
+                                                                    'Diproses',
+                                                                    'Diproses Lapangan'
+                                                                    => '#fd7e14',
+
+                                                                    'Selesai'
+                                                                    => '#198754',
+
+                                                                    'Ditolak'
+                                                                    => '#dc3545',
+
+                                                                    default
+                                                                    => '#6c757d',
+
+                                                                };
+
+                                                            @endphp
+
+
+                                                            <span class="sa-status-badge">
+
+                                                                <span style="background: {{ $warna }}"></span>
+
+                                                                {{ $status }}
+
+                                                            </span>
+
+                                                        </td>
+
+
+
+                                                        {{-- =================================================
+                                                        AKSI
+                                                        ================================================== --}}
+
+                                                        <td>
+
+                                                            <div class="sa-action-buttons">
+
+
+                                                                {{-- DETAIL / EDIT --}}
+
+                                                                <a href="{{ route(
+                                    'adminpermohonan.detail_permohonan',
+                                    ['id' => $permohonan->id]
+                                ) }}" class="sa-action-button sa-key-button" title="Detail Permohonan">
+
+                                                                    <i class="bi bi-eye-fill"></i>
+
+                                                                </a>
+
+
+
+                                                                {{-- HAPUS --}}
+
+                                                                <form action="{{ route(
+                                    'adminpermohonan.delete_permohonan',
+                                    ['id' => $permohonan->id]
+                                ) }}" method="POST" style="display:inline;">
+
+                                                                    @csrf
+
+                                                                    @method('DELETE')
+
+
+                                                                    <button type="submit" class="sa-action-button sa-delete-button"
+                                                                        title="Hapus Permohonan" onclick="return confirm(
+                                                                        'Yakin ingin menghapus data permohonan ini?'
+                                                                    )">
+
+                                                                        <i class="bi bi-trash-fill"></i>
+
+                                                                    </button>
+
+                                                                </form>
+
+
+                                                            </div>
+
+                                                        </td>
+
+
+                                                    </tr>
+
 
                             @empty
 
+
                                 <tr>
 
-                                    <td colspan="7" class="text-center py-4">
+                                    <td colspan="10" class="text-center text-muted py-4">
 
-                                        Tidak ada data permohonan.
+                                        <i class="bi bi-inbox fs-3 d-block mb-2"></i>
+
+                                        Belum ada data permohonan.
 
                                     </td>
 
                                 </tr>
+
 
                             @endforelse
 
@@ -257,21 +454,85 @@
 
                 </div>
 
+
+
+                {{-- =========================================================
+                FOOTER
+                ========================================================== --}}
+
                 <div class="sa-table-footer">
 
                     <span>
+
                         Menampilkan
-                        {{ $permohonans->firstItem() ?? 0 }}
-                        -
-                        {{ $permohonans->lastItem() ?? 0 }}
+                        {{ $permohonans->count() }}
                         dari
-                        {{ $permohonans->total() }}
-                        data
+                        {{ $permohonans->total() ?? $permohonans->count() }}
+                        permohonan
+
                     </span>
 
-                    <div class="sa-pagination">
-                        {{ $permohonans->links() }}
-                    </div>
+
+                    @if(method_exists($permohonans, 'hasPages') && $permohonans->hasPages())
+
+                        <div class="sa-pagination">
+
+                            {{-- PREVIOUS --}}
+
+                            @if($permohonans->onFirstPage())
+
+                                <button disabled>
+
+                                    <i class="bi bi-chevron-left"></i>
+
+                                </button>
+
+                            @else
+
+                                <a href="{{ $permohonans->previousPageUrl() }}" class="sa-pagination-link">
+
+                                    <i class="bi bi-chevron-left"></i>
+
+                                </a>
+
+                            @endif
+
+
+
+                            {{-- CURRENT PAGE --}}
+
+                            <button class="active">
+
+                                {{ $permohonans->currentPage() }}
+
+                            </button>
+
+
+
+                            {{-- NEXT --}}
+
+                            @if($permohonans->hasMorePages())
+
+                                <a href="{{ $permohonans->nextPageUrl() }}" class="sa-pagination-link">
+
+                                    <i class="bi bi-chevron-right"></i>
+
+                                </a>
+
+                            @else
+
+                                <button disabled>
+
+                                    <i class="bi bi-chevron-right"></i>
+
+                                </button>
+
+                            @endif
+
+                        </div>
+
+                    @endif
+
                 </div>
 
             </section>

@@ -214,223 +214,444 @@
         </section>
 
         {{-- TABEL --}}
-       <section class="sa-panel mt-4">
+      <section class="sa-panel mt-4">
 
-                <div class="sa-panel-header">
+    {{-- =========================================================
+    HEADER
+    ========================================================== --}}
+    <div class="sa-panel-header">
 
-                    <div>
+        <div>
 
-                        <h3>Daftar Permohonan</h3>
+            <h3>
+                Daftar Permohonan
+            </h3>
 
-                        <p>Seluruh data permohonan yang telah dikirim masyarakat.</p>
+            <p>
+                Seluruh data permohonan yang telah dikirim masyarakat.
+            </p>
 
-                    </div>
+        </div>
 
-                </div>
+    </div>
 
-                <div class="sa-table-responsive">
 
-                    <table class="sa-table">
+    {{-- =========================================================
+    TABLE
+    ========================================================== --}}
+    <div class="sa-table-responsive">
 
-                        <thead>
+        <table class="sa-table">
 
-                            <tr>
+            <thead>
 
-                                <th>Token</th>
-                                <th>Jenis Permohonan</th>
-                                <th>Nama Pemohon</th>
-                                <th>Kecamatan</th>
-                                <th>Tanggal</th>
-                                <th>Status</th>
-                                <th class="sa-action-column">Aksi</th>
+                <tr>
 
-                            </tr>
+                    <th>Kode Permohonan</th>
 
-                        </thead>
+                    <th>Jenis Permohonan</th>
 
-                        <tbody>
+                    <th>Nama Pemohon / Penyelenggara</th>
 
-                            @forelse($permohonans as $permohonan)
+                    <th>Tanggal Kegiatan</th>
 
-                                <tr>
+                    <th>Waktu</th>
 
-                                    {{-- TOKEN --}}
-                                    <td>
-                                        <strong>
-                                            {{ $permohonan->kode_permohonan ?? '-' }}
-                                        </strong>
-                                    </td>
+                    <th>Tempat</th>
 
+                    <th>Penanggung Jawab</th>
 
-                                    {{-- JENIS PERMOHONAN --}}
-                                    <td>
-                                        {{ $permohonan->jenis_permohonan ?? '-' }}
-                                    </td>
+                    <th>Jumlah Peserta</th>
 
+                    <th>Status</th>
 
-                                    {{-- NAMA PEMOHON --}}
-                                    <td>
-                                        {{ $permohonan->nama_penyelenggara ?? '-' }}
-                                    </td>
+                    <th class="sa-action-column">
+                        Aksi
+                    </th>
 
+                </tr>
 
-                                    {{-- KECAMATAN / TEMPAT --}}
-                                    <td>
-                                        {{ $permohonan->tempat ?? '-' }}
-                                    </td>
+            </thead>
 
 
-                                    {{-- TANGGAL --}}
-                                    <td>
+            <tbody>
 
-                                        @if($permohonan->created_at)
+                @forelse($permohonans as $permohonan)
 
-                                            {{ \Carbon\Carbon::parse($permohonan->created_at)->translatedFormat('d F Y') }}
+                    <tr>
 
-                                        @else
 
-                                            -
+                        {{-- =================================================
+                        KODE PERMOHONAN
+                        ================================================== --}}
 
-                                        @endif
+                        <td>
 
-                                    </td>
+                            <strong>
 
+                                {{ $permohonan->kode_permohonan ?? '-' }}
 
-                                    {{-- STATUS --}}
-                                    <td>
+                            </strong>
 
-                                        @php
+                        </td>
 
-                                            $status = $permohonan->status ?? '-';
 
-                                            $warna = match ($status) {
 
-                                                'Menunggu',
-                                                'Menunggu Verifikasi',
-                                                'Diverifikasi'
-                                                    => '#0d6efd',
+                        {{-- =================================================
+                        JENIS PERMOHONAN
+                        ================================================== --}}
 
-                                                'Diproses',
-                                                'Diproses Lapangan'
-                                                    => '#fd7e14',
+                        <td>
 
-                                                'Selesai'
-                                                    => '#198754',
+                            {{ $permohonan->jenis_permohonan ?? '-' }}
 
-                                                'Ditolak'
-                                                    => '#dc3545',
+                        </td>
 
-                                                default
-                                                    => '#6c757d',
 
-                                            };
 
-                                        @endphp
+                        {{-- =================================================
+                        NAMA PEMOHON / PENYELENGGARA
+                        ================================================== --}}
 
+                        <td>
 
-                                        <span class="sa-status-badge">
+                            @if($permohonan->jenis_permohonan === 'Sosialisasi')
 
-                                            <span style="background: {{ $warna }}"></span>
+                                {{ $permohonan->nama_penyelenggara ?? '-' }}
 
-                                            {{ $status }}
+                            @else
 
-                                        </span>
+                                {{ $permohonan->nama_pemohon ?? '-' }}
 
-                                    </td>
+                            @endif
 
+                        </td>
 
-                                    {{-- AKSI --}}
-                                    <td>
 
-                                        <div class="sa-action-buttons">
 
-                                            {{-- EDIT --}}
-                                            <a href="{{ route(
-                                                'superadmin.detail_permohonan',
-                                                $permohonan->id
-                                            ) }}"
-                                            class="sa-action-button sa-key-button"
-                                            title="Edit Permohonan">
+                        {{-- =================================================
+                        TANGGAL KEGIATAN
+                        ================================================== --}}
 
-                                                <i class="bi bi-pencil-square"></i>
+                        <td>
 
-                                            </a>
+                            @if($permohonan->tanggal_kegiatan)
 
+                                {{ \Carbon\Carbon::parse($permohonan->tanggal_kegiatan)
+                                    ->translatedFormat('d F Y') }}
 
-                                            {{-- DELETE --}}
-                                            <form
-                                                action="{{ route(
-                                                    'superadmin.delete_permohonan',
-                                                    $permohonan->id
-                                                ) }}"
-                                                method="POST"
-                                                style="display:inline;"
-                                            >
+                            @else
 
-                                                @csrf
+                                -
 
-                                                @method('DELETE')
+                            @endif
 
-                                                <button
-                                                    type="submit"
-                                                    class="sa-action-button sa-delete-button"
-                                                    title="Hapus Permohonan"
-                                                    onclick="return confirm('Yakin ingin menghapus data permohonan ini?')"
-                                                >
+                        </td>
 
-                                                    <i class="bi bi-trash-fill"></i>
 
-                                                </button>
 
-                                            </form>
+                        {{-- =================================================
+                        WAKTU KEGIATAN
+                        ================================================== --}}
 
-                                        </div>
+                        <td>
 
-                                    </td>
+                            @if($permohonan->waktu_kegiatan)
 
-                                </tr>
+                                {{ \Carbon\Carbon::parse($permohonan->waktu_kegiatan)
+                                    ->format('H:i') }}
 
-                            @empty
+                                WIB
 
-                                <tr>
+                            @else
 
-                                    <td colspan="7" class="text-center text-muted py-4">
+                                -
 
-                                        Belum ada data permohonan.
+                            @endif
 
-                                    </td>
+                        </td>
 
-                                </tr>
 
-                            @endforelse
 
-                        </tbody>
+                        {{-- =================================================
+                        TEMPAT
+                        ================================================== --}}
 
-                    </table>
+                        <td>
 
-                </div>
+                            {{ $permohonan->tempat ?? '-' }}
 
-                <div class="sa-table-footer">
+                        </td>
 
-                    <span>Menampilkan 3 dari 3 permohonan</span>
 
-                    <div class="sa-pagination">
 
-                        <button disabled>
-                            <i class="bi bi-chevron-left"></i>
-                        </button>
+                        {{-- =================================================
+                        PENANGGUNG JAWAB
+                        ================================================== --}}
 
-                        <button class="active">1</button>
+                        <td>
 
-                        <button disabled>
-                            <i class="bi bi-chevron-right"></i>
-                        </button>
+                            {{ $permohonan->penanggung_jawab ?? '-' }}
 
-                    </div>
+                        </td>
 
-                </div>
 
-            </section>
+
+                        {{-- =================================================
+                        JUMLAH PESERTA
+                        ================================================== --}}
+
+                        <td>
+
+                            @if($permohonan->jumlah_peserta !== null)
+
+                                {{ number_format($permohonan->jumlah_peserta, 0, ',', '.') }}
+
+                                orang
+
+                            @else
+
+                                -
+
+                            @endif
+
+                        </td>
+
+
+
+                        {{-- =================================================
+                        STATUS
+                        ================================================== --}}
+
+                        <td>
+
+                            @php
+
+                                $status = $permohonan->status ?? '-';
+
+                                $warna = match ($status) {
+
+                                    'Diajukan',
+                                    'Menunggu',
+                                    'Menunggu Verifikasi'
+                                        => '#0d6efd',
+
+                                    'Diverifikasi'
+                                        => '#6f42c1',
+
+                                    'Diproses',
+                                    'Diproses Lapangan'
+                                        => '#fd7e14',
+
+                                    'Selesai'
+                                        => '#198754',
+
+                                    'Ditolak'
+                                        => '#dc3545',
+
+                                    default
+                                        => '#6c757d',
+
+                                };
+
+                            @endphp
+
+
+                            <span class="sa-status-badge">
+
+                                <span
+                                    style="background: {{ $warna }}"
+                                ></span>
+
+                                {{ $status }}
+
+                            </span>
+
+                        </td>
+
+
+
+                        {{-- =================================================
+                        AKSI
+                        ================================================== --}}
+
+                        <td>
+
+                            <div class="sa-action-buttons">
+
+
+                                {{-- DETAIL / EDIT --}}
+
+                                <a
+                                    href="{{ route(
+                                        'superadmin.detail_permohonan',
+                                        ['id' => $permohonan->id]
+                                    ) }}"
+                                    class="sa-action-button sa-key-button"
+                                    title="Detail Permohonan"
+                                >
+
+                                    <i class="bi bi-eye-fill"></i>
+
+                                </a>
+
+
+
+                                {{-- HAPUS --}}
+
+                                <form
+                                    action="{{ route(
+                                        'superadmin.delete_permohonan',
+                                        ['id' => $permohonan->id]
+                                    ) }}"
+                                    method="POST"
+                                    style="display:inline;"
+                                >
+
+                                    @csrf
+
+                                    @method('DELETE')
+
+
+                                    <button
+                                        type="submit"
+                                        class="sa-action-button sa-delete-button"
+                                        title="Hapus Permohonan"
+                                        onclick="return confirm(
+                                            'Yakin ingin menghapus data permohonan ini?'
+                                        )"
+                                    >
+
+                                        <i class="bi bi-trash-fill"></i>
+
+                                    </button>
+
+                                </form>
+
+
+                            </div>
+
+                        </td>
+
+
+                    </tr>
+
+
+                @empty
+
+
+                    <tr>
+
+                        <td
+                            colspan="10"
+                            class="text-center text-muted py-4"
+                        >
+
+                            <i class="bi bi-inbox fs-3 d-block mb-2"></i>
+
+                            Belum ada data permohonan.
+
+                        </td>
+
+                    </tr>
+
+
+                @endforelse
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+
+    {{-- =========================================================
+    FOOTER
+    ========================================================== --}}
+
+    <div class="sa-table-footer">
+
+        <span>
+
+            Menampilkan
+            {{ $permohonans->count() }}
+            dari
+            {{ $permohonans->total() ?? $permohonans->count() }}
+            permohonan
+
+        </span>
+
+
+        @if(method_exists($permohonans, 'hasPages') && $permohonans->hasPages())
+
+            <div class="sa-pagination">
+
+                {{-- PREVIOUS --}}
+
+                @if($permohonans->onFirstPage())
+
+                    <button disabled>
+
+                        <i class="bi bi-chevron-left"></i>
+
+                    </button>
+
+                @else
+
+                    <a
+                        href="{{ $permohonans->previousPageUrl() }}"
+                        class="sa-pagination-link"
+                    >
+
+                        <i class="bi bi-chevron-left"></i>
+
+                    </a>
+
+                @endif
+
+
+
+                {{-- CURRENT PAGE --}}
+
+                <button class="active">
+
+                    {{ $permohonans->currentPage() }}
+
+                </button>
+
+
+
+                {{-- NEXT --}}
+
+                @if($permohonans->hasMorePages())
+
+                    <a
+                        href="{{ $permohonans->nextPageUrl() }}"
+                        class="sa-pagination-link"
+                    >
+
+                        <i class="bi bi-chevron-right"></i>
+
+                    </a>
+
+                @else
+
+                    <button disabled>
+
+                        <i class="bi bi-chevron-right"></i>
+
+                    </button>
+
+                @endif
+
+            </div>
+
+        @endif
+
+    </div>
+
+</section>
 
     </main>
 

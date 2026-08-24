@@ -422,62 +422,9 @@
                                 </div>
 
 
-                                {{-- JENIS REHABILITASI --}}
+                               
 
-                                <div class="col-md-4 mb-3">
-
-                                    <label class="form-label">
-                                        Jenis Rehabilitasi
-                                    </label>
-
-                                </div>
-
-
-                                <div class="col-md-8 mb-3">
-
-                                    <select
-                                        class="form-select"
-                                        name="jenis_rehabilitasi"
-                                        id="jenis_rehabilitasi"
-                                    >
-
-                                        <option value="" selected disabled>
-                                            Pilih Jenis Rehabilitasi
-                                        </option>
-
-                                        <option
-                                            value="Rawat Jalan"
-                                            {{ old('jenis_rehabilitasi') == 'Rawat Jalan' ? 'selected' : '' }}
-                                        >
-                                            Rawat Jalan
-                                        </option>
-
-                                        <option
-                                            value="Rawat Inap"
-                                            {{ old('jenis_rehabilitasi') == 'Rawat Inap' ? 'selected' : '' }}
-                                        >
-                                            Rawat Inap
-                                        </option>
-
-                                        <option
-                                            value="Konsultasi"
-                                            {{ old('jenis_rehabilitasi') == 'Konsultasi' ? 'selected' : '' }}
-                                        >
-                                            Konsultasi
-                                        </option>
-
-                                    </select>
-
-
-                                    @error('jenis_rehabilitasi')
-
-                                        <div class="text-danger small mt-1">
-                                            {{ $message }}
-                                        </div>
-
-                                    @enderror
-
-                                </div>
+                              
 
                             </div>
 
@@ -628,162 +575,7 @@
             </div>
 
 
-            {{-- =====================================================
-                SIDEBAR PERMOHONAN TERBARU
-            ====================================================== --}}
-
-            <!-- <aside class="sidebar-aduan">
-
-                <div class="aduan-terbaru-header">
-
-                    <h4>
-                        Permohonan Terbaru
-                    </h4>
-
-                </div>
-
-
-                {{-- =====================================================
-                    SEARCH PERMOHONAN
-                ====================================================== --}}
-
-                <div class="search-permohonan-box">
-
-                    <form
-                        action="{{ route('permohonan.cari') }}"
-                        method="GET"
-                    >
-
-                        <div class="search-permohonan-wrapper">
-
-                            <div class="search-permohonan-input-wrapper">
-
-                                <i class="bi bi-search"></i>
-
-                                <input
-                                    type="text"
-                                    name="jenis_permohonan"
-                                    value="{{ request('jenis_permohonan') }}"
-                                    placeholder="Cari berdasarkan jenis permohonan..."
-                                    autocomplete="off"
-                                >
-
-                            </div>
-
-
-                            <button
-                                type="submit"
-                                class="btn-search-permohonan"
-                            >
-
-                                <i class="bi bi-search"></i>
-
-                                Cari
-
-                            </button>
-
-                        </div>
-
-                    </form>
-
-                </div>
-
-
-                {{-- =====================================================
-                    DATA PERMOHONAN
-                ====================================================== --}}
-
-                @forelse($permohonanTerbaru as $item)
-
-                    <div class="aduan-item">
-
-                        {{-- STATUS --}}
-
-                        <span
-                            class="status
-                                @if($item->status == 'Diajukan')
-                                    menunggu
-                                @elseif($item->status == 'Diverifikasi')
-                                    verifikasi
-                                @elseif($item->status == 'Diproses')
-                                    proses
-                                @elseif($item->status == 'Selesai')
-                                    selesai
-                                @elseif($item->status == 'Ditolak')
-                                    ditolak
-                                @endif
-                            "
-                        >
-                            {{ $item->status }}
-                        </span>
-
-
-                        {{-- JENIS PERMOHONAN --}}
-
-                        <h6>
-                            {{ \Illuminate\Support\Str::limit($item->jenis_permohonan, 40) }}
-                        </h6>
-
-
-                        {{-- NAMA --}}
-
-                        <small>
-
-                            <i class="bi bi-person-fill"></i>
-
-                            @if($item->jenis_permohonan === 'Sosialisasi')
-
-                                {{ \Illuminate\Support\Str::limit($item->nama_penyelenggara ?? '-', 30) }}
-
-                            @elseif($item->jenis_permohonan === 'Rehabilitasi')
-
-                                {{ \Illuminate\Support\Str::limit($item->nama_pemohon ?? '-', 30) }}
-
-                            @endif
-
-                        </small>
-
-
-                        {{-- TANGGAL --}}
-
-                        <small>
-
-                            <i class="bi bi-calendar-event-fill"></i>
-
-                            {{ $item->created_at->translatedFormat('d F Y') }}
-
-                        </small>
-
-
-                        {{-- TRACKING --}}
-
-                        <a
-                            href="{{ route('permohonan.tracking', $item->kode_permohonan) }}"
-                            class="btn-detail-laporan"
-                        >
-
-                            <i class="bi bi-eye-fill"></i>
-
-                            Lihat Tracking
-
-                        </a>
-
-                    </div>
-
-                @empty
-
-                    <div class="alert alert-light">
-
-                        <i class="bi bi-info-circle me-1"></i>
-
-                        Belum ada permohonan.
-
-                    </div>
-
-                @endforelse
-
-            </aside> -->
-
+          
         </div>
 
     </div>
@@ -835,7 +627,6 @@ document.addEventListener('DOMContentLoaded', function () {
         'nama_pemohon',
         'nik',
         'alamat_pemohon',
-        'jenis_rehabilitasi'
     ];
 
 

@@ -8,60 +8,132 @@ use App\Models\Permohonan;
 
 class DataPermohonanController extends Controller
 {
+    /**
+     * ============================================================
+     * DATA PERMOHONAN
+     * ============================================================
+     */
     public function dataPermohonan(Request $request)
     {
         $query = Permohonan::query();
 
-        // Search
+
+        // ========================================================
+        // SEARCH
+        // ========================================================
+
         if ($request->filled('search')) {
 
             $search = trim($request->search);
 
             $query->where(function ($q) use ($search) {
 
-                $q->where('kode_permohonan', 'like', "%{$search}%")
-                    ->orWhere('nama_penyelenggara', 'like', "%{$search}%")
-                    ->orWhere('penanggung_jawab', 'like', "%{$search}%")
-                    ->orWhere('jenis_permohonan', 'like', "%{$search}%");
+                $q->where(
+                    'kode_permohonan',
+                    'like',
+                    "%{$search}%"
+                )
+
+                    ->orWhere(
+                        'nama_penyelenggara',
+                        'like',
+                        "%{$search}%"
+                    )
+
+                    ->orWhere(
+                        'nama_pemohon',
+                        'like',
+                        "%{$search}%"
+                    )
+
+                    ->orWhere(
+                        'penanggung_jawab',
+                        'like',
+                        "%{$search}%"
+                    )
+
+                    ->orWhere(
+                        'jenis_permohonan',
+                        'like',
+                        "%{$search}%"
+                    )
+
+                    ->orWhere(
+                        'tempat',
+                        'like',
+                        "%{$search}%"
+                    );
 
             });
         }
 
-        // Jenis Permohonan
+
+        // ========================================================
+        // FILTER JENIS PERMOHONAN
+        // ========================================================
+
         if ($request->filled('jenis_permohonan')) {
 
             $query->where(
                 'jenis_permohonan',
                 $request->jenis_permohonan
             );
+
         }
 
-        // Status
+
+        // ========================================================
+        // FILTER STATUS
+        // ========================================================
+
         if ($request->filled('status')) {
 
             $query->where(
                 'status',
                 $request->status
             );
+
         }
 
-        // Tanggal Kegiatan
+
+        // ========================================================
+        // FILTER TANGGAL KEGIATAN
+        // ========================================================
+
         if ($request->filled('tanggal_kegiatan')) {
 
             $query->whereDate(
                 'tanggal_kegiatan',
                 $request->tanggal_kegiatan
             );
+
         }
+
+
+        // ========================================================
+        // DATA PERMOHONAN
+        // ========================================================
 
         $permohonans = $query
             ->orderBy('id', 'desc')
-            ->paginate(10);
+            ->paginate(10)
+            ->appends(request()->query());
 
-        $jenisPermohonan = Permohonan::select('jenis_permohonan')
-            ->distinct()
-            ->orderBy('jenis_permohonan')
-            ->pluck('jenis_permohonan');
+        // ========================================================
+        // JENIS PERMOHONAN
+        //
+        // HANYA ADA 2 PILIHAN
+        // ========================================================
+
+        $jenisPermohonan = collect([
+            'Permohonan Rehabilitasi',
+            'Permohonan Sosialisasi',
+        ]);
+
+
+        // ========================================================
+        // DATA VIEW
+        // ========================================================
 
         return view(
             'superadmin.data_permohonan',
@@ -72,43 +144,82 @@ class DataPermohonanController extends Controller
         );
     }
 
+
+    /**
+     * ============================================================
+     * UPDATE PERMOHONAN
+     * ============================================================
+     */
     public function updatePermohonan(Request $request, $id)
     {
         $request->validate([
-            'status' => 'required'
+            'status' => 'required',
         ]);
 
+
         $permohonan = Permohonan::findOrFail($id);
+
 
         $data = [
             'status' => $request->status,
         ];
 
-        // Simpan catatan sesuai status
-        if ($request->status == 'Menunggu') {
+
+        // ========================================================
+        // MENUNGGU / VERIFIKASI
+        // ========================================================
+
+        if ($request->status === 'Menunggu') {
 
             $data['tanggal_verifikasi'] = now();
-            $data['catatan_verifikasi'] = $request->catatan;
+
+            $data['catatan_verifikasi'] =
+                $request->catatan;
+
         }
 
-        if ($request->status == 'Diproses') {
+
+        // ========================================================
+        // DIPROSES
+        // ========================================================
+
+        if ($request->status === 'Diproses') {
 
             $data['tanggal_proses'] = now();
-            $data['catatan_proses'] = $request->catatan;
+
+            $data['catatan_proses'] =
+                $request->catatan;
+
         }
 
-        if ($request->status == 'Selesai') {
+
+        // ========================================================
+        // SELESAI
+        // ========================================================
+
+        if ($request->status === 'Selesai') {
 
             $data['tanggal_selesai'] = now();
-            $data['catatan_selesai'] = $request->catatan;
+
+            $data['catatan_selesai'] =
+                $request->catatan;
+
         }
 
+
+        // ========================================================
+        // UPDATE DATABASE
+        // ========================================================
+
         $permohonan->update($data);
+
 
         return redirect()
             ->route(
                 'superadmin.detail_permohonan',
-                $permohonan->id
+                [
+                    'id' => $permohonan->id
+                ]
             )
             ->with(
                 'success',
@@ -116,9 +227,16 @@ class DataPermohonanController extends Controller
             );
     }
 
+
+    /**
+     * ============================================================
+     * DETAIL PERMOHONAN
+     * ============================================================
+     */
     public function detailPermohonan($id)
     {
         $permohonan = Permohonan::findOrFail($id);
+
 
         return view(
             'superadmin.detail_permohonan',
@@ -126,14 +244,24 @@ class DataPermohonanController extends Controller
         );
     }
 
+
+    /**
+     * ============================================================
+     * HAPUS PERMOHONAN
+     * ============================================================
+     */
     public function destroy($id)
     {
         $permohonan = Permohonan::findOrFail($id);
 
+
         $permohonan->delete();
 
+
         return redirect()
-            ->route('superadmin.data_permohonan')
+            ->route(
+                'superadmin.data_permohonan'
+            )
             ->with(
                 'success',
                 'Data permohonan berhasil dihapus.'

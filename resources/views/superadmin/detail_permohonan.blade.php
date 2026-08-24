@@ -224,7 +224,7 @@
                                 DIVERIFIKASI
                                 ====================================================== --}}
                                 <div class="admin-tracking-item
-            {{ $permohonan->tanggal_verifikasi ? 'selesai' : 'pending' }}">
+                            {{ $permohonan->tanggal_verifikasi ? 'selesai' : 'pending' }}">
 
                                     <div class="admin-tracking-icon">
 
@@ -289,7 +289,7 @@
                                 DIPROSES
                                 ====================================================== --}}
                                 <div class="admin-tracking-item
-            {{ $permohonan->tanggal_proses ? 'selesai' : 'pending' }}">
+                            {{ $permohonan->tanggal_proses ? 'selesai' : 'pending' }}">
 
                                     <div class="admin-tracking-icon">
 
@@ -360,7 +360,7 @@
                                 SELESAI
                                 ====================================================== --}}
                                 <div class="admin-tracking-item
-            {{ $permohonan->tanggal_selesai ? 'selesai' : 'pending' }}">
+                            {{ $permohonan->tanggal_selesai ? 'selesai' : 'pending' }}">
 
                                     <div class="admin-tracking-icon">
 
@@ -509,16 +509,26 @@
                                         Format JPG, JPEG, PNG, PDF. Maksimal 2 MB.
                                     </small>
 
+                                    {{-- Preview --}}
+                                    <div id="previewContainer" class="mt-3" style="display: none;">
 
-                                    {{-- Preview Gambar --}}
-
-                                    <div class="mt-3">
-
-                                        <img id="previewBukti" src="#" alt="Preview Bukti" class="img-fluid rounded shadow"
+                                        {{-- Preview Gambar --}}
+                                        <img id="previewBukti" src="" alt="Preview Bukti" class="img-fluid rounded shadow"
                                             style="
-                                display:none;
-                                max-height:250px;
-                             ">
+                            display: none;
+                            max-height: 400px;
+                            width: auto;
+                         ">
+
+                                        {{-- Preview PDF --}}
+                                        <iframe id="previewPdf" src="" style="
+                                display: none;
+                                width: 100%;
+                                height: 500px;
+                                border: 1px solid #ddd;
+                                border-radius: 8px;
+                            ">
+                                        </iframe>
 
                                     </div>
 
@@ -555,8 +565,8 @@
     </section>
 
     <!-- ==========================================
-                                         MODAL DETAIL TINDAK LANJUT PERMOHONAN
-                                    ========================================== -->
+                                                         MODAL DETAIL TINDAK LANJUT PERMOHONAN
+                                                    ========================================== -->
     <div class="modal fade" id="detailPermohonanModal" tabindex="-1" aria-labelledby="detailPermohonanModalLabel"
         aria-hidden="true">
 
@@ -670,5 +680,60 @@
         </div>
 
     </div>
+    <script>
+        document.getElementById('bukti').addEventListener('change', function (event) {
 
+            const file = event.target.files[0];
+
+            const previewContainer = document.getElementById('previewContainer');
+            const previewImage = document.getElementById('previewBukti');
+            const previewPdf = document.getElementById('previewPdf');
+
+            // Reset preview
+            previewImage.style.display = 'none';
+            previewPdf.style.display = 'none';
+
+            previewImage.src = '';
+            previewPdf.src = '';
+
+            if (!file) {
+                previewContainer.style.display = 'none';
+                return;
+            }
+
+            const fileType = file.type;
+
+            // Tampilkan gambar
+            if (fileType.startsWith('image/')) {
+
+                const reader = new FileReader();
+
+                reader.onload = function (e) {
+
+                    previewImage.src = e.target.result;
+
+                    previewImage.style.display = 'block';
+
+                    previewContainer.style.display = 'block';
+                };
+
+                reader.readAsDataURL(file);
+
+            }
+
+            // Tampilkan PDF
+            else if (fileType === 'application/pdf') {
+
+                const fileURL = URL.createObjectURL(file);
+
+                previewPdf.src = fileURL;
+
+                previewPdf.style.display = 'block';
+
+                previewContainer.style.display = 'block';
+
+            }
+
+        });
+    </script>
 @endsection
