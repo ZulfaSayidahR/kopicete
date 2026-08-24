@@ -364,14 +364,14 @@
 
 
                                                                 {{-- KODE --}}
-
+<!-- 
                                                                 <div class="tracking-item-code">
 
                                                                     <i class="bi bi-upc"></i>
 
                                                                     {{ $item->kode_aduan ?? '-' }}
 
-                                                                </div>
+                                                                </div> -->
 
 
                                                                 {{-- BUTTON --}}
@@ -635,13 +635,13 @@
 
                                                                 {{-- KODE --}}
 
-                                                                <div class="tracking-item-code">
+                                                                <!-- <div class="tracking-item-code">
 
                                                                     <i class="bi bi-upc"></i>
 
                                                                     {{ $item->kode_permohonan ?? '-' }}
 
-                                                                </div>
+                                                                </div> -->
 
 
                                                                 {{-- BUTTON --}}

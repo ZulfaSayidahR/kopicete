@@ -71,7 +71,7 @@
                                                     {{ $data['jenis_permohonan'] === 'Sosialisasi'
                             ? 'Permohonan Sosialisasi'
                             : 'Permohonan Rehabilitasi'
-                                                            }}
+                                                                                                                        }}
                                                 </strong>
 
                                             </div>
@@ -87,29 +87,27 @@
 
                                             <table class="table table-borderless align-middle">
 
-
                                                 {{-- =================================================
                                                 JENIS PERMOHONAN
                                                 ================================================== --}}
 
                                                 <tr>
-
                                                     <td width="35%">
-
                                                         <strong>
                                                             Jenis Permohonan
                                                         </strong>
-
                                                     </td>
 
                                                     <td>
-
-                                                        {{ $data['jenis_permohonan'] ?? '-' }}
-
+                                                        @if($data['jenis_permohonan'] === 'Sosialisasi')
+                                                            Permohonan Sosialisasi
+                                                        @elseif($data['jenis_permohonan'] === 'Rehabilitasi')
+                                                            Permohonan Rehabilitasi
+                                                        @else
+                                                            -
+                                                        @endif
                                                     </td>
-
                                                 </tr>
-
 
                                                 {{-- =================================================
                                                 SOSIALISASI
@@ -325,25 +323,7 @@
                                                     </tr>
 
 
-                                                    {{-- JENIS REHABILITASI --}}
 
-                                                    <tr>
-
-                                                        <td>
-
-                                                            <strong>
-                                                                Jenis Rehabilitasi
-                                                            </strong>
-
-                                                        </td>
-
-                                                        <td>
-
-                                                            {{ $data['jenis_rehabilitasi'] ?? '-' }}
-
-                                                        </td>
-
-                                                    </tr>
 
 
                                                 @endif
@@ -533,178 +513,6 @@
                     </div>
 
                 </div>
-
-
-                {{-- =====================================================
-                SIDEBAR PERMOHONAN TERBARU
-                ====================================================== --}}
-
-                <!-- <aside class="sidebar-aduan">
-
-                    <div class="aduan-terbaru-header">
-
-                        <h4>
-                            Permohonan Terbaru
-                        </h4>
-
-                    </div>
-
-
-                    {{-- =====================================================
-                    SEARCH
-                    ====================================================== --}}
-
-                    <div class="search-permohonan-box">
-
-                        <form action="{{ route('permohonan.cari') }}" method="GET">
-
-                            <div class="search-permohonan-wrapper">
-
-                                <div class="search-permohonan-input-wrapper">
-
-                                    <i class="bi bi-search"></i>
-
-                                    <input type="text" name="jenis_permohonan" value="{{ request('jenis_permohonan') }}"
-                                        placeholder="Cari berdasarkan jenis permohonan..." autocomplete="off">
-
-                                </div>
-
-
-                                <button type="submit" class="btn-search-permohonan">
-
-                                    <i class="bi bi-search"></i>
-
-                                    Cari
-
-                                </button>
-
-                            </div>
-
-                        </form>
-
-                    </div>
-
-
-                    {{-- =====================================================
-                    DATA PERMOHONAN TERBARU
-                    ====================================================== --}}
-
-                    @forelse($permohonanTerbaru as $item)
-
-                                    <div class="aduan-item">
-
-
-                                        {{-- STATUS --}}
-
-                                        <span class="status
-
-                                                    @if($item->status == 'Diajukan')
-                                                        menunggu
-
-                                                    @elseif($item->status == 'Diverifikasi')
-                                                        verifikasi
-
-                                                    @elseif($item->status == 'Diproses')
-                                                        proses
-
-                                                    @elseif($item->status == 'Selesai')
-                                                        selesai
-
-                                                    @elseif($item->status == 'Ditolak')
-                                                        ditolak
-
-                                                    @else
-                                                        verifikasi
-
-                                                    @endif
-
-                                                ">
-
-                                            {{ $item->status }}
-
-                                        </span>
-
-
-                                        {{-- JENIS --}}
-
-                                        <h6>
-
-                                            {{ \Illuminate\Support\Str::limit(
-                            $item->jenis_permohonan,
-                            40
-                        ) }}
-
-                                        </h6>
-
-
-                                        {{-- NAMA --}}
-
-                                        <small>
-
-                                            <i class="bi bi-person-fill"></i>
-
-                                            @if($item->jenis_permohonan === 'Sosialisasi')
-
-                                                                {{ \Illuminate\Support\Str::limit(
-                                                    $item->nama_penyelenggara ?? '-',
-                                                    30
-                                                ) }}
-
-                                            @elseif($item->jenis_permohonan === 'Rehabilitasi')
-
-                                                                {{ \Illuminate\Support\Str::limit(
-                                                    $item->nama_pemohon ?? '-',
-                                                    30
-                                                ) }}
-
-                                            @else
-
-                                                -
-
-                                            @endif
-
-                                        </small>
-
-
-                                        {{-- TANGGAL --}}
-
-                                        <small>
-
-                                            <i class="bi bi-calendar-event-fill"></i>
-
-                                            {{ $item->created_at->translatedFormat('d F Y') }}
-
-                                        </small>
-
-
-                                        {{-- TRACKING --}}
-
-                                        <a href="{{ route(
-                            'permohonan.tracking',
-                            $item->kode_permohonan
-                        ) }}" class="btn-detail-laporan">
-
-                                            <i class="bi bi-eye-fill"></i>
-
-                                            Lihat Tracking
-
-                                        </a>
-
-                                    </div>
-
-                    @empty
-
-                        <div class="alert alert-light">
-
-                            <i class="bi bi-info-circle me-1"></i>
-
-                            Belum ada permohonan.
-
-                        </div>
-
-                    @endforelse
-
-                </aside> -->
 
             </div>
 

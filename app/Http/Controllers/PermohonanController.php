@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
-
 use App\Models\Permohonan;
 
 class PermohonanController extends Controller
@@ -48,7 +47,7 @@ class PermohonanController extends Controller
         $request->validate([
             'jenis_permohonan' => [
                 'required',
-                'in:Rehabilitasi,Sosialisasi'
+                'in:Rehabilitasi,Sosialisasi',
             ],
         ], [
             'jenis_permohonan.required' =>
@@ -68,7 +67,6 @@ class PermohonanController extends Controller
         if ($request->jenis_permohonan === 'Sosialisasi') {
 
             $data = $request->validate([
-
                 'jenis_permohonan' =>
                     'required|in:Sosialisasi',
 
@@ -113,7 +111,6 @@ class PermohonanController extends Controller
         */ else {
 
             $data = $request->validate([
-
                 'jenis_permohonan' =>
                     'required|in:Rehabilitasi',
 
@@ -125,9 +122,6 @@ class PermohonanController extends Controller
 
                 'alamat_pemohon' =>
                     'required|string',
-
-                'jenis_rehabilitasi' =>
-                    'required|string|max:255',
 
                 'no_hp' =>
                     'required|string|max:20',
@@ -204,7 +198,7 @@ class PermohonanController extends Controller
     |--------------------------------------------------------------------------
     */
 
-    public function kirim(Request $request)
+    public function kirimOtp(Request $request)
     {
         /*
         |--------------------------------------------------------------------------
@@ -321,16 +315,12 @@ class PermohonanController extends Controller
         try {
 
             $response = Http::withHeaders([
-
                 'Authorization' =>
                     env('FONNTE_TOKEN'),
 
             ])->post(
-
                     'https://api.fonnte.com/send',
-
                     [
-
                         'target' =>
                             $nomor,
 
@@ -375,9 +365,7 @@ class PermohonanController extends Controller
         */
 
         return redirect()
-            ->route(
-                'permohonan.otp'
-            );
+            ->route('permohonan.otp');
     }
 
 
@@ -395,16 +383,10 @@ class PermohonanController extends Controller
         |--------------------------------------------------------------------------
         */
 
-        if (
-            !Session::has(
-                'permohonan.data'
-            )
-        ) {
+        if (!Session::has('permohonan.data')) {
 
             return redirect()
-                ->route(
-                    'permohonan.create'
-                )
+                ->route('permohonan.create')
                 ->with(
                     'error',
                     'Silakan isi formulir permohonan terlebih dahulu.'
@@ -436,7 +418,6 @@ class PermohonanController extends Controller
         $nomor =
             $data['no_hp'] ?? '';
 
-
         if ($nomor) {
 
             $waTampil =
@@ -459,7 +440,6 @@ class PermohonanController extends Controller
         return view(
             'user.permohonan.verifikasiOtp',
             [
-
                 'expired' =>
                     $expired
                     ? $expired->timestamp * 1000
@@ -478,10 +458,8 @@ class PermohonanController extends Controller
     |--------------------------------------------------------------------------
     */
 
-    public function verifyOtp(
-        Request $request
-    ) {
-
+    public function verifyOtp(Request $request)
+    {
         /*
         |--------------------------------------------------------------------------
         | VALIDASI OTP
@@ -489,12 +467,10 @@ class PermohonanController extends Controller
         */
 
         $request->validate(
-
             [
                 'otp' =>
                     'required|digits:6',
             ],
-
             [
                 'otp.required' =>
                     'Kode OTP wajib diisi.',
@@ -557,16 +533,12 @@ class PermohonanController extends Controller
         */
 
         if (
-            Carbon::now()
-                ->greaterThan($expired)
+            Carbon::now()->greaterThan($expired)
         ) {
 
             Session::forget([
-
                 'permohonan.otp',
-
                 'permohonan.otp_expired',
-
             ]);
 
             return back()
@@ -614,12 +586,10 @@ class PermohonanController extends Controller
                 );
 
         } while (
-
             Permohonan::where(
                 'kode_permohonan',
                 $kode
             )->exists()
-
         );
 
 
@@ -627,117 +597,100 @@ class PermohonanController extends Controller
         |--------------------------------------------------------------------------
         | SIMPAN DATA KE DATABASE
         |--------------------------------------------------------------------------
-        |
-        | Data Sosialisasi dan Rehabilitasi
-        | menggunakan kolom masing-masing.
-        |
         */
 
-        $permohonan =
-            Permohonan::create([
+        $permohonan = Permohonan::create([
 
-                /*
-                |------------------------------------------------------------------
-                | IDENTITAS
-                |------------------------------------------------------------------
-                */
+            /*
+            |--------------------------------------------------------------------------
+            | IDENTITAS
+            |--------------------------------------------------------------------------
+            */
 
-                'kode_permohonan' =>
-                    $kode,
+            'kode_permohonan' =>
+                $kode,
 
-                'jenis_permohonan' =>
-                    $data['jenis_permohonan'],
-
-
-                /*
-                |------------------------------------------------------------------
-                | DATA SOSIALISASI
-                |------------------------------------------------------------------
-                */
-
-                'nama_penyelenggara' =>
-                    $data['nama_penyelenggara']
-                    ?? null,
-
-                'tanggal_kegiatan' =>
-                    $data['tanggal_kegiatan']
-                    ?? null,
-
-                'waktu_kegiatan' =>
-                    $data['waktu_kegiatan']
-                    ?? null,
-
-                'tempat' =>
-                    $data['tempat']
-                    ?? null,
-
-                'penanggung_jawab' =>
-                    $data['penanggung_jawab']
-                    ?? null,
-
-                'jumlah_peserta' =>
-                    $data['jumlah_peserta']
-                    ?? null,
+            'jenis_permohonan' => $data['jenis_permohonan'] === 'Rehabilitasi'
+                ? 'Permohonan Rehabilitasi'
+                : 'Permohonan Sosialisasi',
 
 
-                /*
-                |------------------------------------------------------------------
-                | DATA REHABILITASI
-                |------------------------------------------------------------------
-                */
+            /*
+            |--------------------------------------------------------------------------
+            | DATA SOSIALISASI
+            |--------------------------------------------------------------------------
+            */
 
-                'nama_pemohon' =>
-                    $data['nama_pemohon']
-                    ?? null,
+            'nama_penyelenggara' => $data['nama_penyelenggara'] ?? '-',
 
-                'nik' =>
-                    $data['nik']
-                    ?? null,
+            'tanggal_kegiatan' =>
+                $data['tanggal_kegiatan']
+                ?? null,
 
-                'alamat_pemohon' =>
-                    $data['alamat_pemohon']
-                    ?? null,
+            'waktu_kegiatan' =>
+                $data['waktu_kegiatan']
+                ?? null,
 
-                'jenis_rehabilitasi' =>
-                    $data['jenis_rehabilitasi']
-                    ?? null,
+            'tempat' =>
+                $data['tempat']
+                ?? null,
 
+            'penanggung_jawab' =>
+                $data['penanggung_jawab']
+                ?? null,
 
-                /*
-                |------------------------------------------------------------------
-                | DATA UMUM
-                |------------------------------------------------------------------
-                */
-
-                'no_hp' =>
-                    $data['no_hp']
-                    ?? null,
-
-                'keterangan' =>
-                    $data['keterangan']
-                    ?? null,
-
-                'lampiran' =>
-                    $data['lampiran']
-                    ?? null,
+            'jumlah_peserta' =>
+                $data['jumlah_peserta']
+                ?? null,
 
 
-                /*
-                |------------------------------------------------------------------
-                | STATUS AWAL
-                |------------------------------------------------------------------
-                |
-                | Permohonan baru langsung masuk sebagai DIAJUKAN.
-                | Admin yang menentukan apakah:
-                | Diverifikasi → Diproses → Selesai
-                | atau Ditolak.
-                |
-                */
+            /*
+            |--------------------------------------------------------------------------
+            | DATA REHABILITASI
+            |--------------------------------------------------------------------------
+            */
 
-                'status' =>
-                    'Diajukan',
+            'nama_pemohon' =>
+                $data['nama_pemohon']
+                ?? null,
 
-            ]);
+            'nik' =>
+                $data['nik']
+                ?? null,
+
+            'alamat_pemohon' =>
+                $data['alamat_pemohon']
+                ?? null,
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | DATA UMUM
+            |--------------------------------------------------------------------------
+            */
+
+            'no_hp' =>
+                $data['no_hp']
+                ?? null,
+
+            'keterangan' =>
+                $data['keterangan']
+                ?? null,
+
+            'lampiran' =>
+                $data['lampiran']
+                ?? null,
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | STATUS AWAL
+            |--------------------------------------------------------------------------
+            */
+
+            'status' =>
+                'Diajukan',
+        ]);
 
 
         /*
@@ -747,13 +700,9 @@ class PermohonanController extends Controller
         */
 
         Session::forget([
-
             'permohonan.data',
-
             'permohonan.otp',
-
             'permohonan.otp_expired',
-
         ]);
 
 
@@ -766,8 +715,7 @@ class PermohonanController extends Controller
         return redirect()
             ->route(
                 'permohonan.success',
-                $permohonan
-                    ->kode_permohonan
+                $permohonan->kode_permohonan
             );
     }
 
@@ -778,22 +726,17 @@ class PermohonanController extends Controller
     |--------------------------------------------------------------------------
     */
 
-    public function tracking(
-        $kode
-    ) {
-
+    public function tracking($kode)
+    {
         $permohonan =
             Permohonan::where(
                 'kode_permohonan',
                 $kode
             )->firstOrFail();
 
-
         return view(
             'user.permohonan.tracking',
-            compact(
-                'permohonan'
-            )
+            compact('permohonan')
         );
     }
 
@@ -804,22 +747,17 @@ class PermohonanController extends Controller
     |--------------------------------------------------------------------------
     */
 
-    public function success(
-        $kode
-    ) {
-
+    public function success($kode)
+    {
         $permohonan =
             Permohonan::where(
                 'kode_permohonan',
                 $kode
             )->firstOrFail();
 
-
         return view(
             'user.permohonan.success',
-            compact(
-                'permohonan'
-            )
+            compact('permohonan')
         );
     }
 
@@ -830,10 +768,8 @@ class PermohonanController extends Controller
     |--------------------------------------------------------------------------
     */
 
-    public function kirimUlangOtp(
-        Request $request
-    ) {
-
+    public function kirimUlangOtp(Request $request)
+    {
         /*
         |--------------------------------------------------------------------------
         | AMBIL DATA
@@ -844,7 +780,6 @@ class PermohonanController extends Controller
             Session::get(
                 'permohonan.data'
             );
-
 
         if (!$data) {
 
@@ -868,7 +803,6 @@ class PermohonanController extends Controller
         $nomor =
             $data['no_hp']
             ?? null;
-
 
         if (!$nomor) {
 
@@ -955,7 +889,6 @@ class PermohonanController extends Controller
             Carbon::now()
                 ->addMinutes(5);
 
-
         Session::put(
             'permohonan.otp_expired',
             $expired
@@ -972,16 +905,12 @@ class PermohonanController extends Controller
 
             $response =
                 Http::withHeaders([
-
                     'Authorization' =>
                         env('FONNTE_TOKEN'),
 
                 ])->post(
-
                         'https://api.fonnte.com/send',
-
                         [
-
                             'target' =>
                                 $nomor,
 
@@ -990,14 +919,11 @@ class PermohonanController extends Controller
                                 "Kode OTP Anda : {$otp}\n\n" .
                                 "Berlaku selama 5 menit.\n\n" .
                                 "Jangan berikan kode ini kepada siapa pun.",
-
                         ]
                     );
 
 
-            if (
-                !$response->successful()
-            ) {
+            if (!$response->successful()) {
 
                 return back()
                     ->with(
@@ -1039,16 +965,13 @@ class PermohonanController extends Controller
     |--------------------------------------------------------------------------
     */
 
-    public function trackingDetail(
-        $kode
-    ) {
-
+    public function trackingDetail($kode)
+    {
         $permohonan =
             Permohonan::where(
                 'kode_permohonan',
                 $kode
             )->first();
-
 
         if (!$permohonan) {
 
@@ -1059,12 +982,9 @@ class PermohonanController extends Controller
                 );
         }
 
-
         return view(
             'user.permohonan.tracking',
-            compact(
-                'permohonan'
-            )
+            compact('permohonan')
         );
     }
 
@@ -1075,10 +995,8 @@ class PermohonanController extends Controller
     |--------------------------------------------------------------------------
     */
 
-    public function cari(
-        Request $request
-    ) {
-
+    public function cari(Request $request)
+    {
         $query =
             Permohonan::query();
 
@@ -1096,15 +1014,11 @@ class PermohonanController extends Controller
         ) {
 
             $query->where(
-
                 'jenis_permohonan',
-
                 'like',
-
                 '%' .
                 $request->jenis_permohonan .
                 '%'
-
             );
         }
 
@@ -1122,15 +1036,11 @@ class PermohonanController extends Controller
         ) {
 
             $query->where(
-
                 'kode_permohonan',
-
                 'like',
-
                 '%' .
                 $request->kode_permohonan .
                 '%'
-
             );
         }
 
