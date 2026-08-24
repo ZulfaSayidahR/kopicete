@@ -632,7 +632,7 @@
                 SIDEBAR PERMOHONAN TERBARU
             ====================================================== --}}
 
-            <aside class="sidebar-aduan">
+            <!-- <aside class="sidebar-aduan">
 
                 <div class="aduan-terbaru-header">
 
@@ -782,7 +782,7 @@
 
                 @endforelse
 
-            </aside>
+            </aside> -->
 
         </div>
 

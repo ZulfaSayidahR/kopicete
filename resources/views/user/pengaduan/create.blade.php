@@ -170,7 +170,7 @@
                                                                                 SIDEBAR
                                                                         =========================================== -->
 
-                <aside class="sidebar-aduan">
+                <!-- <aside class="sidebar-aduan">
 
                     <div class="aduan-terbaru-header">
 
@@ -272,7 +272,7 @@
                     @endforelse
 
 
-                </aside>
+                </aside> -->
 
                 <!-- Modal Detail Aduan -->
                 <div class="modal fade" id="detailLaporanModal" tabindex="-1">
