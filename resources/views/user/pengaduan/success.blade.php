@@ -59,15 +59,123 @@
 
                     </div>
 
-                    <div class="alert alert-info mt-4 text-start">
+                    {{-- =================================================
+                    ALERT PENTING - SIMPAN KODE
+                    ================================================== --}}
+
+                    <div class="alert alert-warning text-start border-warning rounded-4 mt-4 mb-4">
+
+                        <div class="d-flex align-items-start">
+
+                            <div class="me-3">
+
+                                <i class="bi bi-exclamation-triangle-fill" style="font-size: 28px;">
+                                </i>
+
+                            </div>
+
+                            <div>
+
+                                <strong class="d-block mb-2">
+
+                                    Penting! Simpan Kode Pengaduan Anda
+
+                                </strong>
+
+                                <p class="mb-2">
+
+                                    Mohon <strong>catat, screenshot, atau simpan</strong>
+                                    kode pengaduan di tempat yang aman.
+                                    Kode ini diperlukan untuk melihat
+                                    perkembangan dan status pengaduan Anda
+                                    melalui halaman tracking pengaduan.
+
+                                </p>
+
+                                <p class="mb-0">
+
+                                    <strong>
+                                        Jangan membagikan kode pengaduan
+                                        kepada orang lain.
+                                    </strong>
+
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    {{-- =================================================
+                    ALERT JIKA LUPA KODE
+                    ================================================== --}}
+
+                    <div class="alert alert-danger text-start border-danger rounded-4 mb-4">
+
+                        <div class="d-flex align-items-start">
+
+                            <div class="me-3">
+
+                                <i class="bi bi-shield-exclamation" style="font-size: 28px;">
+                                </i>
+
+                            </div>
+
+                            <div>
+
+                                <strong class="d-block mb-2">
+
+                                    Lupa atau Kehilangan Kode?
+
+                                </strong>
+
+                                <p class="mb-2">
+
+                                    Jika Anda lupa atau kehilangan
+                                    kode pengaduan, silakan
+                                    <strong>hubungi Admin BNNK Tulungagung</strong>
+                                    untuk mendapatkan bantuan.
+
+                                </p>
+
+                                <p class="mb-0">
+
+                                    <i class="bi bi-telephone-fill me-1"></i>
+
+                                    Pastikan Anda memberikan informasi
+                                    yang diperlukan kepada admin untuk
+                                    membantu proses pencarian data
+                                    pengaduan Anda.
+
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    {{-- =================================================
+                    INFORMASI TRACKING
+                    ================================================== --}}
+
+                    <div class="alert alert-info text-start rounded-4 mb-4">
 
                         <i class="bi bi-info-circle-fill me-2"></i>
 
-                        <strong>Penting:</strong>
+                        <strong>Informasi Pelacakan</strong>
 
-                        Simpan kode pengaduan ini karena kode tersebut
-                        dapat digunakan untuk melihat status dan perkembangan
-                        pengaduan Anda.
+                        <p class="mb-0 mt-2">
+
+                            Gunakan kode pengaduan tersebut pada
+                            halaman <strong>Tracking Pengaduan</strong>
+                            untuk melihat status dan perkembangan
+                            pengaduan Anda.
+
+                        </p>
 
                     </div>
 
