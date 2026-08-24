@@ -37,7 +37,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('about') }}">
+                    <a class="nav-link" href="{{ route('pencarian') }}">
                         Pencarian Pelayanan
                     </a>
                 </li>

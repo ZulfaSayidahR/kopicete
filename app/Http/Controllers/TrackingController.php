@@ -10,6 +10,111 @@ class TrackingController extends Controller
 {
     /**
      * =========================================================
+     * HALAMAN PENCARIAN
+     * =========================================================
+     */
+    public function index(Request $request)
+    {
+        /*
+        |--------------------------------------------------------------------------
+        | PENGADUAN
+        |--------------------------------------------------------------------------
+        */
+
+        $aduanQuery = Pengaduan::with('kecamatan')
+            ->latest();
+
+        if ($request->filled('topik')) {
+
+            $topik = trim($request->topik);
+
+            $aduanQuery->where(function ($query) use ($topik) {
+
+                $query->where(
+                    'judul_aduan',
+                    'like',
+                    '%' . $topik . '%'
+                )
+                    ->orWhere(
+                        'kode_aduan',
+                        'like',
+                        '%' . $topik . '%'
+                    )
+                    ->orWhere(
+                        'detail_aduan',
+                        'like',
+                        '%' . $topik . '%'
+                    );
+
+            });
+        }
+
+        $aduanTerbaru = $aduanQuery
+            ->take(10)
+            ->get();
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | PERMOHONAN
+        |--------------------------------------------------------------------------
+        */
+
+        $permohonanQuery = Permohonan::query()
+            ->latest();
+
+        if ($request->filled('jenis_permohonan')) {
+
+            $jenis = trim($request->jenis_permohonan);
+
+            $permohonanQuery->where(function ($query) use ($jenis) {
+
+                $query->where(
+                    'jenis_permohonan',
+                    'like',
+                    '%' . $jenis . '%'
+                )
+                    ->orWhere(
+                        'kode_permohonan',
+                        'like',
+                        '%' . $jenis . '%'
+                    )
+                    ->orWhere(
+                        'nama_penyelenggara',
+                        'like',
+                        '%' . $jenis . '%'
+                    )
+                    ->orWhere(
+                        'nama_pemohon',
+                        'like',
+                        '%' . $jenis . '%'
+                    );
+
+            });
+        }
+
+        $permohonanTerbaru = $permohonanQuery
+            ->take(10)
+            ->get();
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | VIEW
+        |--------------------------------------------------------------------------
+        */
+
+        return view(
+            'user.pencarian',
+            compact(
+                'aduanTerbaru',
+                'permohonanTerbaru'
+            )
+        );
+    }
+
+    /**
+     * =========================================================
      * SEARCH PENGADUAN / PERMOHONAN
      * =========================================================
      */
@@ -21,12 +126,15 @@ class TrackingController extends Controller
         |--------------------------------------------------------------------------
         */
 
-        $request->validate([
-            'kode' => 'required|string|max:100',
-        ], [
-            'kode.required' =>
-                'Silakan masukkan kode aduan atau kode permohonan.',
-        ]);
+        $request->validate(
+            [
+                'kode' => 'required|string|max:100',
+            ],
+            [
+                'kode.required' =>
+                    'Silakan masukkan kode aduan atau kode permohonan.',
+            ]
+        );
 
 
         /*
@@ -35,7 +143,9 @@ class TrackingController extends Controller
         |--------------------------------------------------------------------------
         */
 
-        $kode = trim($request->input('kode'));
+        $kode = trim(
+            $request->input('kode')
+        );
 
 
         /*
@@ -52,8 +162,11 @@ class TrackingController extends Controller
 
         if ($pengaduan) {
 
-            return redirect()->to(
-                '/pengaduan/tracking/' . $pengaduan->kode_aduan
+            return redirect()->route(
+                'pengaduan.tracking.detail',
+                [
+                    'kode' => $pengaduan->kode_aduan
+                ]
             );
         }
 
@@ -72,8 +185,11 @@ class TrackingController extends Controller
 
         if ($permohonan) {
 
-            return redirect()->to(
-                '/permohonan/tracking/' . $permohonan->kode_permohonan
+            return redirect()->route(
+                'permohonan.tracking.detail',
+                [
+                    'kode' => $permohonan->kode_permohonan
+                ]
             );
         }
 

@@ -54,17 +54,17 @@
 
 
                                 <span class="badge
-                                                    @if($permohonan->status == 'Menunggu')
-                                                        bg-warning
-                                                    @elseif($permohonan->status == 'Diproses')
-                                                        bg-primary
-                                                    @elseif($permohonan->status == 'Selesai')
-                                                        bg-success
-                                                    @elseif($permohonan->status == 'Ditolak')
-                                                        bg-danger
-                                                    @else
-                                                        bg-secondary
-                                                    @endif">
+                                                        @if($permohonan->status == 'Menunggu')
+                                                            bg-warning
+                                                        @elseif($permohonan->status == 'Diproses')
+                                                            bg-primary
+                                                        @elseif($permohonan->status == 'Selesai')
+                                                            bg-success
+                                                        @elseif($permohonan->status == 'Ditolak')
+                                                            bg-danger
+                                                        @else
+                                                            bg-secondary
+                                                        @endif">
 
                                     {{ $permohonan->status }}
 
@@ -80,15 +80,24 @@
                                 <div>
 
                                     <strong>
-
                                         <i class="bi bi-upc-scan"></i>
-
                                         Kode Permohonan
-
                                     </strong>
 
                                     <p>
-                                        {{ $permohonan->kode_permohonan }}
+
+                                        @if($permohonan->kode_permohonan)
+
+                                            {{ substr($permohonan->kode_permohonan, 0, 4) }}
+                                            ******
+                                            {{ substr($permohonan->kode_permohonan, -3) }}
+
+                                        @else
+
+                                            -
+
+                                        @endif
+
                                     </p>
 
                                 </div>
@@ -402,7 +411,7 @@
                                         {{ $permohonan->created_at
         ? $permohonan->created_at->translatedFormat('d F Y H:i')
         : '-' 
-                }}
+                    }}
 
                                     </small>
 
@@ -427,7 +436,7 @@
 
 
                             <div class="tracking-item 
-        {{ $verifikasi ? 'selesai' : '' }}">
+            {{ $verifikasi ? 'selesai' : '' }}">
 
 
                                 <div class="tracking-icon">
@@ -520,7 +529,7 @@
 
 
                             <div class="tracking-item
-        {{ $proses ? 'selesai' : '' }}">
+            {{ $proses ? 'selesai' : '' }}">
 
 
                                 <div class="tracking-icon">
@@ -617,7 +626,7 @@
 
 
                             <div class="tracking-item
-        {{ $selesai ? 'selesai' : '' }}">
+            {{ $selesai ? 'selesai' : '' }}">
 
 
 
@@ -876,9 +885,9 @@
 
                 {{-- HEADER --}}
                 <div class="modal-header bg-{{ $warna }}
-                                @if($warna != 'warning')
-                                    text-white
-                                @endif">
+                                    @if($warna != 'warning')
+                                        text-white
+                                    @endif">
 
                     <h5 class="modal-title fw-bold">
 
@@ -890,9 +899,9 @@
 
 
                     <button type="button" class="btn-close
-                                        @if($warna != 'warning')
-                                            btn-close-white
-                                        @endif" data-bs-dismiss="modal" aria-label="Close">
+                                            @if($warna != 'warning')
+                                                btn-close-white
+                                            @endif" data-bs-dismiss="modal" aria-label="Close">
                     </button>
 
                 </div>
@@ -913,19 +922,19 @@
 
                                 <img src="{{ asset('storage/' . $foto) }}" class="img-fluid rounded-4 shadow border w-100"
                                     style="
-                                                                height:330px;
-                                                                object-fit:cover;
-                                                            " alt="Foto tindak lanjut">
+                                                                        height:330px;
+                                                                        object-fit:cover;
+                                                                    " alt="Foto tindak lanjut">
 
                             @else
 
                                 <div class="border rounded-4 bg-light
-                                                            d-flex flex-column
-                                                            justify-content-center
-                                                            align-items-center" style="height:330px;">
+                                                                    d-flex flex-column
+                                                                    justify-content-center
+                                                                    align-items-center" style="height:330px;">
 
                                     <i class="bi bi-image display-3
-                                                                text-secondary">
+                                                                        text-secondary">
                                     </i>
 
                                     <h6 class="mt-3 text-muted">

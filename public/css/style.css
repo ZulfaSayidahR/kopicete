@@ -4367,3 +4367,695 @@ VERIFIKASI OTP
         padding-left: 0;
     }
 }
+
+/* =========================================================
+   HALAMAN PENCARIAN PELAYANAN
+========================================================= */
+
+.tracking-page {
+    padding: 60px 0 80px;
+    background: #f6f9fc;
+    min-height: 80vh;
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.tracking-hero {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 45px;
+
+    margin-bottom: 30px;
+
+    border-radius: 24px;
+
+    background:
+        linear-gradient(135deg,
+            #075985,
+            #0e7490);
+
+    color: white;
+
+    box-shadow:
+        0 15px 40px rgba(0, 0, 0, .12);
+}
+
+
+.tracking-hero-content {
+    max-width: 720px;
+}
+
+
+.tracking-badge {
+    display: inline-flex;
+
+    align-items: center;
+    gap: 8px;
+
+    padding: 8px 15px;
+
+    margin-bottom: 15px;
+
+    border-radius: 50px;
+
+    background: rgba(255, 255, 255, .15);
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    letter-spacing: .5px;
+}
+
+
+.tracking-hero h1 {
+    margin-bottom: 12px;
+
+    font-size: 38px;
+
+    font-weight: 800;
+}
+
+
+.tracking-hero p {
+    margin: 0;
+
+    max-width: 650px;
+
+    color: rgba(255, 255, 255, .85);
+
+    font-size: 16px;
+
+    line-height: 1.7;
+}
+
+
+.tracking-hero-icon {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 110px;
+    height: 110px;
+
+    border-radius: 30px;
+
+    background: rgba(255, 255, 255, .12);
+
+    font-size: 50px;
+}
+
+
+/* =========================================================
+   SEARCH CARD
+========================================================= */
+
+.tracking-search-card {
+    padding: 35px;
+
+    background: white;
+
+    border-radius: 22px;
+
+    box-shadow:
+        0 10px 35px rgba(0, 0, 0, .08);
+
+    margin-bottom: 55px;
+}
+
+
+.tracking-search-header {
+    display: flex;
+
+    align-items: center;
+
+    gap: 18px;
+
+    margin-bottom: 25px;
+}
+
+
+.tracking-search-icon {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 60px;
+    height: 60px;
+
+    border-radius: 16px;
+
+    background: #e0f2fe;
+
+    color: #0369a1;
+
+    font-size: 26px;
+}
+
+
+.tracking-search-header h3 {
+    margin: 0 0 5px;
+
+    font-weight: 800;
+}
+
+
+.tracking-search-header p {
+    margin: 0;
+
+    color: #64748b;
+}
+
+
+/* =========================================================
+   FORM
+========================================================= */
+
+.tracking-search-form {
+    display: flex;
+
+    gap: 12px;
+}
+
+
+.tracking-input-group {
+    position: relative;
+
+    flex: 1;
+}
+
+
+.tracking-input-group input {
+    width: 100%;
+
+    height: 58px;
+
+    padding: 0 20px 0 52px;
+
+    border: 1px solid #dbe3ea;
+
+    border-radius: 14px;
+
+    outline: none;
+
+    font-size: 15px;
+
+    transition: .2s;
+}
+
+
+.tracking-input-group input:focus {
+    border-color: #0284c7;
+
+    box-shadow:
+        0 0 0 4px rgba(2, 132, 199, .1);
+}
+
+
+.tracking-input-icon {
+    position: absolute;
+
+    left: 18px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    color: #64748b;
+
+    font-size: 20px;
+
+    z-index: 2;
+}
+
+
+.tracking-search-button {
+    height: 58px;
+
+    padding: 0 28px;
+
+    border: none;
+
+    border-radius: 14px;
+
+    background: #0284c7;
+
+    color: white;
+
+    font-weight: 700;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    transition: .2s;
+}
+
+
+.tracking-search-button:hover {
+    background: #0369a1;
+
+    transform: translateY(-2px);
+}
+
+
+/* =========================================================
+   ALERT
+========================================================= */
+
+.tracking-alert {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 14px 18px;
+
+    margin-bottom: 20px;
+
+    border-radius: 12px;
+
+    font-size: 14px;
+}
+
+
+.tracking-alert-danger {
+    background: #fef2f2;
+
+    color: #b91c1c;
+
+    border: 1px solid #fecaca;
+}
+
+
+/* =========================================================
+   HELP
+========================================================= */
+
+.tracking-help {
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    margin-top: 15px;
+
+    color: #64748b;
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   SECTION
+========================================================= */
+
+.tracking-service-section {
+    margin-bottom: 40px;
+}
+
+
+.tracking-section-title {
+    text-align: center;
+
+    margin-bottom: 30px;
+}
+
+
+.tracking-section-title>span {
+    font-size: 12px;
+
+    font-weight: 800;
+
+    letter-spacing: 1px;
+
+    color: #0284c7;
+}
+
+
+.tracking-section-title h2 {
+    margin: 7px 0;
+
+    font-weight: 800;
+}
+
+
+.tracking-section-title p {
+    color: #64748b;
+}
+
+
+/* =========================================================
+   TRACKING SERVICE CARD
+========================================================= */
+
+.tracking-service-card {
+    height: 100%;
+    padding: 24px;
+    background: #ffffff;
+    border: 1px solid #e8edf3;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+    transition: all 0.3s ease;
+}
+
+.tracking-service-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 35px rgba(0, 0, 0, 0.09);
+}
+
+
+/* HEADER */
+
+.tracking-service-header {
+    display: flex;
+    gap: 15px;
+    align-items: flex-start;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #edf0f4;
+}
+
+.tracking-service-header h4 {
+    margin: 0 0 5px;
+    font-weight: 700;
+}
+
+.tracking-service-header p {
+    margin: 0;
+    color: #6b7280;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+
+/* ICON */
+
+.tracking-service-icon {
+    min-width: 52px;
+    width: 52px;
+    height: 52px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 14px;
+
+    font-size: 22px;
+}
+
+.tracking-service-icon.pengaduan {
+    background: #eaf2ff;
+    color: #1769e0;
+}
+
+.tracking-service-icon.permohonan {
+    background: #eefbf4;
+    color: #159447;
+}
+
+
+/* LIST */
+
+.tracking-service-list {
+    margin-top: 20px;
+}
+
+.tracking-list-title {
+    margin-bottom: 12px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+
+/* ITEM */
+
+.tracking-service-item {
+    padding: 16px;
+    margin-bottom: 12px;
+
+    background: #f8fafc;
+    border: 1px solid #edf1f5;
+    border-radius: 14px;
+
+    transition: all 0.25s ease;
+}
+
+.tracking-service-item:hover {
+    background: #ffffff;
+    border-color: #dce4ed;
+    transform: translateY(-2px);
+}
+
+
+/* STATUS */
+
+.tracking-item-top {
+    margin-bottom: 8px;
+}
+
+.tracking-status {
+    display: inline-flex;
+    align-items: center;
+
+    padding: 5px 10px;
+
+    border-radius: 30px;
+
+    font-size: 11px;
+    font-weight: 700;
+}
+
+
+/* STATUS PENGADUAN / PERMOHONAN */
+
+.tracking-status.menunggu {
+    background: #fff4d6;
+    color: #9a6700;
+}
+
+.tracking-status.verifikasi {
+    background: #e8f1ff;
+    color: #1769e0;
+}
+
+.tracking-status.proses {
+    background: #eaf4ff;
+    color: #2563eb;
+}
+
+.tracking-status.selesai {
+    background: #e9f8ef;
+    color: #15803d;
+}
+
+.tracking-status.ditolak {
+    background: #fdecec;
+    color: #dc2626;
+}
+
+
+/* TITLE */
+
+.tracking-service-item h6 {
+    margin: 0 0 10px;
+
+    font-size: 15px;
+    font-weight: 700;
+
+    color: #1f2937;
+}
+
+
+/* INFORMATION */
+
+.tracking-item-info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    margin-bottom: 12px;
+
+    font-size: 12px;
+    color: #6b7280;
+}
+
+.tracking-item-info span {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+
+/* BUTTON */
+
+.tracking-item-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+
+    padding: 8px 13px;
+
+    border-radius: 9px;
+
+    background: #ffffff;
+    border: 1px solid #dce3eb;
+
+    color: #374151;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    transition: all 0.2s ease;
+}
+
+.tracking-item-button:hover {
+    background: #1769e0;
+    border-color: #1769e0;
+    color: #ffffff;
+}
+
+
+/* EMPTY */
+
+.tracking-empty {
+    padding: 25px;
+    text-align: center;
+    color: #9ca3af;
+}
+
+.tracking-empty i {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 28px;
+}
+
+.tracking-empty p {
+    margin: 0;
+    font-size: 13px;
+}
+
+/* =========================================================
+   INFORMATION
+========================================================= */
+
+.tracking-information {
+    display: flex;
+
+    align-items: center;
+
+    gap: 18px;
+
+    padding: 25px 30px;
+
+    border-radius: 18px;
+
+    background: #ecfdf5;
+
+    border: 1px solid #bbf7d0;
+}
+
+
+.tracking-information-icon {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    width: 55px;
+    height: 55px;
+
+    border-radius: 15px;
+
+    background: white;
+
+    color: #059669;
+
+    font-size: 25px;
+}
+
+
+.tracking-information h4 {
+    margin-bottom: 5px;
+
+    font-weight: 800;
+
+    color: #166534;
+}
+
+
+.tracking-information p {
+    margin: 0;
+
+    color: #166534;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 768px) {
+
+    .tracking-page {
+        padding: 35px 0 50px;
+    }
+
+
+    .tracking-hero {
+        padding: 30px 25px;
+    }
+
+
+    .tracking-hero h1 {
+        font-size: 29px;
+    }
+
+
+    .tracking-hero-icon {
+        display: none;
+    }
+
+
+    .tracking-search-card {
+        padding: 25px 20px;
+    }
+
+
+    .tracking-search-form {
+        flex-direction: column;
+    }
+
+
+    .tracking-search-button {
+        width: 100%;
+
+        justify-content: center;
+    }
+
+
+    .tracking-information {
+        align-items: flex-start;
+    }
+
+}

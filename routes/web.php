@@ -215,26 +215,41 @@ Route::prefix('pengaduan')->name('pengaduan.')->group(function () {
 
 
 
-// =========================
-// LACAK ADUAN
-// =========================
-
-// Route::get('/lacak', [PengaduanController::class, 'search'])
-//     ->name('pengaduan.search');
-
-// Route::get('/lacak/{kode}', [PengaduanController::class, 'tracking'])
-//     ->name('pengaduan.tracking');
-
-// Route::get('/lacak', [PermohonanController::class, 'search'])
-//     ->name('permohonan.search');
-
-// Route::get('/lacak/{kode}', [PermohonanController::class, 'tracking'])
-//     ->name('permohonan.tracking');
+// =========================================================
+// PENCARIAN & TRACKING
+// =========================================================
 
 /*
 |--------------------------------------------------------------------------
-| TRACKING
+| HALAMAN PENCARIAN
 |--------------------------------------------------------------------------
+|
+| URL:
+| /pencarian
+|
+| View:
+| resources/views/user/pencarian.blade.php
+|
+*/
+
+Route::get(
+    '/pencarian',
+    [TrackingController::class, 'index']
+)->name('pencarian');
+
+
+/*
+|--------------------------------------------------------------------------
+| PROSES PENCARIAN
+|--------------------------------------------------------------------------
+|
+| URL:
+| /tracking/search
+|
+| Mencari:
+| - kode_aduan
+| - kode_permohonan
+|
 */
 
 Route::get(
@@ -244,11 +259,14 @@ Route::get(
 
 
 
-
 /*
 |--------------------------------------------------------------------------
-| DETAIL PENGADUAN
+| DETAIL TRACKING PENGADUAN
 |--------------------------------------------------------------------------
+|
+| Contoh:
+| /pengaduan/tracking/ADU-20260821-ABCDE
+|
 */
 
 Route::get(
@@ -257,10 +275,15 @@ Route::get(
 )->name('pengaduan.tracking.detail');
 
 
+
 /*
 |--------------------------------------------------------------------------
-| DETAIL PERMOHONAN
+| DETAIL TRACKING PERMOHONAN
 |--------------------------------------------------------------------------
+|
+| Contoh:
+| /permohonan/tracking/PMH-20260821-ABCDE
+|
 */
 
 Route::get(
@@ -269,96 +292,199 @@ Route::get(
 )->name('permohonan.tracking.detail');
 
 
-// ==========================
+
+// =========================================================
 // PERMOHONAN LAYANAN
-// ==========================
+// =========================================================
 
-Route::prefix('permohonan')->name('permohonan.')->group(function () {
+Route::prefix('permohonan')
+    ->name('permohonan.')
+    ->group(function () {
 
-    Route::get('/', [PermohonanController::class, 'create'])
-        ->name('create');
+        /*
+        |--------------------------------------------------------------------------
+        | FORM PERMOHONAN
+        |--------------------------------------------------------------------------
+        */
 
-    Route::post('/konfirmasi', [PermohonanController::class, 'konfirmasi'])
-        ->name('konfirmasi');
-
-    Route::post('/kirim', [PermohonanController::class, 'kirim'])
-        ->name('kirim');
-
-    Route::get('/otp', [PermohonanController::class, 'otp'])
-        ->name('otp');
-
-    Route::post('/otp/verifikasi', [PermohonanController::class, 'verifyOtp'])
-        ->name('verifyOtp');
-    // Kirim ulang OTP
-    Route::post('/otp/kirim-ulang', [PermohonanController::class, 'kirimUlangOtp'])
-        ->name('kirimUlangOtp');
-
-    // TRACKING
-    Route::get('/tracking/{kode}', [PermohonanController::class, 'tracking'])
-        ->name('tracking');
-
-    Route::get('/berhasil/{kode}', [PermohonanController::class, 'success'])
-        ->name('success');
-
-    // CARI
-    Route::get('/cari', [PermohonanController::class, 'cari'])
-        ->name('cari');
-
-});
+        Route::get(
+            '/',
+            [PermohonanController::class, 'create']
+        )->name('create');
 
 
+        /*
+        |--------------------------------------------------------------------------
+        | KONFIRMASI PERMOHONAN
+        |--------------------------------------------------------------------------
+        */
+
+        Route::post(
+            '/konfirmasi',
+            [PermohonanController::class, 'konfirmasi']
+        )->name('konfirmasi');
 
 
-// ==========================
+        /*
+        |--------------------------------------------------------------------------
+        | KIRIM OTP
+        |--------------------------------------------------------------------------
+        |
+        | Controller:
+        | kirimOtp()
+        |
+        */
+
+        Route::post(
+            '/kirim',
+            [PermohonanController::class, 'kirimOtp']
+        )->name('kirim');
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | HALAMAN OTP
+        |--------------------------------------------------------------------------
+        */
+
+        Route::get(
+            '/otp',
+            [PermohonanController::class, 'otp']
+        )->name('otp');
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | VERIFIKASI OTP
+        |--------------------------------------------------------------------------
+        */
+
+        Route::post(
+            '/otp/verifikasi',
+            [PermohonanController::class, 'verifyOtp']
+        )->name('verifyOtp');
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | KIRIM ULANG OTP
+        |--------------------------------------------------------------------------
+        */
+
+        Route::post(
+            '/otp/kirim-ulang',
+            [PermohonanController::class, 'kirimUlangOtp']
+        )->name('kirimUlangOtp');
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | HALAMAN BERHASIL
+        |--------------------------------------------------------------------------
+        |
+        | Contoh:
+        | /permohonan/berhasil/PMH-20260821-ABCDE
+        |
+        */
+
+        Route::get(
+            '/berhasil/{kode}',
+            [PermohonanController::class, 'success']
+        )->name('success');
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | PENCARIAN PERMOHONAN
+        |--------------------------------------------------------------------------
+        */
+
+        Route::get(
+            '/cari',
+            [PermohonanController::class, 'cari']
+        )->name('cari');
+
+    });
+
+
+
+// =========================================================
 // INFORMASI
-// ==========================
-
+// =========================================================
 
 Route::get(
     '/informasi',
     [InformasiController::class, 'index']
-)
-    ->name('informasi');
+)->name('informasi');
 
 
 
-
-// ==========================
+// =========================================================
 // KONTAK
-// ==========================
-
+// =========================================================
 
 Route::get(
     '/kontak',
     [KontakController::class, 'index']
-)
-    ->name('kontak');
+)->name('kontak');
+
+
+
+// =========================================================
+// AUTH
+// =========================================================
+
+/*
+|--------------------------------------------------------------------------
+| LOGIN
+|--------------------------------------------------------------------------
+*/
+
+Route::get(
+    '/login',
+    [AuthController::class, 'login']
+)->name('login');
+
+
+Route::post(
+    '/login',
+    [AuthController::class, 'loginProses']
+)->name('login.proses');
+
 
 
 /*
 |--------------------------------------------------------------------------
-| AUTH
+| FORGOT PASSWORD
 |--------------------------------------------------------------------------
 */
 
-Route::get('/login', [AuthController::class, 'login'])
-    ->name('login');
+Route::get(
+    '/forgot-password',
+    [AuthController::class, 'forgotPassword']
+)->name('forgot.password');
 
-Route::post('/login', [AuthController::class, 'loginProses'])
-    ->name('login.proses');
 
-Route::get('/forgot-password', [AuthController::class, 'forgotPassword'])
-    ->name('forgot.password');
-
-Route::post('/forgot-password', [AuthController::class, 'sendResetLink'])
-    ->name('forgot.password.send');
-
-Route::get('/register', [AuthController::class, 'register'])
-    ->name('register');
-
-Route::post('/register', [AuthController::class, 'registerProses'])
-    ->name('register.proses');
+Route::post(
+    '/forgot-password',
+    [AuthController::class, 'sendResetLink']
+)->name('forgot.password.send');
 
 
 
+/*
+|--------------------------------------------------------------------------
+| REGISTER
+|--------------------------------------------------------------------------
+*/
 
+Route::get(
+    '/register',
+    [AuthController::class, 'register']
+)->name('register');
+
+
+Route::post(
+    '/register',
+    [AuthController::class, 'registerProses']
+)->name('register.proses');
