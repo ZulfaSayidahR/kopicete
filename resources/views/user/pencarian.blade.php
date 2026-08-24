@@ -17,11 +17,8 @@
                 <div class="tracking-hero-content">
 
                     <span class="tracking-badge">
-
                         <i class="bi bi-search"></i>
-
                         LAYANAN PENCARIAN
-
                     </span>
 
                     <h1>
@@ -128,7 +125,11 @@
 
                 {{-- FORM PENCARIAN KODE --}}
 
-                <form action="{{ route('tracking.search') }}" method="GET" class="tracking-search-form">
+                <form
+                    action="{{ route('tracking.search') }}"
+                    method="GET"
+                    class="tracking-search-form"
+                >
 
                     <div class="tracking-input-group">
 
@@ -138,13 +139,22 @@
 
                         </div>
 
-                        <input type="text" name="kode" value="{{ request('kode') }}"
-                            placeholder="Masukkan kode aduan atau permohonan" autocomplete="off" required>
+                        <input
+                            type="text"
+                            name="kode"
+                            value="{{ request('kode') }}"
+                            placeholder="Masukkan kode aduan atau permohonan"
+                            autocomplete="off"
+                            required
+                        >
 
                     </div>
 
 
-                    <button type="submit" class="tracking-search-button">
+                    <button
+                        type="submit"
+                        class="tracking-search-button"
+                    >
 
                         <i class="bi bi-search"></i>
 
@@ -196,17 +206,20 @@
                 </div>
 
 
+                {{-- =================================================
+                GRID 2 KOLOM
+                ================================================== --}}
+
                 <div class="row g-4">
 
 
                     {{-- =================================================
-                    PENGADUAN
+                    KOLOM PENGADUAN
                     ================================================== --}}
 
                     <div class="col-md-6">
 
                         <div class="tracking-service-card">
-
 
                             {{-- HEADER --}}
 
@@ -234,13 +247,14 @@
                             </div>
 
 
-                            {{-- =================================================
-                            SEARCH PENGADUAN
-                            ================================================== --}}
+                            {{-- SEARCH PENGADUAN --}}
 
                             <div class="search-permohonan-box">
 
-                                <form action="{{ route('pencarian') }}" method="GET">
+                                <form
+                                    action="{{ route('pencarian') }}"
+                                    method="GET"
+                                >
 
                                     <div class="search-permohonan-wrapper">
 
@@ -248,13 +262,21 @@
 
                                             <i class="bi bi-search"></i>
 
-                                            <input type="text" name="topik" value="{{ request('topik') }}"
-                                                placeholder="Cari berdasarkan topik aduan..." autocomplete="off">
+                                            <input
+                                                type="text"
+                                                name="topik"
+                                                value="{{ request('topik') }}"
+                                                placeholder="Cari berdasarkan topik aduan..."
+                                                autocomplete="off"
+                                            >
 
                                         </div>
 
 
-                                        <button type="submit" class="btn-search-permohonan">
+                                        <button
+                                            type="submit"
+                                            class="btn-search-permohonan"
+                                        >
 
                                             <i class="bi bi-search"></i>
 
@@ -269,12 +291,9 @@
                             </div>
 
 
-                            {{-- =================================================
-                            HASIL PENGADUAN
-                            ================================================== --}}
+                            {{-- HASIL PENGADUAN --}}
 
                             <div class="tracking-service-list">
-
 
                                 <div class="tracking-list-title">
 
@@ -295,127 +314,126 @@
                                 </div>
 
 
-                                @forelse($aduanTerbaru as $item)
+                                {{-- SCROLL KHUSUS PENGADUAN --}}
 
-                                                            <div class="tracking-service-item">
+                                <div class="tracking-list-scroll">
 
+                                    @forelse($aduanTerbaru as $item)
 
-                                                                {{-- STATUS --}}
-
-                                                                <div class="tracking-item-top">
-
-                                                                    <span class="tracking-status
-                                                                            @if($item->status == 'Menunggu')
-                                                                                menunggu
-                                                                            @elseif($item->status == 'Diproses')
-                                                                                proses
-                                                                            @elseif($item->status == 'Selesai')
-                                                                                selesai
-                                                                            @elseif($item->status == 'Ditolak')
-                                                                                ditolak
-                                                                            @else
-                                                                                verifikasi
-                                                                            @endif">
-
-                                                                        {{ $item->status }}
-
-                                                                    </span>
-
-                                                                </div>
+                                        <div class="tracking-service-item">
 
 
-                                                                {{-- JUDUL --}}
+                                            {{-- STATUS --}}
 
-                                                                <h6>
+                                            <div class="tracking-item-top">
 
-                                                                    {{ \Illuminate\Support\Str::limit(
-                                        $item->judul_aduan ?? '-',
-                                        45
-                                    ) }}
+                                                <span class="tracking-status
+                                                    @if($item->status == 'Menunggu')
+                                                        menunggu
+                                                    @elseif($item->status == 'Diproses')
+                                                        proses
+                                                    @elseif($item->status == 'Selesai')
+                                                        selesai
+                                                    @elseif($item->status == 'Ditolak')
+                                                        ditolak
+                                                    @else
+                                                        verifikasi
+                                                    @endif
+                                                ">
 
-                                                                </h6>
+                                                    {{ $item->status }}
 
+                                                </span>
 
-                                                                {{-- INFORMASI --}}
-
-                                                                <div class="tracking-item-info">
-
-                                                                    <span>
-
-                                                                        <i class="bi bi-geo-alt-fill"></i>
-
-                                                                        {{ $item->kecamatan->nama_kecamatan ?? '-' }}
-
-                                                                    </span>
-
-
-                                                                    <span>
-
-                                                                        <i class="bi bi-calendar-event-fill"></i>
-
-                                                                        {{ $item->created_at
-                                        ? $item->created_at->translatedFormat('d F Y')
-                                        : '-'
-                                                                            }}
-
-                                                                    </span>
-
-                                                                </div>
+                                            </div>
 
 
-                                                                {{-- KODE --}}
-<!-- 
-                                                                <div class="tracking-item-code">
+                                            {{-- JUDUL --}}
 
-                                                                    <i class="bi bi-upc"></i>
+                                            <h6>
 
-                                                                    {{ $item->kode_aduan ?? '-' }}
+                                                {{ \Illuminate\Support\Str::limit(
+                                                    $item->judul_aduan ?? '-',
+                                                    45
+                                                ) }}
 
-                                                                </div> -->
-
-
-                                                                {{-- BUTTON --}}
-
-                                                                <a href="{{ route(
-                                        'pengaduan.tracking.detail',
-                                        ['kode' => $item->kode_aduan]
-                                    ) }}" class="tracking-item-button">
-
-                                                                    <i class="bi bi-eye-fill"></i>
-
-                                                                    Lihat Tracking
-
-                                                                </a>
-
-                                                            </div>
+                                            </h6>
 
 
-                                @empty
+                                            {{-- INFORMASI --}}
 
-                                    <div class="tracking-empty">
+                                            <div class="tracking-item-info">
 
-                                        <i class="bi bi-search"></i>
+                                                <span>
 
-                                        @if(request()->filled('topik'))
+                                                    <i class="bi bi-geo-alt-fill"></i>
 
-                                            <p>
-                                                Pengaduan dengan topik
-                                                "<strong>{{ request('topik') }}</strong>"
-                                                tidak ditemukan.
-                                            </p>
+                                                    {{ $item->kecamatan->nama_kecamatan ?? '-' }}
 
-                                        @else
+                                                </span>
 
-                                            <p>
-                                                Belum ada pengaduan.
-                                            </p>
 
-                                        @endif
+                                                <span>
 
-                                    </div>
+                                                    <i class="bi bi-calendar-event-fill"></i>
 
-                                @endforelse
+                                                    {{ $item->created_at
+                                                        ? $item->created_at->translatedFormat('d F Y')
+                                                        : '-'
+                                                    }}
 
+                                                </span>
+
+                                            </div>
+
+
+                                            {{-- BUTTON --}}
+
+                                            <a
+                                                href="{{ route(
+                                                    'pengaduan.tracking.detail',
+                                                    ['kode' => $item->kode_aduan]
+                                                ) }}"
+                                                class="tracking-item-button"
+                                            >
+
+                                                <i class="bi bi-eye-fill"></i>
+
+                                                Lihat Tracking
+
+                                            </a>
+
+                                        </div>
+
+                                    @empty
+
+                                        <div class="tracking-empty">
+
+                                            <i class="bi bi-search"></i>
+
+                                            @if(request()->filled('topik'))
+
+                                                <p>
+
+                                                    Pengaduan dengan topik
+                                                    "<strong>{{ request('topik') }}</strong>"
+                                                    tidak ditemukan.
+
+                                                </p>
+
+                                            @else
+
+                                                <p>
+                                                    Belum ada pengaduan.
+                                                </p>
+
+                                            @endif
+
+                                        </div>
+
+                                    @endforelse
+
+                                </div>
 
                             </div>
 
@@ -426,7 +444,10 @@
 
                                 <div class="tracking-clear-search">
 
-                                    <a href="{{ route('pencarian') }}" class="btn-clear-search">
+                                    <a
+                                        href="{{ route('pencarian') }}"
+                                        class="btn-clear-search"
+                                    >
 
                                         <i class="bi bi-arrow-counterclockwise"></i>
 
@@ -438,7 +459,6 @@
 
                             @endif
 
-
                         </div>
 
                     </div>
@@ -446,13 +466,12 @@
 
 
                     {{-- =================================================
-                    PERMOHONAN
+                    KOLOM PERMOHONAN
                     ================================================== --}}
 
                     <div class="col-md-6">
 
                         <div class="tracking-service-card">
-
 
                             {{-- HEADER --}}
 
@@ -467,11 +486,11 @@
                                 <div>
 
                                     <h4>
-                                        Permohonan Pelayanan
+                                        Permohonan
                                     </h4>
 
                                     <p>
-                                        Cari permohonan pelayanan
+                                        Cari permohonan
                                         berdasarkan jenis permohonan.
                                     </p>
 
@@ -480,13 +499,14 @@
                             </div>
 
 
-                            {{-- =================================================
-                            SEARCH PERMOHONAN
-                            ================================================== --}}
+                            {{-- SEARCH PERMOHONAN --}}
 
                             <div class="search-permohonan-box">
 
-                                <form action="{{ route('pencarian') }}" method="GET">
+                                <form
+                                    action="{{ route('pencarian') }}"
+                                    method="GET"
+                                >
 
                                     <div class="search-permohonan-wrapper">
 
@@ -494,14 +514,21 @@
 
                                             <i class="bi bi-search"></i>
 
-                                            <input type="text" name="jenis_permohonan"
+                                            <input
+                                                type="text"
+                                                name="jenis_permohonan"
                                                 value="{{ request('jenis_permohonan') }}"
-                                                placeholder="Cari berdasarkan jenis permohonan..." autocomplete="off">
+                                                placeholder="Cari berdasarkan jenis permohonan..."
+                                                autocomplete="off"
+                                            >
 
                                         </div>
 
 
-                                        <button type="submit" class="btn-search-permohonan">
+                                        <button
+                                            type="submit"
+                                            class="btn-search-permohonan"
+                                        >
 
                                             <i class="bi bi-search"></i>
 
@@ -516,12 +543,9 @@
                             </div>
 
 
-                            {{-- =================================================
-                            HASIL PERMOHONAN
-                            ================================================== --}}
+                            {{-- HASIL PERMOHONAN --}}
 
                             <div class="tracking-service-list">
-
 
                                 <div class="tracking-list-title">
 
@@ -542,150 +566,148 @@
                                 </div>
 
 
-                                @forelse($permohonanTerbaru as $item)
+                                {{-- SCROLL KHUSUS PERMOHONAN --}}
 
-                                                            <div class="tracking-service-item">
+                                <div class="tracking-list-scroll">
 
+                                    @forelse($permohonanTerbaru as $item)
 
-                                                                {{-- STATUS --}}
-
-                                                                <div class="tracking-item-top">
-
-                                                                    <span class="tracking-status
-                                                                            @if($item->status == 'Diajukan')
-                                                                                menunggu
-                                                                            @elseif($item->status == 'Diverifikasi')
-                                                                                verifikasi
-                                                                            @elseif($item->status == 'Diproses')
-                                                                                proses
-                                                                            @elseif($item->status == 'Selesai')
-                                                                                selesai
-                                                                            @elseif($item->status == 'Ditolak')
-                                                                                ditolak
-                                                                            @else
-                                                                                verifikasi
-                                                                            @endif">
-
-                                                                        {{ $item->status }}
-
-                                                                    </span>
-
-                                                                </div>
+                                        <div class="tracking-service-item">
 
 
-                                                                {{-- JENIS PERMOHONAN --}}
+                                            {{-- STATUS --}}
 
-                                                                <h6>
+                                            <div class="tracking-item-top">
 
-                                                                    {{ $item->jenis_permohonan ?? '-' }}
+                                                <span class="tracking-status
+                                                    @if($item->status == 'Diajukan')
+                                                        menunggu
+                                                    @elseif($item->status == 'Diverifikasi')
+                                                        verifikasi
+                                                    @elseif($item->status == 'Diproses')
+                                                        proses
+                                                    @elseif($item->status == 'Selesai')
+                                                        selesai
+                                                    @elseif($item->status == 'Ditolak')
+                                                        ditolak
+                                                    @else
+                                                        verifikasi
+                                                    @endif
+                                                ">
 
-                                                                </h6>
+                                                    {{ $item->status }}
 
+                                                </span>
 
-                                                                {{-- INFORMASI --}}
-
-                                                                <div class="tracking-item-info">
-
-
-                                                                    <span>
-
-                                                                        <i class="bi bi-calendar-event-fill"></i>
-
-                                                                        {{ $item->created_at
-                                        ? $item->created_at->translatedFormat('d F Y')
-                                        : '-'
-                                                                            }}
-
-                                                                    </span>
-
-
-                                                                    <span>
-
-                                                                        <i class="bi bi-person-fill"></i>
-
-                                                                        {{ \Illuminate\Support\Str::limit(
-                                        $item->nama_penyelenggara
-                                        ?? $item->nama_pemohon
-                                        ?? '-',
-                                        25
-                                    ) }}
-
-                                                                    </span>
-
-                                                                </div>
+                                            </div>
 
 
-                                                                {{-- JENIS REHABILITASI JIKA ADA --}}
+                                            {{-- JENIS PERMOHONAN --}}
 
-                                                                @if(
-                                                                        $item->jenis_permohonan === 'Rehabilitasi'
-                                                                        && !empty($item->jenis_rehabilitasi)
-                                                                    )
+                                            <h6>
 
-                                                                    <div class="tracking-item-extra">
+                                                {{ $item->jenis_permohonan ?? '-' }}
 
-                                                                        <i class="bi bi-heart-pulse-fill"></i>
-
-                                                                        {{ $item->jenis_rehabilitasi }}
-
-                                                                    </div>
-
-                                                                @endif
+                                            </h6>
 
 
-                                                                {{-- KODE --}}
+                                            {{-- INFORMASI --}}
 
-                                                                <!-- <div class="tracking-item-code">
+                                            <div class="tracking-item-info">
 
-                                                                    <i class="bi bi-upc"></i>
+                                                <span>
 
-                                                                    {{ $item->kode_permohonan ?? '-' }}
+                                                    <i class="bi bi-calendar-event-fill"></i>
 
-                                                                </div> -->
+                                                    {{ $item->created_at
+                                                        ? $item->created_at->translatedFormat('d F Y')
+                                                        : '-'
+                                                    }}
 
-
-                                                                {{-- BUTTON --}}
-
-                                                                <a href="{{ route(
-                                        'permohonan.tracking.detail',
-                                        ['kode' => $item->kode_permohonan]
-                                    ) }}" class="tracking-item-button">
-
-                                                                    <i class="bi bi-eye-fill"></i>
-
-                                                                    Lihat Tracking
-
-                                                                </a>
-
-                                                            </div>
+                                                </span>
 
 
-                                @empty
+                                                <span>
 
-                                    <div class="tracking-empty">
+                                                    <i class="bi bi-person-fill"></i>
 
-                                        <i class="bi bi-search"></i>
+                                                    {{ \Illuminate\Support\Str::limit(
+                                                        $item->nama_penyelenggara
+                                                        ?? $item->nama_pemohon
+                                                        ?? '-',
+                                                        25
+                                                    ) }}
 
-                                        @if(request()->filled('jenis_permohonan'))
+                                                </span>
 
-                                            <p>
-                                                Permohonan dengan jenis
-                                                "<strong>{{ request('jenis_permohonan') }}</strong>"
-                                                tidak ditemukan.
-                                            </p>
+                                            </div>
 
-                                        @else
 
-                                            <p>
-                                                Belum ada permohonan.
-                                            </p>
+                                            {{-- JENIS REHABILITASI --}}
 
-                                        @endif
+                                            @if(
+                                                $item->jenis_permohonan === 'Rehabilitasi'
+                                                && !empty($item->jenis_rehabilitasi)
+                                            )
 
-                                    </div>
+                                                <div class="tracking-item-extra">
 
-                                @endforelse
+                                                    <i class="bi bi-heart-pulse-fill"></i>
 
+                                                    {{ $item->jenis_rehabilitasi }}
+
+                                                </div>
+
+                                            @endif
+
+
+                                            {{-- BUTTON --}}
+
+                                            <a
+                                                href="{{ route(
+                                                    'permohonan.tracking.detail',
+                                                    ['kode' => $item->kode_permohonan]
+                                                ) }}"
+                                                class="tracking-item-button"
+                                            >
+
+                                                <i class="bi bi-eye-fill"></i>
+
+                                                Lihat Tracking
+
+                                            </a>
+
+                                        </div>
+
+                                    @empty
+
+                                        <div class="tracking-empty">
+
+                                            <i class="bi bi-search"></i>
+
+                                            @if(request()->filled('jenis_permohonan'))
+
+                                                <p>
+
+                                                    Permohonan dengan jenis
+                                                    "<strong>{{ request('jenis_permohonan') }}</strong>"
+                                                    tidak ditemukan.
+
+                                                </p>
+
+                                            @else
+
+                                                <p>
+                                                    Belum ada permohonan.
+                                                </p>
+
+                                            @endif
+
+                                        </div>
+
+                                    @endforelse
+
+                                </div>
 
                             </div>
 
@@ -696,7 +718,10 @@
 
                                 <div class="tracking-clear-search">
 
-                                    <a href="{{ route('pencarian') }}" class="btn-clear-search">
+                                    <a
+                                        href="{{ route('pencarian') }}"
+                                        class="btn-clear-search"
+                                    >
 
                                         <i class="bi bi-arrow-counterclockwise"></i>
 
@@ -707,7 +732,6 @@
                                 </div>
 
                             @endif
-
 
                         </div>
 
