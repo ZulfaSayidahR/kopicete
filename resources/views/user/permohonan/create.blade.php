@@ -374,7 +374,7 @@
                                         id="nik"
                                         placeholder="Masukkan NIK"
                                         value="{{ old('nik') }}"
-                                        maxlength="20"
+                                        maxlength="16"
                                     >
 
 
