@@ -71,7 +71,7 @@
                                                     {{ $data['jenis_permohonan'] === 'Sosialisasi'
                             ? 'Permohonan Sosialisasi'
                             : 'Permohonan Rehabilitasi'
-                                                                                                                        }}
+                                                                                                                                            }}
                                                 </strong>
 
                                             </div>
@@ -451,6 +451,8 @@
                                         </div>
 
 
+
+
                                         {{-- =====================================================
                                         INFORMASI OTP
                                         ====================================================== --}}
@@ -468,6 +470,36 @@
                                             </strong>
 
                                         </div>
+
+
+                                        <!-- CHAPTAAAAAAAAAAAAAAAAA -->
+
+                                        <div class="mb-4">
+
+                                            <label class="form-label">
+
+                                                Verifikasi Keamanan
+
+                                            </label>
+
+                                            <div class="mb-3">
+
+                                                {!! NoCaptcha::display() !!}
+
+                                                @error('g-recaptcha-response')
+
+                                                    <small class="text-danger">
+
+                                                        {{ $message }}
+
+                                                    </small>
+
+                                                @enderror
+
+                                            </div>
+
+                                        </div>
+
 
 
                                         {{-- =====================================================

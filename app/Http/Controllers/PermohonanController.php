@@ -990,6 +990,39 @@ class PermohonanController extends Controller
 
 
     /*
+|--------------------------------------------------------------------------
+| Tracking Public Permohonan
+|--------------------------------------------------------------------------
+*/
+
+    public function trackingPublic($kode)
+    {
+        $permohonan = Permohonan::with([
+            'kecamatan',
+            'desa'
+        ])
+            ->where('kode_permohonan', $kode)
+            ->first();
+
+        if (!$permohonan) {
+
+            return redirect()
+                ->route('pencarian')
+                ->with(
+                    'error',
+                    'Data permohonan tidak ditemukan.'
+                );
+        }
+
+        $kecamatan = $permohonan->kecamatan;
+
+        return view(
+            'user.permohonan.trackingPublic',
+            compact('permohonan', 'kecamatan')
+        );
+    }
+
+    /*
     |--------------------------------------------------------------------------
     | CARI PERMOHONAN
     |--------------------------------------------------------------------------

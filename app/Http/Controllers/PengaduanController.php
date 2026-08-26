@@ -437,6 +437,39 @@ class PengaduanController extends Controller
         ));
     }
     /*
+ |--------------------------------------------------------------------------
+ | Tracking Public
+ |--------------------------------------------------------------------------
+ */
+
+    public function trackingPublic($kode)
+    {
+        $pengaduan = Pengaduan::with([
+            'kecamatan',
+            'desa'
+
+        ])
+            ->where('kode_aduan', $kode)
+            ->first();
+
+        if (!$pengaduan) {
+
+            return redirect()
+                ->route('pencarian')
+                ->with(
+                    'error',
+                    'Data pengaduan tidak ditemukan.'
+                );
+        }
+
+        $kecamatan = $pengaduan->kecamatan;
+
+        return view(
+            'user.pengaduan.trackingPublic',
+            compact('pengaduan', 'kecamatan')
+        );
+    }
+    /*
     |--------------------------------------------------------------------------
     | BERHASIL
     |--------------------------------------------------------------------------

@@ -274,6 +274,12 @@ Route::get(
     [PengaduanController::class, 'trackingDetail']
 )->name('pengaduan.tracking.detail');
 
+Route::get(
+    '/pengaduan/tracking-public/{kode}',
+    [PengaduanController::class, 'trackingPublic']
+)->name('pengaduan.tracking.public');
+
+
 
 
 /*
@@ -291,6 +297,11 @@ Route::get(
     [PermohonanController::class, 'trackingDetail']
 )->name('permohonan.tracking.detail');
 
+Route::get(
+    '/permohonan/tracking-public/{kode}',
+    [PermohonanController::class, 'trackingPublic']
+)->name('permohonan.tracking.public');
+
 
 
 
@@ -301,6 +312,7 @@ Route::get(
 Route::prefix('permohonan')
     ->name('permohonan.')
     ->group(function () {
+
 
         /*
         |--------------------------------------------------------------------------
