@@ -64,6 +64,8 @@ class AdminPermohonanController extends Controller
         );
     }
 
+
+
     /*
     |--------------------------------------------------------------------------
     | DETAIL PERMOHONAN
@@ -173,6 +175,26 @@ class AdminPermohonanController extends Controller
             ->with(
                 'success',
                 'Data permohonan berhasil diperbarui.'
+            );
+    }
+
+    /*
+|--------------------------------------------------------------------------
+| HAPUS PERMOHONAN
+|--------------------------------------------------------------------------
+*/
+
+    public function destroy($id)
+    {
+        $permohonan = Permohonan::findOrFail($id);
+
+        $permohonan->delete();
+
+        return redirect()
+            ->route('adminpermohonan.data_permohonan')
+            ->with(
+                'success',
+                'Data permohonan berhasil dihapus.'
             );
     }
 }

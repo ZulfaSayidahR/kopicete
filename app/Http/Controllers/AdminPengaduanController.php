@@ -310,6 +310,12 @@ class AdminPengaduanController extends Controller
     | DELETE PENGADUAN
     |--------------------------------------------------------------------------
     */
+    /*
+ |--------------------------------------------------------------------------
+ | HAPUS PENGADUAN
+ |--------------------------------------------------------------------------
+ */
+
     public function destroy($id)
     {
         $pengaduan = Pengaduan::findOrFail($id);
@@ -317,7 +323,10 @@ class AdminPengaduanController extends Controller
         $pengaduan->delete();
 
         return redirect()
-            ->route('data_pengaduan.index')
-            ->with('success', 'Pengaduan berhasil dihapus.');
+            ->route('adminpengaduan.data_pengaduan')
+            ->with(
+                'success',
+                'Data pengaduan berhasil dihapus.'
+            );
     }
 }

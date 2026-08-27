@@ -94,412 +94,538 @@
 
             </section>
             {{-- =========================================================
-                DATA ADMIN
+            DATA ADMIN
             ========================================================= --}}
-            <section class="sa-panel sa-admin-panel">
+        <section class="sa-panel sa-admin-panel">
 
-                {{-- HEADER --}}
-                <div class="sa-panel-header">
+    {{-- =========================================================
+        HEADER
+    ========================================================== --}}
+    <div class="sa-panel-header">
 
-                    <div>
-                        <h3>Data Admin Terdaftar</h3>
-                        <p>
-                            Daftar akun admin yang terdaftar di dalam sistem.
-                        </p>
-                    </div>
+        <div>
+            <h3>Data Admin Terdaftar</h3>
 
-                    <div class="sa-table-tools">
-
-                        {{-- SEARCH --}}
-                        <div class="sa-search-box">
-                            <i class="bi bi-search"></i>
-
-                            <input
-                                type="search"
-                                id="adminSearch"
-                                placeholder="Cari nama atau email..."
-                                autocomplete="off"
-                            >
-                        </div>
-
-                        {{-- TAMBAH ADMIN --}}
-                        <button
-                            type="button"
-                            class="sa-filter-button"
-                            data-bs-toggle="modal"
-                            data-bs-target="#tambahAdminModal"
-                        >
-                            <i class="bi bi-person-plus-fill"></i>
-                            <span>Tambah Admin</span>
-                        </button>
-
-                    </div>
-                </div>
+            <p>
+                Daftar akun admin yang terdaftar di dalam sistem.
+            </p>
+        </div>
 
 
-                {{-- =========================================================
-                    TABEL DATA ADMIN
-                ========================================================= --}}
-                <div class="sa-table-responsive">
+        <div class="sa-table-tools">
 
-                    <table class="sa-table" id="adminTable">
+            {{-- =================================================
+                SEARCH
+            ================================================== --}}
+            <form
+                action="{{ route('superadmin.data_admin') }}"
+                method="GET"
+                class="sa-search-box"
+            >
 
-                        <thead>
-                            <tr>
+                <i class="bi bi-search"></i>
 
-                                <th>Admin</th>
+                <input
+                    type="text"
+                    name="search"
+                    value="{{ request('search') }}"
+                    placeholder="Cari nama atau email..."
+                    autocomplete="off"
+                >
 
-                                <th>Email</th>
-
-                                <th>Role</th>
-
-                                <th>Metode Login</th>
-
-                                <th>Tanggal Terdaftar</th>
-
-                                <th>Status</th>
-
-                                <th class="sa-action-column">
-                                    Aksi
-                                </th>
-
-                            </tr>
-                        </thead>
+            </form>
 
 
-                        <tbody>
+            {{-- =================================================
+                TAMBAH ADMIN
+            ================================================== --}}
+            <button
+                type="button"
+                class="sa-filter-button"
+                data-bs-toggle="modal"
+                data-bs-target="#tambahAdminModal"
+            >
 
-                            {{-- =================================================
-                                ADMIN 1
-                            ================================================== --}}
-                            <tr>
+                <i class="bi bi-person-plus-fill"></i>
 
-                                {{-- ADMIN --}}
-                                <td>
+                <span>
+                    Tambah Admin
+                </span>
 
-                                    <div class="sa-admin-user">
+            </button>
 
-                                        <div class="sa-admin-avatar">
-                                            A
-                                        </div>
+        </div>
 
-                                        <div>
-                                            <strong>
-                                                Andi Saputra
-                                            </strong>
+    </div>
 
-                                            <small>
+
+    {{-- =========================================================
+        TABEL DATA ADMIN
+    ========================================================== --}}
+    <div class="sa-table-responsive">
+
+        <table
+            class="sa-table"
+            id="adminTable"
+        >
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        Admin
+                    </th>
+
+                    <th>
+                        Email
+                    </th>
+
+                    <th>
+                        Role
+                    </th>
+
+                    <th>
+                        Metode Login
+                    </th>
+
+                    <th>
+                        Tanggal Terdaftar
+                    </th>
+
+                    <th>
+                        Status
+                    </th>
+
+                    <th class="sa-action-column">
+                        Aksi
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                @forelse ($admins as $admin)
+
+                    <tr>
+
+                        {{-- =================================================
+                            ADMIN
+                        ================================================== --}}
+                        <td>
+
+                            <div class="sa-admin-user">
+
+                                <div
+                                    class="sa-admin-avatar
+                                    {{ $admin->role === 'admin_permohonan' ? 'purple' : '' }}"
+                                >
+
+                                    {{ strtoupper(
+                                        substr($admin->name ?? 'A', 0, 1)
+                                    ) }}
+
+                                </div>
+
+
+                                <div>
+
+                                    <strong>
+                                        {{ $admin->name }}
+                                    </strong>
+
+                                    <small>
+
+                                        @switch($admin->role)
+
+                                            @case('admin_pengaduan')
                                                 Admin Pengaduan
-                                            </small>
-                                        </div>
+                                                @break
 
-                                    </div>
+                                            @case('admin_permohonan')
+                                                Admin Permohonan
+                                                @break
 
-                                </td>
+                                            @default
+                                                Admin
+
+                                        @endswitch
+
+                                    </small>
+
+                                </div>
+
+                            </div>
+
+                        </td>
 
 
-                                {{-- EMAIL --}}
-                                <td>
+                        {{-- =================================================
+                            EMAIL
+                        ================================================== --}}
+                        <td>
 
-                                    <span class="sa-email-text">
-                                        andi@gmail.com
-                                    </span>
+                            <span class="sa-email-text">
+                                {{ $admin->email }}
+                            </span>
 
-                                </td>
+                        </td>
 
 
-                                {{-- ROLE --}}
-                                <td>
+                        {{-- =================================================
+                            ROLE
+                        ================================================== --}}
+                        <td>
+
+                            @switch($admin->role)
+
+                                @case('admin_pengaduan')
 
                                     <span class="badge bg-primary">
                                         Admin Pengaduan
                                     </span>
 
-                                </td>
+                                    @break
 
 
-                                {{-- METODE LOGIN --}}
-                                <td>
-
-                                    <span class="sa-login-badge">
-
-                                        <i class="bi bi-envelope-fill"></i>
-
-                                        Email & Password
-
-                                    </span>
-
-                                </td>
-
-
-                                {{-- TANGGAL --}}
-                                <td>
-                                    15 Juli 2026
-                                </td>
-
-
-                                {{-- STATUS --}}
-                                <td>
-
-                                    <span class="sa-status-badge active">
-
-                                        <span></span>
-
-                                        Aktif
-
-                                    </span>
-
-                                </td>
-
-
-                                {{-- AKSI --}}
-                                <td>
-
-                                    <div class="sa-action-buttons">
-
-                                        {{-- RESET PASSWORD --}}
-                                        <button
-                                            type="button"
-                                            class="sa-action-button sa-key-button"
-
-                                            title="Reset password admin"
-
-                                            aria-label="Reset password Andi Saputra"
-
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#resetPasswordModal"
-
-                                            data-admin-name="Andi Saputra"
-                                        >
-
-                                            <i class="bi bi-key-fill"></i>
-
-                                        </button>
-
-
-                                        {{-- HAPUS --}}
-                                        <button
-                                            type="button"
-                                            class="sa-action-button sa-delete-button"
-
-                                            title="Hapus admin"
-
-                                            aria-label="Hapus Andi Saputra"
-
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#hapusAdminModal"
-
-                                            data-admin-name="Andi Saputra"
-                                        >
-
-                                            <i class="bi bi-trash-fill"></i>
-
-                                        </button>
-
-                                    </div>
-
-                                </td>
-
-                            </tr>
-
-
-                            {{-- =================================================
-                                ADMIN 2
-                            ================================================== --}}
-                            <tr>
-
-                                {{-- ADMIN --}}
-                                <td>
-
-                                    <div class="sa-admin-user">
-
-                                        <div class="sa-admin-avatar purple">
-                                            S
-                                        </div>
-
-                                        <div>
-
-                                            <strong>
-                                                Siti Rahma
-                                            </strong>
-
-                                            <small>
-                                                Admin Permohonan
-                                            </small>
-
-                                        </div>
-
-                                    </div>
-
-                                </td>
-
-
-                                {{-- EMAIL --}}
-                                <td>
-
-                                    <span class="sa-email-text">
-                                        siti@gmail.com
-                                    </span>
-
-                                </td>
-
-
-                                {{-- ROLE --}}
-                                <td>
+                                @case('admin_permohonan')
 
                                     <span class="badge bg-success">
                                         Admin Permohonan
                                     </span>
 
-                                </td>
+                                    @break
 
 
-                                {{-- METODE LOGIN --}}
-                                <td>
+                                @default
 
-                                    <span class="sa-login-badge">
-
-                                        <i class="bi bi-envelope-fill"></i>
-
-                                        Email & Password
-
+                                    <span class="badge bg-secondary">
+                                        {{ $admin->role }}
                                     </span>
 
-                                </td>
+                            @endswitch
+
+                        </td>
 
 
-                                {{-- TANGGAL --}}
-                                <td>
-                                    10 Juli 2026
-                                </td>
+                        {{-- =================================================
+                            METODE LOGIN
+                        ================================================== --}}
+                        <td>
+
+                            <span class="sa-login-badge">
+
+                                @if (!empty($admin->google_id))
+
+                                    <i class="bi bi-google"></i>
+
+                                    Google
+
+                                @else
+
+                                    <i class="bi bi-envelope-fill"></i>
+
+                                    Email & Password
+
+                                @endif
+
+                            </span>
+
+                        </td>
 
 
-                                {{-- STATUS --}}
-                                <td>
+                        {{-- =================================================
+                            TANGGAL TERDAFTAR
+                        ================================================== --}}
+                        <td>
 
-                                    <span class="sa-status-badge active">
+                            @if ($admin->created_at)
 
-                                        <span></span>
+                                {{ $admin->created_at->translatedFormat('d F Y') }}
 
-                                        Aktif
+                            @else
 
-                                    </span>
+                                -
 
-                                </td>
+                            @endif
 
-
-                                {{-- AKSI --}}
-                                <td>
-
-                                    <div class="sa-action-buttons">
-
-                                        {{-- RESET PASSWORD --}}
-                                        <button
-                                            type="button"
-                                            class="sa-action-button sa-key-button"
-
-                                            title="Reset password admin"
-
-                                            aria-label="Reset password Siti Rahma"
-
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#resetPasswordModal"
-
-                                            data-admin-name="Siti Rahma"
-                                        >
-
-                                            <i class="bi bi-key-fill"></i>
-
-                                        </button>
+                        </td>
 
 
-                                        {{-- HAPUS --}}
-                                        <button
-                                            type="button"
-                                            class="sa-action-button sa-delete-button"
+                        {{-- =================================================
+                            STATUS
+                        ================================================== --}}
+                        <td>
 
-                                            title="Hapus admin"
+                            @if ($admin->is_active)
 
-                                            aria-label="Hapus Siti Rahma"
+                                <span class="sa-status-badge active">
 
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#hapusAdminModal"
+                                    <span></span>
 
-                                            data-admin-name="Siti Rahma"
-                                        >
+                                    Aktif
 
-                                            <i class="bi bi-trash-fill"></i>
+                                </span>
 
-                                        </button>
+                            @else
 
-                                    </div>
+                                <span class="sa-status-badge">
 
-                                </td>
+                                    <span></span>
 
-                            </tr>
+                                    Nonaktif
 
-                        </tbody>
+                                </span>
 
-                    </table>
+                            @endif
 
-                </div>
+                        </td>
 
 
-                {{-- =========================================================
-                    FOOTER
-                ========================================================== --}}
-                <div class="sa-table-footer">
+                        {{-- =================================================
+                            AKSI
+                        ================================================== --}}
+                        <td>
 
-                    <span>
-                        Menampilkan 2 dari 15 admin
-                    </span>
+                            <div class="sa-action-buttons">
 
-                    <div class="sa-pagination">
 
-                        <button
-                            type="button"
-                            disabled
+                                {{-- =========================================
+                                    RESET PASSWORD
+                                ========================================== --}}
+                                <button
+                                    type="button"
+                                    class="sa-action-button sa-key-button"
+                                    title="Reset password admin"
+                                    aria-label="Reset password {{ $admin->name }}"
+
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#resetPasswordModal"
+
+                                    data-admin-id="{{ $admin->id }}"
+                                    data-admin-name="{{ $admin->name }}"
+                                >
+
+                                    <i class="bi bi-key-fill"></i>
+
+                                </button>
+
+
+                                {{-- =========================================
+                                    HAPUS ADMIN
+                                ========================================== --}}
+                                <button
+                                    type="button"
+                                    class="sa-action-button sa-delete-button"
+                                    title="Hapus admin"
+                                    aria-label="Hapus {{ $admin->name }}"
+
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#hapusAdminModal"
+
+                                    data-admin-id="{{ $admin->id }}"
+                                    data-admin-name="{{ $admin->name }}"
+                                >
+
+                                    <i class="bi bi-trash-fill"></i>
+
+                                </button>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                @empty
+
+                    {{-- =====================================================
+                        TIDAK ADA DATA
+                    ====================================================== --}}
+                    <tr>
+
+                        <td
+                            colspan="7"
+                            class="text-center py-5"
                         >
-                            <i class="bi bi-chevron-left"></i>
-                        </button>
+
+                            <div class="text-muted">
+
+                                <i
+                                    class="bi bi-people"
+                                    style="font-size: 40px;"
+                                ></i>
+
+                                @if (request('search'))
+
+                                    <p class="mt-2 mb-1">
+                                        Admin tidak ditemukan.
+                                    </p>
+
+                                    <small>
+                                        Tidak ada hasil untuk
+                                        "<strong>{{ request('search') }}</strong>"
+                                    </small>
+
+                                @else
+
+                                    <p class="mt-2 mb-0">
+                                        Belum ada admin terdaftar.
+                                    </p>
+
+                                @endif
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                @endforelse
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    {{-- =========================================================
+        FOOTER
+    ========================================================== --}}
+    <div class="sa-table-footer">
+
+
+        {{-- =====================================================
+            INFORMASI DATA
+        ====================================================== --}}
+        <span>
+
+            @if ($admins->total() > 0)
+
+                Menampilkan
+                {{ $admins->firstItem() }}
+                -
+                {{ $admins->lastItem() }}
+                dari
+                {{ $admins->total() }}
+                admin
+
+            @else
+
+                Menampilkan 0 dari 0 admin
+
+            @endif
+
+        </span>
+
+
+        {{-- =====================================================
+            PAGINATION
+        ====================================================== --}}
+        @if ($admins->hasPages())
+
+            <div class="sa-pagination">
+
+
+                {{-- PREVIOUS --}}
+                @if ($admins->onFirstPage())
+
+                    <button
+                        type="button"
+                        disabled
+                    >
+
+                        <i class="bi bi-chevron-left"></i>
+
+                    </button>
+
+                @else
+
+                    <a
+                        href="{{ $admins->previousPageUrl() }}"
+                        class="sa-pagination-link"
+                    >
+
+                        <i class="bi bi-chevron-left"></i>
+
+                    </a>
+
+                @endif
+
+
+                {{-- NOMOR HALAMAN --}}
+                @foreach ($admins->getUrlRange(
+                    max(1, $admins->currentPage() - 2),
+                    min($admins->lastPage(), $admins->currentPage() + 2)
+                ) as $page => $url)
+
+                    @if ($page == $admins->currentPage())
 
                         <button
                             type="button"
                             class="active"
                         >
-                            1
+                            {{ $page }}
                         </button>
 
-                        <button
-                            type="button"
+                    @else
+
+                        <a
+                            href="{{ $url }}"
+                            class="sa-pagination-link"
                         >
-                            2
-                        </button>
+                            {{ $page }}
+                        </a>
 
-                        <button
-                            type="button"
-                        >
-                            <i class="bi bi-chevron-right"></i>
-                        </button>
+                    @endif
 
-                    </div>
+                @endforeach
 
-                </div>
 
-            </section>
+                {{-- NEXT --}}
+                @if ($admins->hasMorePages())
+
+                    <a
+                        href="{{ $admins->nextPageUrl() }}"
+                        class="sa-pagination-link"
+                    >
+
+                        <i class="bi bi-chevron-right"></i>
+
+                    </a>
+
+                @else
+
+                    <button
+                        type="button"
+                        disabled
+                    >
+
+                        <i class="bi bi-chevron-right"></i>
+
+                    </button>
+
+                @endif
+
+            </div>
+
+        @endif
+
+    </div>
+
+</section>
 
 
 
             {{-- =========================================================
-                MODAL TAMBAH ADMIN
+            MODAL TAMBAH ADMIN
             ========================================================= --}}
-            <div
-                class="modal fade"
-                id="tambahAdminModal"
-                tabindex="-1"
-                aria-labelledby="tambahAdminModalLabel"
-                aria-hidden="true"
-            >
+            <div class="modal fade" id="tambahAdminModal" tabindex="-1" aria-labelledby="tambahAdminModalLabel"
+                aria-hidden="true">
 
                 <div class="modal-dialog modal-dialog-centered">
 
@@ -510,10 +636,7 @@
 
                             <div>
 
-                                <h5
-                                    class="modal-title fw-bold"
-                                    id="tambahAdminModalLabel"
-                                >
+                                <h5 class="modal-title fw-bold" id="tambahAdminModalLabel">
 
                                     <i class="bi bi-person-plus-fill me-2"></i>
 
@@ -528,11 +651,7 @@
                             </div>
 
 
-                            <button
-                                type="button"
-                                class="btn-close"
-                                data-bs-dismiss="modal"
-                            ></button>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
 
                         </div>
 
@@ -540,10 +659,7 @@
                         {{-- BODY --}}
                         <div class="modal-body">
 
-                            <form
-                                id="tambahAdminForm"
-                                method="POST"
-                            >
+                            <form id="tambahAdminForm" method="POST">
 
                                 @csrf
 
@@ -551,19 +667,12 @@
                                 {{-- NAMA --}}
                                 <div class="mb-3">
 
-                                    <label
-                                        class="form-label fw-semibold"
-                                    >
+                                    <label class="form-label fw-semibold">
                                         Nama Lengkap
                                     </label>
 
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        name="name"
-                                        placeholder="Masukkan nama lengkap"
-                                        required
-                                    >
+                                    <input type="text" class="form-control" name="name" placeholder="Masukkan nama lengkap"
+                                        required>
 
                                 </div>
 
@@ -571,19 +680,12 @@
                                 {{-- EMAIL --}}
                                 <div class="mb-3">
 
-                                    <label
-                                        class="form-label fw-semibold"
-                                    >
+                                    <label class="form-label fw-semibold">
                                         Email
                                     </label>
 
-                                    <input
-                                        type="email"
-                                        class="form-control"
-                                        name="email"
-                                        placeholder="Masukkan email"
-                                        required
-                                    >
+                                    <input type="email" class="form-control" name="email" placeholder="Masukkan email"
+                                        required>
 
                                     <small class="text-muted">
                                         Email digunakan untuk login ke dalam sistem.
@@ -595,17 +697,11 @@
                                 {{-- ROLE --}}
                                 <div class="mb-3">
 
-                                    <label
-                                        class="form-label fw-semibold"
-                                    >
+                                    <label class="form-label fw-semibold">
                                         Jabatan / Role
                                     </label>
 
-                                    <select
-                                        class="form-select"
-                                        name="role"
-                                        required
-                                    >
+                                    <select class="form-select" name="role" required>
 
                                         <option value="">
                                             Pilih role admin
@@ -626,20 +722,12 @@
                                 {{-- PASSWORD --}}
                                 <div class="mb-3">
 
-                                    <label
-                                        class="form-label fw-semibold"
-                                    >
+                                    <label class="form-label fw-semibold">
                                         Password
                                     </label>
 
-                                    <input
-                                        type="password"
-                                        class="form-control"
-                                        name="password"
-                                        placeholder="Masukkan password"
-                                        minlength="8"
-                                        required
-                                    >
+                                    <input type="password" class="form-control" name="password"
+                                        placeholder="Masukkan password" minlength="8" required>
 
                                     <small class="text-muted">
                                         Password minimal 8 karakter.
@@ -651,20 +739,12 @@
                                 {{-- KONFIRMASI PASSWORD --}}
                                 <div class="mb-3">
 
-                                    <label
-                                        class="form-label fw-semibold"
-                                    >
+                                    <label class="form-label fw-semibold">
                                         Konfirmasi Password
                                     </label>
 
-                                    <input
-                                        type="password"
-                                        class="form-control"
-                                        name="password_confirmation"
-                                        placeholder="Ulangi password"
-                                        minlength="8"
-                                        required
-                                    >
+                                    <input type="password" class="form-control" name="password_confirmation"
+                                        placeholder="Ulangi password" minlength="8" required>
 
                                 </div>
 
@@ -676,19 +756,11 @@
                         {{-- FOOTER --}}
                         <div class="modal-footer border-0">
 
-                            <button
-                                type="button"
-                                class="btn btn-light"
-                                data-bs-dismiss="modal"
-                            >
+                            <button type="button" class="btn btn-light" data-bs-dismiss="modal">
                                 Batal
                             </button>
 
-                            <button
-                                type="submit"
-                                form="tambahAdminForm"
-                                class="btn btn-primary"
-                            >
+                            <button type="submit" form="tambahAdminForm" class="btn btn-primary">
 
                                 <i class="bi bi-person-plus-fill me-1"></i>
 
@@ -707,15 +779,10 @@
 
 
             {{-- =========================================================
-                MODAL RESET PASSWORD
+            MODAL RESET PASSWORD
             ========================================================= --}}
-            <div
-                class="modal fade"
-                id="resetPasswordModal"
-                tabindex="-1"
-                aria-labelledby="resetPasswordModalLabel"
-                aria-hidden="true"
-            >
+            <div class="modal fade" id="resetPasswordModal" tabindex="-1" aria-labelledby="resetPasswordModalLabel"
+                aria-hidden="true">
 
                 <div class="modal-dialog modal-dialog-centered">
 
@@ -726,10 +793,7 @@
 
                             <div>
 
-                                <h5
-                                    class="modal-title fw-bold"
-                                    id="resetPasswordModalLabel"
-                                >
+                                <h5 class="modal-title fw-bold" id="resetPasswordModalLabel">
 
                                     <i class="bi bi-key-fill me-2"></i>
 
@@ -744,11 +808,7 @@
                             </div>
 
 
-                            <button
-                                type="button"
-                                class="btn-close"
-                                data-bs-dismiss="modal"
-                            ></button>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
 
                         </div>
 
@@ -769,10 +829,7 @@
                             </div>
 
 
-                            <form
-                                id="resetPasswordForm"
-                                method="POST"
-                            >
+                            <form id="resetPasswordForm" method="POST">
 
                                 @csrf
 
@@ -780,21 +837,12 @@
                                 {{-- PASSWORD BARU --}}
                                 <div class="mb-3">
 
-                                    <label
-                                        class="form-label fw-semibold"
-                                    >
+                                    <label class="form-label fw-semibold">
                                         Password Baru
                                     </label>
 
-                                    <input
-                                        type="password"
-                                        class="form-control"
-                                        id="newPassword"
-                                        name="password"
-                                        placeholder="Masukkan password baru"
-                                        minlength="8"
-                                        required
-                                    >
+                                    <input type="password" class="form-control" id="newPassword" name="password"
+                                        placeholder="Masukkan password baru" minlength="8" required>
 
                                 </div>
 
@@ -802,21 +850,13 @@
                                 {{-- KONFIRMASI PASSWORD --}}
                                 <div class="mb-3">
 
-                                    <label
-                                        class="form-label fw-semibold"
-                                    >
+                                    <label class="form-label fw-semibold">
                                         Konfirmasi Password
                                     </label>
 
-                                    <input
-                                        type="password"
-                                        class="form-control"
-                                        id="confirmPassword"
-                                        name="password_confirmation"
-                                        placeholder="Ulangi password baru"
-                                        minlength="8"
-                                        required
-                                    >
+                                    <input type="password" class="form-control" id="confirmPassword"
+                                        name="password_confirmation" placeholder="Ulangi password baru" minlength="8"
+                                        required>
 
                                 </div>
 
@@ -828,19 +868,11 @@
                         {{-- FOOTER --}}
                         <div class="modal-footer border-0">
 
-                            <button
-                                type="button"
-                                class="btn btn-light"
-                                data-bs-dismiss="modal"
-                            >
+                            <button type="button" class="btn btn-light" data-bs-dismiss="modal">
                                 Batal
                             </button>
 
-                            <button
-                                type="submit"
-                                form="resetPasswordForm"
-                                class="btn btn-primary"
-                            >
+                            <button type="submit" form="resetPasswordForm" class="btn btn-primary">
 
                                 <i class="bi bi-key-fill me-1"></i>
 
@@ -859,15 +891,10 @@
 
 
             {{-- =========================================================
-                MODAL HAPUS ADMIN
+            MODAL HAPUS ADMIN
             ========================================================= --}}
-            <div
-                class="modal fade"
-                id="hapusAdminModal"
-                tabindex="-1"
-                aria-labelledby="hapusAdminModalLabel"
-                aria-hidden="true"
-            >
+            <div class="modal fade" id="hapusAdminModal" tabindex="-1" aria-labelledby="hapusAdminModalLabel"
+                aria-hidden="true">
 
                 <div class="modal-dialog modal-dialog-centered">
 
@@ -876,10 +903,7 @@
                         {{-- HEADER --}}
                         <div class="modal-header border-0">
 
-                            <h5
-                                class="modal-title fw-bold"
-                                id="hapusAdminModalLabel"
-                            >
+                            <h5 class="modal-title fw-bold" id="hapusAdminModalLabel">
 
                                 <i class="bi bi-trash-fill me-2 text-danger"></i>
 
@@ -888,11 +912,7 @@
                             </h5>
 
 
-                            <button
-                                type="button"
-                                class="btn-close"
-                                data-bs-dismiss="modal"
-                            ></button>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
 
                         </div>
 
@@ -902,10 +922,7 @@
 
                             <div class="mb-3">
 
-                                <i
-                                    class="bi bi-exclamation-circle-fill text-danger"
-                                    style="font-size: 55px;"
-                                ></i>
+                                <i class="bi bi-exclamation-circle-fill text-danger" style="font-size: 55px;"></i>
 
                             </div>
 
@@ -939,24 +956,14 @@
 
 
                         {{-- FOOTER --}}
-                        <div
-                            class="modal-footer border-0 justify-content-center"
-                        >
+                        <div class="modal-footer border-0 justify-content-center">
 
-                            <button
-                                type="button"
-                                class="btn btn-light px-4"
-                                data-bs-dismiss="modal"
-                            >
+                            <button type="button" class="btn btn-light px-4" data-bs-dismiss="modal">
                                 Batal
                             </button>
 
 
-                            <button
-                                type="button"
-                                class="btn btn-danger px-4"
-                                id="confirmHapusAdmin"
-                            >
+                            <button type="button" class="btn btn-danger px-4" id="confirmHapusAdmin">
 
                                 <i class="bi bi-trash-fill me-1"></i>
 
@@ -975,292 +982,292 @@
 
 
             {{-- =========================================================
-                JAVASCRIPT
+            JAVASCRIPT
             ========================================================= --}}
             <script>
 
-            document.addEventListener('DOMContentLoaded', function () {
+                document.addEventListener('DOMContentLoaded', function () {
 
 
-                /*
-                |--------------------------------------------------------------------------
-                | MODAL RESET PASSWORD
-                |--------------------------------------------------------------------------
-                */
+                    /*
+                    |--------------------------------------------------------------------------
+                    | MODAL RESET PASSWORD
+                    |--------------------------------------------------------------------------
+                    */
 
-                const resetPasswordModal =
-                    document.getElementById('resetPasswordModal');
+                    const resetPasswordModal =
+                        document.getElementById('resetPasswordModal');
 
 
-                if (resetPasswordModal) {
+                    if (resetPasswordModal) {
 
-                    resetPasswordModal.addEventListener(
-                        'show.bs.modal',
-                        function (event) {
+                        resetPasswordModal.addEventListener(
+                            'show.bs.modal',
+                            function (event) {
 
-                            const button =
-                                event.relatedTarget;
+                                const button =
+                                    event.relatedTarget;
 
-                            const adminName =
-                                button.getAttribute(
-                                    'data-admin-name'
-                                );
+                                const adminName =
+                                    button.getAttribute(
+                                        'data-admin-name'
+                                    );
 
-                            document.getElementById(
-                                'resetAdminName'
-                            ).textContent = adminName;
-
-                        }
-                    );
-
-                }
-
-
-                /*
-                |--------------------------------------------------------------------------
-                | MODAL HAPUS ADMIN
-                |--------------------------------------------------------------------------
-                */
-
-                const hapusAdminModal =
-                    document.getElementById('hapusAdminModal');
-
-
-                if (hapusAdminModal) {
-
-                    hapusAdminModal.addEventListener(
-                        'show.bs.modal',
-                        function (event) {
-
-                            const button =
-                                event.relatedTarget;
-
-                            const adminName =
-                                button.getAttribute(
-                                    'data-admin-name'
-                                );
-
-                            document.getElementById(
-                                'hapusAdminName'
-                            ).textContent = adminName;
-
-                        }
-                    );
-
-                }
-
-
-                /*
-                |--------------------------------------------------------------------------
-                | SEARCH ADMIN
-                |--------------------------------------------------------------------------
-                */
-
-                const searchInput =
-                    document.getElementById('adminSearch');
-
-                const table =
-                    document.getElementById('adminTable');
-
-
-                if (searchInput && table) {
-
-                    searchInput.addEventListener(
-                        'keyup',
-                        function () {
-
-                            const keyword =
-                                this.value.toLowerCase();
-
-                            const rows =
-                                table.querySelectorAll(
-                                    'tbody tr'
-                                );
-
-
-                            rows.forEach(function (row) {
-
-                                const text =
-                                    row.textContent.toLowerCase();
-
-                                row.style.display =
-                                    text.includes(keyword)
-                                        ? ''
-                                        : 'none';
-
-                            });
-
-                        }
-                    );
-
-                }
-
-
-                /*
-                |--------------------------------------------------------------------------
-                | VALIDASI TAMBAH ADMIN
-                |--------------------------------------------------------------------------
-                */
-
-                const tambahAdminForm =
-                    document.getElementById('tambahAdminForm');
-
-
-                if (tambahAdminForm) {
-
-                    tambahAdminForm.addEventListener(
-                        'submit',
-                        function (event) {
-
-                            const password =
-                                tambahAdminForm.querySelector(
-                                    'input[name="password"]'
-                                ).value;
-
-                            const confirmation =
-                                tambahAdminForm.querySelector(
-                                    'input[name="password_confirmation"]'
-                                ).value;
-
-
-                            if (password !== confirmation) {
-
-                                event.preventDefault();
-
-                                alert(
-                                    'Konfirmasi password tidak sesuai.'
-                                );
-
-                                return;
-
-                            }
-
-
-                            if (password.length < 8) {
-
-                                event.preventDefault();
-
-                                alert(
-                                    'Password minimal 8 karakter.'
-                                );
-
-                                return;
-
-                            }
-
-                        }
-                    );
-
-                }
-
-
-                /*
-                |--------------------------------------------------------------------------
-                | VALIDASI RESET PASSWORD
-                |--------------------------------------------------------------------------
-                */
-
-                const resetForm =
-                    document.getElementById(
-                        'resetPasswordForm'
-                    );
-
-
-                if (resetForm) {
-
-                    resetForm.addEventListener(
-                        'submit',
-                        function (event) {
-
-                            const password =
                                 document.getElementById(
-                                    'newPassword'
-                                ).value;
+                                    'resetAdminName'
+                                ).textContent = adminName;
 
-                            const confirmation =
+                            }
+                        );
+
+                    }
+
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | MODAL HAPUS ADMIN
+                    |--------------------------------------------------------------------------
+                    */
+
+                    const hapusAdminModal =
+                        document.getElementById('hapusAdminModal');
+
+
+                    if (hapusAdminModal) {
+
+                        hapusAdminModal.addEventListener(
+                            'show.bs.modal',
+                            function (event) {
+
+                                const button =
+                                    event.relatedTarget;
+
+                                const adminName =
+                                    button.getAttribute(
+                                        'data-admin-name'
+                                    );
+
                                 document.getElementById(
-                                    'confirmPassword'
-                                ).value;
+                                    'hapusAdminName'
+                                ).textContent = adminName;
+
+                            }
+                        );
+
+                    }
 
 
-                            if (password !== confirmation) {
+                    /*
+                    |--------------------------------------------------------------------------
+                    | SEARCH ADMIN
+                    |--------------------------------------------------------------------------
+                    */
 
-                                event.preventDefault();
+                    const searchInput =
+                        document.getElementById('adminSearch');
+
+                    const table =
+                        document.getElementById('adminTable');
+
+
+                    if (searchInput && table) {
+
+                        searchInput.addEventListener(
+                            'keyup',
+                            function () {
+
+                                const keyword =
+                                    this.value.toLowerCase();
+
+                                const rows =
+                                    table.querySelectorAll(
+                                        'tbody tr'
+                                    );
+
+
+                                rows.forEach(function (row) {
+
+                                    const text =
+                                        row.textContent.toLowerCase();
+
+                                    row.style.display =
+                                        text.includes(keyword)
+                                            ? ''
+                                            : 'none';
+
+                                });
+
+                            }
+                        );
+
+                    }
+
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | VALIDASI TAMBAH ADMIN
+                    |--------------------------------------------------------------------------
+                    */
+
+                    const tambahAdminForm =
+                        document.getElementById('tambahAdminForm');
+
+
+                    if (tambahAdminForm) {
+
+                        tambahAdminForm.addEventListener(
+                            'submit',
+                            function (event) {
+
+                                const password =
+                                    tambahAdminForm.querySelector(
+                                        'input[name="password"]'
+                                    ).value;
+
+                                const confirmation =
+                                    tambahAdminForm.querySelector(
+                                        'input[name="password_confirmation"]'
+                                    ).value;
+
+
+                                if (password !== confirmation) {
+
+                                    event.preventDefault();
+
+                                    alert(
+                                        'Konfirmasi password tidak sesuai.'
+                                    );
+
+                                    return;
+
+                                }
+
+
+                                if (password.length < 8) {
+
+                                    event.preventDefault();
+
+                                    alert(
+                                        'Password minimal 8 karakter.'
+                                    );
+
+                                    return;
+
+                                }
+
+                            }
+                        );
+
+                    }
+
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | VALIDASI RESET PASSWORD
+                    |--------------------------------------------------------------------------
+                    */
+
+                    const resetForm =
+                        document.getElementById(
+                            'resetPasswordForm'
+                        );
+
+
+                    if (resetForm) {
+
+                        resetForm.addEventListener(
+                            'submit',
+                            function (event) {
+
+                                const password =
+                                    document.getElementById(
+                                        'newPassword'
+                                    ).value;
+
+                                const confirmation =
+                                    document.getElementById(
+                                        'confirmPassword'
+                                    ).value;
+
+
+                                if (password !== confirmation) {
+
+                                    event.preventDefault();
+
+                                    alert(
+                                        'Konfirmasi password tidak sesuai.'
+                                    );
+
+                                    return;
+
+                                }
+
+
+                                if (password.length < 8) {
+
+                                    event.preventDefault();
+
+                                    alert(
+                                        'Password minimal 8 karakter.'
+                                    );
+
+                                    return;
+
+                                }
+
+                            }
+                        );
+
+                    }
+
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | HAPUS ADMIN
+                    |--------------------------------------------------------------------------
+                    */
+
+                    const confirmDelete =
+                        document.getElementById(
+                            'confirmHapusAdmin'
+                        );
+
+
+                    if (confirmDelete) {
+
+                        confirmDelete.addEventListener(
+                            'click',
+                            function () {
+
+                                /*
+                                * Nanti bagian ini dihubungkan
+                                * dengan route Laravel untuk
+                                * menghapus admin.
+                                */
 
                                 alert(
-                                    'Konfirmasi password tidak sesuai.'
-                                );
-
-                                return;
-
-                            }
-
-
-                            if (password.length < 8) {
-
-                                event.preventDefault();
-
-                                alert(
-                                    'Password minimal 8 karakter.'
-                                );
-
-                                return;
-
-                            }
-
-                        }
-                    );
-
-                }
-
-
-                /*
-                |--------------------------------------------------------------------------
-                | HAPUS ADMIN
-                |--------------------------------------------------------------------------
-                */
-
-                const confirmDelete =
-                    document.getElementById(
-                        'confirmHapusAdmin'
-                    );
-
-
-                if (confirmDelete) {
-
-                    confirmDelete.addEventListener(
-                        'click',
-                        function () {
-
-                            /*
-                            * Nanti bagian ini dihubungkan
-                            * dengan route Laravel untuk
-                            * menghapus admin.
-                            */
-
-                            alert(
-                                'Data admin berhasil dihapus.'
-                            );
-
-
-                            const modal =
-                                bootstrap.Modal.getInstance(
-                                    hapusAdminModal
+                                    'Data admin berhasil dihapus.'
                                 );
 
 
-                            if (modal) {
+                                const modal =
+                                    bootstrap.Modal.getInstance(
+                                        hapusAdminModal
+                                    );
 
-                                modal.hide();
+
+                                if (modal) {
+
+                                    modal.hide();
+
+                                }
 
                             }
+                        );
 
-                        }
-                    );
+                    }
 
-                }
-
-            });
+                });
 
             </script>
 

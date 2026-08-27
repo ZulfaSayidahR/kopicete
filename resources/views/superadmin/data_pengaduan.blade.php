@@ -457,7 +457,7 @@
     class="sa-action-button sa-key-button"
     title="Lihat Detail"
 >
-    <i class="bi bi-eye-fill"></i>
+     <i class="bi bi-pencil-square"></i>
 </a>
 
                                                                 {{-- HAPUS --}}

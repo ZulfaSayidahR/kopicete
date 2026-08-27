@@ -40,35 +40,115 @@
 
             </p>
 
+
+            {{-- =====================================================
+            PESAN SUCCESS
+            ====================================================== --}}
+
+            @if(session('success'))
+
+                <div class="alert alert-success text-start">
+
+                    <i class="bi bi-check-circle-fill me-2"></i>
+
+                    {{ session('success') }}
+
+                </div>
+
+            @endif
+
+
+            {{-- =====================================================
+            PESAN ERROR
+            ====================================================== --}}
+
+            @if(session('error'))
+
+                <div class="alert alert-danger text-start">
+
+                    <i class="bi bi-exclamation-circle-fill me-2"></i>
+
+                    {{ session('error') }}
+
+                </div>
+
+            @endif
+
+
+            {{-- =====================================================
+            ERROR VALIDASI
+            ====================================================== --}}
+
+            @if($errors->any())
+
+                <div class="alert alert-danger text-start">
+
+                    <ul class="mb-0 ps-3">
+
+                        @foreach($errors->all() as $error)
+
+                            <li>
+                                {{ $error }}
+                            </li>
+
+                        @endforeach
+
+                    </ul>
+
+                </div>
+
+            @endif
+
+
+            {{-- =====================================================
+            LOGIN EMAIL + PASSWORD
+            ====================================================== --}}
+
             <form action="{{ route('login.proses') }}" method="POST">
 
                 @csrf
+
+
+                {{-- EMAIL --}}
 
                 <div class="input-login">
 
                     <i class="bi bi-envelope-fill"></i>
 
-                    <input type="email" name="email" placeholder="Masukkan Email" required>
+                    <input type="email" name="email" value="{{ old('email') }}" placeholder="Masukkan Email"
+                        autocomplete="email" required>
 
                 </div>
+
+
+                {{-- PASSWORD --}}
 
                 <div class="input-login">
 
                     <i class="bi bi-lock-fill"></i>
 
-                    <input type="password" name="password" placeholder="Masukkan Password" required>
+                    <input type="password" name="password" placeholder="Masukkan Password"
+                        autocomplete="current-password" required>
+
+                    <i class="bi bi-eye-fill"></i>
 
                 </div>
+
+
+                {{-- =================================================
+                INGAT SAYA + LUPA PASSWORD
+                ================================================== --}}
 
                 <div class="login-menu">
 
                     <label>
 
-                        <input type="checkbox">
+                        <input type="checkbox" name="remember" value="1">
 
                         Ingat Saya
 
                     </label>
+
 
                     <a href="{{ route('forgot.password') }}">
 
@@ -78,15 +158,25 @@
 
                 </div>
 
-                <a href="{{ route('superadmin.dashboard') }}" class="btn-admin-login">
+
+                {{-- =================================================
+                BUTTON LOGIN
+                ================================================== --}}
+
+                <button type="submit" class="btn-admin-login">
 
                     <i class="bi bi-box-arrow-in-right"></i>
 
                     Masuk
 
-                </a>
+                </button>
 
             </form>
+
+
+            {{-- =====================================================
+            PEMBATAS LOGIN
+            ====================================================== --}}
 
             <div class="divider">
 
@@ -94,23 +184,49 @@
 
             </div>
 
-            <a href="#" class="btn-google">
-                <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg">
+
+            {{-- =====================================================
+            LOGIN GOOGLE SUPERADMIN
+            ====================================================== --}}
+
+            <a href="{{ route('google.redirect') }}" class="btn-google">
+
+                <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google">
+
                 Masuk dengan Google
+
             </a>
 
-            {{-- DAFTAR ADMIN --}}
+
+            <small class="d-block text-muted mt-3">
+
+                Login Google digunakan untuk akun SuperAdmin.
+
+            </small>
+
+
+            {{-- =====================================================
+            DAFTAR ADMIN
+            ====================================================== --}}
+            <!-- 
             <a href="{{ route('register') }}" class="btn-admin-register">
 
                 <i class="bi bi-person-plus-fill"></i>
 
                 Daftar Admin
 
-            </a>
+            </a> -->
+
+
+            {{-- =====================================================
+            KEMBALI KE BERANDA
+            ====================================================== --}}
 
             <a href="{{ route('home') }}" class="btn-back">
 
-                ← Kembali ke Beranda
+                <i class="bi bi-arrow-left"></i>
+
+                Kembali ke Beranda
 
             </a>
 

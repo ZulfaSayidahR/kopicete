@@ -33,24 +33,41 @@ Route::get('/about', function () {
 
 
 // SUPER ADMIN
-
-Route::prefix('superadmin')
+Route::middleware(['auth'])
+    ->prefix('superadmin')
     ->name('superadmin.')
     ->group(function () {
 
-        // Dashboard
-        Route::get(
-            '/dashboard',
-            [SuperAdminController::class, 'dashboard']
-        )->name('dashboard');
+        /*
+        |--------------------------------------------------------------------------
+        | DASHBOARD
+        |--------------------------------------------------------------------------
+        */
 
-        // Data Admin
+        Route::get('/dashboard', [
+            SuperAdminController::class,
+            'dashboard'
+        ])->name('dashboard');
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | DATA ADMIN
+        |--------------------------------------------------------------------------
+        */
+
         Route::get(
             '/data-admin',
             [AdminController::class, 'index']
         )->name('data_admin');
 
-        // Data Pengaduan
+
+        /*
+        |--------------------------------------------------------------------------
+        | DATA PENGADUAN
+        |--------------------------------------------------------------------------
+        */
+
         Route::get(
             '/data-pengaduan',
             [DataPengaduanController::class, 'dataPengaduan']
@@ -81,7 +98,13 @@ Route::prefix('superadmin')
             [DataPengaduanController::class, 'destroy']
         )->name('delete_pengaduan');
 
-        // Data Permohonan
+
+        /*
+        |--------------------------------------------------------------------------
+        | DATA PERMOHONAN
+        |--------------------------------------------------------------------------
+        */
+
         Route::get(
             '/data-permohonan',
             [DataPermohonanController::class, 'dataPermohonan']
@@ -101,8 +124,8 @@ Route::prefix('superadmin')
             '/data-permohonan/{id}/update',
             [DataPermohonanController::class, 'updatePermohonan']
         )->name('update_permohonan');
-    });
 
+    });
 
 // ADMIN PENGADUAN
 
@@ -443,10 +466,6 @@ Route::get(
 
 
 
-// =========================================================
-// AUTH
-// =========================================================
-
 /*
 |--------------------------------------------------------------------------
 | LOGIN
@@ -483,6 +502,12 @@ Route::post(
     [AuthController::class, 'sendResetLink']
 )->name('forgot.password.send');
 
+Route::get('/reset-password/{token}', [AuthController::class, 'showResetPassword'])
+    ->name('password.reset');
+
+Route::post('/reset-password', [AuthController::class, 'resetPassword'])
+    ->name('password.update');
+
 
 
 /*
@@ -501,3 +526,94 @@ Route::post(
     '/register',
     [AuthController::class, 'registerProses']
 )->name('register.proses');
+
+
+
+/*
+|--------------------------------------------------------------------------
+| GOOGLE LOGIN - SUPERADMIN
+|--------------------------------------------------------------------------
+*/
+
+// Redirect ke Google
+Route::get(
+    '/auth/google',
+    [AuthController::class, 'redirectToGoogle']
+)->name('google.redirect');
+
+
+// Callback dari Google
+Route::get(
+    '/auth/google/callback',
+    [AuthController::class, 'handleGoogleCallback']
+)->name('google.callback');
+
+
+
+/*
+|--------------------------------------------------------------------------
+| RESET PASSWORD
+|--------------------------------------------------------------------------
+*/
+
+// Halaman reset password
+Route::get(
+    '/reset-password/{token}',
+    [AuthController::class, 'showResetPassword']
+)->name('password.reset');
+
+
+// Proses reset password
+Route::post(
+    '/reset-password',
+    [AuthController::class, 'resetPassword']
+)->name('password.update');
+
+
+
+/*
+|--------------------------------------------------------------------------
+| LOGOUT
+|--------------------------------------------------------------------------
+*/
+
+Route::post(
+    '/logout',
+    [AuthController::class, 'logout']
+)->name('logout');
+
+Route::middleware(['auth'])
+    ->prefix('superadmin')
+    ->name('superadmin.')
+    ->group(function () {
+
+        // DATA ADMIN
+        Route::get(
+            '/data-admin',
+            [AdminController::class, 'index']
+        )->name('data_admin');
+
+        // TAMBAH ADMIN
+        Route::post(
+            '/data-admin',
+            [AdminController::class, 'store']
+        )->name('data_admin.store');
+
+        // RESET PASSWORD
+        Route::put(
+            '/data-admin/{id}/reset-password',
+            [AdminController::class, 'resetPassword']
+        )->name('data_admin.reset_password');
+
+        // HAPUS ADMIN
+        Route::delete(
+            '/data-admin/{id}',
+            [AdminController::class, 'destroy']
+        )->name('data_admin.destroy');
+
+        // STATUS
+        Route::patch(
+            '/data-admin/{id}/toggle-status',
+            [AdminController::class, 'toggleStatus']
+        )->name('data_admin.toggle_status');
+    });
