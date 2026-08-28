@@ -512,8 +512,6 @@
 
                                             <a href="{{ route('permohonan.create') }}" class="btn-prev">
 
-                                                <i class="bi bi-arrow-left"></i>
-
                                                 Kembali
 
                                             </a>
@@ -530,8 +528,6 @@
                                                 <button type="submit" class="btn-next">
 
                                                     Kirim Permohonan
-
-                                                    <i class="bi bi-arrow-right"></i>
 
                                                 </button>
 
