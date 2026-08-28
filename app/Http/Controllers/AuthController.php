@@ -30,12 +30,9 @@ class AuthController extends Controller
 
     /**
      * Proses login Admin Pengaduan dan Admin Permohonan.
-     */
-    /**
-     * Proses login Admin Pengaduan dan Admin Permohonan.
-     */
-    /**
-     * Proses login Admin Pengaduan dan Admin Permohonan.
+     *
+     * SuperAdmin TIDAK boleh login melalui form ini.
+     * SuperAdmin wajib menggunakan Google.
      */
     public function loginProses(Request $request)
     {
@@ -63,11 +60,14 @@ class AuthController extends Controller
 
         /*
         |--------------------------------------------------------------------------
-        | CARI USER BERDASARKAN EMAIL
+        | CARI USER
         |--------------------------------------------------------------------------
         */
 
-        $user = User::where('email', $credentials['email'])->first();
+        $user = User::where(
+            'email',
+            $credentials['email']
+        )->first();
 
 
         /*
@@ -79,7 +79,9 @@ class AuthController extends Controller
         if (!$user) {
 
             return back()
-                ->withInput($request->only('email'))
+                ->withInput(
+                    $request->only('email')
+                )
                 ->with(
                     'error',
                     'Email atau password salah.'
@@ -89,15 +91,32 @@ class AuthController extends Controller
 
         /*
         |--------------------------------------------------------------------------
-        | CEK ROLE
+        | SUPERADMIN TIDAK BOLEH LOGIN DENGAN EMAIL + PASSWORD
+        |--------------------------------------------------------------------------
+        */
+
+        if ($user->role === 'superadmin') {
+
+            return back()
+                ->withInput(
+                    $request->only('email')
+                )
+                ->with(
+                    'error',
+                    'SuperAdmin harus login menggunakan akun Google.'
+                );
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | CEK ROLE ADMIN
         |--------------------------------------------------------------------------
         |
-        | Login form hanya untuk:
+        | Form login ini hanya diperbolehkan untuk:
         |
-        | - admin_pengaduan
-        | - admin_permohonan
-        |
-        | SuperAdmin login menggunakan Google.
+        | admin_pengaduan
+        | admin_permohonan
         |
         */
 
@@ -109,10 +128,12 @@ class AuthController extends Controller
         ) {
 
             return back()
-                ->withInput($request->only('email'))
+                ->withInput(
+                    $request->only('email')
+                )
                 ->with(
                     'error',
-                    'SuperAdmin harus login menggunakan Google.'
+                    'Role akun tidak valid.'
                 );
         }
 
@@ -126,7 +147,9 @@ class AuthController extends Controller
         if (!$user->is_active) {
 
             return back()
-                ->withInput($request->only('email'))
+                ->withInput(
+                    $request->only('email')
+                )
                 ->with(
                     'error',
                     'Akun Anda sedang dinonaktifkan oleh SuperAdmin.'
@@ -148,7 +171,9 @@ class AuthController extends Controller
         ) {
 
             return back()
-                ->withInput($request->only('email'))
+                ->withInput(
+                    $request->only('email')
+                )
                 ->with(
                     'error',
                     'Email atau password salah.'
@@ -203,11 +228,15 @@ class AuthController extends Controller
 
         /*
         |--------------------------------------------------------------------------
-        | ROLE TIDAK VALID
+        | JIKA ROLE TIDAK VALID
         |--------------------------------------------------------------------------
         */
 
         Auth::logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
 
         return redirect()
             ->route('login')
@@ -236,10 +265,29 @@ class AuthController extends Controller
 
     /**
      * Callback setelah login Google.
+     *
+     * ATURAN:
+     *
+     * 1. Jika Google ID sudah terdaftar sebagai SuperAdmin
+     *    → izinkan login.
+     *
+     * 2. Jika belum terdaftar DAN belum ada SuperAdmin
+     *    → Google tersebut menjadi SuperAdmin pertama.
+     *
+     * 3. Jika belum terdaftar DAN SuperAdmin sudah ada
+     *    → TOLAK LOGIN.
+     *
+     * Dengan demikian hanya ada 1 akun SuperAdmin.
      */
     public function handleGoogleCallback()
     {
         try {
+
+            /*
+            |--------------------------------------------------------------------------
+            | AMBIL DATA GOOGLE
+            |--------------------------------------------------------------------------
+            */
 
             $googleUser = Socialite::driver('google')
                 ->user();
@@ -247,130 +295,208 @@ class AuthController extends Controller
 
             /*
             |--------------------------------------------------------------------------
-            | CARI SUPERADMIN BERDASARKAN GOOGLE ID
+            | DATA GOOGLE
             |--------------------------------------------------------------------------
             */
 
-            $user = User::where('google_id', $googleUser->getId())
-                ->where('role', 'superadmin')
+            $googleId = $googleUser->getId();
+            $googleEmail = $googleUser->getEmail();
+            $googleName = $googleUser->getName()
+                ?? 'Super Admin';
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | CARI USER BERDASARKAN GOOGLE ID
+            |--------------------------------------------------------------------------
+            |
+            | Hanya mencari user SuperAdmin.
+            |
+            */
+
+            $user = User::where(
+                'google_id',
+                $googleId
+            )
+                ->where(
+                    'role',
+                    'superadmin'
+                )
                 ->first();
 
 
             /*
             |--------------------------------------------------------------------------
-            | JIKA SUPERADMIN BELUM ADA
+            | GOOGLE INI ADALAH SUPERADMIN YANG SUDAH TERDAFTAR
             |--------------------------------------------------------------------------
-            |
-            | Google account pertama akan menjadi SuperAdmin.
-            |
             */
 
-            if (!$user) {
-
-                $superAdmin = User::where(
-                    'role',
-                    'superadmin'
-                )->first();
-
+            if ($user) {
 
                 /*
                 |--------------------------------------------------------------------------
-                | BELUM ADA SUPERADMIN SAMA SEKALI
+                | CEK STATUS AKUN
                 |--------------------------------------------------------------------------
                 */
 
-                if (!$superAdmin) {
-
-                    $user = User::create([
-
-                        'name' => $googleUser->getName()
-                            ?? 'Super Admin',
-
-                        'email' => $googleUser->getEmail(),
-
-                        'password' => Hash::make(
-                            Str::random(40)
-                        ),
-
-                        'google_id' => $googleUser->getId(),
-
-                        'role' => 'superadmin',
-
-                        'is_active' => true,
-
-                    ]);
-
-
-                    Auth::login($user);
-
-                    request()
-                        ->session()
-                        ->regenerate();
-
+                if (!$user->is_active) {
 
                     return redirect()
-                        ->route('superadmin.dashboard')
+                        ->route('login')
                         ->with(
-                            'success',
-                            'Akun SuperAdmin berhasil dibuat melalui Google.'
+                            'error',
+                            'Akun SuperAdmin sedang dinonaktifkan.'
                         );
                 }
 
 
                 /*
                 |--------------------------------------------------------------------------
-                | SUPERADMIN SUDAH ADA
+                | LOGIN SUPERADMIN
                 |--------------------------------------------------------------------------
                 */
 
+                Auth::login($user);
+
+                request()
+                    ->session()
+                    ->regenerate();
+
+
                 return redirect()
-                    ->route('login')
+                    ->route('superadmin.dashboard')
                     ->with(
-                        'error',
-                        'Akun Google ini bukan akun SuperAdmin yang terdaftar.'
+                        'success',
+                        'Selamat datang, SuperAdmin.'
                     );
             }
 
 
             /*
             |--------------------------------------------------------------------------
-            | CEK AKTIF
+            | GOOGLE BELUM TERDAFTAR SEBAGAI SUPERADMIN
             |--------------------------------------------------------------------------
+            |
+            | Sekarang kita cek apakah sudah ada SuperAdmin.
+            |
             */
 
-            if (!$user->is_active) {
+            $existingSuperAdmin = User::where(
+                'role',
+                'superadmin'
+            )->first();
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | BELUM ADA SUPERADMIN
+            |--------------------------------------------------------------------------
+            |
+            | Google pertama otomatis menjadi SuperAdmin.
+            |
+            */
+
+            if (!$existingSuperAdmin) {
+
+                /*
+                |--------------------------------------------------------------------------
+                | CEK EMAIL GOOGLE
+                |--------------------------------------------------------------------------
+                |
+                | Pastikan email Google belum digunakan akun lain.
+                |
+                */
+
+                $existingEmail = User::where(
+                    'email',
+                    $googleEmail
+                )->first();
+
+
+                if ($existingEmail) {
+
+                    return redirect()
+                        ->route('login')
+                        ->with(
+                            'error',
+                            'Email Google tersebut sudah digunakan oleh akun lain.'
+                        );
+                }
+
+
+                /*
+                |--------------------------------------------------------------------------
+                | BUAT SUPERADMIN PERTAMA
+                |--------------------------------------------------------------------------
+                */
+
+                $user = User::create([
+
+                    'name' => $googleName,
+
+                    'email' => $googleEmail,
+
+                    'password' => Hash::make(
+                        Str::random(40)
+                    ),
+
+                    'google_id' => $googleId,
+
+                    'role' => 'superadmin',
+
+                    'is_active' => true,
+
+                ]);
+
+
+                /*
+                |--------------------------------------------------------------------------
+                | LOGIN SUPERADMIN BARU
+                |--------------------------------------------------------------------------
+                */
+
+                Auth::login($user);
+
+                request()
+                    ->session()
+                    ->regenerate();
+
 
                 return redirect()
-                    ->route('login')
+                    ->route('superadmin.dashboard')
                     ->with(
-                        'error',
-                        'Akun SuperAdmin sedang dinonaktifkan.'
+                        'success',
+                        'Akun SuperAdmin berhasil dibuat melalui Google.'
                     );
             }
 
 
             /*
             |--------------------------------------------------------------------------
-            | LOGIN SUPERADMIN
+            | SUPERADMIN SUDAH ADA
             |--------------------------------------------------------------------------
+            |
+            | PENTING:
+            |
+            | Google yang berbeda TIDAK BOLEH menjadi SuperAdmin.
+            |
             */
-
-            Auth::login($user);
-
-            request()
-                ->session()
-                ->regenerate();
-
 
             return redirect()
-                ->route('superadmin.dashboard')
+                ->route('login')
                 ->with(
-                    'success',
-                    'Selamat datang, SuperAdmin.'
+                    'error',
+                    'Akun SuperAdmin sudah terdaftar. Hanya akun Google SuperAdmin yang terdaftar yang dapat login.'
                 );
 
 
         } catch (\Exception $e) {
+
+            /*
+            |--------------------------------------------------------------------------
+            | GOOGLE LOGIN ERROR
+            |--------------------------------------------------------------------------
+            */
 
             return redirect()
                 ->route('login')
@@ -393,23 +519,36 @@ class AuthController extends Controller
      */
     public function forgotPassword()
     {
-        return view('auth.forgot_password');
+        return view(
+            'auth.forgot_password'
+        );
     }
 
 
     /**
      * Mengirim link reset password.
+     *
+     * Hanya SuperAdmin yang boleh menggunakan fitur ini.
      */
     public function sendResetLink(Request $request)
     {
+        /*
+        |--------------------------------------------------------------------------
+        | VALIDASI
+        |--------------------------------------------------------------------------
+        */
+
         $request->validate([
             'email' => [
                 'required',
                 'email',
             ],
         ], [
-            'email.required' => 'Email wajib diisi.',
-            'email.email' => 'Format email tidak valid.',
+            'email.required' =>
+                'Email wajib diisi.',
+
+            'email.email' =>
+                'Format email tidak valid.',
         ]);
 
 
@@ -419,8 +558,14 @@ class AuthController extends Controller
         |--------------------------------------------------------------------------
         */
 
-        $user = User::where('email', $request->email)
-            ->where('role', 'superadmin')
+        $user = User::where(
+            'email',
+            $request->email
+        )
+            ->where(
+                'role',
+                'superadmin'
+            )
             ->first();
 
 
@@ -443,7 +588,7 @@ class AuthController extends Controller
 
         /*
         |--------------------------------------------------------------------------
-        | CEK STATUS SUPERADMIN
+        | CEK STATUS
         |--------------------------------------------------------------------------
         */
 
@@ -460,7 +605,7 @@ class AuthController extends Controller
 
         /*
         |--------------------------------------------------------------------------
-        | KIRIM LINK RESET PASSWORD
+        | KIRIM RESET LINK
         |--------------------------------------------------------------------------
         */
 
@@ -513,6 +658,7 @@ class AuthController extends Controller
         Request $request,
         $token
     ) {
+
         return view(
             'auth.reset_password',
             [
@@ -529,8 +675,16 @@ class AuthController extends Controller
     |--------------------------------------------------------------------------
     */
 
-    public function resetPassword(Request $request)
-    {
+    public function resetPassword(
+        Request $request
+    ) {
+
+        /*
+        |--------------------------------------------------------------------------
+        | VALIDASI
+        |--------------------------------------------------------------------------
+        */
+
         $request->validate([
 
             'token' => [
@@ -585,14 +739,39 @@ class AuthController extends Controller
 
             function (User $user, string $password) {
 
+                /*
+                |--------------------------------------------------------------------------
+                | PASTIKAN YANG DIRESET HANYA SUPERADMIN
+                |--------------------------------------------------------------------------
+                */
+
+                if ($user->role !== 'superadmin') {
+                    return;
+                }
+
+
+                /*
+                |--------------------------------------------------------------------------
+                | UPDATE PASSWORD
+                |--------------------------------------------------------------------------
+                */
+
                 $user->forceFill([
 
-                    'password' => Hash::make($password),
+                    'password' =>
+                        Hash::make($password),
 
-                    'remember_token' => Str::random(60),
+                    'remember_token' =>
+                        Str::random(60),
 
                 ])->save();
 
+
+                /*
+                |--------------------------------------------------------------------------
+                | EVENT PASSWORD RESET
+                |--------------------------------------------------------------------------
+                */
 
                 event(
                     new PasswordReset($user)
@@ -641,13 +820,20 @@ class AuthController extends Controller
     |--------------------------------------------------------------------------
     */
 
-    public function logout(Request $request)
-    {
+    public function logout(
+        Request $request
+    ) {
+
         Auth::logout();
 
-        $request->session()->invalidate();
+        $request
+            ->session()
+            ->invalidate();
 
-        $request->session()->regenerateToken();
+        $request
+            ->session()
+            ->regenerateToken();
+
 
         return redirect()
             ->route('login')
