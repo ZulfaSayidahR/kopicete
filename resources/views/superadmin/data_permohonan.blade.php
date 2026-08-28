@@ -437,7 +437,7 @@
                                         => '#0d6efd',
 
                                     'Diverifikasi'
-                                        => '#6f42c1',
+                                        => '#0d6efd',
 
                                     'Diproses',
                                     'Diproses Lapangan'

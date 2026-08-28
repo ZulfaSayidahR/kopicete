@@ -61,6 +61,25 @@ Route::middleware(['auth'])
             [AdminController::class, 'index']
         )->name('data_admin');
 
+        Route::post(
+            '/data-admin',
+            [AdminController::class, 'store']
+        )->name('data_admin.store');
+
+        Route::put(
+            '/data-admin/{id}/reset-password',
+            [AdminController::class, 'resetPassword']
+        )->name('data_admin.reset_password');
+
+        Route::delete(
+            '/data-admin/{id}',
+            [AdminController::class, 'destroy']
+        )->name('data_admin.destroy');
+
+        Route::patch(
+            '/data-admin/{id}/toggle-status',
+            [AdminController::class, 'toggleStatus']
+        )->name('data_admin.toggle_status');
 
         /*
         |--------------------------------------------------------------------------

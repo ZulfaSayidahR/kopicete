@@ -169,13 +169,16 @@ class DataPermohonanController extends Controller
         // MENUNGGU / VERIFIKASI
         // ========================================================
 
-        if ($request->status === 'Menunggu') {
+        // ========================================================
+// DIVERIFIKASI
+// ========================================================
+
+        if ($request->status === 'Diverifikasi') {
 
             $data['tanggal_verifikasi'] = now();
 
             $data['catatan_verifikasi'] =
                 $request->catatan;
-
         }
 
 
