@@ -127,10 +127,11 @@
 
                     <i class="bi bi-lock-fill"></i>
 
-                    <input type="password" name="password" placeholder="Masukkan Password"
+                    <input type="password" name="password" id="password" placeholder="Masukkan Password"
                         autocomplete="current-password" required>
 
-                    <i class="bi bi-eye-fill"></i>
+                    <i class="bi bi-eye-fill"  id="togglePassword"
+       style="cursor: pointer;"></i>
 
                 </div>
 
@@ -237,3 +238,21 @@
 </body>
 
 </html>
+
+<script>
+    const togglePassword = document.getElementById('togglePassword');
+    const password = document.getElementById('password');
+
+    togglePassword.addEventListener('click', function () {
+        // Ubah tipe input
+        const type = password.getAttribute('type') === 'password'
+            ? 'text'
+            : 'password';
+
+        password.setAttribute('type', type);
+
+        // Ubah icon mata
+        this.classList.toggle('bi-eye-fill');
+        this.classList.toggle('bi-eye-slash-fill');
+    });
+</script>
