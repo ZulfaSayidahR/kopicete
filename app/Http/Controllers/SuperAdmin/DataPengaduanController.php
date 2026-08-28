@@ -136,6 +136,12 @@ class DataPengaduanController extends Controller
 
     public function updatePengaduan(Request $request, $id)
     {
+        /*
+        |--------------------------------------------------------------------------
+        | VALIDASI
+        |--------------------------------------------------------------------------
+        */
+
         $request->validate([
             'status' => 'required|in:Diverifikasi,Diproses,Selesai,Ditolak',
             'catatan' => 'nullable|string',
@@ -143,13 +149,98 @@ class DataPengaduanController extends Controller
         ]);
 
 
+        /*
+        |--------------------------------------------------------------------------
+        | AMBIL DATA PENGADUAN
+        |--------------------------------------------------------------------------
+        */
+
         $pengaduan = Pengaduan::findOrFail($id);
 
 
-        $data = [
-            'status' => $request->status,
+        /*
+        |--------------------------------------------------------------------------
+        | STATUS SAAT INI
+        |--------------------------------------------------------------------------
+        */
+
+        $statusSekarang = $pengaduan->status;
+
+        $statusBaru = $request->status;
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | ATURAN TIMELINE STATUS
+        |--------------------------------------------------------------------------
+        |
+        | Diajukan
+        |    ↓
+        | Diverifikasi
+        |    ↓
+        | Diproses
+        |    ↓
+        | Selesai
+        |
+        | Diajukan / Diverifikasi → Ditolak
+        |
+        |--------------------------------------------------------------------------
+        */
+
+        $transisiDiizinkan = [
+
+            'Diajukan' => [
+                'Diverifikasi',
+                'Ditolak',
+            ],
+
+            'Diverifikasi' => [
+                'Diproses',
+                'Ditolak',
+            ],
+
+            'Diproses' => [
+                'Selesai',
+            ],
+
+            'Selesai' => [],
+
+            'Ditolak' => [],
         ];
 
+
+        /*
+        |--------------------------------------------------------------------------
+        | CEK APAKAH PERUBAHAN STATUS SESUAI TIMELINE
+        |--------------------------------------------------------------------------
+        */
+
+        if (
+            !isset($transisiDiizinkan[$statusSekarang]) ||
+            !in_array(
+                $statusBaru,
+                $transisiDiizinkan[$statusSekarang]
+            )
+        ) {
+
+            return redirect()
+                ->back()
+                ->with(
+                    'error',
+                    'Status tidak dapat diubah. Perubahan status harus mengikuti urutan timeline.'
+                );
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | DATA DASAR
+        |--------------------------------------------------------------------------
+        */
+
+        $data = [
+            'status' => $statusBaru,
+        ];
 
 
         /*
@@ -158,135 +249,118 @@ class DataPengaduanController extends Controller
         |--------------------------------------------------------------------------
         */
 
-        if ($request->status == 'Diverifikasi') {
-
+        if ($statusBaru === 'Diverifikasi') {
 
             $data['tanggal_verifikasi'] = now();
-
 
             $data['catatan_verifikasi'] = $request->catatan;
 
 
-
             if ($request->hasFile('bukti')) {
 
-
                 $file = $request->file('bukti')
-                    ->store('pengaduan/verifikasi', 'public');
-
+                    ->store(
+                        'pengaduan/verifikasi',
+                        'public'
+                    );
 
                 $data['foto_verifikasi'] = $file;
-
             }
-
         }
-
 
 
         /*
         |--------------------------------------------------------------------------
         | STATUS DIPROSES
         |--------------------------------------------------------------------------
-        */
-
-        if ($request->status == 'Diproses') {
-
+        */ elseif ($statusBaru === 'Diproses') {
 
             $data['tanggal_proses'] = now();
-
 
             $data['catatan_proses'] = $request->catatan;
 
 
-
             if ($request->hasFile('bukti')) {
 
-
                 $file = $request->file('bukti')
-                    ->store('pengaduan/proses', 'public');
-
+                    ->store(
+                        'pengaduan/proses',
+                        'public'
+                    );
 
                 $data['foto_proses'] = $file;
-
             }
-
         }
-
 
 
         /*
         |--------------------------------------------------------------------------
         | STATUS SELESAI
         |--------------------------------------------------------------------------
-        */
-
-        if ($request->status == 'Selesai') {
-
+        */ elseif ($statusBaru === 'Selesai') {
 
             $data['tanggal_selesai'] = now();
-
 
             $data['catatan_selesai'] = $request->catatan;
 
 
-
             if ($request->hasFile('bukti')) {
 
-
                 $file = $request->file('bukti')
-                    ->store('pengaduan/selesai', 'public');
-
+                    ->store(
+                        'pengaduan/selesai',
+                        'public'
+                    );
 
                 $data['foto_selesai'] = $file;
-
             }
-
         }
-
 
 
         /*
         |--------------------------------------------------------------------------
         | STATUS DITOLAK
         |--------------------------------------------------------------------------
-        */
-
-        if ($request->status == 'Ditolak') {
-
+        */ elseif ($statusBaru === 'Ditolak') {
 
             $data['tanggal_verifikasi'] = now();
-
 
             $data['catatan_verifikasi'] = $request->catatan;
 
 
-
             if ($request->hasFile('bukti')) {
 
-
                 $file = $request->file('bukti')
-                    ->store('pengaduan/verifikasi', 'public');
-
+                    ->store(
+                        'pengaduan/verifikasi',
+                        'public'
+                    );
 
                 $data['foto_verifikasi'] = $file;
-
             }
-
         }
 
 
+        /*
+        |--------------------------------------------------------------------------
+        | SIMPAN PERUBAHAN
+        |--------------------------------------------------------------------------
+        */
 
         $pengaduan->update($data);
 
 
+        /*
+        |--------------------------------------------------------------------------
+        | KEMBALI KE DETAIL
+        |--------------------------------------------------------------------------
+        */
 
         return redirect()
-
             ->route(
                 'superadmin.detail_pengaduan',
                 $pengaduan->id
             )
-
             ->with(
                 'success',
                 'Status pengaduan berhasil diperbarui.'

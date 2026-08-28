@@ -70,8 +70,7 @@
 
                         </div>
 
-                        <!-- FORM -->
-                        <!-- FORM -->
+                     <!-- FORM -->
 
                         <form action="{{ route('pengaduan.storeStep3') }}" method="POST">
 

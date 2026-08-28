@@ -298,7 +298,7 @@
 
 
                         {{-- LAMPIRAN --}}
-                        <div class="tracking-card">
+                        <!-- <div class="tracking-card">
 
                             <h5>
 
@@ -369,7 +369,7 @@
 
                             @endif
 
-                        </div>
+                        </div> -->
 
                     </div>
 

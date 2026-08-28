@@ -394,7 +394,7 @@ class PengaduanController extends Controller
             'email' => $step3['email'],
             'alamat_domisili' => $step3['alamat_domisili'],
             'otp_verified_at' => now(),
-            'status' => 'Diverifikasi'
+            'status' => 'Diajukan'
         ]);
 
         // Bersihkan session

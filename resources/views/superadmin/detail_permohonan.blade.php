@@ -97,13 +97,89 @@
                                     <p>{{ $permohonan->tempat }}</p>
                                 </div>
 
-                                <div class="col-md-6 mb-3">
-                                    <strong>Status Permohonan</strong>
-                                    <p>
-                                        <span class="badge bg-primary">
-                                            {{ $permohonan->status }}
+                                {{-- STATUS PERMOHONAN --}}
+                                <div class="detail-row mb-3">
+
+                                    <div class="detail-label fw-bold">
+                                        Status Permohonan
+                                    </div>
+
+                                    <div class="detail-value">
+
+                                        @php
+
+                                            $status = $permohonan->status;
+
+                                            /*
+                                            |--------------------------------------------------------------------------
+                                            | WARNA STATUS
+                                            |--------------------------------------------------------------------------
+                                            */
+
+                                            $warnaStatus = match ($status) {
+
+                                                'Diajukan' =>
+                                                'secondary',
+
+                                                'Diverifikasi' =>
+                                                'success',
+
+                                                'Diproses' =>
+                                                'warning',
+
+                                                'Selesai' =>
+                                                'primary',
+
+                                                'Ditolak' =>
+                                                'danger',
+
+                                                default =>
+                                                'secondary'
+
+                                            };
+
+
+                                            /*
+                                            |--------------------------------------------------------------------------
+                                            | LABEL STATUS
+                                            |--------------------------------------------------------------------------
+                                            */
+
+                                            $labelStatus = match ($status) {
+
+                                                'Diajukan' =>
+                                                'Diajukan',
+
+                                                'Diverifikasi' =>
+                                                'Diverifikasi',
+
+                                                'Diproses' =>
+                                                'Diproses',
+
+                                                'Selesai' =>
+                                                'Selesai',
+
+                                                'Ditolak' =>
+                                                'Ditolak',
+
+                                                default =>
+                                                'Belum Diproses'
+
+                                            };
+
+                                        @endphp
+
+
+                                        {{-- BADGE STATUS DI BAWAH LABEL --}}
+
+                                        <span class="badge bg-{{ $warnaStatus }} px-3 py-2">
+
+                                            {{ $labelStatus }}
+
                                         </span>
-                                    </p>
+
+                                    </div>
+
                                 </div>
 
                                 <div class="col-md-6 mb-3">
@@ -125,19 +201,19 @@
 
                             @if($permohonan->lampiran)
 
-                                <hr>
 
-                                <strong>Lampiran</strong>
+
+                                <!-- <strong>Lampiran</strong> -->
 
                                 <div class="mt-2">
 
-                                    <a href="{{ asset('storage/' . $permohonan->lampiran) }}" target="_blank"
-                                        class="btn btn-primary btn-sm">
+                                    <!-- <a href="{{ asset('storage/' . $permohonan->lampiran) }}" target="_blank"
+                                                class="btn btn-primary btn-sm">
 
-                                        <i class="bi bi-paperclip"></i>
-                                        Lihat Lampiran
+                                                <i class="bi bi-paperclip"></i>
+                                                Lihat Lampiran
 
-                                    </a>
+                                            </a> -->
 
                                 </div>
 
@@ -148,6 +224,9 @@
 
 
                     {{-- Lampiran --}}
+                    {{-- =====================================================
+                    LAMPIRAN DOKUMEN
+                    ====================================================== --}}
                     <div class="sa-panel mt-4">
 
                         <div class="sa-panel-header">
@@ -156,14 +235,80 @@
 
                         <div class="p-4 text-center">
 
-                            <img src="{{ asset('images/contoh.jpg') }}" class="img-fluid rounded shadow-sm"
-                                style="max-height:350px;">
+                            @if($permohonan->lampiran)
 
-                            <p class="mt-3 text-muted">
+                                @php
+                                    $lampiranUrl = asset('storage/' . $permohonan->lampiran);
+                                    $extension = strtolower(
+                                        pathinfo($permohonan->lampiran, PATHINFO_EXTENSION)
+                                    );
+                                @endphp
 
-                                Dokumen Pendukung / Surat Permohonan
 
-                            </p>
+                                {{-- =================================================
+                                JIKA LAMPIRAN GAMBAR
+                                ================================================== --}}
+                                @if(in_array($extension, ['jpg', 'jpeg', 'png', 'webp']))
+
+                                    <img src="{{ $lampiranUrl }}" alt="Lampiran Permohonan" class="img-fluid rounded shadow-sm"
+                                        style="max-height:350px;">
+
+                                    <p class="mt-3 text-muted">
+                                        Dokumen Pendukung / Surat Permohonan
+                                    </p>
+
+
+                                    {{-- =================================================
+                                    JIKA LAMPIRAN PDF
+                                    ================================================== --}}
+                                @elseif($extension === 'pdf')
+
+                                    <div class="mb-3">
+
+                                        <i class="bi bi-file-earmark-pdf-fill text-danger" style="font-size:70px;"></i>
+
+                                    </div>
+
+                                    <p class="mb-3 text-muted">
+                                        Dokumen PDF
+                                    </p>
+
+                                @endif
+
+
+                                {{-- =================================================
+                                BUTTON LIHAT / BUKA LAMPIRAN
+                                ================================================== --}}
+                                <div class="mt-3">
+
+                                    <a href="{{ $lampiranUrl }}" target="_blank" class="btn btn-primary">
+
+                                        <i class="bi bi-paperclip"></i>
+
+                                        Lihat Lampiran
+
+                                    </a>
+
+                                </div>
+
+
+                            @else
+
+                                {{-- =================================================
+                                TIDAK ADA LAMPIRAN
+                                ================================================== --}}
+
+                                <div class="py-4">
+
+                                    <i class="bi bi-file-earmark-x text-muted" style="font-size:60px;"></i>
+
+                                    <p class="mt-3 mb-0 text-muted">
+                                        Tidak ada lampiran dokumen.
+                                    </p>
+
+                                </div>
+
+                            @endif
 
                         </div>
 
@@ -224,7 +369,7 @@
                                 DIVERIFIKASI
                                 ====================================================== --}}
                                 <div class="admin-tracking-item
-                            {{ $permohonan->tanggal_verifikasi ? 'selesai' : 'pending' }}">
+                                    {{ $permohonan->tanggal_verifikasi ? 'selesai' : 'pending' }}">
 
                                     <div class="admin-tracking-icon">
 
@@ -289,7 +434,7 @@
                                 DIPROSES
                                 ====================================================== --}}
                                 <div class="admin-tracking-item
-                            {{ $permohonan->tanggal_proses ? 'selesai' : 'pending' }}">
+                                    {{ $permohonan->tanggal_proses ? 'selesai' : 'pending' }}">
 
                                     <div class="admin-tracking-icon">
 
@@ -360,7 +505,7 @@
                                 SELESAI
                                 ====================================================== --}}
                                 <div class="admin-tracking-item
-                            {{ $permohonan->tanggal_selesai ? 'selesai' : 'pending' }}">
+                                    {{ $permohonan->tanggal_selesai ? 'selesai' : 'pending' }}">
 
                                     <div class="admin-tracking-icon">
 
@@ -515,19 +660,19 @@
                                         {{-- Preview Gambar --}}
                                         <img id="previewBukti" src="" alt="Preview Bukti" class="img-fluid rounded shadow"
                                             style="
-                            display: none;
-                            max-height: 400px;
-                            width: auto;
-                         ">
+                                    display: none;
+                                    max-height: 400px;
+                                    width: auto;
+                                 ">
 
                                         {{-- Preview PDF --}}
                                         <iframe id="previewPdf" src="" style="
-                                display: none;
-                                width: 100%;
-                                height: 500px;
-                                border: 1px solid #ddd;
-                                border-radius: 8px;
-                            ">
+                                        display: none;
+                                        width: 100%;
+                                        height: 500px;
+                                        border: 1px solid #ddd;
+                                        border-radius: 8px;
+                                    ">
                                         </iframe>
 
                                     </div>
@@ -565,8 +710,8 @@
     </section>
 
     <!-- ==========================================
-                                                         MODAL DETAIL TINDAK LANJUT PERMOHONAN
-                                                    ========================================== -->
+                                                                 MODAL DETAIL TINDAK LANJUT PERMOHONAN
+                                                            ========================================== -->
     <div class="modal fade" id="detailPermohonanModal" tabindex="-1" aria-labelledby="detailPermohonanModalLabel"
         aria-hidden="true">
 

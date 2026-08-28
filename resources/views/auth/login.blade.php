@@ -151,11 +151,11 @@
                     </label>
 
 
-                    <a href="{{ route('forgot.password') }}">
+                    <!-- <a href="{{ route('forgot.password') }}">
 
                         Lupa Password?
 
-                    </a>
+                    </a> -->
 
                 </div>
 

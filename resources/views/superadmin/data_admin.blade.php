@@ -58,41 +58,39 @@
 
             </header>
 
-            {{-- =================================================
-            RINGKASAN DATA ADMIN
-            ================================================== --}}
-            <section class="sa-statistics">
+          {{-- =================================================
+    RINGKASAN DATA ADMIN
+    ================================================== --}}
+<section class="sa-statistics">
 
-                <article class="sa-stat-card">
+    <article class="sa-stat-card">
 
-                    <div class="sa-stat-icon sa-stat-blue">
+        <div class="sa-stat-icon sa-stat-blue">
 
-                        <i class="bi bi-people-fill"></i>
+            <i class="bi bi-people-fill"></i>
 
-                    </div>
-
-
-                    <div class="sa-stat-content">
-
-                        <span>Total Admin Terdaftar</span>
-
-                        <h2>15</h2>
-
-                        <small>
-
-                            <i class="bi bi-database-check"></i>
-
-                            Akun tersimpan dalam sistem
-
-                        </small>
+        </div>
 
 
+        <div class="sa-stat-content">
 
-                    </div>
+            <span>Total Admin Terdaftar</span>
 
-                </article>
+            <h2>{{ $totalAdmin }}</h2>
 
-            </section>
+            <small>
+
+                <i class="bi bi-database-check"></i>
+
+                Akun tersimpan dalam sistem
+
+            </small>
+
+        </div>
+
+    </article>
+
+</section>
             {{-- =========================================================
             DATA ADMIN
             ========================================================= --}}

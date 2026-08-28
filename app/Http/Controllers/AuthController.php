@@ -186,8 +186,9 @@ class AuthController extends Controller
         | LOGIN
         |--------------------------------------------------------------------------
         */
+        $remember = $request->boolean('remember');
 
-        Auth::login($user);
+        Auth::login($user, $remember);
 
         $request->session()->regenerate();
 

@@ -383,67 +383,79 @@
 
                                                         </td>
 
+{{-- =================================================
+     STATUS
+     ================================================== --}}
+<td>
 
-                                                        {{-- STATUS --}}
-                                                        <td>
+    @if($pengaduan->status === 'Diajukan')
 
-                                                            @if($pengaduan->status === 'Menunggu')
+        <span class="sa-status-badge">
 
-                                                                <span class="sa-status-badge">
+            <span style="background:#6c757d"></span>
 
-                                                                    <span style="background:#0d6efd"></span>
+            Diajukan
 
-                                                                    Menunggu
-
-                                                                </span>
-
-
-                                                            @elseif($pengaduan->status === 'Diproses')
-
-                                                                <span class="sa-status-badge">
-
-                                                                    <span style="background:#fd7e14"></span>
-
-                                                                    Diproses
-
-                                                                </span>
+        </span>
 
 
-                                                            @elseif($pengaduan->status === 'Selesai')
+    @elseif($pengaduan->status === 'Diverifikasi')
 
-                                                                <span class="sa-status-badge active">
+        <span class="sa-status-badge">
 
-                                                                    <span></span>
+            <span style="background:#0d6efd"></span>
 
-                                                                    Selesai
+            Diverifikasi
 
-                                                                </span>
-
-
-                                                            @elseif($pengaduan->status === 'Ditolak')
-
-                                                                <span class="sa-status-badge">
-
-                                                                    <span style="background:#dc3545"></span>
-
-                                                                    Ditolak
-
-                                                                </span>
+        </span>
 
 
-                                                            @else
+    @elseif($pengaduan->status === 'Diproses')
 
-                                                                <span class="sa-status-badge">
+        <span class="sa-status-badge">
 
-                                                                    <span></span>
+            <span style="background:#fd7e14"></span>
 
-                                                                    {{ $pengaduan->status ?? '-' }}
+            Diproses
 
-                                                                </span>
+        </span>
 
-                                                            @endif
 
-                                                        </td>
+    @elseif($pengaduan->status === 'Selesai')
+
+        <span class="sa-status-badge active">
+
+            <span style="background:#198754"></span>
+
+            Selesai
+
+        </span>
+
+
+    @elseif($pengaduan->status === 'Ditolak')
+
+        <span class="sa-status-badge">
+
+            <span style="background:#dc3545"></span>
+
+            Ditolak
+
+        </span>
+
+
+    @else
+
+        <span class="sa-status-badge">
+
+            <span></span>
+
+            {{ $pengaduan->status ?? '-' }}
+
+        </span>
+
+    @endif
+
+</td>
 
 
                                                         {{-- AKSI --}}

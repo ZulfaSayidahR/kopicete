@@ -33,8 +33,8 @@
                 <div class="tracking-grid">
 
                     <!-- ==============================
-                                                                                                                                                                        KOLOM KIRI
-                                                                                                                                                                =============================== -->
+                                                                                                                                                                            KOLOM KIRI
+                                                                                                                                                                    =============================== -->
 
                     <div class="tracking-left">
 
@@ -49,15 +49,15 @@
 
                                 <span
                                     class="badge
-                                                                                                                        @if($pengaduan->status == 'Menunggu')
-                                                                                                                            bg-warning
-                                                                                                                        @elseif($pengaduan->status == 'Diproses')
-                                                                                                                            bg-primary
-                                                                                                                        @elseif($pengaduan->status == 'Selesai')
-                                                                                                                            bg-success
-                                                                                                                        @else
-                                                                                                                            bg-secondary
-                                                                                                                        @endif">
+                                                                                                                            @if($pengaduan->status == 'Menunggu')
+                                                                                                                                bg-warning
+                                                                                                                            @elseif($pengaduan->status == 'Diproses')
+                                                                                                                                bg-primary
+                                                                                                                            @elseif($pengaduan->status == 'Selesai')
+                                                                                                                                bg-success
+                                                                                                                            @else
+                                                                                                                                bg-secondary
+                                                                                                                            @endif">
 
                                     {{ $pengaduan->status }}
 
@@ -162,45 +162,45 @@
                         </div>
 
                         <!-- LAMPIRAN -->
+                        <!-- 
+                            <div class="tracking-card">
 
-                        <div class="tracking-card">
+                                <h5>
 
-                            <h5>
+                                    <i class="bi bi-paperclip"></i>
 
-                                <i class="bi bi-paperclip"></i>
+                                    Lampiran Bukti
 
-                                Lampiran Bukti
+                                </h5>
 
-                            </h5>
+                                @if($pengaduan->lampiran)
 
-                            @if($pengaduan->lampiran)
+                                    <div class="text-center mt-3">
 
-                                <div class="text-center mt-3">
+                                        <img src="{{ asset('storage/' . $pengaduan->lampiran) }}" class="img-fluid rounded shadow"
+                                            style="max-height:350px;">
 
-                                    <img src="{{ asset('storage/' . $pengaduan->lampiran) }}" class="img-fluid rounded shadow"
-                                        style="max-height:350px;">
+                                    </div>
 
-                                </div>
+                                @else
 
-                            @else
+                                    <div class="alert alert-light text-center mt-3">
 
-                                <div class="alert alert-light text-center mt-3">
+                                        <i class="bi bi-image fs-2 d-block mb-2"></i>
 
-                                    <i class="bi bi-image fs-2 d-block mb-2"></i>
+                                        Tidak ada lampiran yang diunggah.
 
-                                    Tidak ada lampiran yang diunggah.
+                                    </div>
 
-                                </div>
+                                @endif
 
-                            @endif
-
-                        </div>
+                            </div> -->
 
                     </div>
 
                     <!-- ==============================
-                                                                                                                                                                        KOLOM KANAN
-                                                                                                                                                                =============================== -->
+                                                                                                                                                                            KOLOM KANAN
+                                                                                                                                                                    =============================== -->
 
                     <aside class="tracking-card status-card">
 
@@ -304,15 +304,15 @@
 
 
                                         <!-- <button type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal"
-                                                            data-bs-target="#detailLaporanModal">
+                                                                    data-bs-target="#detailLaporanModal">
 
 
-                                                            <i class="bi bi-eye-fill"></i>
+                                                                    <i class="bi bi-eye-fill"></i>
 
-                                                            Lihat Detail
+                                                                    Lihat Detail
 
 
-                                                        </button> -->
+                                                                </button> -->
 
 
                                     @else
@@ -399,15 +399,15 @@
 
 
                                         <!-- <button type="button" class="btn btn-sm btn-outline-warning" data-bs-toggle="modal"
-                                                    data-bs-target="#detailLaporanModal">
+                                                            data-bs-target="#detailLaporanModal">
 
 
-                                                    <i class="bi bi-eye-fill"></i>
+                                                            <i class="bi bi-eye-fill"></i>
 
-                                                    Lihat Detail
+                                                            Lihat Detail
 
 
-                                                </button> -->
+                                                        </button> -->
 
 
                                     @else

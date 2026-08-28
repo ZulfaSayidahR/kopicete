@@ -35,8 +35,20 @@ class AdminController extends Controller
             ->paginate(10);
 
 
+        // TOTAL ADMIN TERDAFTAR
+        $totalAdmin = User::whereIn('role', [
+            'admin_pengaduan',
+            'admin_permohonan',
+        ])->count();
 
-        return view('superadmin.data_admin', compact('admins'));
+
+        return view(
+            'superadmin.data_admin',
+            compact(
+                'admins',
+                'totalAdmin'
+            )
+        );
     }
 
 

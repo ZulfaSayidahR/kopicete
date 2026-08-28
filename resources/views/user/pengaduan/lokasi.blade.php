@@ -11,8 +11,8 @@
             <div class="pengaduan-wrapper">
 
                 <!-- =========================================
-                                                                            FORM STEP 2
-                                                                    ========================================== -->
+                                                                                                FORM STEP 2
+                                                                                        ========================================== -->
 
                 <div class="pengaduan-card">
 
@@ -134,32 +134,41 @@
 
 
                             </div>
-
                             <div class="mb-4">
 
-                                <label class="form-label fw-semibold">
+                                <label for="lampiran" class="form-label fw-semibold">
 
                                     <i class="bi bi-paperclip"></i>
+
                                     Lampiran Bukti
 
                                 </label>
 
+
                                 <input type="file" name="lampiran" id="lampiran"
                                     class="form-control @error('lampiran') is-invalid @enderror" accept=".jpg,.jpeg,.png">
 
+
                                 @error('lampiran')
+
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
+
                                 @enderror
+
 
                                 <small class="text-muted d-block mt-2">
 
                                     Maksimal <strong>5 MB</strong>.<br>
+
                                     Format yang diperbolehkan:
                                     <strong>JPG, JPEG, PNG</strong>.
 
                                 </small>
+
+
+                                {{-- PREVIEW GAMBAR --}}
 
                                 <div id="previewLampiran" class="mt-3 d-none">
 
@@ -178,6 +187,7 @@
                                 </div>
 
                             </div>
+
 
                             <div class="alert alert-warning">
 
@@ -198,29 +208,29 @@
                             </div>
                             <!-- <div class="mb-4">
 
-                                                    <label class="form-label">
+                                                                        <label class="form-label">
 
-                                                        Verifikasi Keamanan
+                                                                            Verifikasi Keamanan
 
-                                                    </label>
+                                                                        </label>
 
-                                                    <div class="border rounded p-3">
+                                                                        <div class="border rounded p-3">
 
-                                                        <div class="form-check">
+                                                                            <div class="form-check">
 
-                                                            <input class="form-check-input" type="checkbox" required>
+                                                                                <input class="form-check-input" type="checkbox" required>
 
-                                                            <label class="form-check-label">
+                                                                                <label class="form-check-label">
 
-                                                                Saya bukan robot
+                                                                                    Saya bukan robot
 
-                                                            </label>
+                                                                                </label>
 
-                                                        </div>
+                                                                            </div>
 
-                                                    </div>
+                                                                        </div>
 
-                                                </div> -->
+                                                                    </div> -->
 
                             <div class="form-navigation">
 
@@ -245,112 +255,112 @@
                 </div>
 
                 <!-- ==========================================
-                                                                                                            SIDEBAR
-                                                                                                    =========================================== -->
-<!-- 
-                <aside class="sidebar-aduan">
+                                                                                                                                SIDEBAR
+                                                                                                                        =========================================== -->
+                <!-- 
+                                    <aside class="sidebar-aduan">
 
-                    <div class="aduan-terbaru-header">
+                                        <div class="aduan-terbaru-header">
 
-                        <h4>Aduan Terbaru</h4>
+                                            <h4>Aduan Terbaru</h4>
 
-                    </div>
+                                        </div>
 
-                    {{-- SEARCH ADUAN --}}
-                    <div class="search-adukan-box">
+                                        {{-- SEARCH ADUAN --}}
+                                        <div class="search-adukan-box">
 
-                        <form action="{{ route('pengaduan.cari') }}" method="GET">
+                                            <form action="{{ route('pengaduan.cari') }}" method="GET">
 
-                            <div class="search-adukan-wrapper">
+                                                <div class="search-adukan-wrapper">
 
-                                <div class="search-input-wrapper">
+                                                    <div class="search-input-wrapper">
 
-                                    <i class="bi bi-search"></i>
+                                                        <i class="bi bi-search"></i>
 
-                                    <input
-                                        type="text"
-                                        name="topik"
-                                        value="{{ request('topik') }}"
-                                        placeholder="Cari berdasarkan topik aduan..."
-                                        autocomplete="off"
-                                    >
+                                                        <input
+                                                            type="text"
+                                                            name="topik"
+                                                            value="{{ request('topik') }}"
+                                                            placeholder="Cari berdasarkan topik aduan..."
+                                                            autocomplete="off"
+                                                        >
 
-                                </div>
+                                                    </div>
 
-                                <button type="submit" class="btn-search-adukan">
+                                                    <button type="submit" class="btn-search-adukan">
 
-                                    <i class="bi bi-search"></i>
+                                                        <i class="bi bi-search"></i>
 
-                                    Cari
+                                                        Cari
 
-                                </button>
+                                                    </button>
 
-                            </div>
+                                                </div>
 
-                        </form>
+                                            </form>
 
-                    </div>
+                                        </div>
 
-                    @forelse($aduanTerbaru as $item)
+                                        @forelse($aduanTerbaru as $item)
 
-                        <div class="aduan-item">
+                                            <div class="aduan-item">
 
-                            <span class="status
-                                @if($item->status == 'Menunggu') menunggu
-                                @elseif($item->status == 'Diproses') proses
-                                @elseif($item->status == 'Selesai') selesai
-                                @elseif($item->status == 'Ditolak') ditolak
-                                @else verifikasi
-                                @endif">
+                                                <span class="status
+                                                    @if($item->status == 'Menunggu') menunggu
+                                                    @elseif($item->status == 'Diproses') proses
+                                                    @elseif($item->status == 'Selesai') selesai
+                                                    @elseif($item->status == 'Ditolak') ditolak
+                                                    @else verifikasi
+                                                    @endif">
 
-                                {{ $item->status }}
+                                                    {{ $item->status }}
 
-                            </span>
+                                                </span>
 
-                            <h6>
+                                                <h6>
 
-                                {{ Str::limit($item->judul_aduan, 40) }}
+                                                    {{ Str::limit($item->judul_aduan, 40) }}
 
-                            </h6>
+                                                </h6>
 
-                            <small>
+                                                <small>
 
-                                <i class="bi bi-geo-alt-fill"></i>
+                                                    <i class="bi bi-geo-alt-fill"></i>
 
-                                {{ $item->kecamatan->nama_kecamatan ?? '-' }}
+                                                    {{ $item->kecamatan->nama_kecamatan ?? '-' }}
 
-                            </small>
+                                                </small>
 
-                            <small>
+                                                <small>
 
-                                <i class="bi bi-calendar-event-fill"></i>
+                                                    <i class="bi bi-calendar-event-fill"></i>
 
-                                {{ $item->created_at->translatedFormat('d F Y') }}
+                                                    {{ $item->created_at->translatedFormat('d F Y') }}
 
-                            </small>
+                                                </small>
 
-                            <a href="{{ route('pengaduan.tracking.detail', $item->kode_aduan) }}" class="btn-detail-laporan">
+                                                <a href="{{ route('pengaduan.tracking.detail', $item->kode_aduan) }}" class="btn-detail-laporan">
 
-                                <i class="bi bi-eye-fill"></i>
+                                                    <i class="bi bi-eye-fill"></i>
 
-                                Lihat Tracking
+                                                    Lihat Tracking
 
-                            </a>
+                                                </a>
 
-                        </div>
+                                            </div>
 
-                    @empty
+                                        @empty
 
-                        <div class="alert alert-light">
+                                            <div class="alert alert-light">
 
-                            Belum ada aduan.
+                                                Belum ada aduan.
 
-                        </div>
+                                            </div>
 
-                    @endforelse
+                                        @endforelse
 
 
-                </aside> -->
+                                    </aside> -->
 
                 <!-- Modal Detail Aduan -->
                 <div class="modal fade" id="detailLaporanModal" tabindex="-1">
@@ -478,20 +488,20 @@
 
 
                 desa.innerHTML = `
-                                            <option>
-                                                Memuat desa...
-                                            </option>
-                                        `;
+                                                                <option>
+                                                                    Memuat desa...
+                                                                </option>
+                                                            `;
 
 
 
                 if (idKecamatan == '') {
 
                     desa.innerHTML = `
-                                                <option>
-                                                    Pilih Kecamatan Terlebih Dahulu
-                                                </option>
-                                            `;
+                                                                    <option>
+                                                                        Pilih Kecamatan Terlebih Dahulu
+                                                                    </option>
+                                                                `;
 
                     return;
 
@@ -512,10 +522,10 @@
 
 
                         desa.innerHTML = `
-                                                <option value="">
-                                                    Pilih Desa
-                                                </option>
-                                            `;
+                                                                    <option value="">
+                                                                        Pilih Desa
+                                                                    </option>
+                                                                `;
 
 
 
@@ -524,13 +534,13 @@
 
                             desa.innerHTML += `
 
-                                                    <option value="${item.id_desa}">
+                                                                        <option value="${item.id_desa}">
 
-                                                        ${item.nama_desa}
+                                                                            ${item.nama_desa}
 
-                                                    </option>
+                                                                        </option>
 
-                                                `;
+                                                                    `;
 
 
                         });

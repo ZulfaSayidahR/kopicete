@@ -71,7 +71,7 @@
                                                     {{ $data['jenis_permohonan'] === 'Sosialisasi'
                             ? 'Permohonan Sosialisasi'
                             : 'Permohonan Rehabilitasi'
-                                                                                                                                            }}
+                                                                                                                                                                                    }}
                                                 </strong>
 
                                             </div>
@@ -510,10 +510,9 @@
 
                                             {{-- KEMBALI --}}
 
-                                            <a href="{{ route('permohonan.create') }}" class="btn-prev">
+                                            <a href="javascript:void(0);" onclick="history.back();" class="btn-prev">
 
                                                 Kembali
-
                                             </a>
 
 

@@ -97,7 +97,6 @@
 
                                 </div>
 
-
                                 {{-- STATUS --}}
                                 <div class="col-md-6 mb-3">
 
@@ -117,7 +116,7 @@
                                                 'Diverifikasi' =>
                                                 'bg-primary',
 
-                                                'Diproses Lapangan' =>
+                                                'Diproses' =>
                                                 'bg-warning text-dark',
 
                                                 'Selesai' =>
@@ -630,77 +629,92 @@
                                 @csrf
                                 @method('PUT')
 
-                                {{-- STATUS --}}
                                 <div class="mb-3">
 
-                                    <label class="form-label fw-semibold">
-                                        Status
+                                    <label for="status" class="form-label">
+                                        Status Pengaduan
                                     </label>
 
-                                    <select class="form-select" name="status" required>
+                                    <select name="status" id="status" class="form-control" required>
+
+                                        @if($pengaduan->status === 'Diajukan')
+
+                                            <option value="Diverifikasi">
+                                                Diverifikasi
+                                            </option>
+
+                                            <option value="Ditolak">
+                                                Ditolak
+                                            </option>
 
 
-                                        <option value="Diverifikasi" {{ $pengaduan->status == 'Diverifikasi' ? 'selected' : '' }}>
-                                            Diverifikasi
-                                        </option>
+                                        @elseif($pengaduan->status === 'Diverifikasi')
+
+                                            <option value="Diproses">
+                                                Diproses
+                                            </option>
+
+                                            <option value="Ditolak">
+                                                Ditolak
+                                            </option>
 
 
-                                        <option value="Diproses" {{ $pengaduan->status == 'Diproses' ? 'selected' : '' }}>
-                                            Diproses Lapangan
-                                        </option>
+                                        @elseif($pengaduan->status === 'Diproses')
+
+                                            <option value="Selesai">
+                                                Selesai
+                                            </option>
 
 
-                                        <option value="Selesai" {{ $pengaduan->status == 'Selesai' ? 'selected' : '' }}>
-                                            Selesai
-                                        </option>
+                                        @elseif($pengaduan->status === 'Selesai')
+
+                                            <option value="Selesai">
+                                                Selesai
+                                            </option>
 
 
-                                        <option value="Ditolak" {{ $pengaduan->status == 'Ditolak' ? 'selected' : '' }}>
-                                            Ditolak
-                                        </option>
+                                        @elseif($pengaduan->status === 'Ditolak')
 
+                                            <option value="Ditolak">
+                                                Ditolak
+                                            </option>
+
+                                        @endif
 
                                     </select>
 
                                 </div>
 
-                                {{-- CATATAN --}}
+
                                 <div class="mb-3">
 
-                                    <label class="form-label fw-semibold">
-                                        Catatan Admin
+                                    <label for="catatan" class="form-label">
+                                        Catatan
                                     </label>
 
-                                    <textarea class="form-control" name="catatan" rows="4"
-                                        placeholder="Masukkan catatan hasil tindak lanjut...">{{ old('catatan') }}</textarea>
+                                    <textarea name="catatan" id="catatan" class="form-control" rows="4"
+                                        placeholder="Masukkan catatan..."></textarea>
 
                                 </div>
 
-                                {{-- BUKTI --}}
-                                <div class="mb-4">
 
-                                    <label class="form-label fw-semibold">
-                                        Upload Bukti Tindak Lanjut
+                                <div class="mb-3">
+
+                                    <label for="bukti" class="form-label">
+                                        Bukti / Foto
                                     </label>
 
-                                    <input type="file" name="bukti" class="form-control" accept=".jpg,.jpeg,.png">
-
-                                    <small class="text-muted">
-                                        Format JPG, JPEG, PNG. Maksimal 2 MB.
-                                    </small>
+                                    <input type="file" name="bukti" id="bukti" class="form-control"
+                                        accept=".jpg,.jpeg,.png">
 
                                 </div>
 
-                                <div class="d-grid">
 
-                                    <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="btn btn-primary">
 
-                                        <i class="bi bi-check-circle-fill"></i>
-                                        Simpan Perubahan
+                                    Simpan Perubahan
 
-                                    </button>
-
-                                </div>
+                                </button>
 
                             </form>
 
@@ -792,10 +806,10 @@
                 ====================================================== --}}
 
                 <div class="modal-header bg-{{ $warna }}
-                                                                        @if($warna != 'warning')
-                                                                            text-white
-                                                                        @endif
-                                                                    ">
+                                                                                        @if($warna != 'warning')
+                                                                                            text-white
+                                                                                        @endif
+                                                                                    ">
 
                     <h5 class="modal-title fw-bold" id="detailAdminModalLabel">
 
@@ -807,10 +821,11 @@
 
 
                     <button type="button" class="btn-close
-                                                                                @if($warna != 'warning')
-                                                                                    btn-close-white
-                                                                                @endif
-                                                                            " data-bs-dismiss="modal" aria-label="Close">
+                                                                                                @if($warna != 'warning')
+                                                                                                    btn-close-white
+                                                                                                @endif
+                                                                                            " data-bs-dismiss="modal"
+                        aria-label="Close">
                     </button>
 
                 </div>
@@ -839,10 +854,10 @@
                                     <img src="{{ asset('storage/' . $foto) }}" alt="Bukti Tindak Lanjut"
                                         class="img-fluid rounded-3 shadow-sm border"
                                         style="
-                                                                                                                                    max-width: 100%;
-                                                                                                                                    max-height: 350px;
-                                                                                                                                    object-fit: contain;
-                                                                                                                                ">
+                                                                                                                                                                    max-width: 100%;
+                                                                                                                                                                    max-height: 350px;
+                                                                                                                                                                    object-fit: contain;
+                                                                                                                                                                ">
 
                                     <div class="mt-3">
 
@@ -965,18 +980,18 @@
                                     <span class="badge bg-{{ $warnaStatus }} px-3 py-2">
 
                                         <i class="bi 
-                        @if($status == 'Diverifikasi')
-                            bi-check-circle
-                        @elseif($status == 'Diproses')
-                            bi-hourglass-split
-                        @elseif($status == 'Selesai')
-                            bi-check-all
-                        @elseif($status == 'Ditolak')
-                            bi-x-circle
-                        @else
-                            bi-clock
-                        @endif
-                    me-1">
+                                        @if($status == 'Diverifikasi')
+                                            bi-check-circle
+                                        @elseif($status == 'Diproses')
+                                            bi-hourglass-split
+                                        @elseif($status == 'Selesai')
+                                            bi-check-all
+                                        @elseif($status == 'Ditolak')
+                                            bi-x-circle
+                                        @else
+                                            bi-clock
+                                        @endif
+                                    me-1">
                                         </i>
 
 
