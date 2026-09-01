@@ -154,6 +154,8 @@ class DataPermohonanController extends Controller
     {
         $request->validate([
             'status' => 'required',
+            'catatan' => 'nullable|string',
+            'bukti' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
         ]);
 
 
@@ -166,12 +168,8 @@ class DataPermohonanController extends Controller
 
 
         // ========================================================
-        // MENUNGGU / VERIFIKASI
+        // DIVERIFIKASI
         // ========================================================
-
-        // ========================================================
-// DIVERIFIKASI
-// ========================================================
 
         if ($request->status === 'Diverifikasi') {
 
@@ -179,6 +177,15 @@ class DataPermohonanController extends Controller
 
             $data['catatan_verifikasi'] =
                 $request->catatan;
+
+
+            // Upload lampiran verifikasi
+            if ($request->hasFile('bukti')) {
+
+                $data['file_verifikasi'] =
+                    $request->file('bukti')
+                        ->store('permohonan/verifikasi', 'public');
+            }
         }
 
 
@@ -193,6 +200,14 @@ class DataPermohonanController extends Controller
             $data['catatan_proses'] =
                 $request->catatan;
 
+
+            // Upload lampiran proses
+            if ($request->hasFile('bukti')) {
+
+                $data['file_proses'] =
+                    $request->file('bukti')
+                        ->store('permohonan/proses', 'public');
+            }
         }
 
 
@@ -207,6 +222,14 @@ class DataPermohonanController extends Controller
             $data['catatan_selesai'] =
                 $request->catatan;
 
+
+            // Upload lampiran selesai
+            if ($request->hasFile('bukti')) {
+
+                $data['file_selesai'] =
+                    $request->file('bukti')
+                        ->store('permohonan/selesai', 'public');
+            }
         }
 
 
@@ -229,7 +252,6 @@ class DataPermohonanController extends Controller
                 'Status permohonan berhasil diperbarui.'
             );
     }
-
 
     /**
      * ============================================================

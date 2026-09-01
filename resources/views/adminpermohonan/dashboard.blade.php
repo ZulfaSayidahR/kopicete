@@ -326,6 +326,7 @@
 
 
 
+
                                                         {{-- =================================================
                                                         STATUS
                                                         ================================================== --}}
@@ -341,10 +342,10 @@
                                                                     'Diajukan',
                                                                     'Menunggu',
                                                                     'Menunggu Verifikasi'
-                                                                    => '#0d6efd',
+                                                                    => '#6c757d',
 
                                                                     'Diverifikasi'
-                                                                    => '#6f42c1',
+                                                                    => '#0d6efd',
 
                                                                     'Diproses',
                                                                     'Diproses Lapangan'
@@ -376,6 +377,7 @@
 
 
 
+
                                                         {{-- =================================================
                                                         AKSI
                                                         ================================================== --}}
@@ -392,8 +394,8 @@
                                     ['id' => $permohonan->id]
                                 ) }}" class="sa-action-button sa-key-button" title="Detail Permohonan">
 
-                                                                    <i class="bi bi-eye-fill"></i>
 
+                                                                    <i class="bi bi-pencil-square"></i>
                                                                 </a>
 
 
@@ -411,9 +413,10 @@
 
 
                                                                     <button type="submit" class="sa-action-button sa-delete-button"
-                                                                        title="Hapus Permohonan" onclick="return confirm(
-                                                                        'Yakin ingin menghapus data permohonan ini?'
-                                                                    )">
+                                                                        title="Hapus Permohonan"
+                                                                        onclick="return confirm(
+                                                                                                                                                                                        'Yakin ingin menghapus data permohonan ini?'
+                                                                                                                                                                                    )">
 
                                                                         <i class="bi bi-trash-fill"></i>
 

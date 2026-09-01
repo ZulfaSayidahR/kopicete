@@ -37,191 +37,520 @@
                 {{-- ================= KIRI ================= --}}
                 <div class="col-lg-7">
 
-                    {{-- Informasi --}}
+                    {{-- =================================================
+                    INFORMASI PERMOHONAN
+                    ================================================= --}}
                     <div class="sa-panel">
 
                         <div class="sa-panel-header">
-                            <h3>Informasi Permohonan</h3>
+
+                            <h3>
+                                Informasi Permohonan
+                            </h3>
+
                         </div>
+
+
+                        @php
+
+                            /*
+                            |--------------------------------------------------------------------------
+                            | NORMALISASI JENIS PERMOHONAN
+                            |--------------------------------------------------------------------------
+                            | Database bisa berisi:
+                            | - Rehabilitasi
+                            | - Permohonan Rehabilitasi
+                            | - Sosialisasi
+                            | - Permohonan Sosialisasi
+                            |--------------------------------------------------------------------------
+                            */
+
+                            $jenisPermohonan = trim(
+                                $permohonan->jenis_permohonan ?? ''
+                            );
+
+                            $jenisLower = strtolower(
+                                $jenisPermohonan
+                            );
+
+                            $isRehabilitasi = str_contains(
+                                $jenisLower,
+                                'rehabilitasi'
+                            );
+
+                            $isSosialisasi = str_contains(
+                                $jenisLower,
+                                'sosialisasi'
+                            );
+
+
+                            /*
+                            |--------------------------------------------------------------------------
+                            | STATUS
+                            |--------------------------------------------------------------------------
+                            */
+
+                            $status = trim(
+                                $permohonan->status ?? '-'
+                            );
+
+
+                            /*
+
+
+                            /*
+                            |--------------------------------------------------------------------------
+                            | WARNA STATUS
+                            |--------------------------------------------------------------------------
+                            */
+
+                            $warnaStatus = match ($status) {
+
+                                'Diajukan',
+                                'Menunggu',
+                                'Menunggu Verifikasi'
+                                => 'secondary',
+
+                                'Diverifikasi'
+                                => 'primary',
+
+                                'Diproses',
+                                'Diproses Lapangan'
+                                => 'warning',
+
+                                'Selesai'
+                                => 'success',
+
+                                'Ditolak'
+                                => 'danger',
+
+                                default
+                                => 'secondary',
+
+                            };
+
+                        @endphp
 
                         <div class="p-4">
 
+                            {{-- =================================================
+                            INFORMASI UMUM
+                            ================================================== --}}
                             <div class="row">
 
-                                <div class="col-md-6 mb-3">
-                                    <strong>Kode Permohonan</strong>
-                                    <p>{{ $permohonan->kode_permohonan }}</p>
-                                </div>
 
+                                {{-- KODE PERMOHONAN --}}
                                 <div class="col-md-6 mb-3">
-                                    <strong>Jenis Permohonan</strong>
-                                    <p>{{ $permohonan->jenis_permohonan }}</p>
-                                </div>
 
-                                <div class="col-md-6 mb-3">
-                                    <strong>Nama Penyelenggara</strong>
-                                    <p>{{ $permohonan->nama_penyelenggara }}</p>
-                                </div>
+                                    <strong>
+                                        Kode Permohonan
+                                    </strong>
 
-                                <div class="col-md-6 mb-3">
-                                    <strong>Penanggung Jawab</strong>
-                                    <p>{{ $permohonan->penanggung_jawab }}</p>
-                                </div>
-
-                                <div class="col-md-6 mb-3">
-                                    <strong>No. HP</strong>
-                                    <p>{{ $permohonan->no_hp }}</p>
-                                </div>
-
-                                <div class="col-md-6 mb-3">
-                                    <strong>Jumlah Peserta</strong>
-                                    <p>{{ $permohonan->jumlah_peserta }} Orang</p>
-                                </div>
-
-                                <div class="col-md-6 mb-3">
-                                    <strong>Tanggal Kegiatan</strong>
                                     <p>
-                                        {{ \Carbon\Carbon::parse($permohonan->tanggal_kegiatan)->translatedFormat('d F Y') }}
+                                        {{ $permohonan->kode_permohonan ?? '-' }}
                                     </p>
+
                                 </div>
 
+
+                                {{-- JENIS PERMOHONAN --}}
                                 <div class="col-md-6 mb-3">
-                                    <strong>Waktu Kegiatan</strong>
+
+                                    <strong>
+                                        Jenis Permohonan
+                                    </strong>
+
                                     <p>
-                                        {{ \Carbon\Carbon::parse($permohonan->waktu_kegiatan)->format('H:i') }} WIB
+
+                                        @if($isRehabilitasi)
+
+                                            Permohonan Rehabilitasi
+
+                                        @elseif($isSosialisasi)
+
+                                            Permohonan Sosialisasi
+
+                                        @else
+
+                                            {{ $jenisPermohonan ?: '-' }}
+
+                                        @endif
+
                                     </p>
-                                </div>
-
-                                <div class="col-md-12 mb-3">
-                                    <strong>Tempat Kegiatan</strong>
-                                    <p>{{ $permohonan->tempat }}</p>
-                                </div>
-
-                                {{-- STATUS PERMOHONAN --}}
-                                <div class="detail-row mb-3">
-
-                                    <div class="detail-label fw-bold">
-                                        Status Permohonan
-                                    </div>
-
-                                    <div class="detail-value">
-
-                                        @php
-
-                                            $status = $permohonan->status;
-
-                                            /*
-                                            |--------------------------------------------------------------------------
-                                            | WARNA STATUS
-                                            |--------------------------------------------------------------------------
-                                            */
-
-                                            $warnaStatus = match ($status) {
-
-                                                'Diajukan' =>
-                                                'secondary',
-
-                                                'Diverifikasi' =>
-                                                'primary',
-
-                                                'Diproses' =>
-                                                'warning',
-
-                                                'Selesai' =>
-                                                'success',
-
-                                                'Ditolak' =>
-                                                'danger',
-
-                                                default =>
-                                                'secondary'
-
-                                            };
-
-
-                                            /*
-                                            |--------------------------------------------------------------------------
-                                            | LABEL STATUS
-                                            |--------------------------------------------------------------------------
-                                            */
-
-                                            $labelStatus = match ($status) {
-
-                                                'Diajukan' =>
-                                                'Diajukan',
-
-                                                'Diverifikasi' =>
-                                                'Diverifikasi',
-
-                                                'Diproses' =>
-                                                'Diproses',
-
-                                                'Selesai' =>
-                                                'Selesai',
-
-                                                'Ditolak' =>
-                                                'Ditolak',
-
-                                                default =>
-                                                'Belum Diproses'
-
-                                            };
-
-                                        @endphp
-
-
-                                        {{-- BADGE STATUS DI BAWAH LABEL --}}
-
-                                        <span class="badge bg-{{ $warnaStatus }} px-3 py-2">
-
-                                            {{ $labelStatus }}
-
-                                        </span>
-
-                                    </div>
 
                                 </div>
 
-                                <div class="col-md-6 mb-3">
-                                    <strong>Tanggal Pengajuan</strong>
-                                    <p>
-                                        {{ $permohonan->created_at ? $permohonan->created_at->translatedFormat('d F Y H:i') : '-' }}
-                                    </p>
-                                </div>
 
                             </div>
 
-                            <hr>
 
-                            <strong>Keterangan / Tujuan Permohonan</strong>
-
-                            <p>
-                                {{ $permohonan->keterangan ?? '-' }}
-                            </p>
-
-                            @if($permohonan->lampiran)
-
-
-
-                                <!-- <strong>Lampiran</strong> -->
+                            {{-- =================================================
+                            REHABILITASI
+                            ================================================== --}}
+                            @if($isRehabilitasi)
 
                                 <div class="mt-2">
 
-                                    <!-- <a href="{{ asset('storage/' . $permohonan->lampiran) }}" target="_blank"
-                                                                class="btn btn-primary btn-sm">
+                                    <div class="d-flex align-items-center mb-3">
 
-                                                                <i class="bi bi-paperclip"></i>
-                                                                Lihat Lampiran
+                                        <i class="bi bi-person-check-fill me-2 text-primary"></i>
 
-                                                            </a> -->
+                                        <strong>
+                                            Data Pemohon Rehabilitasi
+                                        </strong>
+
+                                    </div>
+
+
+                                    <div class="row">
+
+
+                                        {{-- NAMA PEMOHON --}}
+                                        <div class="col-md-6 mb-3">
+
+                                            <strong>
+                                                Nama Pemohon
+                                            </strong>
+
+                                            <p>
+                                                {{ $permohonan->nama_pemohon ?? '-' }}
+                                            </p>
+
+                                        </div>
+
+
+                                        {{-- NIK --}}
+                                        <div class="col-md-6 mb-3">
+
+                                            <strong>
+                                                NIK
+                                            </strong>
+
+                                            <p>
+                                                {{ $permohonan->nik ?? '-' }}
+                                            </p>
+
+                                        </div>
+
+
+                                        {{-- NO HP --}}
+                                        <div class="col-md-6 mb-3">
+
+                                            <strong>
+                                                No. HP / WhatsApp
+                                            </strong>
+
+                                            <p>
+                                                {{ $permohonan->no_hp ?? '-' }}
+                                            </p>
+
+                                        </div>
+
+
+                                        <!-- {{-- JENIS REHABILITASI --}}
+                                        <div class="col-md-6 mb-3">
+
+                                            <strong>
+                                                Jenis Rehabilitasi
+                                            </strong>
+
+                                            <p>
+                                                {{ $permohonan->jenis_rehabilitasi ?? '-' }}
+                                            </p>
+
+                                        </div> -->
+
+
+                                        {{-- ALAMAT --}}
+                                        <div class="col-md-6 mb-3">
+
+                                            <strong>
+                                                Alamat Pemohon
+                                            </strong>
+
+                                            <p>
+                                                {{ $permohonan->alamat_pemohon ?? '-' }}
+                                            </p>
+
+                                        </div>
+
+
+                                    </div>
+
+                                </div>
+
+
+                                {{-- =================================================
+                                SOSIALISASI
+                                ================================================== --}}
+                            @elseif($isSosialisasi)
+
+                                <div class="mt-2">
+
+                                    <div class="d-flex align-items-center mb-3">
+
+                                        <i class="bi bi-megaphone-fill me-2 text-primary"></i>
+
+                                        <strong>
+                                            Detail Kegiatan Sosialisasi
+                                        </strong>
+
+                                    </div>
+
+
+                                    <div class="row">
+
+
+                                        {{-- NAMA PENYELENGGARA --}}
+                                        <div class="col-md-6 mb-3">
+
+                                            <strong>
+                                                Nama Penyelenggara
+                                            </strong>
+
+                                            <p>
+                                                {{ $permohonan->nama_penyelenggara ?? '-' }}
+                                            </p>
+
+                                        </div>
+
+
+                                        {{-- PENANGGUNG JAWAB --}}
+                                        <div class="col-md-6 mb-3">
+
+                                            <strong>
+                                                Penanggung Jawab
+                                            </strong>
+
+                                            <p>
+                                                {{ $permohonan->penanggung_jawab ?? '-' }}
+                                            </p>
+
+                                        </div>
+
+
+                                        {{-- NO HP --}}
+                                        <div class="col-md-6 mb-3">
+
+                                            <strong>
+                                                No. HP / WhatsApp
+                                            </strong>
+
+                                            <p>
+                                                {{ $permohonan->no_hp ?? '-' }}
+                                            </p>
+
+                                        </div>
+
+
+                                        {{-- JUMLAH PESERTA --}}
+                                        <div class="col-md-6 mb-3">
+
+                                            <strong>
+                                                Jumlah Peserta
+                                            </strong>
+
+                                            <p>
+
+                                                @if($permohonan->jumlah_peserta !== null)
+
+                                                                                    {{ number_format(
+                                                        $permohonan->jumlah_peserta,
+                                                        0,
+                                                        ',',
+                                                        '.'
+                                                    ) }}
+
+                                                                                    orang
+
+                                                @else
+
+                                                    -
+
+                                                @endif
+
+                                            </p>
+
+                                        </div>
+
+
+                                        {{-- TANGGAL KEGIATAN --}}
+                                        <div class="col-md-6 mb-3">
+
+                                            <strong>
+                                                Tanggal Kegiatan
+                                            </strong>
+
+                                            <p>
+
+                                                @if($permohonan->tanggal_kegiatan)
+
+                                                                                    {{ \Carbon\Carbon::parse(
+                                                        $permohonan->tanggal_kegiatan
+                                                    )->translatedFormat('d F Y') }}
+
+                                                @else
+
+                                                    -
+
+                                                @endif
+
+                                            </p>
+
+                                        </div>
+
+
+                                        {{-- WAKTU KEGIATAN --}}
+                                        <div class="col-md-6 mb-3">
+
+                                            <strong>
+                                                Waktu Kegiatan
+                                            </strong>
+
+                                            <p>
+
+                                                @if($permohonan->waktu_kegiatan)
+
+                                                                                    {{ \Carbon\Carbon::parse(
+                                                        $permohonan->waktu_kegiatan
+                                                    )->format('H:i') }}
+
+                                                                                    WIB
+
+                                                @else
+
+                                                    -
+
+                                                @endif
+
+                                            </p>
+
+                                        </div>
+
+
+                                        {{-- TEMPAT --}}
+                                        <div class="col-md-12 mb-3">
+
+                                            <strong>
+                                                Tempat Kegiatan
+                                            </strong>
+
+                                            <p>
+                                                {{ $permohonan->tempat ?? '-' }}
+                                            </p>
+
+                                        </div>
+
+
+                                    </div>
+
+                                </div>
+
+
+                                {{-- =================================================
+                                JENIS TIDAK DIKENALI
+                                ================================================== --}}
+                            @else
+
+                                <div class="alert alert-warning mt-3">
+
+                                    <i class="bi bi-exclamation-triangle me-2"></i>
+
+                                    Jenis permohonan tidak dikenali.
+
+                                    <br>
+
+                                    <small>
+                                        Nilai database:
+                                        <strong>
+                                            {{ $jenisPermohonan ?: '-' }}
+                                        </strong>
+                                    </small>
 
                                 </div>
 
                             @endif
 
-                        </div>
-                    </div>
 
+
+                            {{-- =================================================
+                            STATUS & TANGGAL PENGAJUAN
+                            ================================================== --}}
+                            <hr>
+
+
+                            <div class="row">
+
+
+                                {{-- STATUS --}}
+                                <div class="col-md-6 mb-3">
+
+                                    <strong>
+                                        Status Permohonan
+                                    </strong>
+
+                                    <div class="mt-2">
+
+                                        <span class="badge bg-{{ $warnaStatus }}">
+                                            {{ $status }}
+                                        </span>
+                                    </div>
+
+                                </div>
+
+
+
+                                {{-- TANGGAL PENGAJUAN --}}
+                                <div class="col-md-6 mb-3">
+
+                                    <strong>
+                                        Tanggal Pengajuan
+                                    </strong>
+
+                                    <p>
+
+                                        @if($permohonan->created_at)
+
+                                                                        {{ $permohonan->created_at
+                                            ->translatedFormat('d F Y • H:i') }}
+
+                                                                        WIB
+
+                                        @else
+
+                                            -
+
+                                        @endif
+
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+
+
+                            {{-- =================================================
+                            KETERANGAN
+                            ================================================== --}}
+                            <hr>
+
+
+                            <strong>
+                                Keterangan / Tujuan Permohonan
+                            </strong>
+
+
+                            <p class="mb-0">
+
+                                {{ $permohonan->keterangan ?? '-' }}
+
+                            </p>
+
+
+                        </div>
+
+                    </div>
 
                     {{-- Lampiran --}}
                     {{-- =====================================================
@@ -320,614 +649,375 @@
 
 
 
-            {{-- ================= KANAN ================= --}}
-    <div class="col-lg-5">
+                {{-- ================= KANAN ================= --}}
+                <div class="col-lg-5">
 
-        {{-- ================= RIWAYAT STATUS ================= --}}
-        <div class="sa-panel">
+                    {{-- ================= RIWAYAT STATUS ================= --}}
+                    <div class="sa-panel">
 
-            <div class="sa-panel-header">
-                <h3>
-                    <i class="bi bi-clock-history me-2"></i>
-                    Riwayat Status
-                </h3>
-            </div>
-
-            <div class="p-4">
-
-                <div class="admin-tracking-timeline">
-
-                    {{-- =====================================================
-                    1. PERMOHONAN DIAJUKAN
-                    ====================================================== --}}
-                    <div class="admin-tracking-item selesai">
-
-                        <div class="admin-tracking-icon">
-                            <i class="bi bi-check-lg"></i>
+                        <div class="sa-panel-header">
+                            <h3>
+                                <i class="bi bi-clock-history me-2"></i>
+                                Riwayat Status
+                            </h3>
                         </div>
 
-                        <div class="admin-tracking-content">
+                        <div class="p-4">
 
-                            <h6>
-                                Permohonan Diajukan
-                            </h6>
+                            <div class="admin-tracking-timeline">
 
-                            <small>
-                                <i class="bi bi-calendar-event me-1"></i>
+                                {{-- =====================================================
+                                STATUS DATABASE
+                                ====================================================== --}}
+                                @php
+                                    $status = $permohonan->status ?? 'Diajukan';
 
-                                @if($permohonan->created_at)
+                                    $diajukanAktif = in_array($status, [
+                                        'Diajukan',
+                                        'Diverifikasi',
+                                        'Diproses',
+                                        'Selesai'
+                                    ]);
 
-                                    {{ $permohonan->created_at->translatedFormat('d F Y • H:i') }} WIB
+                                    $verifikasiAktif = in_array($status, [
+                                        'Diverifikasi',
+                                        'Diproses',
+                                        'Selesai'
+                                    ]);
 
-                                @else
+                                    $prosesAktif = in_array($status, [
+                                        'Diproses',
+                                        'Selesai'
+                                    ]);
 
-                                    -
-
-                                @endif
-
-                            </small>
-
-                        </div>
-
-                    </div>
-
-
-                    {{-- =====================================================
-                    2. DIVERIFIKASI
-                    ====================================================== --}}
-                    @php
-                        $verifikasiAktif = !empty($permohonan->tanggal_verifikasi);
-                    @endphp
-
-                    <div class="admin-tracking-item {{ $verifikasiAktif ? 'selesai' : 'pending' }}">
-
-                        <div class="admin-tracking-icon">
-
-                            @if($verifikasiAktif)
-
-                                <i class="bi bi-check-lg"></i>
-
-                            @else
-
-                                <i class="bi bi-circle"></i>
-
-                            @endif
-
-                        </div>
-
-                        <div class="admin-tracking-content">
-
-                            <h6>
-                                Diverifikasi Admin BNNK
-                            </h6>
-
-                            @if($verifikasiAktif)
-
-                                                        <small>
-                                                            <i class="bi bi-calendar-event me-1"></i>
-
-                                                            {{ \Carbon\Carbon::parse(
-                                    $permohonan->tanggal_verifikasi
-                                )->translatedFormat('d F Y • H:i') }}
-
-                                                            WIB
-                                                        </small>
-
-                                                        @if($permohonan->catatan_verifikasi)
-
-                                                            <div class="mt-2">
-
-                                                                <strong>
-                                                                    Catatan:
-                                                                </strong>
-
-                                                                <br>
-
-                                                                {{ $permohonan->catatan_verifikasi }}
-
-                                                            </div>
-
-                                                        @endif
-
-                            @else
-
-                                <small class="text-muted">
-                                    Menunggu verifikasi admin.
-                                </small>
-
-                            @endif
-
-                        </div>
-
-                    </div>
+                                    $selesaiAktif = $status === 'Selesai';
+                                @endphp
 
 
-                    {{-- =====================================================
-                    3. DIPROSES
-                    ====================================================== --}}
-                    @php
-                        $prosesAktif = in_array(
-                            $permohonan->status,
-                            [
-                                'Diproses',
-                                'Selesai'
-                            ]
-                        );
-                    @endphp
+                                {{-- =====================================================
+                                1. PERMOHONAN DIAJUKAN
+                                ====================================================== --}}
+                                <div class="admin-tracking-item {{ $diajukanAktif ? 'selesai' : 'pending' }}">
 
-                    <div class="admin-tracking-item {{ $prosesAktif ? 'selesai' : 'pending' }}">
+                                    <div class="admin-tracking-icon">
 
-                        <div class="admin-tracking-icon">
-
-                            @if($prosesAktif)
-
-                                <i class="bi bi-check-lg"></i>
-
-                            @else
-
-                                <i class="bi bi-hourglass-split"></i>
-
-                            @endif
-
-                        </div>
-
-                        <div class="admin-tracking-content">
-
-                            <h6>
-                                Diproses BNNK
-                            </h6>
-
-                            @if($prosesAktif)
-
-                                @if($permohonan->tanggal_proses)
-
-                                                            <small>
-                                                                <i class="bi bi-calendar-event me-1"></i>
-
-                                                                {{ \Carbon\Carbon::parse(
-                                        $permohonan->tanggal_proses
-                                    )->translatedFormat('d F Y • H:i') }}
-
-                                                                WIB
-                                                            </small>
-
-                                @endif
-
-                                @if($permohonan->catatan_proses)
-
-                                    <div class="mt-2">
-
-                                        <strong>
-                                            Catatan:
-                                        </strong>
-
-                                        <br>
-
-                                        {{ $permohonan->catatan_proses }}
+                                        @if($diajukanAktif)
+                                            <i class="bi bi-check-lg"></i>
+                                        @else
+                                            <i class="bi bi-circle"></i>
+                                        @endif
 
                                     </div>
 
-                                @endif
+                                    <div class="admin-tracking-content">
 
-                            @else
+                                        <h6>
+                                            Permohonan Diajukan
+                                        </h6>
 
-                                <small class="text-muted">
-                                    Menunggu proses BNNK.
-                                </small>
+                                        @if($permohonan->created_at)
 
-                            @endif
+                                            <small>
+                                                <i class="bi bi-calendar-event me-1"></i>
 
-                        </div>
+                                                {{ $permohonan->created_at->translatedFormat('d F Y • H:i') }}
+                                                WIB
+                                            </small>
 
-                    </div>
+                                        @else
 
+                                            <small class="text-muted">
+                                                -
+                                            </small>
 
-                    {{-- =====================================================
-                    4. SELESAI
-                    ====================================================== --}}
-                    @php
-                        $selesaiAktif = $permohonan->status === 'Selesai';
-                    @endphp
-
-                    <div class="admin-tracking-item {{ $selesaiAktif ? 'selesai' : 'pending' }}">
-
-                        <div class="admin-tracking-icon">
-
-                            @if($selesaiAktif)
-
-                                <i class="bi bi-check-lg"></i>
-
-                            @else
-
-                                <i class="bi bi-flag"></i>
-
-                            @endif
-
-                        </div>
-
-                        <div class="admin-tracking-content">
-
-                            <h6>
-                                Permohonan Selesai
-                            </h6>
-
-                            @if($selesaiAktif)
-
-                                @if($permohonan->tanggal_selesai)
-
-                                                            <small>
-                                                                <i class="bi bi-calendar-event me-1"></i>
-
-                                                                {{ \Carbon\Carbon::parse(
-                                        $permohonan->tanggal_selesai
-                                    )->translatedFormat('d F Y • H:i') }}
-
-                                                                WIB
-                                                            </small>
-
-                                @endif
-
-                                @if($permohonan->catatan_selesai)
-
-                                    <div class="mt-2">
-
-                                        <strong>
-                                            Catatan:
-                                        </strong>
-
-                                        <br>
-
-                                        {{ $permohonan->catatan_selesai }}
+                                        @endif
 
                                     </div>
 
-                                @endif
+                                </div>
 
-                            @else
 
-                                <small class="text-muted">
-                                    Belum selesai.
-                                </small>
+                                {{-- =====================================================
+                                2. DIVERIFIKASI
+                                ====================================================== --}}
+                                <div class="admin-tracking-item {{ $verifikasiAktif ? 'selesai' : 'pending' }}">
 
-                            @endif
+                                    <div class="admin-tracking-icon">
 
-                        </div>
+                                        @if($verifikasiAktif)
+                                            <i class="bi bi-check-lg"></i>
+                                        @else
+                                            <i class="bi bi-circle"></i>
+                                        @endif
 
-                    </div>
+                                    </div>
 
-                </div>
+                                    <div class="admin-tracking-content">
 
-            </div>
+                                        <h6>
+                                            Diverifikasi Admin BNNK
+                                        </h6>
 
-        </div>
+                                        @if($verifikasiAktif)
 
+                                            {{-- Tanggal Verifikasi --}}
+                                            @if($permohonan->tanggal_verifikasi)
 
-        {{-- =====================================================
-        UPDATE STATUS PERMOHONAN
-        ====================================================== --}}
-        <div class="sa-panel mt-4">
+                                                                            <small>
+                                                                                <i class="bi bi-calendar-event me-1"></i>
 
-            <div class="sa-panel-header">
+                                                                                {{ \Carbon\Carbon::parse(
+                                                    $permohonan->tanggal_verifikasi
+                                                )->translatedFormat('d F Y • H:i') }}
 
-                <h3>
-                    Verifikasi Permohonan
-                </h3>
+                                                                                WIB
+                                                                            </small>
 
-            </div>
+                                            @else
 
-            <div class="p-4">
+                                                <small>
+                                                    <i class="bi bi-check-circle me-1"></i>
+                                                    Permohonan telah diverifikasi.
+                                                </small>
 
-                <form
-                    action="{{ route('superadmin.update_permohonan', $permohonan->id) }}"
-                    method="POST"
-                    enctype="multipart/form-data"
-                >
+                                            @endif
 
-                    @csrf
-                    @method('PUT')
 
+                                            {{-- Catatan Verifikasi --}}
+                                            @if($permohonan->catatan_verifikasi)
 
-                    {{-- =================================================
-                    STATUS
-                    ================================================== --}}
-                    <div class="mb-3">
+                                                <div class="mt-2">
 
-                        <label for="status" class="form-label">
-                            Status Permohonan
-                        </label>
+                                                    <strong>
+                                                        Catatan:
+                                                    </strong>
 
-                        <select
-                            name="status"
-                            id="status"
-                            class="form-control"
-                            required
-                        >
+                                                    <br>
 
-                            {{-- =========================================
-                            Diajukan
-                            HANYA BOLEH → DIVERIFIKASI / DITOLAK
-                            ========================================== --}}
-                            @if($permohonan->status === 'Diajukan')
+                                                    {{ $permohonan->catatan_verifikasi }}
 
-                                    <option value="Diverifikasi">
-                                        Diverifikasi
-                                    </option>
+                                                </div>
 
-                                    <option value="Ditolak">
-                                        Ditolak
-                                    </option>
+                                            @endif
 
 
-                                {{-- =========================================
-                                Diverifikasi
-                                HANYA BOLEH → DIPROSES / DITOLAK
-                                ========================================== --}}
-                            @elseif($permohonan->status === 'Diverifikasi')
+                                            {{-- Lampiran Verifikasi --}}
+                                            @if($permohonan->file_verifikasi)
 
-                                    <option value="Diproses">
-                                        Diproses
-                                    </option>
+                                                <div class="mt-3">
 
-                                    <option value="Ditolak">
-                                        Ditolak
-                                    </option>
+                                                    <a href="{{ asset('storage/' . $permohonan->file_verifikasi) }}" target="_blank"
+                                                        class="btn btn-sm btn-primary">
 
+                                                        <i class="bi bi-paperclip me-1"></i>
 
-                                {{-- =========================================
-                                Diproses
-                                HANYA BOLEH → SELESAI
-                                ========================================== --}}
-                            @elseif($permohonan->status === 'Diproses')
+                                                        Lihat Lampiran Verifikasi
 
-                                    <option value="Selesai">
-                                        Selesai
-                                    </option>
-
-
-                                {{-- =========================================
-                                Selesai
-                                TIDAK BOLEH KEMBALI
-                                ========================================== --}}
-                            @elseif($permohonan->status === 'Selesai')
+                                                    </a>
 
-                                    <option value="Selesai">
-                                        Selesai
-                                    </option>
-
-
-                                {{-- =========================================
-                                Ditolak
-                                TIDAK BOLEH KEMBALI
-                                ========================================== --}}
-                            @elseif($permohonan->status === 'Ditolak')
-
-                                    <option value="Ditolak">
-                                        Ditolak
-                                    </option>
-
+                                                </div>
 
-                                {{-- =========================================
-                                FALLBACK
-                                ========================================== --}}
-                            @else
-
-                                <option value="Diverifikasi">
-                                    Diverifikasi
-                                </option>
-
-                            @endif
-
-                        </select>
-
-                    </div>
+                                            @endif
 
+                                        @else
 
-                    {{-- =================================================
-                    CATATAN
-                    ================================================== --}}
-                    <div class="mb-3">
+                                            <small class="text-muted">
+                                                Menunggu verifikasi admin.
+                                            </small>
 
-                        <label for="catatan" class="form-label">
-                            Catatan Admin
-                        </label>
+                                        @endif
 
-                        <textarea
-                            name="catatan"
-                            id="catatan"
-                            class="form-control"
-                            rows="4"
-                            placeholder="Masukkan catatan verifikasi atau tindak lanjut..."
-                        >{{ old('catatan') }}</textarea>
+                                    </div>
 
-                    </div>
+                                </div>
 
 
-                    {{-- =================================================
-                    FILE BUKTI
-                    ================================================== --}}
-                    <div class="mb-4">
+                                {{-- =====================================================
+                                3. DIPROSES
+                                ====================================================== --}}
+                                <div class="admin-tracking-item {{ $prosesAktif ? 'selesai' : 'pending' }}">
 
-                        <label for="bukti" class="form-label">
-                            Upload Bukti Tindak Lanjut
-                        </label>
+                                    <div class="admin-tracking-icon">
 
-                        <input
-                            type="file"
-                            name="bukti"
-                            id="bukti"
-                            class="form-control"
-                            accept=".jpg,.jpeg,.png,.pdf"
-                        >
+                                        @if($prosesAktif)
+                                            <i class="bi bi-check-lg"></i>
+                                        @else
+                                            <i class="bi bi-hourglass-split"></i>
+                                        @endif
 
-                        <small class="text-muted">
-                            Format JPG, JPEG, PNG, PDF. Maksimal 2 MB.
-                        </small>
+                                    </div>
 
+                                    <div class="admin-tracking-content">
 
-                        {{-- =========================
-                        PREVIEW
-                        ========================== --}}
-                        <div
-                            id="previewContainer"
-                            class="mt-3"
-                            style="display: none;"
-                        >
+                                        <h6>
+                                            Diproses BNNK
+                                        </h6>
 
-                            {{-- Preview Gambar --}}
-                            <img
-                                id="previewBukti"
-                                src=""
-                                alt="Preview Bukti"
-                                class="img-fluid rounded shadow"
-                                style="
-                                    display: none;
-                                    max-height: 400px;
-                                    width: auto;
-                                "
-                            >
+                                        @if($prosesAktif)
 
+                                            {{-- Tanggal Proses --}}
+                                            @if($permohonan->tanggal_proses)
 
-                            {{-- Preview PDF --}}
-                            <iframe
-                                id="previewPdf"
-                                src=""
-                                style="
-                                    display: none;
-                                    width: 100%;
-                                    height: 500px;
-                                    border: 1px solid #ddd;
-                                    border-radius: 8px;
-                                "
-                            ></iframe>
+                                                                            <small>
+                                                                                <i class="bi bi-calendar-event me-1"></i>
 
-                        </div>
+                                                                                {{ \Carbon\Carbon::parse(
+                                                    $permohonan->tanggal_proses
+                                                )->translatedFormat('d F Y • H:i') }}
 
-                    </div>
+                                                                                WIB
+                                                                            </small>
 
+                                            @else
 
-                    {{-- =================================================
-                    BUTTON
-                    ================================================== --}}
-                    <div class="d-grid">
+                                                <small>
+                                                    <i class="bi bi-check-circle me-1"></i>
+                                                    Permohonan sedang diproses.
+                                                </small>
 
-                        <button
-                            type="submit"
-                            class="btn btn-primary"
-                        >
+                                            @endif
 
-                            <i class="bi bi-check-circle-fill me-1"></i>
 
-                            Simpan Perubahan
+                                            {{-- Catatan Proses --}}
+                                            @if($permohonan->catatan_proses)
 
-                        </button>
+                                                <div class="mt-2">
 
-                    </div>
+                                                    <strong>
+                                                        Catatan:
+                                                    </strong>
 
-                </form>
+                                                    <br>
 
-            </div>
+                                                    {{ $permohonan->catatan_proses }}
 
-        </div>
+                                                </div>
 
-    </div>
+                                            @endif
 
 
-                </div>
+                                            {{-- Lampiran Proses --}}
+                                            @if($permohonan->file_proses)
 
-            </main>
+                                                <div class="mt-3">
 
-        </section>
+                                                    <a href="{{ asset('storage/' . $permohonan->file_proses) }}" target="_blank"
+                                                        class="btn btn-sm btn-primary">
 
-        <!-- ==========================================
-                                                                         MODAL DETAIL TINDAK LANJUT PERMOHONAN
-                                                                    ========================================== -->
-        <div class="modal fade" id="detailPermohonanModal" tabindex="-1" aria-labelledby="detailPermohonanModalLabel"
-            aria-hidden="true">
+                                                        <i class="bi bi-paperclip me-1"></i>
 
-            <div class="modal-dialog modal-lg modal-dialog-centered">
+                                                        Lihat Lampiran Proses
 
-                <div class="modal-content border-0 shadow-lg rounded-4">
+                                                    </a>
 
-                    <!-- Header -->
-                    <div class="modal-header">
+                                                </div>
 
-                        <h5 class="modal-title fw-bold" id="detailPermohonanModalLabel">
-                            <i class="bi bi-file-earmark-text-fill me-2"></i>
-                            Detail Tindak Lanjut Permohonan
-                        </h5>
+                                            @endif
 
-                        <button type="button" class="btn-close" data-bs-dismiss="modal">
-                        </button>
+                                        @else
 
-                    </div>
+                                            <small class="text-muted">
+                                                Menunggu proses BNNK.
+                                            </small>
 
-                    <!-- Body -->
-                    <div class="modal-body p-4">
+                                        @endif
 
-                        <div class="row g-4 align-items-start">
+                                    </div>
 
-                            <!-- Dokumen / Bukti -->
-                            <div class="col-md-5">
+                                </div>
 
-                                <img src="{{ asset('images/bukti-default.jpg') }}" class="img-fluid rounded-3 shadow-sm border"
-                                    alt="Dokumen Permohonan">
 
-                            </div>
+                                {{-- =====================================================
+                                4. SELESAI
+                                ====================================================== --}}
+                                <div class="admin-tracking-item {{ $selesaiAktif ? 'selesai' : 'pending' }}">
 
-                            <!-- Informasi -->
-                            <div class="col-md-7">
+                                    <div class="admin-tracking-icon">
 
-                                <h4 class="fw-bold mb-3">
-                                    Permohonan Rehabilitasi
-                                </h4>
+                                        @if($selesaiAktif)
+                                            <i class="bi bi-check-lg"></i>
+                                        @else
+                                            <i class="bi bi-flag"></i>
+                                        @endif
 
-                                <hr>
+                                    </div>
 
-                                <p class="mb-3">
+                                    <div class="admin-tracking-content">
 
-                                    <strong>Status :</strong>
+                                        <h6>
+                                            Permohonan Selesai
+                                        </h6>
 
-                                    <span class="badge bg-primary px-3 py-2">
-                                        Diproses
-                                    </span>
+                                        @if($selesaiAktif)
 
-                                </p>
+                                            {{-- Tanggal Selesai --}}
+                                            @if($permohonan->tanggal_selesai)
 
-                                <p class="mb-3">
+                                                                            <small>
+                                                                                <i class="bi bi-calendar-event me-1"></i>
 
-                                    <strong>Petugas/Admin :</strong>
+                                                                                {{ \Carbon\Carbon::parse(
+                                                    $permohonan->tanggal_selesai
+                                                )->translatedFormat('d F Y • H:i') }}
 
-                                    Admin BNNK Tulungagung
+                                                                                WIB
+                                                                            </small>
 
-                                </p>
+                                            @else
 
-                                <p class="mb-3">
+                                                <small>
+                                                    <i class="bi bi-check-circle me-1"></i>
+                                                    Permohonan telah selesai.
+                                                </small>
 
-                                    <strong>Tanggal Penanganan :</strong>
+                                            @endif
 
-                                    16 Juli 2026 • 10:45 WIB
 
-                                </p>
+                                            {{-- Catatan Selesai --}}
+                                            @if($permohonan->catatan_selesai)
 
-                                <label class="fw-bold mb-2">
+                                                <div class="mt-2">
 
-                                    <i class="bi bi-journal-text me-1"></i>
+                                                    <strong>
+                                                        Catatan:
+                                                    </strong>
 
-                                    Catatan Admin
+                                                    <br>
 
-                                </label>
+                                                    {{ $permohonan->catatan_selesai }}
 
-                                <div class="border rounded-3 bg-light p-3">
+                                                </div>
 
-                                    Dokumen permohonan telah diterima dan
-                                    diverifikasi oleh Admin BNNK Tulungagung.
+                                            @endif
 
-                                    <br><br>
 
-                                    Selanjutnya permohonan diteruskan ke
-                                    Bidang Rehabilitasi untuk dilakukan
-                                    pemeriksaan kelengkapan administrasi dan
-                                    penjadwalan proses layanan.
+                                            {{-- Lampiran Selesai --}}
+                                            @if($permohonan->file_selesai)
+
+                                                <div class="mt-3">
+
+                                                    <a href="{{ asset('storage/' . $permohonan->file_selesai) }}" target="_blank"
+                                                        class="btn btn-sm btn-primary">
+
+                                                        <i class="bi bi-paperclip me-1"></i>
+
+                                                        Lihat Lampiran Selesai
+
+                                                    </a>
+
+                                                </div>
+
+                                            @endif
+
+                                        @else
+
+                                            <small class="text-muted">
+                                                Belum selesai.
+                                            </small>
+
+                                        @endif
+
+                                    </div>
 
                                 </div>
 
@@ -937,77 +1027,380 @@
 
                     </div>
 
-                    <!-- Footer -->
-                    <div class="modal-footer">
 
-                        <button class="btn btn-secondary" data-bs-dismiss="modal">
 
-                            <i class="bi bi-x-circle me-1"></i>
-                            Tutup
+                    {{-- =====================================================
+                    UPDATE STATUS PERMOHONAN
+                    ====================================================== --}}
+                    <div class="sa-panel mt-4">
 
-                        </button>
+                        <div class="sa-panel-header">
+
+                            <h3>
+                                Verifikasi Permohonan
+                            </h3>
+
+                        </div>
+
+                        <div class="p-4">
+
+                            <form action="{{ route('superadmin.update_permohonan', $permohonan->id) }}" method="POST"
+                                enctype="multipart/form-data">
+
+                                @csrf
+                                @method('PUT')
+
+
+                                {{-- =================================================
+                                STATUS
+                                ================================================== --}}
+                                <div class="mb-3">
+
+                                    <label for="status" class="form-label">
+                                        Status Permohonan
+                                    </label>
+
+                                    <select name="status" id="status" class="form-control" required>
+
+                                        {{-- =========================================
+                                        Diajukan
+                                        HANYA BOLEH → DIVERIFIKASI / DITOLAK
+                                        ========================================== --}}
+                                        @if($permohonan->status === 'Diajukan')
+
+                                            <option value="Diverifikasi">
+                                                Diverifikasi
+                                            </option>
+
+                                            <option value="Ditolak">
+                                                Ditolak
+                                            </option>
+
+
+                                            {{-- =========================================
+                                            Diverifikasi
+                                            HANYA BOLEH → DIPROSES / DITOLAK
+                                            ========================================== --}}
+                                        @elseif($permohonan->status === 'Diverifikasi')
+
+                                            <option value="Diproses">
+                                                Diproses
+                                            </option>
+
+                                            <option value="Ditolak">
+                                                Ditolak
+                                            </option>
+
+
+                                            {{-- =========================================
+                                            Diproses
+                                            HANYA BOLEH → SELESAI
+                                            ========================================== --}}
+                                        @elseif($permohonan->status === 'Diproses')
+
+                                            <option value="Selesai">
+                                                Selesai
+                                            </option>
+
+
+                                            {{-- =========================================
+                                            Selesai
+                                            TIDAK BOLEH KEMBALI
+                                            ========================================== --}}
+                                        @elseif($permohonan->status === 'Selesai')
+
+                                            <option value="Selesai">
+                                                Selesai
+                                            </option>
+
+
+                                            {{-- =========================================
+                                            Ditolak
+                                            TIDAK BOLEH KEMBALI
+                                            ========================================== --}}
+                                        @elseif($permohonan->status === 'Ditolak')
+
+                                            <option value="Ditolak">
+                                                Ditolak
+                                            </option>
+
+
+                                            {{-- =========================================
+                                            FALLBACK
+                                            ========================================== --}}
+                                        @else
+
+                                            <option value="Diverifikasi">
+                                                Diverifikasi
+                                            </option>
+
+                                        @endif
+
+                                    </select>
+
+                                </div>
+
+
+                                {{-- =================================================
+                                CATATAN
+                                ================================================== --}}
+                                <div class="mb-3">
+
+                                    <label for="catatan" class="form-label">
+                                        Catatan Admin
+                                    </label>
+
+                                    <textarea name="catatan" id="catatan" class="form-control" rows="4"
+                                        placeholder="Masukkan catatan verifikasi atau tindak lanjut...">{{ old('catatan') }}</textarea>
+
+                                </div>
+
+
+                                {{-- =================================================
+                                FILE BUKTI
+                                ================================================== --}}
+                                <div class="mb-4">
+
+                                    <label for="bukti" class="form-label">
+                                        Upload Bukti Tindak Lanjut
+                                    </label>
+
+                                    <input type="file" name="bukti" id="bukti" class="form-control"
+                                        accept=".jpg,.jpeg,.png,.pdf">
+
+                                    <small class="text-muted">
+                                        Format JPG, JPEG, PNG, PDF. Maksimal 2 MB.
+                                    </small>
+
+
+                                    {{-- =========================
+                                    PREVIEW
+                                    ========================== --}}
+                                    <div id="previewContainer" class="mt-3" style="display: none;">
+
+                                        {{-- Preview Gambar --}}
+                                        <img id="previewBukti" src="" alt="Preview Bukti" class="img-fluid rounded shadow"
+                                            style="
+                                                            display: none;
+                                                            max-height: 400px;
+                                                            width: auto;
+                                                        ">
+
+
+                                        {{-- Preview PDF --}}
+                                        <iframe id="previewPdf" src="" style="
+                                                            display: none;
+                                                            width: 100%;
+                                                            height: 500px;
+                                                            border: 1px solid #ddd;
+                                                            border-radius: 8px;
+                                                        "></iframe>
+
+                                    </div>
+
+                                </div>
+
+
+                                {{-- =================================================
+                                BUTTON
+                                ================================================== --}}
+                                <div class="d-grid">
+
+                                    <button type="submit" class="btn btn-primary">
+
+                                        <i class="bi bi-check-circle-fill me-1"></i>
+
+                                        Simpan Perubahan
+
+                                    </button>
+
+                                </div>
+
+                            </form>
+
+                        </div>
 
                     </div>
+
+                </div>
+
+
+            </div>
+
+        </main>
+
+    </section>
+
+    <!-- ==========================================
+                                                                                                 MODAL DETAIL TINDAK LANJUT PERMOHONAN
+                                                                                            ========================================== -->
+    <div class="modal fade" id="detailPermohonanModal" tabindex="-1" aria-labelledby="detailPermohonanModalLabel"
+        aria-hidden="true">
+
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+
+            <div class="modal-content border-0 shadow-lg rounded-4">
+
+                <!-- Header -->
+                <div class="modal-header">
+
+                    <h5 class="modal-title fw-bold" id="detailPermohonanModalLabel">
+                        <i class="bi bi-file-earmark-text-fill me-2"></i>
+                        Detail Tindak Lanjut Permohonan
+                    </h5>
+
+                    <button type="button" class="btn-close" data-bs-dismiss="modal">
+                    </button>
+
+                </div>
+
+                <!-- Body -->
+                <div class="modal-body p-4">
+
+                    <div class="row g-4 align-items-start">
+
+                        <!-- Dokumen / Bukti -->
+                        <div class="col-md-5">
+
+                            <img src="{{ asset('images/bukti-default.jpg') }}" class="img-fluid rounded-3 shadow-sm border"
+                                alt="Dokumen Permohonan">
+
+                        </div>
+
+                        <!-- Informasi -->
+                        <div class="col-md-7">
+
+                            <h4 class="fw-bold mb-3">
+                                Permohonan Rehabilitasi
+                            </h4>
+
+                            <hr>
+
+                            <p class="mb-3">
+
+                                <strong>Status :</strong>
+
+                                <span class="badge bg-primary px-3 py-2">
+                                    Diproses
+                                </span>
+
+                            </p>
+
+                            <p class="mb-3">
+
+                                <strong>Petugas/Admin :</strong>
+
+                                Admin BNNK Tulungagung
+
+                            </p>
+
+                            <p class="mb-3">
+
+                                <strong>Tanggal Penanganan :</strong>
+
+                                16 Juli 2026 • 10:45 WIB
+
+                            </p>
+
+                            <label class="fw-bold mb-2">
+
+                                <i class="bi bi-journal-text me-1"></i>
+
+                                Catatan Admin
+
+                            </label>
+
+                            <div class="border rounded-3 bg-light p-3">
+
+                                Dokumen permohonan telah diterima dan
+                                diverifikasi oleh Admin BNNK Tulungagung.
+
+                                <br><br>
+
+                                Selanjutnya permohonan diteruskan ke
+                                Bidang Rehabilitasi untuk dilakukan
+                                pemeriksaan kelengkapan administrasi dan
+                                penjadwalan proses layanan.
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- Footer -->
+                <div class="modal-footer">
+
+                    <button class="btn btn-secondary" data-bs-dismiss="modal">
+
+                        <i class="bi bi-x-circle me-1"></i>
+                        Tutup
+
+                    </button>
 
                 </div>
 
             </div>
 
         </div>
-        <script>
-            document.getElementById('bukti').addEventListener('change', function (event) {
 
-                const file = event.target.files[0];
+    </div>
+    <script>
+        document.getElementById('bukti').addEventListener('change', function (event) {
 
-                const previewContainer = document.getElementById('previewContainer');
-                const previewImage = document.getElementById('previewBukti');
-                const previewPdf = document.getElementById('previewPdf');
+            const file = event.target.files[0];
 
-                // Reset preview
-                previewImage.style.display = 'none';
-                previewPdf.style.display = 'none';
+            const previewContainer = document.getElementById('previewContainer');
+            const previewImage = document.getElementById('previewBukti');
+            const previewPdf = document.getElementById('previewPdf');
 
-                previewImage.src = '';
-                previewPdf.src = '';
+            // Reset preview
+            previewImage.style.display = 'none';
+            previewPdf.style.display = 'none';
 
-                if (!file) {
-                    previewContainer.style.display = 'none';
-                    return;
-                }
+            previewImage.src = '';
+            previewPdf.src = '';
 
-                const fileType = file.type;
+            if (!file) {
+                previewContainer.style.display = 'none';
+                return;
+            }
 
-                // Tampilkan gambar
-                if (fileType.startsWith('image/')) {
+            const fileType = file.type;
 
-                    const reader = new FileReader();
+            // Tampilkan gambar
+            if (fileType.startsWith('image/')) {
 
-                    reader.onload = function (e) {
+                const reader = new FileReader();
 
-                        previewImage.src = e.target.result;
+                reader.onload = function (e) {
 
-                        previewImage.style.display = 'block';
+                    previewImage.src = e.target.result;
 
-                        previewContainer.style.display = 'block';
-                    };
-
-                    reader.readAsDataURL(file);
-
-                }
-
-                // Tampilkan PDF
-                else if (fileType === 'application/pdf') {
-
-                    const fileURL = URL.createObjectURL(file);
-
-                    previewPdf.src = fileURL;
-
-                    previewPdf.style.display = 'block';
+                    previewImage.style.display = 'block';
 
                     previewContainer.style.display = 'block';
+                };
 
-                }
+                reader.readAsDataURL(file);
 
-            });
-        </script>
+            }
+
+            // Tampilkan PDF
+            else if (fileType === 'application/pdf') {
+
+                const fileURL = URL.createObjectURL(file);
+
+                previewPdf.src = fileURL;
+
+                previewPdf.style.display = 'block';
+
+                previewContainer.style.display = 'block';
+
+            }
+
+        });
+    </script>
 @endsection

@@ -434,7 +434,7 @@
                                     'Diajukan',
                                     'Menunggu',
                                     'Menunggu Verifikasi'
-                                        => '#0d6efd',
+                                           => '#6c757d',
 
                                     'Diverifikasi'
                                         => '#0d6efd',

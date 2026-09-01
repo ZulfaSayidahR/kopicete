@@ -417,9 +417,14 @@
                                                         {{-- =====================================
                                                         AKSI
                                                         ====================================== --}}
+                                                        {{-- =================================================
+                                                        AKSI
+                                                        ================================================= --}}
+
                                                         <td>
 
                                                             <div class="sa-action-buttons">
+
 
                                                                 {{-- DETAIL --}}
                                                                 <a href="{{ route(
@@ -427,14 +432,37 @@
                                     $pengaduan->id
                                 ) }}" class="sa-action-button sa-key-button" title="Lihat Detail">
 
-                                                                    <i class="bi bi-eye-fill"></i>
+                                                                    <i class="bi bi-pencil-square"></i>
 
                                                                 </a>
+
+
+
+                                                                {{-- HAPUS --}}
+                                                                <form action="{{ route(
+                                    'adminpengaduan.delete_pengaduan',
+                                    $pengaduan->id
+                                ) }}" method="POST" style="display:inline;">
+
+                                                                    @csrf
+
+                                                                    @method('DELETE')
+
+                                                                    <button type="submit" class="sa-action-button sa-delete-button"
+                                                                        title="Hapus Pengaduan" onclick="return confirm(
+                                                'Yakin ingin menghapus data pengaduan ini?'
+                                            )">
+
+                                                                        <i class="bi bi-trash-fill"></i>
+
+                                                                    </button>
+
+                                                                </form>
+
 
                                                             </div>
 
                                                         </td>
-
                                                     </tr>
                             @empty
 

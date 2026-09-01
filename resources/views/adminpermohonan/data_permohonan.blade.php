@@ -197,249 +197,253 @@
 
                             @forelse($permohonans as $permohonan)
 
-                                                                                <tr>
+                                                    <tr>
 
 
-                                                                                    {{-- =================================================
-                                                                                    KODE PERMOHONAN
-                                                                                    ================================================== --}}
+                                                        {{-- =================================================
+                                                        KODE PERMOHONAN
+                                                        ================================================== --}}
 
-                                                                                    <td>
+                                                        <td>
 
-                                                                                        <strong>
+                                                            <strong>
 
-                                                                                            {{ $permohonan->kode_permohonan ?? '-' }}
+                                                                {{ $permohonan->kode_permohonan ?? '-' }}
 
-                                                                                        </strong>
+                                                            </strong>
 
-                                                                                    </td>
+                                                        </td>
 
 
 
-                                                                                    {{-- =================================================
-                                                                                    JENIS PERMOHONAN
-                                                                                    ================================================== --}}
+                                                        {{-- =================================================
+                                                        JENIS PERMOHONAN
+                                                        ================================================== --}}
 
-                                                                                    <td>
+                                                        <td>
 
-                                                                                        {{ $permohonan->jenis_permohonan ?? '-' }}
+                                                            {{ $permohonan->jenis_permohonan ?? '-' }}
 
-                                                                                    </td>
+                                                        </td>
 
 
 
-                                                                                    {{-- =================================================
-                                                                                    NAMA PEMOHON / PENYELENGGARA
-                                                                                    ================================================== --}}
+                                                        {{-- =================================================
+                                                        NAMA PEMOHON / PENYELENGGARA
+                                                        ================================================== --}}
 
-                                                                                    <td>
+                                                        <td>
 
-                                                                                        @if($permohonan->jenis_permohonan === 'Sosialisasi')
+                                                            @if($permohonan->jenis_permohonan === 'Sosialisasi')
 
-                                                                                            {{ $permohonan->nama_penyelenggara ?? '-' }}
+                                                                {{ $permohonan->nama_penyelenggara ?? '-' }}
 
-                                                                                        @else
+                                                            @else
 
-                                                                                            {{ $permohonan->nama_pemohon ?? '-' }}
+                                                                {{ $permohonan->nama_pemohon ?? '-' }}
 
-                                                                                        @endif
+                                                            @endif
 
-                                                                                    </td>
+                                                        </td>
 
 
 
-                                                                                    {{-- =================================================
-                                                                                    TANGGAL KEGIATAN
-                                                                                    ================================================== --}}
+                                                        {{-- =================================================
+                                                        TANGGAL KEGIATAN
+                                                        ================================================== --}}
 
-                                                                                    <td>
+                                                        <td>
 
-                                                                                        @if($permohonan->tanggal_kegiatan)
+                                                            @if($permohonan->tanggal_kegiatan)
 
-                                                                                                                                                                    {{ \Carbon\Carbon::parse($permohonan->tanggal_kegiatan)
-                                                                                            ->translatedFormat('d F Y') }}
+                                                                                    {{ \Carbon\Carbon::parse($permohonan->tanggal_kegiatan)
+                                                                ->translatedFormat('d F Y') }}
 
-                                                                                        @else
+                                                            @else
 
-                                                                                            -
+                                                                -
 
-                                                                                        @endif
+                                                            @endif
 
-                                                                                    </td>
+                                                        </td>
 
 
 
-                                                                                    {{-- =================================================
-                                                                                    WAKTU KEGIATAN
-                                                                                    ================================================== --}}
+                                                        {{-- =================================================
+                                                        WAKTU KEGIATAN
+                                                        ================================================== --}}
 
-                                                                                    <td>
+                                                        <td>
 
-                                                                                        @if($permohonan->waktu_kegiatan)
+                                                            @if($permohonan->waktu_kegiatan)
 
-                                                                                                                                                                    {{ \Carbon\Carbon::parse($permohonan->waktu_kegiatan)
-                                                                                            ->format('H:i') }}
+                                                                                    {{ \Carbon\Carbon::parse($permohonan->waktu_kegiatan)
+                                                                ->format('H:i') }}
 
-                                                                                                                                                                    WIB
+                                                                                    WIB
 
-                                                                                        @else
+                                                            @else
 
-                                                                                            -
+                                                                -
 
-                                                                                        @endif
+                                                            @endif
 
-                                                                                    </td>
+                                                        </td>
 
 
 
-                                                                                    {{-- =================================================
-                                                                                    TEMPAT
-                                                                                    ================================================== --}}
+                                                        {{-- =================================================
+                                                        TEMPAT
+                                                        ================================================== --}}
 
-                                                                                    <td>
+                                                        <td>
 
-                                                                                        {{ $permohonan->tempat ?? '-' }}
+                                                            {{ $permohonan->tempat ?? '-' }}
 
-                                                                                    </td>
+                                                        </td>
 
 
 
-                                                                                    {{-- =================================================
-                                                                                    PENANGGUNG JAWAB
-                                                                                    ================================================== --}}
+                                                        {{-- =================================================
+                                                        PENANGGUNG JAWAB
+                                                        ================================================== --}}
 
-                                                                                    <td>
+                                                        <td>
 
-                                                                                        {{ $permohonan->penanggung_jawab ?? '-' }}
+                                                            {{ $permohonan->penanggung_jawab ?? '-' }}
 
-                                                                                    </td>
+                                                        </td>
 
 
 
-                                                                                    {{-- =================================================
-                                                                                    JUMLAH PESERTA
-                                                                                    ================================================== --}}
+                                                        {{-- =================================================
+                                                        JUMLAH PESERTA
+                                                        ================================================== --}}
 
-                                                                                    <td>
+                                                        <td>
 
-                                                                                        @if($permohonan->jumlah_peserta !== null)
+                                                            @if($permohonan->jumlah_peserta !== null)
 
-                                                                                            {{ number_format($permohonan->jumlah_peserta, 0, ',', '.') }}
+                                                                {{ number_format($permohonan->jumlah_peserta, 0, ',', '.') }}
 
-                                                                                            orang
+                                                                orang
 
-                                                                                        @else
+                                                            @else
 
-                                                                                            -
+                                                                -
 
-                                                                                        @endif
+                                                            @endif
 
-                                                                                    </td>
+                                                        </td>
 
 
 
-                                                                                    {{-- =================================================
-                                                                                    STATUS
-                                                                                    ================================================== --}}
 
-                                                                                    <td>
+                                                        {{-- =================================================
+                                                        STATUS
+                                                        ================================================== --}}
 
-                                                                                        @php
+                                                        <td>
 
-                                                                                            $status = $permohonan->status ?? '-';
+                                                            @php
 
-                                                                                            $warna = match ($status) {
+                                                                $status = $permohonan->status ?? '-';
 
-                                                                                                'Diajukan',
-                                                                                                'Menunggu',
-                                                                                                'Menunggu Verifikasi'
-                                                                                                => '#0d6efd',
+                                                                $warna = match ($status) {
 
-                                                                                                'Diverifikasi'
-                                                                                                => '#6f42c1',
+                                                                    'Diajukan',
+                                                                    'Menunggu',
+                                                                    'Menunggu Verifikasi'
+                                                                    => '#6c757d',
 
-                                                                                                'Diproses',
-                                                                                                'Diproses Lapangan'
-                                                                                                => '#fd7e14',
+                                                                    'Diverifikasi'
+                                                                    => '#0d6efd',
 
-                                                                                                'Selesai'
-                                                                                                => '#198754',
+                                                                    'Diproses',
+                                                                    'Diproses Lapangan'
+                                                                    => '#fd7e14',
 
-                                                                                                'Ditolak'
-                                                                                                => '#dc3545',
+                                                                    'Selesai'
+                                                                    => '#198754',
 
-                                                                                                default
-                                                                                                => '#6c757d',
+                                                                    'Ditolak'
+                                                                    => '#dc3545',
 
-                                                                                            };
+                                                                    default
+                                                                    => '#6c757d',
 
-                                                                                        @endphp
+                                                                };
 
+                                                            @endphp
 
-                                                                                        <span class="sa-status-badge">
 
-                                                                                            <span style="background: {{ $warna }}"></span>
+                                                            <span class="sa-status-badge">
 
-                                                                                            {{ $status }}
+                                                                <span style="background: {{ $warna }}"></span>
 
-                                                                                        </span>
+                                                                {{ $status }}
 
-                                                                                    </td>
+                                                            </span>
 
+                                                        </td>
 
 
-                                                                                    {{-- =================================================
-                                                                                    AKSI
-                                                                                    ================================================== --}}
 
-                                                                                    <td>
 
-                                                                                        <div class="sa-action-buttons">
 
+                                                        {{-- =================================================
+                                                        AKSI
+                                                        ================================================== --}}
 
-                                                                                            {{-- DETAIL / EDIT --}}
+                                                        <td>
 
-                                                                                            <a href="{{ route(
+                                                            <div class="sa-action-buttons">
+
+
+                                                                {{-- DETAIL / EDIT --}}
+
+                                                                <a href="{{ route(
                                     'adminpermohonan.detail_permohonan',
                                     ['id' => $permohonan->id]
                                 ) }}" class="sa-action-button sa-key-button" title="Detail Permohonan">
 
-                                                                                                 <i class="bi bi-pencil-square"></i>
+                                                                    <i class="bi bi-pencil-square"></i>
 
-                                                                                            </a>
+                                                                </a>
 
 
 
-                                                                                            {{-- HAPUS --}}
+                                                                {{-- HAPUS --}}
 
-                                                                                            <form action="{{ route(
+                                                                <form action="{{ route(
                                     'adminpermohonan.delete_permohonan',
                                     ['id' => $permohonan->id]
                                 ) }}" method="POST" style="display:inline;">
 
-                                                                                                @csrf
+                                                                    @csrf
 
-                                                                                                @method('DELETE')
-
-
-                                                                                                <button type="submit" class="sa-action-button sa-delete-button"
-                                                                                                    title="Hapus Permohonan" onclick="return confirm(
-                                                                                                    'Yakin ingin menghapus data permohonan ini?'
-                                                                                                )">
-
-                                                                                                    <i class="bi bi-trash-fill"></i>
-
-                                                                                                </button>
-
-                                                                                            </form>
+                                                                    @method('DELETE')
 
 
-                                                                                        </div>
+                                                                    <button type="submit" class="sa-action-button sa-delete-button"
+                                                                        title="Hapus Permohonan"
+                                                                        onclick="return confirm(
+                                                                                                                                                                                                                                                'Yakin ingin menghapus data permohonan ini?'
+                                                                                                                                                                                                                                            )">
 
-                                                                                    </td>
+                                                                        <i class="bi bi-trash-fill"></i>
+
+                                                                    </button>
+
+                                                                </form>
 
 
-                                                                                </tr>
+                                                            </div>
+
+                                                        </td>
+
+
+                                                    </tr>
 
 
                             @empty
