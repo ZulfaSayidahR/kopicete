@@ -138,7 +138,7 @@ class PengaduanController extends Controller
     {
         $request->validate([
             'nama_lengkap' => 'required|string|max:255',
-            'no_whatsapp' => 'required|string|max:20',
+            'no_whatsapp' => 'required|string|max:13',
             'alamat_domisili' => 'required|string',
             'email' => 'nullable|email',
         ]);
@@ -388,6 +388,7 @@ class PengaduanController extends Controller
             'detail_aduan' => $step1['detail_aduan'],
             'id_kecamatan' => $step2['id_kecamatan'],
             'id_desa' => $step2['id_desa'],
+            'alamat_kejadian' => $step2['alamat_kejadian'],
             'lampiran' => $step2['lampiran'],
             'nama_lengkap' => $step3['nama_lengkap'],
             'no_whatsapp' => $step3['no_whatsapp'],
@@ -423,18 +424,33 @@ class PengaduanController extends Controller
         ]);
     }
 
+    // public function tracking($kode)
+    // {
+    //     $pengaduan = Pengaduan::where('kode_aduan', $kode)->firstOrFail();
+
+    //     $kecamatan = Kecamatan::find($pengaduan->id_kecamatan);
+    //     $desa = Desa::find($pengaduan->id_desa);
+
+    //     return view('user.pengaduan.tracking', compact(
+    //         'pengaduan',
+    //         'kecamatan',
+    //         'desa'
+    //     ));
+    // }
+
     public function tracking($kode)
     {
-        $pengaduan = Pengaduan::where('kode_aduan', $kode)->firstOrFail();
-
-        $kecamatan = Kecamatan::find($pengaduan->id_kecamatan);
-        $desa = Desa::find($pengaduan->id_desa);
-
-        return view('user.pengaduan.tracking', compact(
-            'pengaduan',
+        $pengaduan = Pengaduan::with([
             'kecamatan',
             'desa'
-        ));
+        ])
+            ->where('kode_aduan', $kode)
+            ->firstOrFail();
+
+        return view(
+            'user.pengaduan.tracking',
+            compact('pengaduan')
+        );
     }
     /*
  |--------------------------------------------------------------------------

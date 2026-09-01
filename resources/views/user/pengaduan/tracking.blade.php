@@ -33,8 +33,8 @@
                 <div class="tracking-grid">
 
                     <!-- ==============================
-                                                                                                                                                                KOLOM KIRI
-                                                                                                                                                        =============================== -->
+                                                                                                                                                                                        KOLOM KIRI
+                                                                                                                                                                                =============================== -->
 
                     <div class="tracking-left">
 
@@ -48,15 +48,19 @@
                                 </h5>
 
                                 <span class="badge
-                                                                                                                @if($pengaduan->status == 'Menunggu')
-                                                                                                                    bg-warning
-                                                                                                                @elseif($pengaduan->status == 'Diproses')
-                                                                                                                    bg-primary
-                                                                                                                @elseif($pengaduan->status == 'Selesai')
-                                                                                                                    bg-success
-                                                                                                                @else
-                                                                                                                    bg-secondary
-                                                                                                                @endif">
+            @if($pengaduan->status == 'Diajukan')
+                bg-secondary
+            @elseif($pengaduan->status == 'Diverifikasi')
+                bg-primary
+            @elseif($pengaduan->status == 'Diproses')
+                bg-warning text-dark
+            @elseif($pengaduan->status == 'Selesai')
+                bg-success
+            @elseif($pengaduan->status == 'Ditolak')
+                bg-danger
+            @else
+                bg-secondary
+            @endif">
 
                                     {{ $pengaduan->status }}
 
@@ -74,23 +78,10 @@
                                     </strong>
 
                                     <p>
-
-                                        @if($pengaduan->kode_aduan)
-
-                                            {{ substr($pengaduan->kode_aduan, 0, 4) }}
-                                            ******
-                                            {{ substr($pengaduan->kode_aduan, -3) }}
-
-                                        @else
-
-                                            -
-
-                                        @endif
-
+                                        {{ $pengaduan->kode_aduan ?? '-' }}
                                     </p>
 
                                 </div>
-
                                 <div>
 
                                     <strong>
@@ -98,10 +89,11 @@
                                         Kecamatan
                                     </strong>
 
-                                    <p>{{ $kecamatan->nama_kecamatan ?? '-' }}</p>
+                                    <p>
+                                        {{ $pengaduan->kecamatan->nama_kecamatan ?? '-' }}
+                                    </p>
 
                                 </div>
-
                                 <div>
 
                                     <strong>
@@ -121,19 +113,7 @@
                                     </strong>
 
                                     <p>
-
-                                        @if($pengaduan->no_whatsapp)
-
-                                            {{ substr($pengaduan->no_whatsapp, 0, 4) }}
-                                            ******
-                                            {{ substr($pengaduan->no_whatsapp, -3) }}
-
-                                        @else
-
-                                            -
-
-                                        @endif
-
+                                        {{ $pengaduan->no_whatsapp ?? '-' }}
                                     </p>
 
                                 </div>
@@ -198,8 +178,8 @@
                     </div>
 
                     <!-- ==============================
-                                                                                                                                                                KOLOM KANAN
-                                                                                                                                                        =============================== -->
+                                                                                                                                                                                        KOLOM KANAN
+                                                                                                                                                                                =============================== -->
 
                     <aside class="tracking-card status-card">
 
@@ -598,9 +578,9 @@
 
                 {{-- HEADER --}}
                 <div class="modal-header bg-{{ $warna }}
-                                                                        @if($warna != 'warning')
-                                                                            text-white
-                                                                        @endif">
+                                                                                                @if($warna != 'warning')
+                                                                                                    text-white
+                                                                                                @endif">
 
                     <h5 class="modal-title fw-bold">
 
@@ -611,9 +591,10 @@
                     </h5>
 
                     <button class="btn-close
-                                                                    @if($warna != 'warning')
-                                                                        btn-close-white
-                                                                    @endif" data-bs-dismiss="modal">
+                                                                                            @if($warna != 'warning')
+                                                                                                btn-close-white
+                                                                                            @endif"
+                        data-bs-dismiss="modal">
                     </button>
 
                 </div>

@@ -301,59 +301,62 @@
 
                         <td>
 
-                            @if($item->status === 'Menunggu')
+    {{-- =================================================
+    | STATUS
+    ================================================== --}}
 
-                                <span class="sa-status-badge">
-                                    <span style="background:#0d6efd"></span>
-                                    Menunggu
-                                </span>
+    @if($item->status === 'Diajukan')
 
-                            @elseif($item->status === 'Diverifikasi')
+        <span class="sa-status-badge">
+            <span style="background:#6c757d;"></span>
+            Diajukan
+        </span>
 
-                                <span class="sa-status-badge">
-                                    <span style="background:#0d6efd"></span>
-                                    Diverifikasi
-                                </span>
+    @elseif($item->status === 'Diverifikasi')
 
-                            @elseif($item->status === 'Diproses')
+        <span class="sa-status-badge">
+            <span style="background:#0d6efd;"></span>
+            Diverifikasi
+        </span>
 
-                                <span class="sa-status-badge">
-                                    <span style="background:#fd7e14"></span>
-                                    Diproses
-                                </span>
+    @elseif($item->status === 'Diproses')
 
-                            @elseif($item->status === 'Diproses Lapangan')
+        <span class="sa-status-badge">
+            <span style="background:#fd7e14;"></span>
+            Diproses
+        </span>
 
-                                <span class="sa-status-badge">
-                                    <span style="background:#fd7e14"></span>
-                                    Diproses Lapangan
-                                </span>
+    @elseif($item->status === 'Diproses Lapangan')
 
-                            @elseif($item->status === 'Selesai')
+        <span class="sa-status-badge">
+            <span style="background:#fd7e14;"></span>
+            Diproses Lapangan
+        </span>
 
-                                <span class="sa-status-badge active">
-                                    <span></span>
-                                    Selesai
-                                </span>
+    @elseif($item->status === 'Selesai')
 
-                            @elseif($item->status === 'Ditolak')
+        <span class="sa-status-badge active">
+            <span style="background:#198754;"></span>
+            Selesai
+        </span>
 
-                                <span class="sa-status-badge">
-                                    <span style="background:#dc3545"></span>
-                                    Ditolak
-                                </span>
+    @elseif($item->status === 'Ditolak')
 
-                            @else
+        <span class="sa-status-badge">
+            <span style="background:#dc3545;"></span>
+            Ditolak
+        </span>
 
-                                <span class="sa-status-badge">
-                                    <span></span>
-                                    {{ $item->status ?? '-' }}
-                                </span>
+    @else
 
-                            @endif
+        <span class="sa-status-badge">
+            <span style="background:#6c757d;"></span>
+            {{ $item->status ?? '-' }}
+        </span>
 
-                        </td>
+    @endif
 
+</td>
                         <td>
 
                             <div class="sa-action-buttons">

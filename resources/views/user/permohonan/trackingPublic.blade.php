@@ -41,32 +41,57 @@
                     <div class="tracking-left">
 
 
-                        {{-- INFORMASI PERMOHONAN --}}
+                        {{-- ==========================================
+                        INFORMASI PERMOHONAN
+                        =========================================== --}}
                         <div class="tracking-card mb-4">
 
                             <div class="d-flex justify-content-between align-items-center mb-4">
 
                                 <h5 class="mb-0">
-
+                                    <i class="bi bi-file-earmark-text-fill me-2"></i>
                                     Informasi Permohonan
-
                                 </h5>
 
+                                @php
 
-                                <span class="badge
-                                                            @if($permohonan->status == 'Menunggu')
-                                                                bg-warning
-                                                            @elseif($permohonan->status == 'Diproses')
-                                                                bg-primary
-                                                            @elseif($permohonan->status == 'Selesai')
-                                                                bg-success
-                                                            @elseif($permohonan->status == 'Ditolak')
-                                                                bg-danger
-                                                            @else
-                                                                bg-secondary
-                                                            @endif">
+                                    $status = trim($permohonan->status ?? 'Diajukan');
 
-                                    {{ $permohonan->status }}
+                                    $warnaStatus = match ($status) {
+
+                                        'Diajukan',
+                                        'Menunggu',
+                                        'Menunggu Verifikasi'
+                                        => 'secondary',
+
+                                        'Diverifikasi'
+                                        => 'primary',
+
+                                        'Diproses',
+                                        'Diproses Lapangan'
+                                        => 'warning',
+
+                                        'Selesai'
+                                        => 'success',
+
+                                        'Ditolak'
+                                        => 'danger',
+
+                                        default
+                                        => 'secondary',
+
+                                    };
+
+                                @endphp
+
+
+                                <span class="badge bg-{{ $warnaStatus }}
+                @if($warnaStatus === 'warning')
+                    text-dark
+                @endif
+            ">
+
+                                    {{ $status }}
 
                                 </span>
 
@@ -76,7 +101,9 @@
                             <div class="info-grid">
 
 
-                                {{-- KODE --}}
+                                {{-- =====================================================
+                                KODE PERMOHONAN
+                                ====================================================== --}}
                                 <div>
 
                                     <strong>
@@ -103,167 +130,264 @@
                                 </div>
 
 
-                                {{-- JENIS --}}
+
+                                {{-- =====================================================
+                                JENIS PERMOHONAN
+                                ====================================================== --}}
                                 <div>
 
                                     <strong>
-
                                         <i class="bi bi-file-earmark-text-fill"></i>
-
                                         Jenis Permohonan
-
                                     </strong>
 
                                     <p>
-                                        {{ $permohonan->jenis_permohonan }}
+                                        {{ $permohonan->jenis_permohonan ?? '-' }}
                                     </p>
 
                                 </div>
 
 
-                                {{-- PENYELENGGARA --}}
-                                <div>
 
-                                    <strong>
-
-                                        <i class="bi bi-building-fill"></i>
-
-                                        Nama Penyelenggara
-
-                                    </strong>
-
-                                    <p>
-                                        {{ $permohonan->nama_penyelenggara }}
-                                    </p>
-
-                                </div>
+                                {{-- =====================================================
+                                KHUSUS REHABILITASI
+                                ====================================================== --}}
+                                @if(
+                                        $permohonan->jenis_permohonan === 'Rehabilitasi' ||
+                                        $permohonan->jenis_permohonan === 'Permohonan Rehabilitasi'
+                                    )
 
 
-                                {{-- PENANGGUNG JAWAB --}}
-                                <div>
+                                    {{-- NAMA PEMOHON --}}
+                                    <div>
 
-                                    <strong>
+                                        <strong>
+                                            <i class="bi bi-person-fill"></i>
+                                            Nama Pemohon
+                                        </strong>
 
-                                        <i class="bi bi-person-fill"></i>
+                                        <p>
+                                            {{ $permohonan->nama_pemohon ?? '-' }}
+                                        </p>
 
-                                        Penanggungjawab
-
-                                    </strong>
-
-                                    <p>
-                                        {{ $permohonan->penanggung_jawab }}
-                                    </p>
-
-                                </div>
+                                    </div>
 
 
-                                {{-- NO HP --}}
-                                <div>
+                                    {{-- NIK --}}
+                                    <div>
 
-                                    <strong>
+                                        <strong>
+                                            <i class="bi bi-person-vcard-fill"></i>
+                                            NIK
+                                        </strong>
 
-                                        <i class="bi bi-whatsapp"></i>
+                                        <p>
 
-                                        No. HP
+                                            @if($permohonan->nik)
 
-                                    </strong>
+                                                {{ substr($permohonan->nik, 0, 4) }}
+                                                ****
+                                                {{ substr($permohonan->nik, -4) }}
 
-                                    <p>
+                                            @else
 
-                                        @if($permohonan->no_hp)
+                                                -
 
-                                            {{ substr($permohonan->no_hp, 0, 4) }}
-                                            ******
-                                            {{ substr($permohonan->no_hp, -3) }}
+                                            @endif
 
-                                        @else
+                                        </p>
 
-                                            -
-
-                                        @endif
-
-                                    </p>
-
-                                </div>
+                                    </div>
 
 
-                                {{-- JUMLAH PESERTA --}}
-                                <div>
+                                    {{-- NO HP --}}
+                                    <div>
 
-                                    <strong>
+                                        <strong>
+                                            <i class="bi bi-whatsapp"></i>
+                                            No. HP
+                                        </strong>
 
-                                        <i class="bi bi-people-fill"></i>
+                                        <p>
 
-                                        Jumlah Peserta
+                                            @if($permohonan->no_hp)
 
-                                    </strong>
+                                                {{ substr($permohonan->no_hp, 0, 4) }}
+                                                ******
+                                                {{ substr($permohonan->no_hp, -3) }}
 
-                                    <p>
-                                        {{ $permohonan->jumlah_peserta }} orang
-                                    </p>
+                                            @else
 
-                                </div>
+                                                -
 
+                                            @endif
 
-                                {{-- TANGGAL KEGIATAN --}}
-                                <div>
+                                        </p>
 
-                                    <strong>
-
-                                        <i class="bi bi-calendar-event-fill"></i>
-
-                                        Tanggal Kegiatan
-
-                                    </strong>
-
-                                    <p>
-
-                                        {{ \Carbon\Carbon::parse($permohonan->tanggal_kegiatan)->translatedFormat('d F Y') }}
-
-                                    </p>
-
-                                </div>
+                                    </div>
 
 
-                                {{-- WAKTU --}}
-                                <div>
+                                    {{-- ALAMAT --}}
+                                    <div>
 
-                                    <strong>
+                                        <strong>
+                                            <i class="bi bi-geo-alt-fill"></i>
+                                            Alamat
+                                        </strong>
 
-                                        <i class="bi bi-clock-fill"></i>
+                                        <p>
+                                            {{ $permohonan->alamat ?? '-' }}
+                                        </p>
 
-                                        Waktu Kegiatan
-
-                                    </strong>
-
-                                    <p>
-                                        {{ $permohonan->waktu_kegiatan }}
-                                    </p>
-
-                                </div>
+                                    </div>
 
 
-                                {{-- TEMPAT --}}
-                                <div>
+                                    {{-- =====================================================
+                                    KHUSUS SOSIALISASI
+                                    ====================================================== --}}
+                                @elseif(
+                                        $permohonan->jenis_permohonan === 'Sosialisasi' ||
+                                        $permohonan->jenis_permohonan === 'Permohonan Sosialisasi'
+                                    )
 
-                                    <strong>
 
-                                        <i class="bi bi-geo-alt-fill"></i>
+                                    {{-- PENYELENGGARA --}}
+                                    <div>
 
-                                        Tempat Kegiatan
+                                        <strong>
+                                            <i class="bi bi-building-fill"></i>
+                                            Nama Penyelenggara
+                                        </strong>
 
-                                    </strong>
+                                        <p>
+                                            {{ $permohonan->nama_penyelenggara ?? '-' }}
+                                        </p>
 
-                                    <p>
-                                        {{ $permohonan->tempat }}
-                                    </p>
+                                    </div>
 
-                                </div>
+
+                                    {{-- PENANGGUNG JAWAB --}}
+                                    <div>
+
+                                        <strong>
+                                            <i class="bi bi-person-fill"></i>
+                                            Penanggung Jawab
+                                        </strong>
+
+                                        <p>
+                                            {{ $permohonan->penanggung_jawab ?? '-' }}
+                                        </p>
+
+                                    </div>
+
+
+                                    {{-- NO HP --}}
+                                    <div>
+
+                                        <strong>
+                                            <i class="bi bi-whatsapp"></i>
+                                            No. HP
+                                        </strong>
+
+                                        <p>
+
+                                            @if($permohonan->no_hp)
+
+                                                {{ substr($permohonan->no_hp, 0, 4) }}
+                                                ******
+                                                {{ substr($permohonan->no_hp, -3) }}
+
+                                            @else
+
+                                                -
+
+                                            @endif
+
+                                        </p>
+
+                                    </div>
+
+
+                                    {{-- JUMLAH PESERTA --}}
+                                    <div>
+
+                                        <strong>
+                                            <i class="bi bi-people-fill"></i>
+                                            Jumlah Peserta
+                                        </strong>
+
+                                        <p>
+                                            {{ $permohonan->jumlah_peserta ?? 0 }} orang
+                                        </p>
+
+                                    </div>
+
+
+                                    {{-- TANGGAL KEGIATAN --}}
+                                    <div>
+
+                                        <strong>
+                                            <i class="bi bi-calendar-event-fill"></i>
+                                            Tanggal Kegiatan
+                                        </strong>
+
+                                        <p>
+
+                                            @if($permohonan->tanggal_kegiatan)
+
+                                                                            {{ \Carbon\Carbon::parse(
+                                                    $permohonan->tanggal_kegiatan
+                                                )->translatedFormat('d F Y') }}
+
+                                            @else
+
+                                                -
+
+                                            @endif
+
+                                        </p>
+
+                                    </div>
+
+
+                                    {{-- WAKTU KEGIATAN --}}
+                                    <div>
+
+                                        <strong>
+                                            <i class="bi bi-clock-fill"></i>
+                                            Waktu Kegiatan
+                                        </strong>
+
+                                        <p>
+                                            {{ $permohonan->waktu_kegiatan ?? '-' }}
+                                        </p>
+
+                                    </div>
+
+
+                                    {{-- TEMPAT --}}
+                                    <div>
+
+                                        <strong>
+                                            <i class="bi bi-geo-alt-fill"></i>
+                                            Tempat Kegiatan
+                                        </strong>
+
+                                        <p>
+                                            {{ $permohonan->tempat ?? '-' }}
+                                        </p>
+
+                                    </div>
+
+                                @endif
 
                             </div>
 
 
-                            {{-- KETERANGAN --}}
+
+                            {{-- =====================================================
+                            KETERANGAN
+                            ====================================================== --}}
                             <div class="kronologi">
 
                                 <h6>
@@ -293,83 +417,83 @@
 
                             </div>
 
-                        </div>
 
+                        </div>
 
 
                         {{-- LAMPIRAN --}}
                         <!-- <div class="tracking-card">
 
-                            <h5>
+                                <h5>
 
-                                <i class="bi bi-paperclip"></i>
+                                    <i class="bi bi-paperclip"></i>
 
-                                Lampiran Surat Undangan
+                                    Lampiran Surat Undangan
 
-                            </h5>
-
-
-                            @if($permohonan->lampiran)
-
-                                <div class="text-center mt-3">
-
-                                    @php
-
-                                        $extension =
-                                            strtolower(
-                                                pathinfo(
-                                                    $permohonan->lampiran,
-                                                    PATHINFO_EXTENSION
-                                                )
-                                            );
-
-                                    @endphp
+                                </h5>
 
 
-                                    @if(in_array($extension, ['jpg', 'jpeg', 'png']))
+                                @if($permohonan->lampiran)
 
-                                        <img src="{{ asset('storage/' . $permohonan->lampiran) }}" class="img-fluid rounded shadow"
-                                            style="max-height:350px;">
+                                    <div class="text-center mt-3">
 
-                                    @else
+                                        @php
 
-                                        <div class="text-center p-4">
+                                            $extension =
+                                                strtolower(
+                                                    pathinfo(
+                                                        $permohonan->lampiran,
+                                                        PATHINFO_EXTENSION
+                                                    )
+                                                );
 
-                                            <i class="bi bi-file-earmark-pdf-fill text-danger" style="font-size:60px;">
-                                            </i>
+                                        @endphp
 
-                                            <p class="mt-2">
-                                                Dokumen PDF
-                                            </p>
 
-                                            <a href="{{ asset('storage/' . $permohonan->lampiran) }}" target="_blank"
-                                                class="btn btn-danger">
+                                        @if(in_array($extension, ['jpg', 'jpeg', 'png']))
 
-                                                <i class="bi bi-eye-fill"></i>
+                                            <img src="{{ asset('storage/' . $permohonan->lampiran) }}" class="img-fluid rounded shadow"
+                                                style="max-height:350px;">
 
-                                                Lihat Lampiran
+                                        @else
 
-                                            </a>
+                                            <div class="text-center p-4">
 
-                                        </div>
+                                                <i class="bi bi-file-earmark-pdf-fill text-danger" style="font-size:60px;">
+                                                </i>
 
-                                    @endif
+                                                <p class="mt-2">
+                                                    Dokumen PDF
+                                                </p>
 
-                                </div>
+                                                <a href="{{ asset('storage/' . $permohonan->lampiran) }}" target="_blank"
+                                                    class="btn btn-danger">
 
-                            @else
+                                                    <i class="bi bi-eye-fill"></i>
 
-                                <div class="alert alert-light text-center mt-3">
+                                                    Lihat Lampiran
 
-                                    <i class="bi bi-file-earmark-x fs-2 d-block mb-2"></i>
+                                                </a>
 
-                                    Tidak ada lampiran.
+                                            </div>
 
-                                </div>
+                                        @endif
 
-                            @endif
+                                    </div>
 
-                        </div> -->
+                                @else
+
+                                    <div class="alert alert-light text-center mt-3">
+
+                                        <i class="bi bi-file-earmark-x fs-2 d-block mb-2"></i>
+
+                                        Tidak ada lampiran.
+
+                                    </div>
+
+                                @endif
+
+                            </div> -->
 
                     </div>
 
@@ -411,7 +535,7 @@
                                         {{ $permohonan->created_at
         ? $permohonan->created_at->translatedFormat('d F Y H:i')
         : '-' 
-                        }}
+                            }}
 
                                     </small>
 
@@ -436,7 +560,7 @@
 
 
                             <div class="tracking-item 
-                {{ $verifikasi ? 'selesai' : '' }}">
+                    {{ $verifikasi ? 'selesai' : '' }}">
 
 
                                 <div class="tracking-icon">
@@ -481,15 +605,15 @@
 
 
                                                                     <!-- <button type="button" class="btn btn-sm btn-light mt-2" data-bs-toggle="modal"
-                                                                        data-bs-target="#detailPermohonanModal">
+                                                                                                            data-bs-target="#detailPermohonanModal">
 
 
-                                                                        <i class="bi bi-eye-fill"></i>
+                                                                                                            <i class="bi bi-eye-fill"></i>
 
-                                                                        Lihat Detail
+                                                                                                            Lihat Detail
 
 
-                                                                    </button> -->
+                                                                                                        </button> -->
 
 
                                     @else
@@ -529,7 +653,7 @@
 
 
                             <div class="tracking-item
-                {{ $proses ? 'selesai' : '' }}">
+                    {{ $proses ? 'selesai' : '' }}">
 
 
                                 <div class="tracking-icon">
@@ -573,17 +697,17 @@
                                                                     </small>
 
 
-<!-- 
-                                                                    <button type="button" class="btn btn-sm btn-light mt-2" data-bs-toggle="modal"
-                                                                        data-bs-target="#detailPermohonanModal">
+                                                                    <!-- 
+                                                                                                        <button type="button" class="btn btn-sm btn-light mt-2" data-bs-toggle="modal"
+                                                                                                            data-bs-target="#detailPermohonanModal">
 
 
-                                                                        <i class="bi bi-eye-fill"></i>
+                                                                                                            <i class="bi bi-eye-fill"></i>
 
-                                                                        Lihat Detail
+                                                                                                            Lihat Detail
 
 
-                                                                    </button> -->
+                                                                                                        </button> -->
 
 
 
@@ -626,7 +750,7 @@
 
 
                             <div class="tracking-item
-                {{ $selesai ? 'selesai' : '' }}">
+                    {{ $selesai ? 'selesai' : '' }}">
 
 
 
@@ -675,15 +799,15 @@
 
 
                                                                     <!-- <button type="button" class="btn btn-sm btn-light mt-2" data-bs-toggle="modal"
-                                                                        data-bs-target="#detailPermohonanModal">
+                                                                                                            data-bs-target="#detailPermohonanModal">
 
 
-                                                                        <i class="bi bi-eye-fill"></i>
+                                                                                                            <i class="bi bi-eye-fill"></i>
 
-                                                                        Lihat Detail
+                                                                                                            Lihat Detail
 
 
-                                                                    </button> -->
+                                                                                                        </button> -->
 
 
 

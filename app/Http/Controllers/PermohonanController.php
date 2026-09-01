@@ -86,7 +86,7 @@ class PermohonanController extends Controller
                     'required|string|max:255',
 
                 'no_hp' =>
-                    'required|string|max:20',
+                    'required|string|max:13',
 
                 'jumlah_peserta' =>
                     'required|integer|min:1',
@@ -118,13 +118,13 @@ class PermohonanController extends Controller
                     'required|string|max:255',
 
                 'nik' =>
-                    'required|string|max:20',
+                    'required|string|max:16',
 
                 'alamat_pemohon' =>
                     'required|string',
 
                 'no_hp' =>
-                    'required|string|max:20',
+                    'required|string|max:13',
 
                 'keterangan' =>
                     'nullable|string',
