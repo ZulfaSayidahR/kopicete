@@ -248,17 +248,17 @@
 
 
                                         <!-- {{-- JENIS REHABILITASI --}}
-                                        <div class="col-md-6 mb-3">
+                                                <div class="col-md-6 mb-3">
 
-                                            <strong>
-                                                Jenis Rehabilitasi
-                                            </strong>
+                                                    <strong>
+                                                        Jenis Rehabilitasi
+                                                    </strong>
 
-                                            <p>
-                                                {{ $permohonan->jenis_rehabilitasi ?? '-' }}
-                                            </p>
+                                                    <p>
+                                                        {{ $permohonan->jenis_rehabilitasi ?? '-' }}
+                                                    </p>
 
-                                        </div> -->
+                                                </div> -->
 
 
                                         {{-- ALAMAT --}}
@@ -652,25 +652,42 @@
                 {{-- ================= KANAN ================= --}}
                 <div class="col-lg-5">
 
-                    {{-- ================= RIWAYAT STATUS ================= --}}
+
+                    {{-- =================================================
+                    RIWAYAT STATUS
+                    ================================================== --}}
                     <div class="sa-panel">
 
                         <div class="sa-panel-header">
+
                             <h3>
+
                                 <i class="bi bi-clock-history me-2"></i>
+
                                 Riwayat Status
+
                             </h3>
+
                         </div>
+
 
                         <div class="p-4">
 
                             <div class="admin-tracking-timeline">
 
-                                {{-- =====================================================
-                                STATUS DATABASE
-                                ====================================================== --}}
+
                                 @php
-                                    $status = $permohonan->status ?? 'Diajukan';
+
+                                    $status = trim(
+                                        $permohonan->status ?? 'Diajukan'
+                                    );
+
+
+                                    /*
+                                    |--------------------------------------------------------------------------
+                                    | STATUS BERDASARKAN DATABASE
+                                    |--------------------------------------------------------------------------
+                                    */
 
                                     $diajukanAktif = in_array($status, [
                                         'Diajukan',
@@ -679,35 +696,47 @@
                                         'Selesai'
                                     ]);
 
+
                                     $verifikasiAktif = in_array($status, [
                                         'Diverifikasi',
                                         'Diproses',
                                         'Selesai'
                                     ]);
 
+
                                     $prosesAktif = in_array($status, [
                                         'Diproses',
                                         'Selesai'
                                     ]);
 
-                                    $selesaiAktif = $status === 'Selesai';
+
+                                    $selesaiAktif =
+                                        $status === 'Selesai';
+
                                 @endphp
 
 
-                                {{-- =====================================================
-                                1. PERMOHONAN DIAJUKAN
-                                ====================================================== --}}
-                                <div class="admin-tracking-item {{ $diajukanAktif ? 'selesai' : 'pending' }}">
+
+                                {{-- =================================================
+                                1. DIAJUKAN
+                                ================================================== --}}
+                                <div class="admin-tracking-item
+                                                        {{ $diajukanAktif ? 'selesai' : 'pending' }}">
 
                                     <div class="admin-tracking-icon">
 
                                         @if($diajukanAktif)
+
                                             <i class="bi bi-check-lg"></i>
+
                                         @else
+
                                             <i class="bi bi-circle"></i>
+
                                         @endif
 
                                     </div>
+
 
                                     <div class="admin-tracking-content">
 
@@ -715,14 +744,19 @@
                                             Permohonan Diajukan
                                         </h6>
 
+
                                         @if($permohonan->created_at)
 
-                                            <small>
-                                                <i class="bi bi-calendar-event me-1"></i>
+                                                                        <small>
 
-                                                {{ $permohonan->created_at->translatedFormat('d F Y • H:i') }}
-                                                WIB
-                                            </small>
+                                                                            <i class="bi bi-calendar-event me-1"></i>
+
+                                                                            {{ $permohonan->created_at
+                                            ->translatedFormat('d F Y • H:i') }}
+
+                                                                            WIB
+
+                                                                        </small>
 
                                         @else
 
@@ -737,20 +771,27 @@
                                 </div>
 
 
-                                {{-- =====================================================
+
+                                {{-- =================================================
                                 2. DIVERIFIKASI
-                                ====================================================== --}}
-                                <div class="admin-tracking-item {{ $verifikasiAktif ? 'selesai' : 'pending' }}">
+                                ================================================== --}}
+                                <div class="admin-tracking-item
+                                                        {{ $verifikasiAktif ? 'selesai' : 'pending' }}">
 
                                     <div class="admin-tracking-icon">
 
                                         @if($verifikasiAktif)
+
                                             <i class="bi bi-check-lg"></i>
+
                                         @else
+
                                             <i class="bi bi-circle"></i>
+
                                         @endif
 
                                     </div>
+
 
                                     <div class="admin-tracking-content">
 
@@ -758,12 +799,15 @@
                                             Diverifikasi Admin BNNK
                                         </h6>
 
+
                                         @if($verifikasiAktif)
 
-                                            {{-- Tanggal Verifikasi --}}
+
+                                            {{-- TANGGAL --}}
                                             @if($permohonan->tanggal_verifikasi)
 
                                                                             <small>
+
                                                                                 <i class="bi bi-calendar-event me-1"></i>
 
                                                                                 {{ \Carbon\Carbon::parse(
@@ -771,19 +815,24 @@
                                                 )->translatedFormat('d F Y • H:i') }}
 
                                                                                 WIB
+
                                                                             </small>
 
                                             @else
 
                                                 <small>
+
                                                     <i class="bi bi-check-circle me-1"></i>
+
                                                     Permohonan telah diverifikasi.
+
                                                 </small>
 
                                             @endif
 
 
-                                            {{-- Catatan Verifikasi --}}
+
+                                            {{-- CATATAN --}}
                                             @if($permohonan->catatan_verifikasi)
 
                                                 <div class="mt-2">
@@ -801,7 +850,8 @@
                                             @endif
 
 
-                                            {{-- Lampiran Verifikasi --}}
+
+                                            {{-- LAMPIRAN --}}
                                             @if($permohonan->file_verifikasi)
 
                                                 <div class="mt-3">
@@ -819,10 +869,13 @@
 
                                             @endif
 
+
                                         @else
 
                                             <small class="text-muted">
+
                                                 Menunggu verifikasi admin.
+
                                             </small>
 
                                         @endif
@@ -832,20 +885,27 @@
                                 </div>
 
 
-                                {{-- =====================================================
+
+                                {{-- =================================================
                                 3. DIPROSES
-                                ====================================================== --}}
-                                <div class="admin-tracking-item {{ $prosesAktif ? 'selesai' : 'pending' }}">
+                                ================================================== --}}
+                                <div class="admin-tracking-item
+                                                        {{ $prosesAktif ? 'selesai' : 'pending' }}">
 
                                     <div class="admin-tracking-icon">
 
                                         @if($prosesAktif)
+
                                             <i class="bi bi-check-lg"></i>
+
                                         @else
+
                                             <i class="bi bi-hourglass-split"></i>
+
                                         @endif
 
                                     </div>
+
 
                                     <div class="admin-tracking-content">
 
@@ -853,12 +913,15 @@
                                             Diproses BNNK
                                         </h6>
 
+
                                         @if($prosesAktif)
 
-                                            {{-- Tanggal Proses --}}
+
+                                            {{-- TANGGAL --}}
                                             @if($permohonan->tanggal_proses)
 
                                                                             <small>
+
                                                                                 <i class="bi bi-calendar-event me-1"></i>
 
                                                                                 {{ \Carbon\Carbon::parse(
@@ -866,19 +929,43 @@
                                                 )->translatedFormat('d F Y • H:i') }}
 
                                                                                 WIB
+
                                                                             </small>
+
+
+                                                                            {{-- LAMPIRAN --}}
+                                                                            @if($permohonan->file_verifikasi)
+
+                                                                                <div class="mt-3">
+
+                                                                                    <a href="{{ asset('storage/' . $permohonan->file_verifikasi) }}" target="_blank"
+                                                                                        class="btn btn-sm btn-primary">
+
+                                                                                        <i class="bi bi-paperclip me-1"></i>
+
+                                                                                        Lihat Lampiran Verifikasi
+
+                                                                                    </a>
+
+                                                                                </div>
+
+                                                                            @endif
 
                                             @else
 
                                                 <small>
+
                                                     <i class="bi bi-check-circle me-1"></i>
+
                                                     Permohonan sedang diproses.
+
                                                 </small>
 
                                             @endif
 
 
-                                            {{-- Catatan Proses --}}
+
+                                            {{-- CATATAN --}}
                                             @if($permohonan->catatan_proses)
 
                                                 <div class="mt-2">
@@ -896,7 +983,8 @@
                                             @endif
 
 
-                                            {{-- Lampiran Proses --}}
+
+                                            {{-- LAMPIRAN --}}
                                             @if($permohonan->file_proses)
 
                                                 <div class="mt-3">
@@ -914,10 +1002,13 @@
 
                                             @endif
 
+
                                         @else
 
                                             <small class="text-muted">
+
                                                 Menunggu proses BNNK.
+
                                             </small>
 
                                         @endif
@@ -927,20 +1018,27 @@
                                 </div>
 
 
-                                {{-- =====================================================
+
+                                {{-- =================================================
                                 4. SELESAI
-                                ====================================================== --}}
-                                <div class="admin-tracking-item {{ $selesaiAktif ? 'selesai' : 'pending' }}">
+                                ================================================== --}}
+                                <div class="admin-tracking-item
+                                                        {{ $selesaiAktif ? 'selesai' : 'pending' }}">
 
                                     <div class="admin-tracking-icon">
 
                                         @if($selesaiAktif)
+
                                             <i class="bi bi-check-lg"></i>
+
                                         @else
+
                                             <i class="bi bi-flag"></i>
+
                                         @endif
 
                                     </div>
+
 
                                     <div class="admin-tracking-content">
 
@@ -948,12 +1046,15 @@
                                             Permohonan Selesai
                                         </h6>
 
+
                                         @if($selesaiAktif)
 
-                                            {{-- Tanggal Selesai --}}
+
+                                            {{-- TANGGAL --}}
                                             @if($permohonan->tanggal_selesai)
 
                                                                             <small>
+
                                                                                 <i class="bi bi-calendar-event me-1"></i>
 
                                                                                 {{ \Carbon\Carbon::parse(
@@ -961,19 +1062,24 @@
                                                 )->translatedFormat('d F Y • H:i') }}
 
                                                                                 WIB
+
                                                                             </small>
 
                                             @else
 
                                                 <small>
+
                                                     <i class="bi bi-check-circle me-1"></i>
+
                                                     Permohonan telah selesai.
+
                                                 </small>
 
                                             @endif
 
 
-                                            {{-- Catatan Selesai --}}
+
+                                            {{-- CATATAN --}}
                                             @if($permohonan->catatan_selesai)
 
                                                 <div class="mt-2">
@@ -991,7 +1097,8 @@
                                             @endif
 
 
-                                            {{-- Lampiran Selesai --}}
+
+                                            {{-- LAMPIRAN --}}
                                             @if($permohonan->file_selesai)
 
                                                 <div class="mt-3">
@@ -1009,10 +1116,13 @@
 
                                             @endif
 
+
                                         @else
 
                                             <small class="text-muted">
+
                                                 Belum selesai.
+
                                             </small>
 
                                         @endif
@@ -1020,6 +1130,7 @@
                                     </div>
 
                                 </div>
+
 
                             </div>
 
@@ -1181,20 +1292,20 @@
                                         {{-- Preview Gambar --}}
                                         <img id="previewBukti" src="" alt="Preview Bukti" class="img-fluid rounded shadow"
                                             style="
-                                                            display: none;
-                                                            max-height: 400px;
-                                                            width: auto;
-                                                        ">
+                                                                display: none;
+                                                                max-height: 400px;
+                                                                width: auto;
+                                                            ">
 
 
                                         {{-- Preview PDF --}}
                                         <iframe id="previewPdf" src="" style="
-                                                            display: none;
-                                                            width: 100%;
-                                                            height: 500px;
-                                                            border: 1px solid #ddd;
-                                                            border-radius: 8px;
-                                                        "></iframe>
+                                                                display: none;
+                                                                width: 100%;
+                                                                height: 500px;
+                                                                border: 1px solid #ddd;
+                                                                border-radius: 8px;
+                                                            "></iframe>
 
                                     </div>
 
@@ -1232,8 +1343,8 @@
     </section>
 
     <!-- ==========================================
-                                                                                                 MODAL DETAIL TINDAK LANJUT PERMOHONAN
-                                                                                            ========================================== -->
+                                                                                                     MODAL DETAIL TINDAK LANJUT PERMOHONAN
+                                                                                                ========================================== -->
     <div class="modal fade" id="detailPermohonanModal" tabindex="-1" aria-labelledby="detailPermohonanModalLabel"
         aria-hidden="true">
 

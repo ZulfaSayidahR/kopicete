@@ -964,10 +964,10 @@
                 ====================================================== --}}
 
                 <div class="modal-header bg-{{ $warna }}
-                                                                                            @if($warna != 'warning')
-                                                                                                text-white
-                                                                                            @endif
-                                                                                        ">
+                                                                                                @if($warna != 'warning')
+                                                                                                    text-white
+                                                                                                @endif
+                                                                                            ">
 
                     <h5 class="modal-title fw-bold" id="detailAdminModalLabel">
 
@@ -979,11 +979,11 @@
 
 
                     <button type="button" class="btn-close
-                                                                                                    @if($warna != 'warning')
-                                                                                                        btn-close-white
-                                                                                                    @endif
-                                                                                                " data-bs-dismiss="modal"
-                        aria-label="Close">
+                                                                                                        @if($warna != 'warning')
+                                                                                                            btn-close-white
+                                                                                                        @endif
+                                                                                                    "
+                        data-bs-dismiss="modal" aria-label="Close">
                     </button>
 
                 </div>
@@ -1012,10 +1012,10 @@
                                     <img src="{{ asset('storage/' . $foto) }}" alt="Bukti Tindak Lanjut"
                                         class="img-fluid rounded-3 shadow-sm border"
                                         style="
-                                                                                                                                                                            max-width: 100%;
-                                                                                                                                                                            max-height: 350px;
-                                                                                                                                                                            object-fit: contain;
-                                                                                                                                                                        ">
+                                                                                                                                                                                    max-width: 100%;
+                                                                                                                                                                                    max-height: 350px;
+                                                                                                                                                                                    object-fit: contain;
+                                                                                                                                                                                ">
 
                                     <div class="mt-3">
 
@@ -1138,18 +1138,18 @@
                                     <span class="badge bg-{{ $warnaStatus }} px-3 py-2">
 
                                         <i class="bi 
-                                            @if($status == 'Diverifikasi')
-                                                bi-check-circle
-                                            @elseif($status == 'Diproses')
-                                                bi-hourglass-split
-                                            @elseif($status == 'Selesai')
-                                                bi-check-all
-                                            @elseif($status == 'Ditolak')
-                                                bi-x-circle
-                                            @else
-                                                bi-clock
-                                            @endif
-                                        me-1">
+                                                @if($status == 'Diverifikasi')
+                                                    bi-check-circle
+                                                @elseif($status == 'Diproses')
+                                                    bi-hourglass-split
+                                                @elseif($status == 'Selesai')
+                                                    bi-check-all
+                                                @elseif($status == 'Ditolak')
+                                                    bi-x-circle
+                                                @else
+                                                    bi-clock
+                                                @endif
+                                            me-1">
                                         </i>
 
 
