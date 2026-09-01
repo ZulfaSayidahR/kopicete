@@ -863,7 +863,6 @@
                     </div>
 
 
-
                     {{-- =================================================
                     | FORM UPDATE
                     ================================================== --}}
@@ -877,7 +876,6 @@
 
                         </div>
 
-
                         <div class="p-4">
 
                             <form action="{{ route('adminpengaduan.update_pengaduan', $pengaduan->id) }}" method="POST"
@@ -887,42 +885,82 @@
                                 @method('PUT')
 
 
-                                {{-- STATUS --}}
+                                {{-- =================================================
+                                | STATUS
+                                ================================================== --}}
                                 <div class="mb-3">
 
-                                    <label class="form-label fw-semibold">
-
-                                        Status
-
+                                    <label for="status" class="form-label fw-semibold">
+                                        Status Pengaduan
                                     </label>
 
+                                    <select name="status" id="status" class="form-select" required>
 
-                                    <select class="form-select" name="status" required>
+                                        {{-- =========================================
+                                        STATUS SAAT INI : DIAJUKAN
+                                        ========================================== --}}
+                                        @if($pengaduan->status === 'Diajukan')
 
-                                        <option value="Diverifikasi" {{ $pengaduan->status == 'Diverifikasi' ? 'selected' : '' }}>
-                                            Diverifikasi
-                                        </option>
+                                            <option value="Diverifikasi">
+                                                Diverifikasi
+                                            </option>
 
-                                        <option value="Diproses" {{ $pengaduan->status == 'Diproses' ? 'selected' : '' }}>
-                                            Diproses Lapangan
-                                        </option>
+                                            <option value="Ditolak">
+                                                Ditolak
+                                            </option>
 
-                                        <option value="Selesai" {{ $pengaduan->status == 'Selesai' ? 'selected' : '' }}>
-                                            Selesai / Diteruskan BNNK
-                                        </option>
 
-                                        <option value="Ditolak" {{ $pengaduan->status == 'Ditolak' ? 'selected' : '' }}>
-                                            Ditolak
-                                        </option>
+                                            {{-- =========================================
+                                            STATUS SAAT INI : DIVERIFIKASI
+                                            ========================================== --}}
+                                        @elseif($pengaduan->status === 'Diverifikasi')
+
+                                            <option value="Diproses">
+                                                Diproses
+                                            </option>
+
+                                            <option value="Ditolak">
+                                                Ditolak
+                                            </option>
+
+
+                                            {{-- =========================================
+                                            STATUS SAAT INI : DIPROSES
+                                            ========================================== --}}
+                                        @elseif($pengaduan->status === 'Diproses')
+
+                                            <option value="Selesai">
+                                                Selesai
+                                            </option>
+
+
+                                            {{-- =========================================
+                                            STATUS SAAT INI : SELESAI
+                                            ========================================== --}}
+                                        @elseif($pengaduan->status === 'Selesai')
+
+                                            <option value="Selesai" selected>
+                                                Selesai
+                                            </option>
+
+
+                                            {{-- =========================================
+                                            STATUS SAAT INI : DITOLAK
+                                            ========================================== --}}
+                                        @elseif($pengaduan->status === 'Ditolak')
+
+                                            <option value="Ditolak" selected>
+                                                Ditolak
+                                            </option>
+
+                                        @endif
 
                                     </select>
 
                                     @error('status')
 
                                         <div class="text-danger small mt-1">
-
                                             {{ $message }}
-
                                         </div>
 
                                     @enderror
@@ -930,27 +968,22 @@
                                 </div>
 
 
-
-                                {{-- CATATAN --}}
+                                {{-- =================================================
+                                | CATATAN
+                                ================================================== --}}
                                 <div class="mb-3">
 
-                                    <label class="form-label fw-semibold">
-
+                                    <label for="catatan" class="form-label fw-semibold">
                                         Catatan Admin
-
                                     </label>
 
-
-                                    <textarea name="catatan" class="form-control" rows="4"
+                                    <textarea name="catatan" id="catatan" class="form-control" rows="4"
                                         placeholder="Masukkan catatan tindak lanjut...">{{ old('catatan') }}</textarea>
-
 
                                     @error('catatan')
 
                                         <div class="text-danger small mt-1">
-
                                             {{ $message }}
-
                                         </div>
 
                                     @enderror
@@ -958,34 +991,26 @@
                                 </div>
 
 
-
-                                {{-- BUKTI --}}
+                                {{-- =================================================
+                                | BUKTI
+                                ================================================== --}}
                                 <div class="mb-4">
 
-                                    <label class="form-label fw-semibold">
-
+                                    <label for="bukti" class="form-label fw-semibold">
                                         Upload Bukti Tindak Lanjut
-
                                     </label>
-
 
                                     <input type="file" name="bukti" id="bukti" class="form-control"
                                         accept=".jpg,.jpeg,.png">
 
-
                                     <small class="text-muted">
-
                                         JPG, JPEG, PNG maksimal 2 MB.
-
                                     </small>
-
 
                                     @error('bukti')
 
                                         <div class="text-danger small mt-1">
-
                                             {{ $message }}
-
                                         </div>
 
                                     @enderror
@@ -1002,26 +1027,45 @@
                                 </div>
 
 
+                                {{-- =================================================
+                                | BUTTON
+                                ================================================== --}}
+                                @if(
+                                        $pengaduan->status !== 'Selesai' &&
+                                        $pengaduan->status !== 'Ditolak'
+                                    )
 
-                                {{-- BUTTON --}}
-                                <div class="d-grid">
+                                    <div class="d-grid">
 
-                                    <button type="submit" class="btn btn-primary">
+                                        <button type="submit" class="btn btn-primary">
 
-                                        <i class="bi bi-check-circle-fill me-1"></i>
+                                            <i class="bi bi-check-circle-fill me-1"></i>
 
-                                        Simpan Perubahan
+                                            Simpan Perubahan
 
-                                    </button>
+                                        </button>
 
-                                </div>
+                                    </div>
+
+                                @else
+
+                                    <div class="alert alert-secondary mb-0">
+
+                                        <i class="bi bi-lock-fill me-1"></i>
+
+                                        Status pengaduan sudah
+                                        <strong>{{ $pengaduan->status }}</strong>
+                                        dan tidak dapat diubah kembali.
+
+                                    </div>
+
+                                @endif
 
                             </form>
 
                         </div>
 
                     </div>
-
                 </div>
 
             </div>
@@ -1092,12 +1136,12 @@
                 ====================================================== --}}
 
                 <div class="modal-header
-                                        {{ $statusClass }}">
+                                            {{ $statusClass }}">
 
                     <h5 class="modal-title fw-bold
-                                            @if($statusClass != 'bg-warning text-dark')
-                                                text-white
-                                            @endif" id="detailAdminModalLabel">
+                                                @if($statusClass != 'bg-warning text-dark')
+                                                    text-white
+                                                @endif" id="detailAdminModalLabel">
 
                         <i class="bi bi-file-earmark-medical me-2"></i>
 
@@ -1107,9 +1151,9 @@
 
 
                     <button type="button" class="btn-close
-                                                    @if($statusClass != 'bg-warning text-dark')
-                                                        btn-close-white
-                                                    @endif" data-bs-dismiss="modal" aria-label="Close">
+                                                        @if($statusClass != 'bg-warning text-dark')
+                                                            btn-close-white
+                                                        @endif" data-bs-dismiss="modal" aria-label="Close">
                     </button>
 
                 </div>
@@ -1137,10 +1181,10 @@
 
                                     <img src="{{ asset('storage/' . $foto) }}" alt="Bukti Tindak Lanjut"
                                         class="img-fluid rounded-3 shadow-sm border" style="
-                                                                        max-width: 100%;
-                                                                        max-height: 350px;
-                                                                        object-fit: contain;
-                                                                    ">
+                                                                                max-width: 100%;
+                                                                                max-height: 350px;
+                                                                                object-fit: contain;
+                                                                            ">
 
 
                                     <div class="mt-3">
@@ -1161,10 +1205,10 @@
                             @else
 
                                 <div class="border rounded-3 bg-light
-                                                                    d-flex flex-column
-                                                                    justify-content-center
-                                                                    align-items-center
-                                                                    text-muted" style="height: 300px;">
+                                                                            d-flex flex-column
+                                                                            justify-content-center
+                                                                            align-items-center
+                                                                            text-muted" style="height: 300px;">
 
                                     <i class="bi bi-image" style="font-size: 60px;"></i>
 
@@ -1228,8 +1272,8 @@
                                 <div class="detail-value">
 
                                     <span class="badge
-                                                            {{ $statusClass }}
-                                                            px-3 py-2">
+                                                                {{ $statusClass }}
+                                                                px-3 py-2">
 
                                         {{ $pengaduan->status }}
 

@@ -11,8 +11,8 @@
             <div class="pengaduan-wrapper">
 
                 <!-- ==========================================
-                                                        FORM STEP 3
-                                                =========================================== -->
+                                                                            FORM STEP 3
+                                                                    =========================================== -->
 
                 <div class="pengaduan-card">
 
@@ -70,11 +70,12 @@
 
                         </div>
 
-                     <!-- FORM -->
+                        <!-- FORM -->
 
                         <form action="{{ route('pengaduan.storeStep3') }}" method="POST">
 
                             @csrf
+
                             @if ($errors->any())
 
                                 <div class="alert alert-danger">
@@ -93,6 +94,11 @@
 
                             @endif
 
+
+                            {{-- =====================================================
+                            NAMA LENGKAP
+                            ====================================================== --}}
+
                             <div class="mb-3">
 
                                 <label class="form-label">
@@ -100,11 +106,15 @@
                                 </label>
 
                                 <input type="text" class="form-control" name="nama_lengkap"
-                                    placeholder="Masukkan nama lengkap" value="{{ old('nama_lengkap') }}" required>
+                                    placeholder="Masukkan nama lengkap"
+                                    value="{{ old('nama_lengkap', $step3['nama_lengkap'] ?? '') }}" required>
 
                             </div>
 
 
+                            {{-- =====================================================
+                            NOMOR WHATSAPP
+                            ====================================================== --}}
 
                             <div class="mb-3">
 
@@ -113,8 +123,8 @@
                                 </label>
 
                                 <input type="text" class="form-control" name="no_whatsapp"
-                                    placeholder="Contoh : 081234567890" value="{{ old('no_whatsapp') }}" required>
-
+                                    placeholder="Contoh : 081234567890"
+                                    value="{{ old('no_whatsapp', $step3['no_whatsapp'] ?? '') }}" required>
 
                                 <div class="form-note">
 
@@ -127,6 +137,9 @@
                             </div>
 
 
+                            {{-- =====================================================
+                            EMAIL
+                            ====================================================== --}}
 
                             <div class="mb-3">
 
@@ -135,8 +148,8 @@
                                 </label>
 
                                 <input type="email" class="form-control" name="email"
-                                    placeholder="Masukkan email aktif (opsional)" value="{{ old('email') }}">
-
+                                    placeholder="Masukkan email aktif (opsional)"
+                                    value="{{ old('email', $step3['email'] ?? '') }}">
 
                                 <div class="form-note">
 
@@ -148,6 +161,9 @@
                             </div>
 
 
+                            {{-- =====================================================
+                            ALAMAT DOMISILI
+                            ====================================================== --}}
 
                             <div class="mb-4">
 
@@ -155,24 +171,24 @@
                                     Alamat Domisili
                                 </label>
 
-
                                 <textarea class="form-control" name="alamat_domisili" rows="4"
-                                    placeholder="Masukkan alamat lengkap">{{ old('alamat_domisili') }}</textarea>
-
+                                    placeholder="Masukkan alamat lengkap"
+                                    required>{{ old('alamat_domisili', $step3['alamat_domisili'] ?? '') }}</textarea>
 
                             </div>
 
 
+                            {{-- =====================================================
+                            KONFIRMASI DATA
+                            ====================================================== --}}
 
                             <div class="alert alert-info">
 
                                 <div class="form-check">
 
-                                    <input class="form-check-input" type="checkbox" name="konfirmasi_data" value="setuju"
-                                        required>
-
-
-                                    <label class="form-check-label">
+                                    <input class="form-check-input" type="checkbox" name="konfirmasi_data" value="1"
+                                        id="konfirmasi_data" required {{ old('konfirmasi_data', $step3['konfirmasi_data'] ?? '') == '1' ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="konfirmasi_data">
 
                                         Saya memastikan data pribadi yang saya masukkan
                                         adalah benar dan dapat dipertanggungjawabkan.
@@ -184,9 +200,11 @@
                             </div>
 
 
+                            {{-- =====================================================
+                            NAVIGASI
+                            ====================================================== --}}
 
                             <div class="form-navigation">
-
 
                                 <a href="{{ route('pengaduan.lokasi') }}" class="btn btn-secondary">
 
@@ -195,128 +213,19 @@
                                 </a>
 
 
-
                                 <button type="submit" class="btn-next">
 
                                     Selanjutnya
 
                                 </button>
 
-
                             </div>
-
 
                         </form>
                     </div>
 
                 </div>
 
-                <!-- ==========================================
-                                                                                                    SIDEBAR
-                                                                                            =========================================== -->
-                <!-- <aside class="sidebar-aduan">
-
-                    <div class="aduan-terbaru-header">
-
-                        <h4>Aduan Terbaru</h4>
-
-                    </div>
-
-                    {{-- SEARCH ADUAN --}}
-                    <div class="search-adukan-box">
-
-                        <form action="{{ route('pengaduan.cari') }}" method="GET">
-
-                            <div class="search-adukan-wrapper">
-
-                                <div class="search-input-wrapper">
-
-                                    <i class="bi bi-search"></i>
-
-                                    <input
-                                        type="text"
-                                        name="topik"
-                                        value="{{ request('topik') }}"
-                                        placeholder="Cari berdasarkan topik aduan..."
-                                        autocomplete="off"
-                                    >
-
-                                </div>
-
-                                <button type="submit" class="btn-search-adukan">
-
-                                    <i class="bi bi-search"></i>
-
-                                    Cari
-
-                                </button>
-
-                            </div>
-
-                        </form>
-
-                    </div>
-
-                    @forelse($aduanTerbaru as $item)
-
-                        <div class="aduan-item">
-
-                            <span class="status
-                                @if($item->status == 'Menunggu') menunggu
-                                @elseif($item->status == 'Diproses') proses
-                                @elseif($item->status == 'Selesai') selesai
-                                @elseif($item->status == 'Ditolak') ditolak
-                                @else verifikasi
-                                @endif">
-
-                                {{ $item->status }}
-
-                            </span>
-
-                            <h6>
-
-                                {{ Str::limit($item->judul_aduan, 40) }}
-
-                            </h6>
-
-                            <small>
-
-                                <i class="bi bi-geo-alt-fill"></i>
-
-                                {{ $item->kecamatan->nama_kecamatan ?? '-' }}
-
-                            </small>
-
-                            <small>
-
-                                <i class="bi bi-calendar-event-fill"></i>
-
-                                {{ $item->created_at->translatedFormat('d F Y') }}
-
-                            </small>
-
-                            <a href="{{ route('pengaduan.tracking.detail', $item->kode_aduan) }}" class="btn-detail-laporan">
-
-                                <i class="bi bi-eye-fill"></i>
-
-                                Lihat Tracking
-
-                            </a>
-
-                        </div>
-
-                    @empty
-
-                        <div class="alert alert-light">
-
-                            Belum ada aduan.
-
-                        </div>
-
-                    @endforelse
-
-
-                </aside> -->
 
                 <!-- Modal Detail Aduan -->
                 <div class="modal fade" id="detailLaporanModal" tabindex="-1">

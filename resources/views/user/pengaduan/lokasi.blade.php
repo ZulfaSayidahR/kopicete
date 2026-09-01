@@ -11,8 +11,8 @@
             <div class="pengaduan-wrapper">
 
                 <!-- =========================================
-                                                                                                FORM STEP 2
-                                                                                        ========================================== -->
+                                                                                                                FORM STEP 2
+                                                                                                        ========================================== -->
 
                 <div class="pengaduan-card">
 
@@ -80,27 +80,19 @@
 
                                     <select class="form-select" name="id_kecamatan" id="kecamatan" required>
 
-
                                         <option value="">
                                             Pilih Kecamatan
                                         </option>
 
-
                                         @foreach($kecamatan as $item)
 
-                                            <option value="{{ $item->id_kecamatan }}">
-
+                                            <option value="{{ $item->id_kecamatan }}" {{ ($step2['id_kecamatan'] ?? '') == $item->id_kecamatan ? 'selected' : '' }}>
                                                 {{ $item->nama_kecamatan }}
-
                                             </option>
-
-
 
                                         @endforeach
 
-
                                     </select>
-
 
                                 </div>
 
@@ -145,6 +137,8 @@
                                 </label>
 
 
+                                {{-- INPUT FILE BARU --}}
+
                                 <input type="file" name="lampiran" id="lampiran"
                                     class="form-control @error('lampiran') is-invalid @enderror" accept=".jpg,.jpeg,.png">
 
@@ -168,17 +162,81 @@
                                 </small>
 
 
-                                {{-- PREVIEW GAMBAR --}}
+                                {{-- =================================================
+                                | LAMPIRAN YANG SUDAH TERSIMPAN
+                                ================================================== --}}
+
+                                @if(!empty($step2['lampiran']))
+
+                                    <div class="mt-3">
+
+                                        <div class="card shadow-sm">
+
+                                            <div class="card-header bg-light">
+
+                                                <strong>
+                                                    <i class="bi bi-paperclip me-1"></i>
+                                                    Lampiran Saat Ini
+                                                </strong>
+
+                                            </div>
+
+
+                                            <div class="card-body text-center">
+
+                                                <img src="{{ asset('storage/' . $step2['lampiran']) }}"
+                                                    class="img-fluid rounded" style="max-height:300px;"
+                                                    alt="Lampiran Sebelumnya">
+
+
+                                                <p class="mt-3 mb-0 text-secondary fw-semibold">
+
+                                                    Lampiran sebelumnya masih tersimpan.
+
+                                                </p>
+
+
+                                                <small class="text-muted d-block mt-1">
+
+                                                    Pilih file baru jika ingin mengganti lampiran.
+
+                                                </small>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                @endif
+
+
+                                {{-- =================================================
+                                | PREVIEW FILE BARU
+                                ================================================== --}}
 
                                 <div id="previewLampiran" class="mt-3 d-none">
 
                                     <div class="card shadow-sm">
 
+                                        <div class="card-header bg-light">
+
+                                            <strong>
+                                                <i class="bi bi-image me-1"></i>
+                                                Preview Lampiran Baru
+                                            </strong>
+
+                                        </div>
+
+
                                         <div class="card-body text-center">
 
-                                            <img id="previewImage" class="img-fluid rounded" style="max-height:300px;">
+                                            <img id="previewImage" class="img-fluid rounded" style="max-height:300px;"
+                                                alt="Preview Lampiran">
 
-                                            <p id="namaFile" class="mt-3 mb-0 text-secondary fw-semibold"></p>
+
+                                            <p id="namaFile" class="mt-3 mb-0 text-secondary fw-semibold">
+                                            </p>
 
                                         </div>
 
@@ -187,7 +245,6 @@
                                 </div>
 
                             </div>
-
 
                             <div class="alert alert-warning">
 
@@ -208,29 +265,29 @@
                             </div>
                             <!-- <div class="mb-4">
 
-                                                                        <label class="form-label">
+                                                                                        <label class="form-label">
 
-                                                                            Verifikasi Keamanan
+                                                                                            Verifikasi Keamanan
 
-                                                                        </label>
+                                                                                        </label>
 
-                                                                        <div class="border rounded p-3">
+                                                                                        <div class="border rounded p-3">
 
-                                                                            <div class="form-check">
+                                                                                            <div class="form-check">
 
-                                                                                <input class="form-check-input" type="checkbox" required>
+                                                                                                <input class="form-check-input" type="checkbox" required>
 
-                                                                                <label class="form-check-label">
+                                                                                                <label class="form-check-label">
 
-                                                                                    Saya bukan robot
+                                                                                                    Saya bukan robot
 
-                                                                                </label>
+                                                                                                </label>
 
-                                                                            </div>
+                                                                                            </div>
 
-                                                                        </div>
+                                                                                        </div>
 
-                                                                    </div> -->
+                                                                                    </div> -->
 
                             <div class="form-navigation">
 
@@ -255,112 +312,112 @@
                 </div>
 
                 <!-- ==========================================
-                                                                                                                                SIDEBAR
-                                                                                                                        =========================================== -->
+                                                                                                                                                SIDEBAR
+                                                                                                                                        =========================================== -->
                 <!-- 
-                                    <aside class="sidebar-aduan">
+                                                    <aside class="sidebar-aduan">
 
-                                        <div class="aduan-terbaru-header">
+                                                        <div class="aduan-terbaru-header">
 
-                                            <h4>Aduan Terbaru</h4>
+                                                            <h4>Aduan Terbaru</h4>
 
-                                        </div>
+                                                        </div>
 
-                                        {{-- SEARCH ADUAN --}}
-                                        <div class="search-adukan-box">
+                                                        {{-- SEARCH ADUAN --}}
+                                                        <div class="search-adukan-box">
 
-                                            <form action="{{ route('pengaduan.cari') }}" method="GET">
+                                                            <form action="{{ route('pengaduan.cari') }}" method="GET">
 
-                                                <div class="search-adukan-wrapper">
+                                                                <div class="search-adukan-wrapper">
 
-                                                    <div class="search-input-wrapper">
+                                                                    <div class="search-input-wrapper">
 
-                                                        <i class="bi bi-search"></i>
+                                                                        <i class="bi bi-search"></i>
 
-                                                        <input
-                                                            type="text"
-                                                            name="topik"
-                                                            value="{{ request('topik') }}"
-                                                            placeholder="Cari berdasarkan topik aduan..."
-                                                            autocomplete="off"
-                                                        >
+                                                                        <input
+                                                                            type="text"
+                                                                            name="topik"
+                                                                            value="{{ request('topik') }}"
+                                                                            placeholder="Cari berdasarkan topik aduan..."
+                                                                            autocomplete="off"
+                                                                        >
 
-                                                    </div>
+                                                                    </div>
 
-                                                    <button type="submit" class="btn-search-adukan">
+                                                                    <button type="submit" class="btn-search-adukan">
 
-                                                        <i class="bi bi-search"></i>
+                                                                        <i class="bi bi-search"></i>
 
-                                                        Cari
+                                                                        Cari
 
-                                                    </button>
+                                                                    </button>
 
-                                                </div>
+                                                                </div>
 
-                                            </form>
+                                                            </form>
 
-                                        </div>
+                                                        </div>
 
-                                        @forelse($aduanTerbaru as $item)
+                                                        @forelse($aduanTerbaru as $item)
 
-                                            <div class="aduan-item">
+                                                            <div class="aduan-item">
 
-                                                <span class="status
-                                                    @if($item->status == 'Menunggu') menunggu
-                                                    @elseif($item->status == 'Diproses') proses
-                                                    @elseif($item->status == 'Selesai') selesai
-                                                    @elseif($item->status == 'Ditolak') ditolak
-                                                    @else verifikasi
-                                                    @endif">
+                                                                <span class="status
+                                                                    @if($item->status == 'Menunggu') menunggu
+                                                                    @elseif($item->status == 'Diproses') proses
+                                                                    @elseif($item->status == 'Selesai') selesai
+                                                                    @elseif($item->status == 'Ditolak') ditolak
+                                                                    @else verifikasi
+                                                                    @endif">
 
-                                                    {{ $item->status }}
+                                                                    {{ $item->status }}
 
-                                                </span>
+                                                                </span>
 
-                                                <h6>
+                                                                <h6>
 
-                                                    {{ Str::limit($item->judul_aduan, 40) }}
+                                                                    {{ Str::limit($item->judul_aduan, 40) }}
 
-                                                </h6>
+                                                                </h6>
 
-                                                <small>
+                                                                <small>
 
-                                                    <i class="bi bi-geo-alt-fill"></i>
+                                                                    <i class="bi bi-geo-alt-fill"></i>
 
-                                                    {{ $item->kecamatan->nama_kecamatan ?? '-' }}
+                                                                    {{ $item->kecamatan->nama_kecamatan ?? '-' }}
 
-                                                </small>
+                                                                </small>
 
-                                                <small>
+                                                                <small>
 
-                                                    <i class="bi bi-calendar-event-fill"></i>
+                                                                    <i class="bi bi-calendar-event-fill"></i>
 
-                                                    {{ $item->created_at->translatedFormat('d F Y') }}
+                                                                    {{ $item->created_at->translatedFormat('d F Y') }}
 
-                                                </small>
+                                                                </small>
 
-                                                <a href="{{ route('pengaduan.tracking.detail', $item->kode_aduan) }}" class="btn-detail-laporan">
+                                                                <a href="{{ route('pengaduan.tracking.detail', $item->kode_aduan) }}" class="btn-detail-laporan">
 
-                                                    <i class="bi bi-eye-fill"></i>
+                                                                    <i class="bi bi-eye-fill"></i>
 
-                                                    Lihat Tracking
+                                                                    Lihat Tracking
 
-                                                </a>
+                                                                </a>
 
-                                            </div>
+                                                            </div>
 
-                                        @empty
+                                                        @empty
 
-                                            <div class="alert alert-light">
+                                                            <div class="alert alert-light">
 
-                                                Belum ada aduan.
+                                                                Belum ada aduan.
 
-                                            </div>
+                                                            </div>
 
-                                        @endforelse
+                                                        @endforelse
 
 
-                                    </aside> -->
+                                                    </aside> -->
 
                 <!-- Modal Detail Aduan -->
                 <div class="modal fade" id="detailLaporanModal" tabindex="-1">
@@ -475,107 +532,210 @@
     </section>
     <script>
 
-        document
-            .getElementById('kecamatan')
-            .addEventListener('change', function () {
+        document.addEventListener('DOMContentLoaded', function () {
+
+            /*
+            |--------------------------------------------------------------------------
+            | KECAMATAN & DESA
+            |--------------------------------------------------------------------------
+            */
+
+            const kecamatan = document.getElementById('kecamatan');
+            const desa = document.getElementById('desa');
+
+            // Nilai yang tersimpan di session
+            const selectedKecamatan = "{{ old('id_kecamatan', $step2['id_kecamatan'] ?? '') }}";
+            const selectedDesa = "{{ old('id_desa', $step2['id_desa'] ?? '') }}";
 
 
-                let idKecamatan = this.value;
+            /*
+            |--------------------------------------------------------------------------
+            | LOAD DESA
+            |--------------------------------------------------------------------------
+            */
 
+            function loadDesa(idKecamatan, selectedDesa = '') {
 
-                let desa = document.getElementById('desa');
+                if (!desa) {
+                    return;
+                }
 
-
-
-                desa.innerHTML = `
-                                                                <option>
-                                                                    Memuat desa...
-                                                                </option>
-                                                            `;
-
-
-
-                if (idKecamatan == '') {
+                if (!idKecamatan) {
 
                     desa.innerHTML = `
-                                                                    <option>
-                                                                        Pilih Kecamatan Terlebih Dahulu
-                                                                    </option>
-                                                                `;
+                            <option value="">
+                                Pilih Kecamatan Terlebih Dahulu
+                            </option>
+                        `;
 
                     return;
-
                 }
 
 
+                // Tampilkan loading
+                desa.innerHTML = `
+                        <option value="">
+                            Memuat desa...
+                        </option>
+                    `;
 
-                fetch(
-                    "{{ url('/pengaduan/get-desa') }}/"
-                    + idKecamatan
-                )
 
+                fetch("{{ url('/pengaduan/get-desa') }}/" + idKecamatan)
 
-                    .then(response => response.json())
+                    .then(response => {
 
+                        if (!response.ok) {
+                            throw new Error('Gagal mengambil data desa.');
+                        }
+
+                        return response.json();
+
+                    })
 
                     .then(data => {
 
-
                         desa.innerHTML = `
-                                                                    <option value="">
-                                                                        Pilih Desa
-                                                                    </option>
-                                                                `;
-
+                                <option value="">
+                                    Pilih Desa
+                                </option>
+                            `;
 
 
                         data.forEach(item => {
 
+                            const option = document.createElement('option');
 
-                            desa.innerHTML += `
+                            option.value = item.id_desa;
+                            option.textContent = item.nama_desa;
 
-                                                                        <option value="${item.id_desa}">
 
-                                                                            ${item.nama_desa}
+                            // Pilih kembali desa yang sebelumnya dipilih
+                            if (String(item.id_desa) === String(selectedDesa)) {
+                                option.selected = true;
+                            }
 
-                                                                        </option>
 
-                                                                    `;
-
+                            desa.appendChild(option);
 
                         });
 
+                    })
 
+                    .catch(error => {
+
+                        console.error(error);
+
+                        desa.innerHTML = `
+                                <option value="">
+                                    Gagal memuat desa
+                                </option>
+                            `;
 
                     });
 
+            }
 
 
-            });
+            /*
+            |--------------------------------------------------------------------------
+            | SAAT KECAMATAN BERUBAH
+            |--------------------------------------------------------------------------
+            */
+
+            if (kecamatan) {
+
+                kecamatan.addEventListener('change', function () {
+
+                    const idKecamatan = this.value;
+
+                    // Karena kecamatan berubah, jangan gunakan desa lama
+                    loadDesa(idKecamatan, '');
+
+                });
 
 
-        document.getElementById('lampiran').addEventListener('change', function (e) {
+                /*
+                |--------------------------------------------------------------------------
+                | LOAD ULANG DATA SESSION SAAT KEMBALI KE STEP 2
+                |--------------------------------------------------------------------------
+                */
 
-            const file = e.target.files[0];
+                if (selectedKecamatan) {
 
-            if (!file) return;
+                    // Pilih kecamatan yang tersimpan
+                    kecamatan.value = selectedKecamatan;
 
-            document.getElementById('namaFile').innerHTML = file.name;
+                    // Load desa sesuai kecamatan
+                    loadDesa(
+                        selectedKecamatan,
+                        selectedDesa
+                    );
 
-            const reader = new FileReader();
-
-            reader.onload = function (event) {
-
-                document.getElementById('previewImage').src = event.target.result;
-
-                document.getElementById('previewLampiran').classList.remove('d-none');
+                }
 
             }
 
-            reader.readAsDataURL(file);
+
+            /*
+            |--------------------------------------------------------------------------
+            | PREVIEW LAMPIRAN
+            |--------------------------------------------------------------------------
+            */
+
+            const lampiran = document.getElementById('lampiran');
+            const previewLampiran = document.getElementById('previewLampiran');
+            const previewImage = document.getElementById('previewImage');
+            const namaFile = document.getElementById('namaFile');
+
+
+            if (lampiran) {
+
+                lampiran.addEventListener('change', function (e) {
+
+                    const file = e.target.files[0];
+
+
+                    if (!file) {
+
+                        if (previewLampiran) {
+                            previewLampiran.classList.add('d-none');
+                        }
+
+                        return;
+
+                    }
+
+
+                    // Tampilkan nama file
+                    if (namaFile) {
+                        namaFile.textContent = file.name;
+                    }
+
+
+                    // Preview gambar
+                    const reader = new FileReader();
+
+
+                    reader.onload = function (event) {
+
+                        if (previewImage) {
+                            previewImage.src = event.target.result;
+                        }
+
+                        if (previewLampiran) {
+                            previewLampiran.classList.remove('d-none');
+                        }
+
+                    };
+
+
+                    reader.readAsDataURL(file);
+
+                });
+
+            }
 
         });
 
     </script>
-
 @endsection

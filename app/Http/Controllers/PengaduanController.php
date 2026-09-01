@@ -60,13 +60,20 @@ class PengaduanController extends Controller
     {
         $kecamatan = Kecamatan::all();
 
+        // Ambil data Step 2 yang sebelumnya sudah disimpan
+        $step2 = Session::get('pengaduan.step2', []);
+
         $aduanTerbaru = Pengaduan::with('kecamatan')
             ->latest()
             ->get();
 
         return view(
             'user.pengaduan.lokasi',
-            compact('kecamatan', 'aduanTerbaru')
+            compact(
+                'kecamatan',
+                'step2',
+                'aduanTerbaru'
+            )
         );
     }
 
@@ -101,56 +108,126 @@ class PengaduanController extends Controller
             'lampiran' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
-        $lampiran = null;
+        // Ambil data Step 2 yang sebelumnya tersimpan di session
+        $step2Lama = Session::get('pengaduan.step2', []);
 
+        // Pertahankan lampiran lama
+        $lampiran = $step2Lama['lampiran'] ?? null;
+
+        // Jika user memilih lampiran baru,
+        // gunakan lampiran yang baru di-upload
         if ($request->hasFile('lampiran')) {
+
             $lampiran = $request->file('lampiran')
                 ->store('lampiran', 'public');
         }
 
+        // Simpan kembali seluruh data Step 2 ke session
         Session::put('pengaduan.step2', [
+
             'id_kecamatan' => $request->id_kecamatan,
+
             'id_desa' => $request->id_desa,
+
             'alamat_kejadian' => $request->alamat_kejadian,
+
             'lampiran' => $lampiran,
+
         ]);
-
-
 
         return redirect()->route('pengaduan.datapribadi');
     }
 
     /*
-   |--------------------------------------------------------------------------
-   | STEP 3 : DATA PRIBADI
-   |--------------------------------------------------------------------------
-   */
+ |--------------------------------------------------------------------------
+ | STEP 3 : DATA PRIBADI
+ |--------------------------------------------------------------------------
+ */
 
     public function dataPribadi()
     {
         $aduanTerbaru = Pengaduan::latest()
-            ->latest()
             ->get();
 
-        return view('user.pengaduan.datapribadi', compact('aduanTerbaru'));
+        // Ambil data Step 3 dari session
+        $step3 = Session::get('pengaduan.step3', []);
+
+        return view(
+            'user.pengaduan.datapribadi',
+            compact('aduanTerbaru', 'step3')
+        );
     }
+
+
     public function storeStep3(Request $request)
     {
         $request->validate([
             'nama_lengkap' => 'required|string|max:255',
-            'no_whatsapp' => 'required|string|max:13',
+
+            'no_whatsapp' => [
+                'required',
+                'string',
+                'max:13',
+            ],
+
             'alamat_domisili' => 'required|string',
+
             'email' => 'nullable|email',
+
+            'konfirmasi_data' => 'required|accepted',
+        ], [
+            'nama_lengkap.required' =>
+                'Nama lengkap wajib diisi.',
+
+            'no_whatsapp.required' =>
+                'Nomor WhatsApp wajib diisi.',
+
+            'no_whatsapp.max' =>
+                'Nomor WhatsApp maksimal 13 karakter.',
+
+            'alamat_domisili.required' =>
+                'Alamat domisili wajib diisi.',
+
+            'email.email' =>
+                'Format email tidak valid.',
+
+            'konfirmasi_data.required' =>
+                'Anda harus menyetujui pernyataan data.',
+
+            'konfirmasi_data.accepted' =>
+                'Anda harus menyetujui pernyataan data.',
         ]);
+
+        /*
+        |--------------------------------------------------------------------------
+        | SIMPAN DATA STEP 3 KE SESSION
+        |--------------------------------------------------------------------------
+        */
 
         Session::put('pengaduan.step3', [
 
-            'nama_lengkap' => $request->nama_lengkap,
-            'no_whatsapp' => $request->no_whatsapp,
-            'email' => $request->email,
-            'alamat_domisili' => $request->alamat_domisili,
+            'nama_lengkap' =>
+                $request->nama_lengkap,
+
+            'no_whatsapp' =>
+                $request->no_whatsapp,
+
+            'email' =>
+                $request->email,
+
+            'alamat_domisili' =>
+                $request->alamat_domisili,
+
+            'konfirmasi_data' =>
+                $request->konfirmasi_data,
 
         ]);
+
+        /*
+        |--------------------------------------------------------------------------
+        | LANJUT KE STEP 4
+        |--------------------------------------------------------------------------
+        */
 
         return redirect()->route('pengaduan.konfirmasi');
     }
