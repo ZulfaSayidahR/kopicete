@@ -676,7 +676,7 @@
                 <div class="col-lg-5">
 
 
-                  {{-- =================================================
+                    {{-- =================================================
                     RIWAYAT STATUS
                     ================================================= --}}
                     <div class="sa-panel">
@@ -756,7 +756,7 @@
                                 1. PERMOHONAN DIAJUKAN
                                 ================================================== --}}
                                 <div class="admin-tracking-item
-                                    {{ $diajukanAktif ? 'selesai' : 'pending' }}">
+                                        {{ $diajukanAktif ? 'selesai' : 'pending' }}">
 
                                     <div class="admin-tracking-icon">
 
@@ -807,9 +807,8 @@
 
                                             @if($lampiranPengajuan)
 
-                                                <a href="{{ $lampiranPengajuan }}"
-                                                target="_blank"
-                                                class="btn btn-sm btn-primary">
+                                                <a href="{{ $lampiranPengajuan }}" target="_blank"
+                                                    class="btn btn-sm btn-primary">
 
                                                     <i class="bi bi-paperclip me-1"></i>
 
@@ -819,9 +818,7 @@
 
                                             @else
 
-                                                <button type="button"
-                                                        class="btn btn-sm btn-secondary"
-                                                        disabled>
+                                                <button type="button" class="btn btn-sm btn-secondary" disabled>
 
                                                     <i class="bi bi-paperclip me-1"></i>
 
@@ -843,7 +840,7 @@
                                 2. DIVERIFIKASI
                                 ================================================== --}}
                                 <div class="admin-tracking-item
-                                    {{ $verifikasiAktif ? 'selesai' : 'pending' }}">
+                                        {{ $verifikasiAktif ? 'selesai' : 'pending' }}">
 
                                     <div class="admin-tracking-icon">
 
@@ -872,17 +869,17 @@
                                             {{-- TANGGAL --}}
                                             @if($permohonan->tanggal_verifikasi)
 
-                                                <small>
+                                                                            <small>
 
-                                                    <i class="bi bi-calendar-event me-1"></i>
+                                                                                <i class="bi bi-calendar-event me-1"></i>
 
-                                                    {{ \Carbon\Carbon::parse(
-                                                        $permohonan->tanggal_verifikasi
-                                                    )->translatedFormat('d F Y • H:i') }}
+                                                                                {{ \Carbon\Carbon::parse(
+                                                    $permohonan->tanggal_verifikasi
+                                                )->translatedFormat('d F Y • H:i') }}
 
-                                                    WIB
+                                                                                WIB
 
-                                                </small>
+                                                                            </small>
 
                                             @else
 
@@ -923,9 +920,8 @@
 
                                             @if($lampiranVerifikasi)
 
-                                                <a href="{{ $lampiranVerifikasi }}"
-                                                target="_blank"
-                                                class="btn btn-sm btn-primary">
+                                                <a href="{{ $lampiranVerifikasi }}" target="_blank"
+                                                    class="btn btn-sm btn-primary">
 
                                                     <i class="bi bi-paperclip me-1"></i>
 
@@ -935,9 +931,7 @@
 
                                             @else
 
-                                                <button type="button"
-                                                        class="btn btn-sm btn-secondary"
-                                                        disabled>
+                                                <button type="button" class="btn btn-sm btn-secondary" disabled>
 
                                                     <i class="bi bi-paperclip me-1"></i>
 
@@ -970,7 +964,7 @@
                                 3. DIPROSES
                                 ================================================== --}}
                                 <div class="admin-tracking-item
-                                    {{ $prosesAktif ? 'selesai' : 'pending' }}">
+                                        {{ $prosesAktif ? 'selesai' : 'pending' }}">
 
                                     <div class="admin-tracking-icon">
 
@@ -999,17 +993,17 @@
                                             {{-- TANGGAL --}}
                                             @if($permohonan->tanggal_proses)
 
-                                                <small>
+                                                                            <small>
 
-                                                    <i class="bi bi-calendar-event me-1"></i>
+                                                                                <i class="bi bi-calendar-event me-1"></i>
 
-                                                    {{ \Carbon\Carbon::parse(
-                                                        $permohonan->tanggal_proses
-                                                    )->translatedFormat('d F Y • H:i') }}
+                                                                                {{ \Carbon\Carbon::parse(
+                                                    $permohonan->tanggal_proses
+                                                )->translatedFormat('d F Y • H:i') }}
 
-                                                    WIB
+                                                                                WIB
 
-                                                </small>
+                                                                            </small>
 
                                             @else
 
@@ -1049,9 +1043,7 @@
 
                                             @if($lampiranProses)
 
-                                                <a href="{{ $lampiranProses }}"
-                                                target="_blank"
-                                                class="btn btn-sm btn-primary">
+                                                <a href="{{ $lampiranProses }}" target="_blank" class="btn btn-sm btn-primary">
 
                                                     <i class="bi bi-paperclip me-1"></i>
 
@@ -1061,9 +1053,7 @@
 
                                             @else
 
-                                                <button type="button"
-                                                        class="btn btn-sm btn-secondary"
-                                                        disabled>
+                                                <button type="button" class="btn btn-sm btn-secondary" disabled>
 
                                                     <i class="bi bi-paperclip me-1"></i>
 
@@ -1096,7 +1086,7 @@
                                 4. PERMOHONAN SELESAI
                                 ================================================== --}}
                                 <div class="admin-tracking-item
-                                    {{ $selesaiAktif ? 'selesai' : 'pending' }}">
+                                        {{ $selesaiAktif ? 'selesai' : 'pending' }}">
 
                                     <div class="admin-tracking-icon">
 
@@ -1125,17 +1115,17 @@
                                             {{-- TANGGAL --}}
                                             @if($permohonan->tanggal_selesai)
 
-                                                <small>
+                                                                            <small>
 
-                                                    <i class="bi bi-calendar-event me-1"></i>
+                                                                                <i class="bi bi-calendar-event me-1"></i>
 
-                                                    {{ \Carbon\Carbon::parse(
-                                                        $permohonan->tanggal_selesai
-                                                    )->translatedFormat('d F Y • H:i') }}
+                                                                                {{ \Carbon\Carbon::parse(
+                                                    $permohonan->tanggal_selesai
+                                                )->translatedFormat('d F Y • H:i') }}
 
-                                                    WIB
+                                                                                WIB
 
-                                                </small>
+                                                                            </small>
 
                                             @else
 
@@ -1175,9 +1165,7 @@
 
                                             @if($lampiranSelesai)
 
-                                                <a href="{{ $lampiranSelesai }}"
-                                                target="_blank"
-                                                class="btn btn-sm btn-primary">
+                                                <a href="{{ $lampiranSelesai }}" target="_blank" class="btn btn-sm btn-primary">
 
                                                     <i class="bi bi-paperclip me-1"></i>
 
@@ -1187,9 +1175,7 @@
 
                                             @else
 
-                                                <button type="button"
-                                                        class="btn btn-sm btn-secondary"
-                                                        disabled>
+                                                <button type="button" class="btn btn-sm btn-secondary" disabled>
 
                                                     <i class="bi bi-paperclip me-1"></i>
 
@@ -1391,40 +1377,59 @@
 
                                         <img id="previewBukti" src="" alt="Preview Bukti" class="img-fluid rounded shadow"
                                             style="
-                                                                        display:none;
-                                                                        max-height:400px;
-                                                                        width:auto;
-                                                                    ">
+                                                                            display:none;
+                                                                            max-height:400px;
+                                                                            width:auto;
+                                                                        ">
 
 
                                         <iframe id="previewPdf" src="" style="
-                                                                        display:none;
-                                                                        width:100%;
-                                                                        height:500px;
-                                                                        border:1px solid #ddd;
-                                                                        border-radius:8px;
-                                                                    "></iframe>
+                                                                            display:none;
+                                                                            width:100%;
+                                                                            height:500px;
+                                                                            border:1px solid #ddd;
+                                                                            border-radius:8px;
+                                                                        "></iframe>
 
                                     </div>
 
                                 </div>
 
 
-
                                 {{-- =================================================
-                                BUTTON
+                                | BUTTON
                                 ================================================== --}}
-                                <div class="d-grid">
+                                @if(
+                                        $permohonan->status !== 'Selesai' &&
+                                        $permohonan->status !== 'Ditolak'
+                                    )
 
-                                    <button type="submit" class="btn btn-primary">
+                                    <div class="d-grid">
 
-                                        <i class="bi bi-check-circle-fill me-1"></i>
+                                        <button type="submit" class="btn btn-primary">
 
-                                        Simpan Perubahan
+                                            <i class="bi bi-check-circle-fill me-1"></i>
 
-                                    </button>
+                                            Simpan Perubahan
 
-                                </div>
+                                        </button>
+
+                                    </div>
+
+                                @else
+
+                                    <div class="alert alert-secondary mb-0">
+
+                                        <i class="bi bi-lock-fill me-1"></i>
+
+                                        Status pengaduan sudah
+                                        <strong>{{ $permohonan->status }}</strong>
+                                        dan tidak dapat diubah kembali.
+
+                                    </div>
+
+                                @endif
+
 
 
                             </form>

@@ -11,8 +11,8 @@
             <div class="pengaduan-wrapper">
 
                 <!-- =========================================
-                                                                                                                FORM STEP 2
-                                                                                                        ========================================== -->
+                                                                                                                            FORM STEP 2
+                                                                                                                    ========================================== -->
 
                 <div class="pengaduan-card">
 
@@ -265,33 +265,34 @@
                             </div>
                             <!-- <div class="mb-4">
 
-                                                                                        <label class="form-label">
+                                                                                                    <label class="form-label">
 
-                                                                                            Verifikasi Keamanan
+                                                                                                        Verifikasi Keamanan
 
-                                                                                        </label>
+                                                                                                    </label>
 
-                                                                                        <div class="border rounded p-3">
+                                                                                                    <div class="border rounded p-3">
 
-                                                                                            <div class="form-check">
+                                                                                                        <div class="form-check">
 
-                                                                                                <input class="form-check-input" type="checkbox" required>
+                                                                                                            <input class="form-check-input" type="checkbox" required>
 
-                                                                                                <label class="form-check-label">
+                                                                                                            <label class="form-check-label">
 
-                                                                                                    Saya bukan robot
+                                                                                                                Saya bukan robot
 
-                                                                                                </label>
+                                                                                                            </label>
 
-                                                                                            </div>
+                                                                                                        </div>
 
-                                                                                        </div>
+                                                                                                    </div>
 
-                                                                                    </div> -->
+                                                                                                </div> -->
 
                             <div class="form-navigation">
 
-                                <a href="{{ route('pengaduan.create') }}" class="btn btn-secondary">
+                                <a href="{{ route('pengaduan.create') }}"
+                                    class="btn btn-secondary d-flex align-items-center justify-content-center fw-semibold">
 
                                     Sebelumnya
 
@@ -312,112 +313,112 @@
                 </div>
 
                 <!-- ==========================================
-                                                                                                                                                SIDEBAR
-                                                                                                                                        =========================================== -->
+                                                                                                                                                            SIDEBAR
+                                                                                                                                                    =========================================== -->
                 <!-- 
-                                                    <aside class="sidebar-aduan">
+                                                                <aside class="sidebar-aduan">
 
-                                                        <div class="aduan-terbaru-header">
+                                                                    <div class="aduan-terbaru-header">
 
-                                                            <h4>Aduan Terbaru</h4>
-
-                                                        </div>
-
-                                                        {{-- SEARCH ADUAN --}}
-                                                        <div class="search-adukan-box">
-
-                                                            <form action="{{ route('pengaduan.cari') }}" method="GET">
-
-                                                                <div class="search-adukan-wrapper">
-
-                                                                    <div class="search-input-wrapper">
-
-                                                                        <i class="bi bi-search"></i>
-
-                                                                        <input
-                                                                            type="text"
-                                                                            name="topik"
-                                                                            value="{{ request('topik') }}"
-                                                                            placeholder="Cari berdasarkan topik aduan..."
-                                                                            autocomplete="off"
-                                                                        >
+                                                                        <h4>Aduan Terbaru</h4>
 
                                                                     </div>
 
-                                                                    <button type="submit" class="btn-search-adukan">
+                                                                    {{-- SEARCH ADUAN --}}
+                                                                    <div class="search-adukan-box">
 
-                                                                        <i class="bi bi-search"></i>
+                                                                        <form action="{{ route('pengaduan.cari') }}" method="GET">
 
-                                                                        Cari
+                                                                            <div class="search-adukan-wrapper">
 
-                                                                    </button>
+                                                                                <div class="search-input-wrapper">
 
-                                                                </div>
+                                                                                    <i class="bi bi-search"></i>
 
-                                                            </form>
+                                                                                    <input
+                                                                                        type="text"
+                                                                                        name="topik"
+                                                                                        value="{{ request('topik') }}"
+                                                                                        placeholder="Cari berdasarkan topik aduan..."
+                                                                                        autocomplete="off"
+                                                                                    >
 
-                                                        </div>
+                                                                                </div>
 
-                                                        @forelse($aduanTerbaru as $item)
+                                                                                <button type="submit" class="btn-search-adukan">
 
-                                                            <div class="aduan-item">
+                                                                                    <i class="bi bi-search"></i>
 
-                                                                <span class="status
-                                                                    @if($item->status == 'Menunggu') menunggu
-                                                                    @elseif($item->status == 'Diproses') proses
-                                                                    @elseif($item->status == 'Selesai') selesai
-                                                                    @elseif($item->status == 'Ditolak') ditolak
-                                                                    @else verifikasi
-                                                                    @endif">
+                                                                                    Cari
 
-                                                                    {{ $item->status }}
+                                                                                </button>
 
-                                                                </span>
+                                                                            </div>
 
-                                                                <h6>
+                                                                        </form>
 
-                                                                    {{ Str::limit($item->judul_aduan, 40) }}
+                                                                    </div>
 
-                                                                </h6>
+                                                                    @forelse($aduanTerbaru as $item)
 
-                                                                <small>
+                                                                        <div class="aduan-item">
 
-                                                                    <i class="bi bi-geo-alt-fill"></i>
+                                                                            <span class="status
+                                                                                @if($item->status == 'Menunggu') menunggu
+                                                                                @elseif($item->status == 'Diproses') proses
+                                                                                @elseif($item->status == 'Selesai') selesai
+                                                                                @elseif($item->status == 'Ditolak') ditolak
+                                                                                @else verifikasi
+                                                                                @endif">
 
-                                                                    {{ $item->kecamatan->nama_kecamatan ?? '-' }}
+                                                                                {{ $item->status }}
 
-                                                                </small>
+                                                                            </span>
 
-                                                                <small>
+                                                                            <h6>
 
-                                                                    <i class="bi bi-calendar-event-fill"></i>
+                                                                                {{ Str::limit($item->judul_aduan, 40) }}
 
-                                                                    {{ $item->created_at->translatedFormat('d F Y') }}
+                                                                            </h6>
 
-                                                                </small>
+                                                                            <small>
 
-                                                                <a href="{{ route('pengaduan.tracking.detail', $item->kode_aduan) }}" class="btn-detail-laporan">
+                                                                                <i class="bi bi-geo-alt-fill"></i>
 
-                                                                    <i class="bi bi-eye-fill"></i>
+                                                                                {{ $item->kecamatan->nama_kecamatan ?? '-' }}
 
-                                                                    Lihat Tracking
+                                                                            </small>
 
-                                                                </a>
+                                                                            <small>
 
-                                                            </div>
+                                                                                <i class="bi bi-calendar-event-fill"></i>
 
-                                                        @empty
+                                                                                {{ $item->created_at->translatedFormat('d F Y') }}
 
-                                                            <div class="alert alert-light">
+                                                                            </small>
 
-                                                                Belum ada aduan.
+                                                                            <a href="{{ route('pengaduan.tracking.detail', $item->kode_aduan) }}" class="btn-detail-laporan">
 
-                                                            </div>
+                                                                                <i class="bi bi-eye-fill"></i>
 
-                                                        @endforelse
+                                                                                Lihat Tracking
+
+                                                                            </a>
+
+                                                                        </div>
+
+                                                                    @empty
+
+                                                                        <div class="alert alert-light">
+
+                                                                            Belum ada aduan.
+
+                                                                        </div>
+
+                                                                    @endforelse
 
 
-                                                    </aside> -->
+                                                                </aside> -->
 
                 <!-- Modal Detail Aduan -->
                 <div class="modal fade" id="detailLaporanModal" tabindex="-1">
@@ -563,10 +564,10 @@
                 if (!idKecamatan) {
 
                     desa.innerHTML = `
-                            <option value="">
-                                Pilih Kecamatan Terlebih Dahulu
-                            </option>
-                        `;
+                                        <option value="">
+                                            Pilih Kecamatan Terlebih Dahulu
+                                        </option>
+                                    `;
 
                     return;
                 }
@@ -574,10 +575,10 @@
 
                 // Tampilkan loading
                 desa.innerHTML = `
-                        <option value="">
-                            Memuat desa...
-                        </option>
-                    `;
+                                    <option value="">
+                                        Memuat desa...
+                                    </option>
+                                `;
 
 
                 fetch("{{ url('/pengaduan/get-desa') }}/" + idKecamatan)
@@ -595,10 +596,10 @@
                     .then(data => {
 
                         desa.innerHTML = `
-                                <option value="">
-                                    Pilih Desa
-                                </option>
-                            `;
+                                            <option value="">
+                                                Pilih Desa
+                                            </option>
+                                        `;
 
 
                         data.forEach(item => {
@@ -626,10 +627,10 @@
                         console.error(error);
 
                         desa.innerHTML = `
-                                <option value="">
-                                    Gagal memuat desa
-                                </option>
-                            `;
+                                            <option value="">
+                                                Gagal memuat desa
+                                            </option>
+                                        `;
 
                     });
 

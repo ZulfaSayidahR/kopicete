@@ -206,7 +206,7 @@
 
                             <div class="form-navigation">
 
-                                <a href="{{ route('pengaduan.lokasi') }}" class="btn btn-secondary">
+                                <a href="{{ route('pengaduan.lokasi') }}" class="btn btn-secondary d-flex align-items-center justify-content-center fw-semibold">
 
                                     Sebelumnya
 

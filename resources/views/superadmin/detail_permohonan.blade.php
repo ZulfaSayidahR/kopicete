@@ -248,17 +248,17 @@
 
 
                                         <!-- {{-- JENIS REHABILITASI --}}
-                                                                                <div class="col-md-6 mb-3">
+                                                                                        <div class="col-md-6 mb-3">
 
-                                                                                    <strong>
-                                                                                        Jenis Rehabilitasi
-                                                                                    </strong>
+                                                                                            <strong>
+                                                                                                Jenis Rehabilitasi
+                                                                                            </strong>
 
-                                                                                    <p>
-                                                                                        {{ $permohonan->jenis_rehabilitasi ?? '-' }}
-                                                                                    </p>
+                                                                                            <p>
+                                                                                                {{ $permohonan->jenis_rehabilitasi ?? '-' }}
+                                                                                            </p>
 
-                                                                                </div> -->
+                                                                                        </div> -->
 
 
                                         {{-- ALAMAT --}}
@@ -653,552 +653,538 @@
                 <div class="col-lg-5">
 
 
-                 {{-- =================================================
-RIWAYAT STATUS
-================================================= --}}
-<div class="sa-panel">
+                    {{-- =================================================
+                    RIWAYAT STATUS
+                    ================================================= --}}
+                    <div class="sa-panel">
 
-    <div class="sa-panel-header">
+                        <div class="sa-panel-header">
 
-        <h3>
-            <i class="bi bi-clock-history me-2"></i>
-            Riwayat Status
-        </h3>
+                            <h3>
+                                <i class="bi bi-clock-history me-2"></i>
+                                Riwayat Status
+                            </h3>
 
-    </div>
+                        </div>
 
 
-    <div class="p-4">
+                        <div class="p-4">
 
-        @php
+                            @php
 
-            $status = trim($permohonan->status ?? 'Diajukan');
+                                $status = trim($permohonan->status ?? 'Diajukan');
 
-            /*
-            |--------------------------------------------------------------------------
-            | STATUS TIMELINE
-            |--------------------------------------------------------------------------
-            */
+                                /*
+                                |--------------------------------------------------------------------------
+                                | STATUS TIMELINE
+                                |--------------------------------------------------------------------------
+                                */
 
-            $diajukanAktif = in_array($status, [
-                'Diajukan',
-                'Diverifikasi',
-                'Diproses',
-                'Selesai'
-            ]);
+                                $diajukanAktif = in_array($status, [
+                                    'Diajukan',
+                                    'Diverifikasi',
+                                    'Diproses',
+                                    'Selesai'
+                                ]);
 
-            $verifikasiAktif = in_array($status, [
-                'Diverifikasi',
-                'Diproses',
-                'Selesai'
-            ]);
+                                $verifikasiAktif = in_array($status, [
+                                    'Diverifikasi',
+                                    'Diproses',
+                                    'Selesai'
+                                ]);
 
-            $prosesAktif = in_array($status, [
-                'Diproses',
-                'Selesai'
-            ]);
+                                $prosesAktif = in_array($status, [
+                                    'Diproses',
+                                    'Selesai'
+                                ]);
 
-            $selesaiAktif = $status === 'Selesai';
+                                $selesaiAktif = $status === 'Selesai';
 
 
-            /*
-            |--------------------------------------------------------------------------
-            | URL LAMPIRAN
-            |--------------------------------------------------------------------------
-            */
+                                /*
+                                |--------------------------------------------------------------------------
+                                | URL LAMPIRAN
+                                |--------------------------------------------------------------------------
+                                */
 
-            $lampiranPengajuan = $permohonan->lampiran
-                ? asset('storage/' . $permohonan->lampiran)
-                : null;
+                                $lampiranPengajuan = $permohonan->lampiran
+                                    ? asset('storage/' . $permohonan->lampiran)
+                                    : null;
 
-            $lampiranVerifikasi = $permohonan->file_verifikasi
-                ? asset('storage/' . $permohonan->file_verifikasi)
-                : null;
+                                $lampiranVerifikasi = $permohonan->file_verifikasi
+                                    ? asset('storage/' . $permohonan->file_verifikasi)
+                                    : null;
 
-            $lampiranProses = $permohonan->file_proses
-                ? asset('storage/' . $permohonan->file_proses)
-                : null;
+                                $lampiranProses = $permohonan->file_proses
+                                    ? asset('storage/' . $permohonan->file_proses)
+                                    : null;
 
-            $lampiranSelesai = $permohonan->file_selesai
-                ? asset('storage/' . $permohonan->file_selesai)
-                : null;
+                                $lampiranSelesai = $permohonan->file_selesai
+                                    ? asset('storage/' . $permohonan->file_selesai)
+                                    : null;
 
-        @endphp
+                            @endphp
 
 
-        <div class="admin-tracking-timeline">
+                            <div class="admin-tracking-timeline">
 
 
-            {{-- =================================================
-            1. PERMOHONAN DIAJUKAN
-            ================================================== --}}
-            <div class="admin-tracking-item
-                {{ $diajukanAktif ? 'selesai' : 'pending' }}">
+                                {{-- =================================================
+                                1. PERMOHONAN DIAJUKAN
+                                ================================================== --}}
+                                <div class="admin-tracking-item
+                    {{ $diajukanAktif ? 'selesai' : 'pending' }}">
 
-                <div class="admin-tracking-icon">
+                                    <div class="admin-tracking-icon">
 
-                    @if($diajukanAktif)
+                                        @if($diajukanAktif)
 
-                        <i class="bi bi-check-lg"></i>
+                                            <i class="bi bi-check-lg"></i>
 
-                    @else
+                                        @else
 
-                        <i class="bi bi-circle"></i>
+                                            <i class="bi bi-circle"></i>
 
-                    @endif
+                                        @endif
 
-                </div>
+                                    </div>
 
 
-                <div class="admin-tracking-content">
+                                    <div class="admin-tracking-content">
 
-                    <h6>
-                        Permohonan Diajukan
-                    </h6>
+                                        <h6>
+                                            Permohonan Diajukan
+                                        </h6>
 
 
-                    {{-- TANGGAL --}}
-                    @if($permohonan->created_at)
+                                        {{-- TANGGAL --}}
+                                        @if($permohonan->created_at)
 
-                        <small>
+                                            <small>
 
-                            <i class="bi bi-calendar-event me-1"></i>
+                                                <i class="bi bi-calendar-event me-1"></i>
 
-                            {{ $permohonan->created_at->translatedFormat('d F Y • H:i') }}
+                                                {{ $permohonan->created_at->translatedFormat('d F Y • H:i') }}
 
-                            WIB
+                                                WIB
 
-                        </small>
+                                            </small>
 
-                    @else
+                                        @else
 
-                        <small class="text-muted">
-                            -
-                        </small>
+                                            <small class="text-muted">
+                                                -
+                                            </small>
 
-                    @endif
+                                        @endif
 
 
-                    {{-- LAMPIRAN --}}
-                    <div class="mt-3">
+                                        {{-- LAMPIRAN --}}
+                                        <div class="mt-3">
 
-                        @if($lampiranPengajuan)
+                                            @if($lampiranPengajuan)
 
-                            <a href="{{ $lampiranPengajuan }}"
-                               target="_blank"
-                               class="btn btn-sm btn-primary">
+                                                <a href="{{ $lampiranPengajuan }}" target="_blank"
+                                                    class="btn btn-sm btn-primary">
 
-                                <i class="bi bi-paperclip me-1"></i>
+                                                    <i class="bi bi-paperclip me-1"></i>
 
-                                Lihat Lampiran
+                                                    Lihat Lampiran
 
-                            </a>
+                                                </a>
 
-                        @else
+                                            @else
 
-                            <button type="button"
-                                    class="btn btn-sm btn-secondary"
-                                    disabled>
+                                                <button type="button" class="btn btn-sm btn-secondary" disabled>
 
-                                <i class="bi bi-paperclip me-1"></i>
+                                                    <i class="bi bi-paperclip me-1"></i>
 
-                                Belum Ada Lampiran
+                                                    Belum Ada Lampiran
 
-                            </button>
+                                                </button>
 
-                        @endif
+                                            @endif
 
-                    </div>
+                                        </div>
 
-                </div>
+                                    </div>
 
-            </div>
+                                </div>
 
 
 
-            {{-- =================================================
-            2. DIVERIFIKASI
-            ================================================== --}}
-            <div class="admin-tracking-item
-                {{ $verifikasiAktif ? 'selesai' : 'pending' }}">
+                                {{-- =================================================
+                                2. DIVERIFIKASI
+                                ================================================== --}}
+                                <div class="admin-tracking-item
+                    {{ $verifikasiAktif ? 'selesai' : 'pending' }}">
 
-                <div class="admin-tracking-icon">
+                                    <div class="admin-tracking-icon">
 
-                    @if($verifikasiAktif)
+                                        @if($verifikasiAktif)
 
-                        <i class="bi bi-check-lg"></i>
+                                            <i class="bi bi-check-lg"></i>
 
-                    @else
+                                        @else
 
-                        <i class="bi bi-circle"></i>
+                                            <i class="bi bi-circle"></i>
 
-                    @endif
+                                        @endif
 
-                </div>
+                                    </div>
 
 
-                <div class="admin-tracking-content">
+                                    <div class="admin-tracking-content">
 
-                    <h6>
-                        Diverifikasi Admin BNNK
-                    </h6>
+                                        <h6>
+                                            Diverifikasi Admin BNNK
+                                        </h6>
 
 
-                    @if($verifikasiAktif)
+                                        @if($verifikasiAktif)
 
-                        {{-- TANGGAL --}}
-                        @if($permohonan->tanggal_verifikasi)
+                                            {{-- TANGGAL --}}
+                                            @if($permohonan->tanggal_verifikasi)
 
-                            <small>
+                                                                            <small>
 
-                                <i class="bi bi-calendar-event me-1"></i>
+                                                                                <i class="bi bi-calendar-event me-1"></i>
 
-                                {{ \Carbon\Carbon::parse(
-                                    $permohonan->tanggal_verifikasi
-                                )->translatedFormat('d F Y • H:i') }}
+                                                                                {{ \Carbon\Carbon::parse(
+                                                    $permohonan->tanggal_verifikasi
+                                                )->translatedFormat('d F Y • H:i') }}
 
-                                WIB
+                                                                                WIB
 
-                            </small>
+                                                                            </small>
 
-                        @else
+                                            @else
 
-                            <small class="text-muted">
+                                                <small class="text-muted">
 
-                                <i class="bi bi-check-circle me-1"></i>
+                                                    <i class="bi bi-check-circle me-1"></i>
 
-                                Permohonan telah diverifikasi.
+                                                    Permohonan telah diverifikasi.
 
-                            </small>
+                                                </small>
 
-                        @endif
+                                            @endif
 
 
-                        {{-- CATATAN --}}
-                        @if($permohonan->catatan_verifikasi)
+                                            {{-- CATATAN --}}
+                                            @if($permohonan->catatan_verifikasi)
 
-                            <div class="mt-2">
+                                                <div class="mt-2">
 
-                                <strong>
-                                    Catatan:
-                                </strong>
+                                                    <strong>
+                                                        Catatan:
+                                                    </strong>
 
-                                <br>
+                                                    <br>
 
-                                {{ $permohonan->catatan_verifikasi }}
+                                                    {{ $permohonan->catatan_verifikasi }}
+
+                                                </div>
+
+                                            @endif
+
+
+                                        @endif
+
+
+                                        {{-- LAMPIRAN VERIFIKASI --}}
+                                        <div class="mt-3">
+
+                                            @if($lampiranVerifikasi)
+
+                                                <a href="{{ $lampiranVerifikasi }}" target="_blank"
+                                                    class="btn btn-sm btn-primary">
+
+                                                    <i class="bi bi-paperclip me-1"></i>
+
+                                                    Lihat Lampiran
+
+                                                </a>
+
+                                            @else
+
+                                                <button type="button" class="btn btn-sm btn-secondary" disabled>
+
+                                                    <i class="bi bi-paperclip me-1"></i>
+
+                                                    Belum Ada Lampiran
+
+                                                </button>
+
+                                            @endif
+
+                                        </div>
+
+
+                                        @if(!$verifikasiAktif)
+
+                                            <small class="text-muted d-block mt-2">
+
+                                                Menunggu verifikasi admin.
+
+                                            </small>
+
+                                        @endif
+
+                                    </div>
+
+                                </div>
+
+
+
+                                {{-- =================================================
+                                3. DIPROSES
+                                ================================================== --}}
+                                <div class="admin-tracking-item
+                    {{ $prosesAktif ? 'selesai' : 'pending' }}">
+
+                                    <div class="admin-tracking-icon">
+
+                                        @if($prosesAktif)
+
+                                            <i class="bi bi-check-lg"></i>
+
+                                        @else
+
+                                            <i class="bi bi-hourglass-split"></i>
+
+                                        @endif
+
+                                    </div>
+
+
+                                    <div class="admin-tracking-content">
+
+                                        <h6>
+                                            Diproses BNNK
+                                        </h6>
+
+
+                                        @if($prosesAktif)
+
+                                            {{-- TANGGAL --}}
+                                            @if($permohonan->tanggal_proses)
+
+                                                                            <small>
+
+                                                                                <i class="bi bi-calendar-event me-1"></i>
+
+                                                                                {{ \Carbon\Carbon::parse(
+                                                    $permohonan->tanggal_proses
+                                                )->translatedFormat('d F Y • H:i') }}
+
+                                                                                WIB
+
+                                                                            </small>
+
+                                            @else
+
+                                                <small class="text-muted">
+
+                                                    <i class="bi bi-check-circle me-1"></i>
+
+                                                    Permohonan sedang diproses.
+
+                                                </small>
+
+                                            @endif
+
+
+                                            {{-- CATATAN --}}
+                                            @if($permohonan->catatan_proses)
+
+                                                <div class="mt-2">
+
+                                                    <strong>
+                                                        Catatan:
+                                                    </strong>
+
+                                                    <br>
+
+                                                    {{ $permohonan->catatan_proses }}
+
+                                                </div>
+
+                                            @endif
+
+                                        @endif
+
+
+                                        {{-- LAMPIRAN PROSES --}}
+                                        <div class="mt-3">
+
+                                            @if($lampiranProses)
+
+                                                <a href="{{ $lampiranProses }}" target="_blank" class="btn btn-sm btn-primary">
+
+                                                    <i class="bi bi-paperclip me-1"></i>
+
+                                                    Lihat Lampiran
+
+                                                </a>
+
+                                            @else
+
+                                                <button type="button" class="btn btn-sm btn-secondary" disabled>
+
+                                                    <i class="bi bi-paperclip me-1"></i>
+
+                                                    Belum Ada Lampiran
+
+                                                </button>
+
+                                            @endif
+
+                                        </div>
+
+
+                                        @if(!$prosesAktif)
+
+                                            <small class="text-muted d-block mt-2">
+
+                                                Menunggu proses BNNK.
+
+                                            </small>
+
+                                        @endif
+
+                                    </div>
+
+                                </div>
+
+
+
+                                {{-- =================================================
+                                4. PERMOHONAN SELESAI
+                                ================================================== --}}
+                                <div class="admin-tracking-item
+                    {{ $selesaiAktif ? 'selesai' : 'pending' }}">
+
+                                    <div class="admin-tracking-icon">
+
+                                        @if($selesaiAktif)
+
+                                            <i class="bi bi-check-lg"></i>
+
+                                        @else
+
+                                            <i class="bi bi-flag"></i>
+
+                                        @endif
+
+                                    </div>
+
+
+                                    <div class="admin-tracking-content">
+
+                                        <h6>
+                                            Permohonan Selesai
+                                        </h6>
+
+
+                                        @if($selesaiAktif)
+
+                                            {{-- TANGGAL --}}
+                                            @if($permohonan->tanggal_selesai)
+
+                                                                            <small>
+
+                                                                                <i class="bi bi-calendar-event me-1"></i>
+
+                                                                                {{ \Carbon\Carbon::parse(
+                                                    $permohonan->tanggal_selesai
+                                                )->translatedFormat('d F Y • H:i') }}
+
+                                                                                WIB
+
+                                                                            </small>
+
+                                            @else
+
+                                                <small class="text-muted">
+
+                                                    <i class="bi bi-check-circle me-1"></i>
+
+                                                    Permohonan telah selesai.
+
+                                                </small>
+
+                                            @endif
+
+
+                                            {{-- CATATAN --}}
+                                            @if($permohonan->catatan_selesai)
+
+                                                <div class="mt-2">
+
+                                                    <strong>
+                                                        Catatan:
+                                                    </strong>
+
+                                                    <br>
+
+                                                    {{ $permohonan->catatan_selesai }}
+
+                                                </div>
+
+                                            @endif
+
+                                        @endif
+
+
+                                        {{-- LAMPIRAN SELESAI --}}
+                                        <div class="mt-3">
+
+                                            @if($lampiranSelesai)
+
+                                                <a href="{{ $lampiranSelesai }}" target="_blank" class="btn btn-sm btn-primary">
+
+                                                    <i class="bi bi-paperclip me-1"></i>
+
+                                                    Lihat Lampiran
+
+                                                </a>
+
+                                            @else
+
+                                                <button type="button" class="btn btn-sm btn-secondary" disabled>
+
+                                                    <i class="bi bi-paperclip me-1"></i>
+
+                                                    Belum Ada Lampiran
+
+                                                </button>
+
+                                            @endif
+
+                                        </div>
+
+
+                                        @if(!$selesaiAktif)
+
+                                            <small class="text-muted d-block mt-2">
+
+                                                Belum selesai.
+
+                                            </small>
+
+                                        @endif
+
+                                    </div>
+
+                                </div>
+
 
                             </div>
 
-                        @endif
-
-
-                    @endif
-
-
-                    {{-- LAMPIRAN VERIFIKASI --}}
-                    <div class="mt-3">
-
-                        @if($lampiranVerifikasi)
-
-                            <a href="{{ $lampiranVerifikasi }}"
-                               target="_blank"
-                               class="btn btn-sm btn-primary">
-
-                                <i class="bi bi-paperclip me-1"></i>
-
-                                Lihat Lampiran
-
-                            </a>
-
-                        @else
-
-                            <button type="button"
-                                    class="btn btn-sm btn-secondary"
-                                    disabled>
-
-                                <i class="bi bi-paperclip me-1"></i>
-
-                                Belum Ada Lampiran
-
-                            </button>
-
-                        @endif
+                        </div>
 
                     </div>
-
-
-                    @if(!$verifikasiAktif)
-
-                        <small class="text-muted d-block mt-2">
-
-                            Menunggu verifikasi admin.
-
-                        </small>
-
-                    @endif
-
-                </div>
-
-            </div>
-
-
-
-            {{-- =================================================
-            3. DIPROSES
-            ================================================== --}}
-            <div class="admin-tracking-item
-                {{ $prosesAktif ? 'selesai' : 'pending' }}">
-
-                <div class="admin-tracking-icon">
-
-                    @if($prosesAktif)
-
-                        <i class="bi bi-check-lg"></i>
-
-                    @else
-
-                        <i class="bi bi-hourglass-split"></i>
-
-                    @endif
-
-                </div>
-
-
-                <div class="admin-tracking-content">
-
-                    <h6>
-                        Diproses BNNK
-                    </h6>
-
-
-                    @if($prosesAktif)
-
-                        {{-- TANGGAL --}}
-                        @if($permohonan->tanggal_proses)
-
-                            <small>
-
-                                <i class="bi bi-calendar-event me-1"></i>
-
-                                {{ \Carbon\Carbon::parse(
-                                    $permohonan->tanggal_proses
-                                )->translatedFormat('d F Y • H:i') }}
-
-                                WIB
-
-                            </small>
-
-                        @else
-
-                            <small class="text-muted">
-
-                                <i class="bi bi-check-circle me-1"></i>
-
-                                Permohonan sedang diproses.
-
-                            </small>
-
-                        @endif
-
-
-                        {{-- CATATAN --}}
-                        @if($permohonan->catatan_proses)
-
-                            <div class="mt-2">
-
-                                <strong>
-                                    Catatan:
-                                </strong>
-
-                                <br>
-
-                                {{ $permohonan->catatan_proses }}
-
-                            </div>
-
-                        @endif
-
-                    @endif
-
-
-                    {{-- LAMPIRAN PROSES --}}
-                    <div class="mt-3">
-
-                        @if($lampiranProses)
-
-                            <a href="{{ $lampiranProses }}"
-                               target="_blank"
-                               class="btn btn-sm btn-primary">
-
-                                <i class="bi bi-paperclip me-1"></i>
-
-                                Lihat Lampiran
-
-                            </a>
-
-                        @else
-
-                            <button type="button"
-                                    class="btn btn-sm btn-secondary"
-                                    disabled>
-
-                                <i class="bi bi-paperclip me-1"></i>
-
-                                Belum Ada Lampiran
-
-                            </button>
-
-                        @endif
-
-                    </div>
-
-
-                    @if(!$prosesAktif)
-
-                        <small class="text-muted d-block mt-2">
-
-                            Menunggu proses BNNK.
-
-                        </small>
-
-                    @endif
-
-                </div>
-
-            </div>
-
-
-
-            {{-- =================================================
-            4. PERMOHONAN SELESAI
-            ================================================== --}}
-            <div class="admin-tracking-item
-                {{ $selesaiAktif ? 'selesai' : 'pending' }}">
-
-                <div class="admin-tracking-icon">
-
-                    @if($selesaiAktif)
-
-                        <i class="bi bi-check-lg"></i>
-
-                    @else
-
-                        <i class="bi bi-flag"></i>
-
-                    @endif
-
-                </div>
-
-
-                <div class="admin-tracking-content">
-
-                    <h6>
-                        Permohonan Selesai
-                    </h6>
-
-
-                    @if($selesaiAktif)
-
-                        {{-- TANGGAL --}}
-                        @if($permohonan->tanggal_selesai)
-
-                            <small>
-
-                                <i class="bi bi-calendar-event me-1"></i>
-
-                                {{ \Carbon\Carbon::parse(
-                                    $permohonan->tanggal_selesai
-                                )->translatedFormat('d F Y • H:i') }}
-
-                                WIB
-
-                            </small>
-
-                        @else
-
-                            <small class="text-muted">
-
-                                <i class="bi bi-check-circle me-1"></i>
-
-                                Permohonan telah selesai.
-
-                            </small>
-
-                        @endif
-
-
-                        {{-- CATATAN --}}
-                        @if($permohonan->catatan_selesai)
-
-                            <div class="mt-2">
-
-                                <strong>
-                                    Catatan:
-                                </strong>
-
-                                <br>
-
-                                {{ $permohonan->catatan_selesai }}
-
-                            </div>
-
-                        @endif
-
-                    @endif
-
-
-                    {{-- LAMPIRAN SELESAI --}}
-                    <div class="mt-3">
-
-                        @if($lampiranSelesai)
-
-                            <a href="{{ $lampiranSelesai }}"
-                               target="_blank"
-                               class="btn btn-sm btn-primary">
-
-                                <i class="bi bi-paperclip me-1"></i>
-
-                                Lihat Lampiran
-
-                            </a>
-
-                        @else
-
-                            <button type="button"
-                                    class="btn btn-sm btn-secondary"
-                                    disabled>
-
-                                <i class="bi bi-paperclip me-1"></i>
-
-                                Belum Ada Lampiran
-
-                            </button>
-
-                        @endif
-
-                    </div>
-
-
-                    @if(!$selesaiAktif)
-
-                        <small class="text-muted d-block mt-2">
-
-                            Belum selesai.
-
-                        </small>
-
-                    @endif
-
-                </div>
-
-            </div>
-
-
-        </div>
-
-    </div>
-
-</div>
 
 
 
@@ -1354,20 +1340,20 @@ RIWAYAT STATUS
                                         {{-- Preview Gambar --}}
                                         <img id="previewBukti" src="" alt="Preview Bukti" class="img-fluid rounded shadow"
                                             style="
-                                                                                display: none;
-                                                                                max-height: 400px;
-                                                                                width: auto;
-                                                                            ">
+                                                                                    display: none;
+                                                                                    max-height: 400px;
+                                                                                    width: auto;
+                                                                                ">
 
 
                                         {{-- Preview PDF --}}
                                         <iframe id="previewPdf" src="" style="
-                                                                                display: none;
-                                                                                width: 100%;
-                                                                                height: 500px;
-                                                                                border: 1px solid #ddd;
-                                                                                border-radius: 8px;
-                                                                            "></iframe>
+                                                                                    display: none;
+                                                                                    width: 100%;
+                                                                                    height: 500px;
+                                                                                    border: 1px solid #ddd;
+                                                                                    border-radius: 8px;
+                                                                                "></iframe>
 
                                     </div>
 
@@ -1375,21 +1361,41 @@ RIWAYAT STATUS
 
 
                                 {{-- =================================================
-                                BUTTON
+                                | BUTTON
                                 ================================================== --}}
-                                <div class="d-grid">
+                                @if(
+                                        $permohonan->status !== 'Selesai' &&
+                                        $permohonan->status !== 'Ditolak'
+                                    )
 
-                                    <button type="submit" class="btn btn-primary">
+                                    <div class="d-grid">
 
-                                        <i class="bi bi-check-circle-fill me-1"></i>
+                                        <button type="submit" class="btn btn-primary">
 
-                                        Simpan Perubahan
+                                            <i class="bi bi-check-circle-fill me-1"></i>
 
-                                    </button>
+                                            Simpan Perubahan
 
-                                </div>
+                                        </button>
+
+                                    </div>
+
+                                @else
+
+                                    <div class="alert alert-secondary mb-0">
+
+                                        <i class="bi bi-lock-fill me-1"></i>
+
+                                        Status pengaduan sudah
+                                        <strong>{{ $permohonan->status }}</strong>
+                                        dan tidak dapat diubah kembali.
+
+                                    </div>
+
+                                @endif
 
                             </form>
+
 
                         </div>
 
@@ -1405,8 +1411,8 @@ RIWAYAT STATUS
     </section>
 
     <!-- ==========================================
-                                                                                                                     MODAL DETAIL TINDAK LANJUT PERMOHONAN
-                                                                                                                ========================================== -->
+                                                                                                                         MODAL DETAIL TINDAK LANJUT PERMOHONAN
+                                                                                                                    ========================================== -->
     <div class="modal fade" id="detailPermohonanModal" tabindex="-1" aria-labelledby="detailPermohonanModalLabel"
         aria-hidden="true">
 

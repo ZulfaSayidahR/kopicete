@@ -939,76 +939,81 @@
             aria-hidden="true"
         >
 
-            <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-dialog modal-dialog-centered">
 
-                <div class="modal-content border-0 shadow-lg rounded-4">
-
-
-                    {{-- HEADER --}}
-                    <div class="modal-header border-0">
-
-                        <div>
-
-                            <h5
-                                class="modal-title fw-bold"
-                                id="resetPasswordModalLabel"
-                            >
-
-                                <i class="bi bi-key-fill me-2"></i>
-
-                                Reset Password
-
-                            </h5>
-
-                            <small class="text-muted">
-                                Buat password baru untuk akun admin.
-                            </small>
-
-                        </div>
+            <div class="modal-content border-0 shadow-lg rounded-4">
 
 
-                        <button
-                            type="button"
-                            class="btn-close"
-                            data-bs-dismiss="modal"
-                        ></button>
+                {{-- HEADER --}}
+                <div class="modal-header border-0">
+
+                    <div>
+
+                        <h5
+                            class="modal-title fw-bold"
+                            id="resetPasswordModalLabel"
+                        >
+
+                            <i class="bi bi-key-fill me-2"></i>
+
+                            Reset Password
+
+                        </h5>
+
+                        <small class="text-muted">
+                            Buat password baru untuk akun admin.
+                        </small>
 
                     </div>
 
 
-                    {{-- BODY --}}
-                    <div class="modal-body">
+                    <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                    ></button>
 
-                        <div class="alert alert-warning">
-
-                            <i class="bi bi-exclamation-triangle-fill me-1"></i>
-
-                            Password akun berikut akan diubah:
-
-                            <strong id="resetAdminName">
-                                Admin
-                            </strong>
-
-                        </div>
+                </div>
 
 
-                        <form
-                            id="resetPasswordForm"
-                            method="POST"
-                            action=""
-                        >
+                {{-- BODY --}}
+                <div class="modal-body">
 
-                            @csrf
+                    <div class="alert alert-warning">
 
-                            @method('PUT')
+                        <i class="bi bi-exclamation-triangle-fill me-1"></i>
+
+                        Password akun berikut akan diubah:
+
+                        <strong id="resetAdminName">
+                            Admin
+                        </strong>
+
+                    </div>
 
 
-                            {{-- PASSWORD BARU --}}
-                            <div class="mb-3">
+                    <form
+                        id="resetPasswordForm"
+                        method="POST"
+                        action=""
+                    >
 
-                                <label class="form-label fw-semibold">
-                                    Password Baru
-                                </label>
+                        @csrf
+
+                        @method('PUT')
+
+
+                        {{-- =================================================
+                        PASSWORD BARU
+                        ================================================== --}}
+                        <div class="mb-3">
+
+                            <label class="form-label fw-semibold">
+                                Password Baru
+                            </label>
+
+
+                            <div style="position: relative;">
 
                                 <input
                                     type="password"
@@ -1018,17 +1023,41 @@
                                     placeholder="Masukkan password baru"
                                     minlength="8"
                                     required
+                                    style="padding-right: 45px;"
                                 >
+
+
+                                {{-- ICON MATA PASSWORD BARU --}}
+                                <i
+                                    class="bi bi-eye-fill"
+                                    id="toggleNewPassword"
+                                    title="Lihat password"
+                                    style="
+                                        position: absolute;
+                                        right: 15px;
+                                        top: 50%;
+                                        transform: translateY(-50%);
+                                        cursor: pointer;
+                                        z-index: 10;
+                                    "
+                                ></i>
 
                             </div>
 
+                        </div>
 
-                            {{-- KONFIRMASI PASSWORD --}}
-                            <div class="mb-3">
 
-                                <label class="form-label fw-semibold">
-                                    Konfirmasi Password
-                                </label>
+                        {{-- =================================================
+                        KONFIRMASI PASSWORD
+                        ================================================== --}}
+                        <div class="mb-3">
+
+                            <label class="form-label fw-semibold">
+                                Konfirmasi Password
+                            </label>
+
+
+                            <div style="position: relative;">
 
                                 <input
                                     type="password"
@@ -1038,45 +1067,196 @@
                                     placeholder="Ulangi password baru"
                                     minlength="8"
                                     required
+                                    style="padding-right: 45px;"
                                 >
+
+
+                                {{-- ICON MATA KONFIRMASI PASSWORD --}}
+                                <i
+                                    class="bi bi-eye-fill"
+                                    id="toggleConfirmPassword"
+                                    title="Lihat konfirmasi password"
+                                    style="
+                                        position: absolute;
+                                        right: 15px;
+                                        top: 50%;
+                                        transform: translateY(-50%);
+                                        cursor: pointer;
+                                        z-index: 10;
+                                    "
+                                ></i>
 
                             </div>
 
-                        </form>
-
-                    </div>
+                        </div>
 
 
-                    {{-- FOOTER --}}
-                    <div class="modal-footer border-0">
-
-                        <button
-                            type="button"
-                            class="btn btn-light"
-                            data-bs-dismiss="modal"
-                        >
-                            Batal
-                        </button>
-
-                        <button
-                            type="submit"
-                            form="resetPasswordForm"
-                            class="btn btn-primary"
-                        >
-
-                            <i class="bi bi-key-fill me-1"></i>
-
-                            Reset Password
-
-                        </button>
-
-                    </div>
+                    </form>
 
                 </div>
+
+
+                {{-- FOOTER --}}
+                <div class="modal-footer border-0">
+
+                    <button
+                        type="button"
+                        class="btn btn-light"
+                        data-bs-dismiss="modal"
+                    >
+                        Batal
+                    </button>
+
+
+                    <button
+                        type="submit"
+                        form="resetPasswordForm"
+                        class="btn btn-primary"
+                    >
+
+                        <i class="bi bi-key-fill me-1"></i>
+
+                        Reset Password
+
+                    </button>
+
+                </div>
+
 
             </div>
 
         </div>
+
+        </div>
+
+        {{-- ============================================================
+        JAVASCRIPT ICON MATA PASSWORD
+        ============================================================ --}}
+        <script>
+
+        document.addEventListener('DOMContentLoaded', function () {
+
+
+            // ============================================================
+            // PASSWORD BARU
+            // ============================================================
+
+            const newPassword =
+                document.getElementById('newPassword');
+
+            const toggleNewPassword =
+                document.getElementById('toggleNewPassword');
+
+
+            if (toggleNewPassword && newPassword) {
+
+                toggleNewPassword.addEventListener(
+                    'click',
+                    function () {
+
+                        if (newPassword.type === 'password') {
+
+                            newPassword.type = 'text';
+
+                            this.classList.remove(
+                                'bi-eye-fill'
+                            );
+
+                            this.classList.add(
+                                'bi-eye-slash-fill'
+                            );
+
+                            this.setAttribute(
+                                'title',
+                                'Sembunyikan password'
+                            );
+
+                        } else {
+
+                            newPassword.type = 'password';
+
+                            this.classList.remove(
+                                'bi-eye-slash-fill'
+                            );
+
+                            this.classList.add(
+                                'bi-eye-fill'
+                            );
+
+                            this.setAttribute(
+                                'title',
+                                'Lihat password'
+                            );
+
+                        }
+
+                    }
+                );
+
+            }
+
+
+            // ============================================================
+            // KONFIRMASI PASSWORD
+            // ============================================================
+
+            const confirmPassword =
+                document.getElementById('confirmPassword');
+
+            const toggleConfirmPassword =
+                document.getElementById('toggleConfirmPassword');
+
+
+            if (toggleConfirmPassword && confirmPassword) {
+
+                toggleConfirmPassword.addEventListener(
+                    'click',
+                    function () {
+
+                        if (confirmPassword.type === 'password') {
+
+                            confirmPassword.type = 'text';
+
+                            this.classList.remove(
+                                'bi-eye-fill'
+                            );
+
+                            this.classList.add(
+                                'bi-eye-slash-fill'
+                            );
+
+                            this.setAttribute(
+                                'title',
+                                'Sembunyikan konfirmasi password'
+                            );
+
+                        } else {
+
+                            confirmPassword.type = 'password';
+
+                            this.classList.remove(
+                                'bi-eye-slash-fill'
+                            );
+
+                            this.classList.add(
+                                'bi-eye-fill'
+                            );
+
+                            this.setAttribute(
+                                'title',
+                                'Lihat konfirmasi password'
+                            );
+
+                        }
+
+                    }
+                );
+
+            }
+
+        });
+
+        </script>
 
 
         {{-- =========================================================

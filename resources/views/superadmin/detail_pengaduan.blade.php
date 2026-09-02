@@ -870,26 +870,53 @@
 
                                 <div class="mb-3">
 
-                                  <label for="bukti" class="form-label">
+                                    <label for="bukti" class="form-label">
                                         Upload Bukti Tindak Lanjut
                                     </label>
 
                                     <input type="file" name="bukti" id="bukti" class="form-control"
                                         accept=".jpg,.jpeg,.png">
 
-                                           <small class="text-muted">
+                                    <small class="text-muted">
                                         Format JPG, JPEG, PNG, PDF. Maksimal 2 MB.
                                     </small>
 
                                 </div>
 
 
-                                <button type="submit" class="btn btn-primary">
+                                {{-- =================================================
+                                | BUTTON
+                                ================================================== --}}
+                                @if(
+                                        $pengaduan->status !== 'Selesai' &&
+                                        $pengaduan->status !== 'Ditolak'
+                                    )
 
-                                    Simpan Perubahan
+                                    <div class="d-grid">
 
-                                </button>
+                                        <button type="submit" class="btn btn-primary">
 
+                                            <i class="bi bi-check-circle-fill me-1"></i>
+
+                                            Simpan Perubahan
+
+                                        </button>
+
+                                    </div>
+
+                                @else
+
+                                    <div class="alert alert-secondary mb-0">
+
+                                        <i class="bi bi-lock-fill me-1"></i>
+
+                                        Status pengaduan sudah
+                                        <strong>{{ $pengaduan->status }}</strong>
+                                        dan tidak dapat diubah kembali.
+
+                                    </div>
+
+                                @endif
                             </form>
 
                         </div>
@@ -956,11 +983,11 @@
                                 {{-- FOTO --}}
                                 <img id="modalFoto" src="" alt="Bukti Tindak Lanjut"
                                     class="img-fluid rounded-3 shadow-sm border" style="
-                                                                max-width:100%;
-                                                                max-height:350px;
-                                                                object-fit:contain;
-                                                                display:none;
-                                                            ">
+                                                                    max-width:100%;
+                                                                    max-height:350px;
+                                                                    object-fit:contain;
+                                                                    display:none;
+                                                                ">
 
 
                                 {{-- TOMBOL LIHAT FOTO --}}
