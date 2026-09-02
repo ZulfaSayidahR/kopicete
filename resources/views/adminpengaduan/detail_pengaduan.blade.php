@@ -423,444 +423,457 @@
                 ====================================================== --}}
                 <div class="col-lg-5">
 
-                    {{-- ================= RIWAYAT STATUS ================= --}}
-                    <div class="sa-panel">
+                  {{-- ================= RIWAYAT STATUS ================= --}}
+<div class="sa-panel">
 
-                        <div class="sa-panel-header">
-                            <h3>
-                                <i class="bi bi-clock-history me-2"></i>
-                                Riwayat Status
-                            </h3>
-                        </div>
+    <div class="sa-panel-header">
+        <h3>
+            <i class="bi bi-clock-history me-2"></i>
+            Riwayat Status
+        </h3>
+    </div>
 
-                        <div class="p-4">
+    <div class="p-4">
 
-                            <div class="admin-tracking-timeline">
+        <div class="admin-tracking-timeline">
 
-                                @php
+            @php
 
-                                    /*
-                                    |--------------------------------------------------------------------------
-                                    | STATUS PERMOHONAN / PENGADUAN
-                                    |--------------------------------------------------------------------------
-                                    */
+                /*
+                |--------------------------------------------------------------------------
+                | STATUS SAAT INI
+                |--------------------------------------------------------------------------
+                */
 
-                                    $status = trim($pengaduan->status ?? 'Diajukan');
+                $status = trim($pengaduan->status ?? 'Diajukan');
 
 
-                                    /*
-                                    |--------------------------------------------------------------------------
-                                    | TENTUKAN TAHAP BERDASARKAN STATUS DATABASE
-                                    |--------------------------------------------------------------------------
-                                    */
+                /*
+                |--------------------------------------------------------------------------
+                | TENTUKAN TAHAP YANG SUDAH SELESAI
+                |--------------------------------------------------------------------------
+                */
 
-                                    $diajukanAktif = in_array($status, [
-                                        'Diajukan',
-                                        'Diverifikasi',
-                                        'Diproses',
-                                        'Selesai'
-                                    ]);
+                $diajukanAktif = in_array($status, [
+                    'Diajukan',
+                    'Diverifikasi',
+                    'Diproses',
+                    'Selesai'
+                ]);
 
+                $verifikasiAktif = in_array($status, [
+                    'Diverifikasi',
+                    'Diproses',
+                    'Selesai'
+                ]);
 
-                                    $verifikasiAktif = in_array($status, [
-                                        'Diverifikasi',
-                                        'Diproses',
-                                        'Selesai'
-                                    ]);
+                $prosesAktif = in_array($status, [
+                    'Diproses',
+                    'Selesai'
+                ]);
 
+                $selesaiAktif = $status === 'Selesai';
 
-                                    $prosesAktif = in_array($status, [
-                                        'Diproses',
-                                        'Selesai'
-                                    ]);
+            @endphp
 
 
-                                    $selesaiAktif = $status === 'Selesai';
+            {{-- =====================================================
+            1. DIAJUKAN
+            ====================================================== --}}
 
-                                @endphp
+            <div class="admin-tracking-item {{ $diajukanAktif ? 'selesai' : 'pending' }}">
 
+                <div class="admin-tracking-icon">
 
+                    @if($diajukanAktif)
+                        <i class="bi bi-check-lg"></i>
+                    @else
+                        <i class="bi bi-circle"></i>
+                    @endif
 
-                                {{-- =====================================================
-                                1. DIAJUKAN
-                                ====================================================== --}}
+                </div>
 
-                                <div class="admin-tracking-item {{ $diajukanAktif ? 'selesai' : 'pending' }}">
 
-                                    <div class="admin-tracking-icon">
+                <div class="admin-tracking-content">
 
-                                        @if($diajukanAktif)
+                    <h6>
+                        Diajukan
+                    </h6>
 
-                                            <i class="bi bi-check-lg"></i>
+                    @if($pengaduan->created_at)
 
-                                        @else
+                        <small>
+                            <i class="bi bi-calendar-event me-1"></i>
 
-                                            <i class="bi bi-circle"></i>
+                            {{ $pengaduan->created_at->translatedFormat('d F Y • H:i') }}
+                            WIB
+                        </small>
 
-                                        @endif
+                    @else
 
-                                    </div>
+                        <small class="text-muted">
+                            -
+                        </small>
 
+                    @endif
 
-                                    <div class="admin-tracking-content">
+                </div>
 
-                                        <h6>
-                                            Diajukan
-                                        </h6>
+            </div>
 
 
-                                        @if($pengaduan->created_at)
 
-                                            <small>
+            {{-- =====================================================
+            2. DIVERIFIKASI
+            ====================================================== --}}
 
-                                                <i class="bi bi-calendar-event me-1"></i>
+            <div class="admin-tracking-item {{ $verifikasiAktif ? 'selesai' : 'pending' }}">
 
-                                                {{ $pengaduan->created_at->translatedFormat('d F Y • H:i') }}
+                <div class="admin-tracking-icon">
 
-                                                WIB
+                    @if($verifikasiAktif)
+                        <i class="bi bi-check-lg"></i>
+                    @else
+                        <i class="bi bi-circle"></i>
+                    @endif
 
-                                            </small>
+                </div>
 
-                                        @else
 
-                                            <small class="text-muted">
-                                                -
-                                            </small>
+                <div class="admin-tracking-content">
 
-                                        @endif
+                    <h6>
+                        Diverifikasi Admin BNNK
+                    </h6>
 
-                                    </div>
 
-                                </div>
+                    @if($verifikasiAktif)
 
+                        {{-- TANGGAL --}}
+                        @if($pengaduan->tanggal_verifikasi)
 
+                            <small>
+                                <i class="bi bi-calendar-event me-1"></i>
 
-                                {{-- =====================================================
-                                2. DIVERIFIKASI
-                                ====================================================== --}}
+                                {{ \Carbon\Carbon::parse($pengaduan->tanggal_verifikasi)->translatedFormat('d F Y • H:i') }}
+                                WIB
+                            </small>
 
-                                <div class="admin-tracking-item {{ $verifikasiAktif ? 'selesai' : 'pending' }}">
+                        @else
 
-                                    <div class="admin-tracking-icon">
+                            <small>
+                                <i class="bi bi-check-circle me-1"></i>
+                                Pengaduan telah diverifikasi.
+                            </small>
 
-                                        @if($verifikasiAktif)
+                        @endif
 
-                                            <i class="bi bi-check-lg"></i>
 
-                                        @else
+                        {{-- CATATAN --}}
+                        @if($pengaduan->catatan_verifikasi)
 
-                                            <i class="bi bi-circle"></i>
+                            <div class="mt-2">
 
-                                        @endif
+                                <strong>
+                                    Catatan:
+                                </strong>
 
-                                    </div>
+                                <br>
 
-
-                                    <div class="admin-tracking-content">
-
-                                        <h6>
-                                            Diverifikasi Admin BNNK
-                                        </h6>
-
-
-                                        @if($verifikasiAktif)
-
-                                            @if($pengaduan->tanggal_verifikasi)
-
-                                                                            <small>
-
-                                                                                <i class="bi bi-calendar-event me-1"></i>
-
-                                                                                {{ \Carbon\Carbon::parse(
-                                                    $pengaduan->tanggal_verifikasi
-                                                )->translatedFormat('d F Y • H:i') }}
-
-                                                                                WIB
-
-                                                                            </small>
-
-                                            @else
-
-                                                <small>
-
-                                                    <i class="bi bi-check-circle me-1"></i>
-
-                                                    Pengaduan telah diverifikasi.
-
-                                                </small>
-
-                                            @endif
-
-
-                                            @if($pengaduan->catatan_verifikasi)
-
-                                                <div class="mt-2">
-
-                                                    <strong>
-                                                        Catatan:
-                                                    </strong>
-
-                                                    <br>
-
-                                                    {{ $pengaduan->catatan_verifikasi }}
-
-                                                </div>
-
-                                            @endif
-
-
-                                            @if($pengaduan->foto_verifikasi)
-
-                                                <div class="mt-2">
-
-                                                    <button type="button" class="btn-detail-admin" data-bs-toggle="modal"
-                                                        data-bs-target="#detailAdminModal">
-
-                                                        <i class="bi bi-eye-fill me-1"></i>
-
-                                                        Lihat Bukti & Catatan
-
-                                                    </button>
-
-                                                </div>
-
-                                            @endif
-
-
-                                        @else
-
-                                            <small class="text-muted">
-
-                                                Menunggu verifikasi admin.
-
-                                            </small>
-
-                                        @endif
-
-                                    </div>
-
-                                </div>
-
-
-
-                                {{-- =====================================================
-                                3. DIPROSES LAPANGAN
-                                ====================================================== --}}
-
-                                <div class="admin-tracking-item {{ $prosesAktif ? 'selesai' : 'pending' }}">
-
-                                    <div class="admin-tracking-icon">
-
-                                        @if($prosesAktif)
-
-                                            <i class="bi bi-check-lg"></i>
-
-                                        @else
-
-                                            <i class="bi bi-hourglass-split"></i>
-
-                                        @endif
-
-                                    </div>
-
-
-                                    <div class="admin-tracking-content">
-
-                                        <h6>
-                                            Diproses Lapangan
-                                        </h6>
-
-
-                                        @if($prosesAktif)
-
-                                            @if($pengaduan->tanggal_proses)
-
-                                                                            <small>
-
-                                                                                <i class="bi bi-calendar-event me-1"></i>
-
-                                                                                {{ \Carbon\Carbon::parse(
-                                                    $pengaduan->tanggal_proses
-                                                )->translatedFormat('d F Y • H:i') }}
-
-                                                                                WIB
-
-                                                                            </small>
-
-                                            @else
-
-                                                <small>
-
-                                                    <i class="bi bi-check-circle me-1"></i>
-
-                                                    Pengaduan sedang diproses.
-
-                                                </small>
-
-                                            @endif
-
-
-                                            @if($pengaduan->catatan_proses)
-
-                                                <div class="mt-2">
-
-                                                    <strong>
-                                                        Catatan:
-                                                    </strong>
-
-                                                    <br>
-
-                                                    {{ $pengaduan->catatan_proses }}
-
-                                                </div>
-
-                                            @endif
-
-
-                                            @if($pengaduan->foto_proses)
-
-                                                <div class="mt-2">
-
-                                                    <button type="button" class="btn-detail-admin" data-bs-toggle="modal"
-                                                        data-bs-target="#detailAdminModal">
-
-                                                        <i class="bi bi-eye-fill me-1"></i>
-
-                                                        Lihat Bukti & Catatan
-
-                                                    </button>
-
-                                                </div>
-
-                                            @endif
-
-
-                                        @else
-
-                                            <small class="text-muted">
-
-                                                Menunggu proses lapangan.
-
-                                            </small>
-
-                                        @endif
-
-                                    </div>
-
-                                </div>
-
-
-
-                                {{-- =====================================================
-                                4. SELESAI
-                                ====================================================== --}}
-
-                                <div class="admin-tracking-item {{ $selesaiAktif ? 'selesai' : 'pending' }}">
-
-                                    <div class="admin-tracking-icon">
-
-                                        @if($selesaiAktif)
-
-                                            <i class="bi bi-check-lg"></i>
-
-                                        @else
-
-                                            <i class="bi bi-flag"></i>
-
-                                        @endif
-
-                                    </div>
-
-
-                                    <div class="admin-tracking-content">
-
-                                        <h6>
-                                            Selesai / Diteruskan BNNK
-                                        </h6>
-
-
-                                        @if($selesaiAktif)
-
-                                            @if($pengaduan->tanggal_selesai)
-
-                                                                            <small>
-
-                                                                                <i class="bi bi-calendar-event me-1"></i>
-
-                                                                                {{ \Carbon\Carbon::parse(
-                                                    $pengaduan->tanggal_selesai
-                                                )->translatedFormat('d F Y • H:i') }}
-
-                                                                                WIB
-
-                                                                            </small>
-
-                                            @else
-
-                                                <small>
-
-                                                    <i class="bi bi-check-circle me-1"></i>
-
-                                                    Pengaduan telah selesai.
-
-                                                </small>
-
-                                            @endif
-
-
-                                            @if($pengaduan->catatan_selesai)
-
-                                                <div class="mt-2">
-
-                                                    <strong>
-                                                        Catatan:
-                                                    </strong>
-
-                                                    <br>
-
-                                                    {{ $pengaduan->catatan_selesai }}
-
-                                                </div>
-
-                                            @endif
-
-
-                                            @if($pengaduan->foto_selesai)
-
-                                                <div class="mt-2">
-
-                                                    <button type="button" class="btn-detail-admin" data-bs-toggle="modal"
-                                                        data-bs-target="#detailAdminModal">
-
-                                                        <i class="bi bi-eye-fill me-1"></i>
-
-                                                        Lihat Bukti & Catatan
-
-                                                    </button>
-
-                                                </div>
-
-                                            @endif
-
-
-                                        @else
-
-                                            <small class="text-muted">
-
-                                                Belum selesai.
-
-                                            </small>
-
-                                        @endif
-
-                                    </div>
-
-                                </div>
+                                {{ $pengaduan->catatan_verifikasi }}
 
                             </div>
-                        </div>
 
-                    </div>
+                        @endif
+
+
+                        {{-- TOMBOL DETAIL VERIFIKASI --}}
+                        @if(
+                            $pengaduan->foto_verifikasi ||
+                            $pengaduan->catatan_verifikasi ||
+                            $pengaduan->tanggal_verifikasi
+                        )
+
+                            <div class="mt-2">
+
+                                <button
+                                    type="button"
+                                    class="btn-detail-admin"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#detailAdminModal"
+
+                                    data-status="Diverifikasi"
+
+                                    data-foto="{{ $pengaduan->foto_verifikasi
+                                        ? asset('storage/' . $pengaduan->foto_verifikasi)
+                                        : '' }}"
+
+                                    data-catatan="{{ $pengaduan->catatan_verifikasi ?? '' }}"
+
+                                    data-tanggal="{{ $pengaduan->tanggal_verifikasi
+                                        ? \Carbon\Carbon::parse($pengaduan->tanggal_verifikasi)->translatedFormat('d F Y • H:i')
+                                        : '' }}"
+                                >
+
+                                    <i class="bi bi-eye-fill me-1"></i>
+
+                                    Lihat Bukti & Catatan
+
+                                </button>
+
+                            </div>
+
+                        @endif
+
+                    @else
+
+                        <small class="text-muted">
+                            Menunggu verifikasi admin.
+                        </small>
+
+                    @endif
+
+                </div>
+
+            </div>
+
+
+
+            {{-- =====================================================
+            3. DIPROSES LAPANGAN
+            ====================================================== --}}
+
+            <div class="admin-tracking-item {{ $prosesAktif ? 'selesai' : 'pending' }}">
+
+                <div class="admin-tracking-icon">
+
+                    @if($prosesAktif)
+                        <i class="bi bi-check-lg"></i>
+                    @else
+                        <i class="bi bi-hourglass-split"></i>
+                    @endif
+
+                </div>
+
+
+                <div class="admin-tracking-content">
+
+                    <h6>
+                        Diproses Lapangan
+                    </h6>
+
+
+                    @if($prosesAktif)
+
+                        {{-- TANGGAL --}}
+                        @if($pengaduan->tanggal_proses)
+
+                            <small>
+                                <i class="bi bi-calendar-event me-1"></i>
+
+                                {{ \Carbon\Carbon::parse($pengaduan->tanggal_proses)->translatedFormat('d F Y • H:i') }}
+                                WIB
+                            </small>
+
+                        @else
+
+                            <small>
+                                <i class="bi bi-check-circle me-1"></i>
+                                Pengaduan sedang diproses.
+                            </small>
+
+                        @endif
+
+
+                        {{-- CATATAN --}}
+                        @if($pengaduan->catatan_proses)
+
+                            <div class="mt-2">
+
+                                <strong>
+                                    Catatan:
+                                </strong>
+
+                                <br>
+
+                                {{ $pengaduan->catatan_proses }}
+
+                            </div>
+
+                        @endif
+
+
+                        {{-- TOMBOL DETAIL PROSES --}}
+                        @if(
+                            $pengaduan->foto_proses ||
+                            $pengaduan->catatan_proses ||
+                            $pengaduan->tanggal_proses
+                        )
+
+                            <div class="mt-2">
+
+                                <button
+                                    type="button"
+                                    class="btn-detail-admin"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#detailAdminModal"
+
+                                    data-status="Diproses"
+
+                                    data-foto="{{ $pengaduan->foto_proses
+                                        ? asset('storage/' . $pengaduan->foto_proses)
+                                        : '' }}"
+
+                                    data-catatan="{{ $pengaduan->catatan_proses ?? '' }}"
+
+                                    data-tanggal="{{ $pengaduan->tanggal_proses
+                                        ? \Carbon\Carbon::parse($pengaduan->tanggal_proses)->translatedFormat('d F Y • H:i')
+                                        : '' }}"
+                                >
+
+                                    <i class="bi bi-eye-fill me-1"></i>
+
+                                    Lihat Bukti & Catatan
+
+                                </button>
+
+                            </div>
+
+                        @endif
+
+                    @else
+
+                        <small class="text-muted">
+                            Menunggu proses lapangan.
+                        </small>
+
+                    @endif
+
+                </div>
+
+            </div>
+
+
+
+            {{-- =====================================================
+            4. SELESAI
+            ====================================================== --}}
+
+            <div class="admin-tracking-item {{ $selesaiAktif ? 'selesai' : 'pending' }}">
+
+                <div class="admin-tracking-icon">
+
+                    @if($selesaiAktif)
+                        <i class="bi bi-check-lg"></i>
+                    @else
+                        <i class="bi bi-flag"></i>
+                    @endif
+
+                </div>
+
+
+                <div class="admin-tracking-content">
+
+                    <h6>
+                        Selesai / Diteruskan BNNK
+                    </h6>
+
+
+                    @if($selesaiAktif)
+
+                        {{-- TANGGAL --}}
+                        @if($pengaduan->tanggal_selesai)
+
+                            <small>
+                                <i class="bi bi-calendar-event me-1"></i>
+
+                                {{ \Carbon\Carbon::parse($pengaduan->tanggal_selesai)->translatedFormat('d F Y • H:i') }}
+                                WIB
+                            </small>
+
+                        @else
+
+                            <small>
+                                <i class="bi bi-check-circle me-1"></i>
+                                Pengaduan telah selesai.
+                            </small>
+
+                        @endif
+
+
+                        {{-- CATATAN --}}
+                        @if($pengaduan->catatan_selesai)
+
+                            <div class="mt-2">
+
+                                <strong>
+                                    Catatan:
+                                </strong>
+
+                                <br>
+
+                                {{ $pengaduan->catatan_selesai }}
+
+                            </div>
+
+                        @endif
+
+
+                        {{-- TOMBOL DETAIL SELESAI --}}
+                        @if(
+                            $pengaduan->foto_selesai ||
+                            $pengaduan->catatan_selesai ||
+                            $pengaduan->tanggal_selesai
+                        )
+
+                            <div class="mt-2">
+
+                                <button
+                                    type="button"
+                                    class="btn-detail-admin"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#detailAdminModal"
+
+                                    data-status="Selesai"
+
+                                    data-foto="{{ $pengaduan->foto_selesai
+                                        ? asset('storage/' . $pengaduan->foto_selesai)
+                                        : '' }}"
+
+                                    data-catatan="{{ $pengaduan->catatan_selesai ?? '' }}"
+
+                                    data-tanggal="{{ $pengaduan->tanggal_selesai
+                                        ? \Carbon\Carbon::parse($pengaduan->tanggal_selesai)->translatedFormat('d F Y • H:i')
+                                        : '' }}"
+                                >
+
+                                    <i class="bi bi-eye-fill me-1"></i>
+
+                                    Lihat Bukti & Catatan
+
+                                </button>
+
+                            </div>
+
+                        @endif
+
+                    @else
+
+                        <small class="text-muted">
+                            Belum selesai.
+                        </small>
+
+                    @endif
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
 
 
                     {{-- =================================================
@@ -1077,51 +1090,8 @@
 
 
     {{-- =========================================================
-    | MODAL DETAIL TINDAK LANJUT
-    ========================================================= --}}
-
-    @php
-
-        $foto = null;
-        $catatan = null;
-        $tanggal = null;
-        $statusClass = 'bg-secondary';
-
-        if ($pengaduan->status == 'Diverifikasi') {
-
-            $foto = $pengaduan->foto_verifikasi;
-            $catatan = $pengaduan->catatan_verifikasi;
-            $tanggal = $pengaduan->tanggal_verifikasi;
-            $statusClass = 'bg-primary';
-
-        } elseif ($pengaduan->status == 'Diproses') {
-
-            $foto = $pengaduan->foto_proses;
-            $catatan = $pengaduan->catatan_proses;
-            $tanggal = $pengaduan->tanggal_proses;
-            $statusClass = 'bg-warning text-dark';
-
-        } elseif ($pengaduan->status == 'Selesai') {
-
-            $foto = $pengaduan->foto_selesai;
-            $catatan = $pengaduan->catatan_selesai;
-            $tanggal = $pengaduan->tanggal_selesai;
-            $statusClass = 'bg-success';
-
-        } elseif ($pengaduan->status == 'Ditolak') {
-
-            $foto = $pengaduan->foto_verifikasi;
-            $catatan = $pengaduan->catatan_verifikasi;
-            $tanggal = $pengaduan->tanggal_verifikasi;
-            $statusClass = 'bg-danger';
-
-        }
-
-    @endphp
-
-
-    {{-- =========================================================
-    MODAL DETAIL TINDAK LANJUT
+    MODAL DETAIL TINDAK LANJUT ADUAN
+    MODAL DINAMIS SESUAI TIMELINE
     ========================================================= --}}
 
     <div class="modal fade" id="detailAdminModal" tabindex="-1" aria-labelledby="detailAdminModalLabel" aria-hidden="true">
@@ -1135,13 +1105,9 @@
                 HEADER
                 ====================================================== --}}
 
-                <div class="modal-header
-                                            {{ $statusClass }}">
+                <div class="modal-header" id="modalDetailHeader" style="background:#0d6efd;">
 
-                    <h5 class="modal-title fw-bold
-                                                @if($statusClass != 'bg-warning text-dark')
-                                                    text-white
-                                                @endif" id="detailAdminModalLabel">
+                    <h5 class="modal-title fw-bold text-white" id="detailAdminModalLabel">
 
                         <i class="bi bi-file-earmark-medical me-2"></i>
 
@@ -1149,11 +1115,7 @@
 
                     </h5>
 
-
-                    <button type="button" class="btn-close
-                                                        @if($statusClass != 'bg-warning text-dark')
-                                                            btn-close-white
-                                                        @endif" data-bs-dismiss="modal" aria-label="Close">
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close">
                     </button>
 
                 </div>
@@ -1175,59 +1137,57 @@
 
                         <div class="col-md-5">
 
-                            @if($foto)
+                            {{-- GAMBAR --}}
 
-                                <div class="text-center">
+                            <div id="modalFotoContainer" class="text-center">
 
-                                    <img src="{{ asset('storage/' . $foto) }}" alt="Bukti Tindak Lanjut"
-                                        class="img-fluid rounded-3 shadow-sm border" style="
-                                                                                max-width: 100%;
-                                                                                max-height: 350px;
-                                                                                object-fit: contain;
-                                                                            ">
+                                <img id="modalFoto" src="" alt="Bukti Tindak Lanjut"
+                                    class="img-fluid rounded-3 shadow-sm border" style="
+                                            max-width:100%;
+                                            max-height:350px;
+                                            object-fit:contain;
+                                        ">
 
+                                <div class="mt-3">
 
-                                    <div class="mt-3">
+                                    <a id="modalFotoLink" href="#" target="_blank" class="btn btn-sm btn-outline-primary">
 
-                                        <a href="{{ asset('storage/' . $foto) }}" target="_blank"
-                                            class="btn btn-sm btn-outline-primary">
+                                        <i class="bi bi-eye-fill me-1"></i>
 
-                                            <i class="bi bi-eye-fill me-1"></i>
+                                        Lihat Foto
 
-                                            Lihat Foto
-
-                                        </a>
-
-                                    </div>
+                                    </a>
 
                                 </div>
 
-                            @else
+                            </div>
 
-                                <div class="border rounded-3 bg-light
-                                                                            d-flex flex-column
-                                                                            justify-content-center
-                                                                            align-items-center
-                                                                            text-muted" style="height: 300px;">
 
-                                    <i class="bi bi-image" style="font-size: 60px;"></i>
+                            {{-- TIDAK ADA FOTO --}}
 
-                                    <span class="mt-2">
+                            <div id="modalNoFoto" class="border rounded-3 bg-light
+                                    d-flex flex-column
+                                    justify-content-center
+                                    align-items-center
+                                    text-muted" style="height:300px; display:none !important;">
 
-                                        Belum ada foto tindak lanjut
+                                <i class="bi bi-image" style="font-size:60px;">
+                                </i>
 
-                                    </span>
+                                <span class="mt-2">
 
-                                </div>
+                                    Belum ada foto tindak lanjut
 
-                            @endif
+                                </span>
+
+                            </div>
 
                         </div>
 
 
 
                         {{-- =================================================
-                        INFORMASI TINDAK LANJUT
+                        INFORMASI
                         ================================================== --}}
 
                         <div class="col-md-7">
@@ -1271,11 +1231,7 @@
 
                                 <div class="detail-value">
 
-                                    <span class="badge
-                                                                {{ $statusClass }}
-                                                                px-3 py-2">
-
-                                        {{ $pengaduan->status }}
+                                    <span id="modalStatus" class="badge px-3 py-2">
 
                                     </span>
 
@@ -1286,7 +1242,7 @@
 
 
                             {{-- =================================================
-                            TOPIK ADUAN
+                            TOPIK
                             ================================================== --}}
 
                             <div class="detail-row mb-3">
@@ -1349,17 +1305,9 @@
 
                                 <div class="detail-value">
 
-                                    @if($tanggal)
-
-                                                                {{ \Carbon\Carbon::parse($tanggal)
-                                        ->locale('id')
-                                        ->translatedFormat('d F Y H:i') }}
-
-                                    @else
-
+                                    <span id="modalTanggal">
                                         -
-
-                                    @endif
+                                    </span>
 
                                 </div>
 
@@ -1368,7 +1316,7 @@
 
 
                             {{-- =================================================
-                            ADMIN / PETUGAS
+                            ADMIN
                             ================================================== --}}
 
                             <div class="detail-row mb-3">
@@ -1408,19 +1356,9 @@
 
                                 <div class="border rounded-3 bg-light p-3">
 
-                                    @if($catatan)
-
-                                        {!! nl2br(e($catatan)) !!}
-
-                                    @else
-
-                                        <span class="text-muted">
-
-                                            Belum ada catatan dari admin.
-
-                                        </span>
-
-                                    @endif
+                                    <span id="modalCatatan">
+                                        Belum ada catatan dari admin.
+                                    </span>
 
                                 </div>
 
@@ -1462,44 +1400,370 @@
 @endsection
 
 
-
-{{-- =========================================================
-| PREVIEW FOTO
-========================================================= --}}
-
 @push('scripts')
 
     <script>
 
         document.addEventListener('DOMContentLoaded', function () {
 
-            const input = document.getElementById('bukti');
 
-            const preview = document.getElementById('previewBukti');
+            /*
+            |--------------------------------------------------------------------------
+            | MODAL DETAIL TIMELINE
+            |--------------------------------------------------------------------------
+            */
+
+            const detailAdminModal = document.getElementById('detailAdminModal');
+
+            if (!detailAdminModal) {
+                return;
+            }
 
 
-            if (input && preview) {
+            /*
+            |--------------------------------------------------------------------------
+            | ELEMENT MODAL
+            |--------------------------------------------------------------------------
+            */
 
-                input.addEventListener('change', function (event) {
+            const modalHeader =
+                document.getElementById('modalDetailHeader');
 
-                    const file = event.target.files[0];
+            const modalStatus =
+                document.getElementById('modalStatus');
+
+            const modalFoto =
+                document.getElementById('modalFoto');
+
+            const modalFotoLink =
+                document.getElementById('modalFotoLink');
+
+            const modalFotoContainer =
+                document.getElementById('modalFotoContainer');
+
+            const modalNoFoto =
+                document.getElementById('modalNoFoto');
+
+            const modalTanggal =
+                document.getElementById('modalTanggal');
+
+            const modalCatatan =
+                document.getElementById('modalCatatan');
 
 
-                    if (file) {
 
-                        preview.src = URL.createObjectURL(file);
+            /*
+            |--------------------------------------------------------------------------
+            | SEMUA BUTTON DETAIL
+            |--------------------------------------------------------------------------
+            */
 
-                        preview.style.display = 'block';
+            const buttons =
+                document.querySelectorAll(
+                    '.btn-detail-admin[data-status]'
+                );
+
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | EVENT CLICK
+            |--------------------------------------------------------------------------
+            */
+
+            buttons.forEach(function (button) {
+
+                button.addEventListener('click', function () {
+
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | AMBIL DATA DARI BUTTON
+                    |--------------------------------------------------------------------------
+                    */
+
+                    const status =
+                        button.getAttribute('data-status') || '';
+
+                    const foto =
+                        button.getAttribute('data-foto') || '';
+
+                    const catatan =
+                        button.getAttribute('data-catatan') || '';
+
+                    const tanggal =
+                        button.getAttribute('data-tanggal') || '';
+
+
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | DEFAULT
+                    |--------------------------------------------------------------------------
+                    */
+
+                    let warna = '#6c757d';
+
+                    let warnaBadge = 'bg-secondary';
+
+                    let label = status;
+
+                    let icon = 'bi-clock';
+
+
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | DIVERIFIKASI
+                    |--------------------------------------------------------------------------
+                    */
+
+                    if (status === 'Diverifikasi') {
+
+                        warna = '#0d6efd';
+
+                        warnaBadge = 'bg-primary';
+
+                        label = 'Diverifikasi Admin BNNK';
+
+                        icon = 'bi-check-circle';
+
+                    }
+
+
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | DIPROSES
+                    |--------------------------------------------------------------------------
+                    */
+
+                    else if (status === 'Diproses') {
+
+                        warna = '#ffc107';
+
+                        warnaBadge = 'bg-warning text-dark';
+
+                        label = 'Sedang Diproses Lapangan';
+
+                        icon = 'bi-hourglass-split';
+
+                    }
+
+
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | SELESAI
+                    |--------------------------------------------------------------------------
+                    */
+
+                    else if (status === 'Selesai') {
+
+                        warna = '#198754';
+
+                        warnaBadge = 'bg-success';
+
+                        label = 'Selesai / Diteruskan BNNK';
+
+                        icon = 'bi-check-all';
+
+                    }
+
+
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | DITOLAK
+                    |--------------------------------------------------------------------------
+                    */
+
+                    else if (status === 'Ditolak') {
+
+                        warna = '#dc3545';
+
+                        warnaBadge = 'bg-danger';
+
+                        label = 'Pengaduan Ditolak';
+
+                        icon = 'bi-x-circle';
+
+                    }
+
+
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | HEADER
+                    |--------------------------------------------------------------------------
+                    */
+
+                    modalHeader.style.backgroundColor = warna;
+
+
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | STATUS BADGE
+                    |--------------------------------------------------------------------------
+                    */
+
+                    modalStatus.className =
+                        'badge px-3 py-2 ' + warnaBadge;
+
+                    modalStatus.innerHTML =
+                        '<i class="bi ' + icon + ' me-1"></i>' +
+                        label;
+
+
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | TANGGAL
+                    |--------------------------------------------------------------------------
+                    */
+
+                    modalTanggal.textContent =
+                        tanggal || '-';
+
+
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | CATATAN
+                    |--------------------------------------------------------------------------
+                    */
+
+                    if (catatan) {
+
+                        modalCatatan.innerHTML =
+                            catatan.replace(/\n/g, '<br>');
 
                     } else {
 
-                        preview.src = '#';
+                        modalCatatan.innerHTML =
+                            '<span class="text-muted">' +
+                            'Belum ada catatan dari admin.' +
+                            '</span>';
 
-                        preview.style.display = 'none';
+                    }
+
+
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | FOTO
+                    |--------------------------------------------------------------------------
+                    */
+
+                    if (foto) {
+
+                        modalFoto.src = foto;
+
+                        modalFotoLink.href = foto;
+
+                        modalFotoContainer.style.display =
+                            'block';
+
+                        modalNoFoto.style.setProperty(
+                            'display',
+                            'none',
+                            'important'
+                        );
+
+                    }
+
+                    else {
+
+                        modalFoto.src = '';
+
+                        modalFotoLink.href = '#';
+
+                        modalFotoContainer.style.display =
+                            'none';
+
+                        modalNoFoto.style.setProperty(
+                            'display',
+                            'flex',
+                            'important'
+                        );
 
                     }
 
                 });
+
+            });
+
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | RESET SAAT MODAL DITUTUP
+            |--------------------------------------------------------------------------
+            */
+
+            detailAdminModal.addEventListener(
+                'hidden.bs.modal',
+                function () {
+
+                    modalFoto.src = '';
+
+                    modalFotoLink.href = '#';
+
+                    modalTanggal.textContent = '-';
+
+                    modalCatatan.innerHTML =
+                        'Belum ada catatan dari admin.';
+
+                }
+            );
+
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | PREVIEW FOTO FORM
+            |--------------------------------------------------------------------------
+            */
+
+            const input =
+                document.getElementById('bukti');
+
+            const preview =
+                document.getElementById('previewBukti');
+
+
+            if (input && preview) {
+
+                input.addEventListener(
+                    'change',
+                    function (event) {
+
+                        const file =
+                            event.target.files[0];
+
+
+                        if (file) {
+
+                            preview.src =
+                                URL.createObjectURL(file);
+
+                            preview.style.display =
+                                'block';
+
+                        }
+
+                        else {
+
+                            preview.src = '#';
+
+                            preview.style.display =
+                                'none';
+
+                        }
+
+                    }
+                );
 
             }
 

@@ -515,23 +515,27 @@
                                             @endif
 
 
-                                            @if($pengaduan->foto_verifikasi)
+                                            @if($pengaduan->tanggal_verifikasi)
 
-                                                <div class="mt-2">
+                                                                        <div class="mt-2">
 
-                                                    <button type="button" class="btn-detail-admin" data-bs-toggle="modal"
-                                                        data-bs-target="#detailAdminModal">
+                                                                            <button type="button" class="btn-detail-admin" data-bs-toggle="modal"
+                                                                                data-bs-target="#detailAdminModal" data-status="Diverifikasi" data-foto="{{ $pengaduan->foto_verifikasi
+                                                ? asset('storage/' . $pengaduan->foto_verifikasi)
+                                                : '' }}" data-catatan="{{ $pengaduan->catatan_verifikasi ?? '' }}"
+                                                                                data-tanggal="{{ $pengaduan->tanggal_verifikasi
+                                                ? \Carbon\Carbon::parse($pengaduan->tanggal_verifikasi)->translatedFormat('d F Y • H:i')
+                                                : '' }}">
 
-                                                        <i class="bi bi-eye-fill me-1"></i>
+                                                                                <i class="bi bi-eye-fill me-1"></i>
 
-                                                        Lihat Bukti & Catatan
+                                                                                Lihat Bukti & Catatan
 
-                                                    </button>
+                                                                            </button>
 
-                                                </div>
+                                                                        </div>
 
                                             @endif
-
 
                                         @else
 
@@ -623,23 +627,27 @@
                                             @endif
 
 
-                                            @if($pengaduan->foto_proses)
+                                            @if($pengaduan->tanggal_proses)
 
-                                                <div class="mt-2">
+                                                                        <div class="mt-2">
 
-                                                    <button type="button" class="btn-detail-admin" data-bs-toggle="modal"
-                                                        data-bs-target="#detailAdminModal">
+                                                                            <button type="button" class="btn-detail-admin" data-bs-toggle="modal"
+                                                                                data-bs-target="#detailAdminModal" data-status="Diproses" data-foto="{{ $pengaduan->foto_proses
+                                                ? asset('storage/' . $pengaduan->foto_proses)
+                                                : '' }}" data-catatan="{{ $pengaduan->catatan_proses ?? '' }}"
+                                                                                data-tanggal="{{ $pengaduan->tanggal_proses
+                                                ? \Carbon\Carbon::parse($pengaduan->tanggal_proses)->translatedFormat('d F Y • H:i')
+                                                : '' }}">
 
-                                                        <i class="bi bi-eye-fill me-1"></i>
+                                                                                <i class="bi bi-eye-fill me-1"></i>
 
-                                                        Lihat Bukti & Catatan
+                                                                                Lihat Bukti & Catatan
 
-                                                    </button>
+                                                                            </button>
 
-                                                </div>
+                                                                        </div>
 
                                             @endif
-
 
                                         @else
 
@@ -731,23 +739,27 @@
                                             @endif
 
 
-                                            @if($pengaduan->foto_selesai)
+                                            @if($pengaduan->tanggal_selesai)
 
-                                                <div class="mt-2">
+                                                                        <div class="mt-2">
 
-                                                    <button type="button" class="btn-detail-admin" data-bs-toggle="modal"
-                                                        data-bs-target="#detailAdminModal">
+                                                                            <button type="button" class="btn-detail-admin" data-bs-toggle="modal"
+                                                                                data-bs-target="#detailAdminModal" data-status="Selesai" data-foto="{{ $pengaduan->foto_selesai
+                                                ? asset('storage/' . $pengaduan->foto_selesai)
+                                                : '' }}" data-catatan="{{ $pengaduan->catatan_selesai ?? '' }}"
+                                                                                data-tanggal="{{ $pengaduan->tanggal_selesai
+                                                ? \Carbon\Carbon::parse($pengaduan->tanggal_selesai)->translatedFormat('d F Y • H:i')
+                                                : '' }}">
 
-                                                        <i class="bi bi-eye-fill me-1"></i>
+                                                                                <i class="bi bi-eye-fill me-1"></i>
 
-                                                        Lihat Bukti & Catatan
+                                                                                Lihat Bukti & Catatan
 
-                                                    </button>
+                                                                            </button>
 
-                                                </div>
+                                                                        </div>
 
                                             @endif
-
 
                                         @else
 
@@ -890,67 +902,9 @@
     {{-- =========================================================
     MODAL DETAIL TINDAK LANJUT ADUAN
     ========================================================= --}}
-
-    @php
-
-        $status = $pengaduan->status ?? 'Menunggu';
-
-        $warna = 'secondary';
-        $foto = null;
-        $catatan = null;
-        $tanggal = null;
-
-        switch ($status) {
-
-            case 'Diverifikasi':
-
-                $warna = 'primary';
-
-                $foto = $pengaduan->foto_verifikasi;
-
-                $catatan = $pengaduan->catatan_verifikasi;
-
-                $tanggal = $pengaduan->tanggal_verifikasi;
-
-                break;
-
-
-            case 'Diproses':
-
-                $warna = 'warning';
-
-                $foto = $pengaduan->foto_proses;
-
-                $catatan = $pengaduan->catatan_proses;
-
-                $tanggal = $pengaduan->tanggal_proses;
-
-                break;
-
-
-            case 'Selesai':
-
-                $warna = 'success';
-
-                $foto = $pengaduan->foto_selesai;
-
-                $catatan = $pengaduan->catatan_selesai;
-
-                $tanggal = $pengaduan->tanggal_selesai;
-
-                break;
-
-
-            case 'Ditolak':
-
-                $warna = 'danger';
-
-                break;
-
-        }
-
-    @endphp
-
+    {{-- =========================================================
+    MODAL DETAIL TINDAK LANJUT ADUAN
+    ========================================================= --}}
 
     <div class="modal fade" id="detailAdminModal" tabindex="-1" aria-labelledby="detailAdminModalLabel" aria-hidden="true">
 
@@ -958,18 +912,13 @@
 
             <div class="modal-content border-0 shadow-lg rounded-4">
 
-
                 {{-- =====================================================
                 HEADER
                 ====================================================== --}}
 
-                <div class="modal-header bg-{{ $warna }}
-                                                                                                @if($warna != 'warning')
-                                                                                                    text-white
-                                                                                                @endif
-                                                                                            ">
+                <div class="modal-header" id="detailAdminModalHeader" style="background:#0d6efd;">
 
-                    <h5 class="modal-title fw-bold" id="detailAdminModalLabel">
+                    <h5 class="modal-title fw-bold text-white" id="detailAdminModalLabel">
 
                         <i class="bi bi-file-earmark-medical me-2"></i>
 
@@ -977,17 +926,10 @@
 
                     </h5>
 
-
-                    <button type="button" class="btn-close
-                                                                                                        @if($warna != 'warning')
-                                                                                                            btn-close-white
-                                                                                                        @endif
-                                                                                                    "
-                        data-bs-dismiss="modal" aria-label="Close">
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close">
                     </button>
 
                 </div>
-
 
 
                 {{-- =====================================================
@@ -1005,52 +947,40 @@
 
                         <div class="col-md-5">
 
-                            @if($foto)
+                            <div class="text-center">
 
-                                <div class="text-center">
+                                {{-- FOTO --}}
+                                <img id="modalFoto" src="" alt="Bukti Tindak Lanjut"
+                                    class="img-fluid rounded-3 shadow-sm border" style="
+                                                                max-width:100%;
+                                                                max-height:350px;
+                                                                object-fit:contain;
+                                                                display:none;
+                                                            ">
 
-                                    <img src="{{ asset('storage/' . $foto) }}" alt="Bukti Tindak Lanjut"
-                                        class="img-fluid rounded-3 shadow-sm border"
-                                        style="
-                                                                                                                                                                                    max-width: 100%;
-                                                                                                                                                                                    max-height: 350px;
-                                                                                                                                                                                    object-fit: contain;
-                                                                                                                                                                                ">
 
-                                    <div class="mt-3">
+                                {{-- TOMBOL LIHAT FOTO --}}
+                                <div class="mt-3" id="modalFotoButtonContainer" style="display:none;">
 
-                                        <a href="{{ asset('storage/' . $foto) }}" target="_blank"
-                                            class="btn btn-sm btn-outline-primary">
-                                            <i class="bi bi-eye-fill me-1"></i>
-                                            Lihat Foto
-                                        </a>
+                                    <a id="modalFotoLink" href="#" target="_blank" class="btn btn-sm btn-outline-primary">
 
-                                    </div>
+                                        <i class="bi bi-eye-fill me-1"></i>
 
-                                </div>
+                                        Lihat Foto
 
-                            @else
-
-                                <div class="border rounded-3 bg-light d-flex flex-column justify-content-center align-items-center text-muted"
-                                    style="height:300px;">
-
-                                    <i class="bi bi-image" style="font-size:60px;"></i>
-
-                                    <span class="mt-2">
-                                        Belum ada foto tindak lanjut
-                                    </span>
+                                    </a>
 
                                 </div>
 
-                            @endif
 
+                            </div>
 
                         </div>
 
 
 
                         {{-- =================================================
-                        INFORMASI TINDAK LANJUT
+                        INFORMASI
                         ================================================== --}}
 
                         <div class="col-md-7">
@@ -1077,8 +1007,10 @@
                             <hr>
 
 
+                            {{-- =================================================
+                            STATUS
+                            ================================================== --}}
 
-                            {{-- STATUS --}}
                             <div class="detail-row mb-3">
 
                                 <div class="detail-label fw-bold">
@@ -1089,82 +1021,27 @@
                                     :
                                 </div>
 
-
                                 <div class="detail-value">
 
-                                    @php
+                                    <span id="modalStatus" class="badge px-3 py-2">
 
-                                        $status = $pengaduan->status;
-
-
-                                        $warnaStatus = match ($status) {
-
-                                            'Diverifikasi' => 'success',
-
-                                            'Diproses' => 'warning',
-
-                                            'Selesai' => 'primary',
-
-                                            'Ditolak' => 'danger',
-
-                                            default => 'secondary'
-
-                                        };
-
-
-                                        $labelStatus = match ($status) {
-
-                                            'Diverifikasi' =>
-                                            'Diverifikasi Admin BNNK',
-
-                                            'Diproses' =>
-                                            'Sedang Diproses Lapangan',
-
-                                            'Selesai' =>
-                                            'Selesai / Diteruskan BNNK',
-
-                                            'Ditolak' =>
-                                            'Pengaduan Ditolak',
-
-                                            default =>
-                                            'Belum Diproses'
-
-                                        };
-
-                                    @endphp
-
-
-
-                                    <span class="badge bg-{{ $warnaStatus }} px-3 py-2">
-
-                                        <i class="bi 
-                                                @if($status == 'Diverifikasi')
-                                                    bi-check-circle
-                                                @elseif($status == 'Diproses')
-                                                    bi-hourglass-split
-                                                @elseif($status == 'Selesai')
-                                                    bi-check-all
-                                                @elseif($status == 'Ditolak')
-                                                    bi-x-circle
-                                                @else
-                                                    bi-clock
-                                                @endif
-                                            me-1">
+                                        <i id="modalStatusIcon" class="bi me-1">
                                         </i>
 
-
-                                        {{ $labelStatus }}
-
+                                        <span id="modalStatusText">
+                                            -
+                                        </span>
 
                                     </span>
-
 
                                 </div>
 
                             </div>
 
 
-                            {{-- TOPIK --}}
+                            {{-- =================================================
+                            TOPIK
+                            ================================================== --}}
 
                             <div class="detail-row mb-3">
 
@@ -1185,8 +1062,9 @@
                             </div>
 
 
-
-                            {{-- KECAMATAN --}}
+                            {{-- =================================================
+                            KECAMATAN
+                            ================================================== --}}
 
                             <div class="detail-row mb-3">
 
@@ -1207,8 +1085,9 @@
                             </div>
 
 
-
-                            {{-- TANGGAL PENANGANAN --}}
+                            {{-- =================================================
+                            TANGGAL
+                            ================================================== --}}
 
                             <div class="detail-row mb-3">
 
@@ -1222,23 +1101,18 @@
 
                                 <div class="detail-value">
 
-                                    @if($tanggal)
-
-                                        {{ \Carbon\Carbon::parse($tanggal)->translatedFormat('d F Y H:i') }}
-
-                                    @else
-
+                                    <span id="modalTanggal">
                                         -
-
-                                    @endif
+                                    </span>
 
                                 </div>
 
                             </div>
 
 
-
-                            {{-- ADMIN --}}
+                            {{-- =================================================
+                            ADMIN
+                            ================================================== --}}
 
                             <div class="detail-row mb-3">
 
@@ -1259,7 +1133,6 @@
                             </div>
 
 
-
                             {{-- =================================================
                             CATATAN ADMIN
                             ================================================== --}}
@@ -1275,33 +1148,21 @@
                                 </label>
 
 
-                                <div class="border rounded-3 bg-light p-3">
+                                <div id="modalCatatan" class="border rounded-3 bg-light p-3">
 
-                                    @if($catatan)
-
-                                        {!! nl2br(e($catatan)) !!}
-
-                                    @else
-
-                                        <span class="text-muted">
-
-                                            Belum ada catatan dari admin.
-
-                                        </span>
-
-                                    @endif
+                                    <span class="text-muted">
+                                        Belum ada catatan dari admin.
+                                    </span>
 
                                 </div>
 
                             </div>
-
 
                         </div>
 
                     </div>
 
                 </div>
-
 
 
                 {{-- =====================================================
@@ -1326,24 +1187,244 @@
 
     </div>
 
+
+
+
 @endsection
-
 <script>
-    document.getElementById('bukti').addEventListener('change', function (e) {
+    document.addEventListener('DOMContentLoaded', function () {
 
-        const file = e.target.files[0];
-        const preview = document.getElementById('previewBukti');
+        const modal = document.getElementById('detailAdminModal');
 
-        if (file) {
-
-            preview.src = URL.createObjectURL(file);
-            preview.style.display = 'block';
-
-        } else {
-
-            preview.style.display = 'none';
-
+        if (!modal) {
+            return;
         }
+
+        modal.addEventListener('show.bs.modal', function (event) {
+
+            const button = event.relatedTarget;
+
+            if (!button) {
+                return;
+            }
+
+            // =====================================================
+            // DATA DARI TIMELINE YANG DIKLIK
+            // =====================================================
+
+            const status =
+                button.getAttribute('data-status') || '';
+
+            const foto =
+                button.getAttribute('data-foto') || '';
+
+            const catatan =
+                button.getAttribute('data-catatan') || '';
+
+            const tanggal =
+                button.getAttribute('data-tanggal') || '';
+
+
+            // =====================================================
+            // ELEMENT MODAL
+            // =====================================================
+
+            const header =
+                document.getElementById('detailAdminModalHeader');
+
+            const statusBadge =
+                document.getElementById('modalStatus');
+
+            const statusIcon =
+                document.getElementById('modalStatusIcon');
+
+            const statusText =
+                document.getElementById('modalStatusText');
+
+            const tanggalElement =
+                document.getElementById('modalTanggal');
+
+            const catatanElement =
+                document.getElementById('modalCatatan');
+
+            const fotoElement =
+                document.getElementById('modalFoto');
+
+            const fotoLink =
+                document.getElementById('modalFotoLink');
+
+            const fotoButtonContainer =
+                document.getElementById('modalFotoButtonContainer');
+
+            const noFoto =
+                document.getElementById('modalNoFoto');
+
+
+            // =====================================================
+            // DEFAULT
+            // =====================================================
+
+            let warna = '#6c757d';
+
+            let icon = 'bi-clock';
+
+            let label = 'Belum Diproses';
+
+
+            // =====================================================
+            // DIVERIFIKASI
+            // =====================================================
+
+            if (status === 'Diverifikasi') {
+
+                warna = '#0d6efd';
+
+                icon = 'bi-check-circle';
+
+                label = 'Diverifikasi Admin BNNK';
+
+            }
+
+
+            // =====================================================
+            // DIPROSES
+            // =====================================================
+
+            else if (status === 'Diproses') {
+
+                warna = '#ffc107';
+
+                icon = 'bi-hourglass-split';
+
+                label = 'Sedang Diproses Lapangan';
+
+            }
+
+
+            // =====================================================
+            // SELESAI
+            // =====================================================
+
+            else if (status === 'Selesai') {
+
+                warna = '#198754';
+
+                icon = 'bi-check-all';
+
+                label = 'Selesai / Diteruskan BNNK';
+
+            }
+
+
+            // =====================================================
+            // DITOLAK
+            // =====================================================
+
+            else if (status === 'Ditolak') {
+
+                warna = '#dc3545';
+
+                icon = 'bi-x-circle';
+
+                label = 'Pengaduan Ditolak';
+
+            }
+
+
+            // =====================================================
+            // HEADER
+            // =====================================================
+
+            header.style.backgroundColor = warna;
+
+
+            // =====================================================
+            // STATUS
+            // =====================================================
+
+            statusBadge.style.backgroundColor = warna;
+
+            statusBadge.classList.remove(
+                'text-dark',
+                'text-white'
+            );
+
+            if (status === 'Diproses') {
+
+                statusBadge.classList.add('text-dark');
+
+            } else {
+
+                statusBadge.classList.add('text-white');
+
+            }
+
+
+            statusIcon.className =
+                'bi ' + icon + ' me-1';
+
+            statusText.textContent =
+                label;
+
+
+            // =====================================================
+            // TANGGAL
+            // =====================================================
+
+            tanggalElement.textContent =
+                tanggal || '-';
+
+
+            // =====================================================
+            // CATATAN
+            // =====================================================
+
+            if (catatan) {
+
+                catatanElement.innerHTML =
+                    catatan.replace(/\n/g, '<br>');
+
+            } else {
+
+                catatanElement.innerHTML =
+                    '<span class="text-muted">' +
+                    'Belum ada catatan dari admin.' +
+                    '</span>';
+
+            }
+
+
+            // =====================================================
+            // FOTO
+            // =====================================================
+
+            if (foto) {
+
+                fotoElement.src = foto;
+
+                fotoElement.style.display = 'block';
+
+                fotoLink.href = foto;
+
+                fotoButtonContainer.style.display = 'block';
+
+                noFoto.style.display = 'none';
+
+            } else {
+
+                fotoElement.src = '';
+
+                fotoElement.style.display = 'none';
+
+                fotoLink.href = '#';
+
+                fotoButtonContainer.style.display = 'none';
+
+                noFoto.style.display = 'flex';
+
+            }
+
+        });
 
     });
 </script>

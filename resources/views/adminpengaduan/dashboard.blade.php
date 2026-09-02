@@ -329,94 +329,103 @@
 
 
                                                         {{-- =====================================
-                                                        STATUS
-                                                        ====================================== --}}
-                                                        <td>
+STATUS
+====================================== --}}
+<td>
 
-                                                            @if($pengaduan->status === 'Menunggu')
+    @if($pengaduan->status === 'Diajukan')
 
-                                                                <span class="sa-status-badge">
+        <span class="sa-status-badge">
 
-                                                                    <span style="background:#0d6efd"></span>
+            <span style="background:#6c757d"></span>
 
-                                                                    Menunggu
+            Diajukan
 
-                                                                </span>
-
-
-                                                            @elseif($pengaduan->status === 'Diverifikasi')
-
-                                                                <span class="sa-status-badge">
-
-                                                                    <span style="background:#0d6efd"></span>
-
-                                                                    Diverifikasi
-
-                                                                </span>
+        </span>
 
 
-                                                            @elseif($pengaduan->status === 'Diproses')
+    @elseif($pengaduan->status === 'Menunggu')
 
-                                                                <span class="sa-status-badge">
+        <span class="sa-status-badge">
 
-                                                                    <span style="background:#fd7e14"></span>
+            <span style="background:#0d6efd"></span>
 
-                                                                    Diproses
+            Menunggu
 
-                                                                </span>
-
-
-                                                            @elseif($pengaduan->status === 'Diproses Lapangan')
-
-                                                                <span class="sa-status-badge">
-
-                                                                    <span style="background:#fd7e14"></span>
-
-                                                                    Diproses Lapangan
-
-                                                                </span>
+        </span>
 
 
-                                                            @elseif($pengaduan->status === 'Selesai')
+    @elseif($pengaduan->status === 'Diverifikasi')
 
-                                                                <span class="sa-status-badge active">
+        <span class="sa-status-badge">
 
-                                                                    <span></span>
+            <span style="background:#0d6efd"></span>
 
-                                                                    Selesai
+            Diverifikasi
 
-                                                                </span>
-
-
-                                                            @elseif($pengaduan->status === 'Ditolak')
-
-                                                                <span class="sa-status-badge">
-
-                                                                    <span style="background:#dc3545"></span>
-
-                                                                    Ditolak
-
-                                                                </span>
+        </span>
 
 
-                                                            @else
+    @elseif($pengaduan->status === 'Diproses')
 
-                                                                <span class="sa-status-badge">
+        <span class="sa-status-badge">
 
-                                                                    <span></span>
+            <span style="background:#fd7e14"></span>
 
-                                                                    {{ $pengaduan->status ?? '-' }}
+            Diproses
 
-                                                                </span>
-
-                                                            @endif
-
-                                                        </td>
+        </span>
 
 
-                                                        {{-- =====================================
-                                                        AKSI
-                                                        ====================================== --}}
+    @elseif($pengaduan->status === 'Diproses Lapangan')
+
+        <span class="sa-status-badge">
+
+            <span style="background:#fd7e14"></span>
+
+            Diproses Lapangan
+
+        </span>
+
+
+    @elseif($pengaduan->status === 'Selesai')
+
+        <span class="sa-status-badge">
+
+            <span style="background:#198754"></span>
+
+            Selesai
+
+        </span>
+
+
+    @elseif($pengaduan->status === 'Ditolak')
+
+        <span class="sa-status-badge">
+
+            <span style="background:#dc3545"></span>
+
+            Ditolak
+
+        </span>
+
+
+    @else
+
+        <span class="sa-status-badge">
+
+            <span style="background:#6c757d"></span>
+
+            {{ $pengaduan->status ?? '-' }}
+
+        </span>
+
+    @endif
+
+</td>
+
+
+                                                
                                                         {{-- =================================================
                                                         AKSI
                                                         ================================================= --}}

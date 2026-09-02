@@ -248,17 +248,17 @@
 
 
                                         <!-- {{-- JENIS REHABILITASI --}}
-                                                <div class="col-md-6 mb-3">
+                                                                                <div class="col-md-6 mb-3">
 
-                                                    <strong>
-                                                        Jenis Rehabilitasi
-                                                    </strong>
+                                                                                    <strong>
+                                                                                        Jenis Rehabilitasi
+                                                                                    </strong>
 
-                                                    <p>
-                                                        {{ $permohonan->jenis_rehabilitasi ?? '-' }}
-                                                    </p>
+                                                                                    <p>
+                                                                                        {{ $permohonan->jenis_rehabilitasi ?? '-' }}
+                                                                                    </p>
 
-                                                </div> -->
+                                                                                </div> -->
 
 
                                         {{-- ALAMAT --}}
@@ -721,7 +721,7 @@
                                 1. DIAJUKAN
                                 ================================================== --}}
                                 <div class="admin-tracking-item
-                                                        {{ $diajukanAktif ? 'selesai' : 'pending' }}">
+                                                                        {{ $diajukanAktif ? 'selesai' : 'pending' }}">
 
                                     <div class="admin-tracking-icon">
 
@@ -776,7 +776,7 @@
                                 2. DIVERIFIKASI
                                 ================================================== --}}
                                 <div class="admin-tracking-item
-                                                        {{ $verifikasiAktif ? 'selesai' : 'pending' }}">
+                                                                        {{ $verifikasiAktif ? 'selesai' : 'pending' }}">
 
                                     <div class="admin-tracking-icon">
 
@@ -851,24 +851,29 @@
 
 
 
-                                            {{-- LAMPIRAN --}}
-                                            @if($permohonan->file_verifikasi)
+                                            {{-- LAMPIRAN VERIFIKASI --}}
+                                            <div class="mt-3">
 
-                                                <div class="mt-3">
+                                                @if($permohonan->file_verifikasi)
 
                                                     <a href="{{ asset('storage/' . $permohonan->file_verifikasi) }}" target="_blank"
                                                         class="btn btn-sm btn-primary">
 
                                                         <i class="bi bi-paperclip me-1"></i>
-
-                                                        Lihat Lampiran Verifikasi
+                                                        Lihat Lampiran
 
                                                     </a>
 
-                                                </div>
+                                                @else
 
-                                            @endif
+                                                    <span class="text-muted small">
+                                                        <i class="bi bi-paperclip me-1"></i>
+                                                        Tidak ada lampiran verifikasi
+                                                    </span>
 
+                                                @endif
+
+                                            </div>
 
                                         @else
 
@@ -890,7 +895,7 @@
                                 3. DIPROSES
                                 ================================================== --}}
                                 <div class="admin-tracking-item
-                                                        {{ $prosesAktif ? 'selesai' : 'pending' }}">
+                                                                        {{ $prosesAktif ? 'selesai' : 'pending' }}">
 
                                     <div class="admin-tracking-icon">
 
@@ -916,12 +921,10 @@
 
                                         @if($prosesAktif)
 
-
                                             {{-- TANGGAL --}}
                                             @if($permohonan->tanggal_proses)
 
                                                                             <small>
-
                                                                                 <i class="bi bi-calendar-event me-1"></i>
 
                                                                                 {{ \Carbon\Carbon::parse(
@@ -929,40 +932,9 @@
                                                 )->translatedFormat('d F Y • H:i') }}
 
                                                                                 WIB
-
                                                                             </small>
 
-
-                                                                            {{-- LAMPIRAN --}}
-                                                                            @if($permohonan->file_verifikasi)
-
-                                                                                <div class="mt-3">
-
-                                                                                    <a href="{{ asset('storage/' . $permohonan->file_verifikasi) }}" target="_blank"
-                                                                                        class="btn btn-sm btn-primary">
-
-                                                                                        <i class="bi bi-paperclip me-1"></i>
-
-                                                                                        Lihat Lampiran Verifikasi
-
-                                                                                    </a>
-
-                                                                                </div>
-
-                                                                            @endif
-
-                                            @else
-
-                                                <small>
-
-                                                    <i class="bi bi-check-circle me-1"></i>
-
-                                                    Permohonan sedang diproses.
-
-                                                </small>
-
                                             @endif
-
 
 
                                             {{-- CATATAN --}}
@@ -983,25 +955,29 @@
                                             @endif
 
 
+                                            {{-- LAMPIRAN PROSES --}}
+                                            <div class="mt-3">
 
-                                            {{-- LAMPIRAN --}}
-                                            @if($permohonan->file_proses)
-
-                                                <div class="mt-3">
+                                                @if($permohonan->file_proses)
 
                                                     <a href="{{ asset('storage/' . $permohonan->file_proses) }}" target="_blank"
                                                         class="btn btn-sm btn-primary">
 
                                                         <i class="bi bi-paperclip me-1"></i>
-
-                                                        Lihat Lampiran Proses
+                                                        Lihat Lampiran
 
                                                     </a>
 
-                                                </div>
+                                                @else
 
-                                            @endif
+                                                    <span class="text-muted small">
+                                                        <i class="bi bi-paperclip me-1"></i>
+                                                        Tidak ada lampiran proses
+                                                    </span>
 
+                                                @endif
+
+                                            </div>
 
                                         @else
 
@@ -1023,7 +999,7 @@
                                 4. SELESAI
                                 ================================================== --}}
                                 <div class="admin-tracking-item
-                                                        {{ $selesaiAktif ? 'selesai' : 'pending' }}">
+                                                                        {{ $selesaiAktif ? 'selesai' : 'pending' }}">
 
                                     <div class="admin-tracking-icon">
 
@@ -1108,7 +1084,7 @@
 
                                                         <i class="bi bi-paperclip me-1"></i>
 
-                                                        Lihat Lampiran Selesai
+                                                        Lihat Lampiran
 
                                                     </a>
 
@@ -1292,20 +1268,20 @@
                                         {{-- Preview Gambar --}}
                                         <img id="previewBukti" src="" alt="Preview Bukti" class="img-fluid rounded shadow"
                                             style="
-                                                                display: none;
-                                                                max-height: 400px;
-                                                                width: auto;
-                                                            ">
+                                                                                display: none;
+                                                                                max-height: 400px;
+                                                                                width: auto;
+                                                                            ">
 
 
                                         {{-- Preview PDF --}}
                                         <iframe id="previewPdf" src="" style="
-                                                                display: none;
-                                                                width: 100%;
-                                                                height: 500px;
-                                                                border: 1px solid #ddd;
-                                                                border-radius: 8px;
-                                                            "></iframe>
+                                                                                display: none;
+                                                                                width: 100%;
+                                                                                height: 500px;
+                                                                                border: 1px solid #ddd;
+                                                                                border-radius: 8px;
+                                                                            "></iframe>
 
                                     </div>
 
@@ -1343,8 +1319,8 @@
     </section>
 
     <!-- ==========================================
-                                                                                                     MODAL DETAIL TINDAK LANJUT PERMOHONAN
-                                                                                                ========================================== -->
+                                                                                                                     MODAL DETAIL TINDAK LANJUT PERMOHONAN
+                                                                                                                ========================================== -->
     <div class="modal fade" id="detailPermohonanModal" tabindex="-1" aria-labelledby="detailPermohonanModalLabel"
         aria-hidden="true">
 

@@ -757,7 +757,7 @@
                                 1. DIAJUKAN
                                 ================================================== --}}
                                 <div class="admin-tracking-item
-                                                    {{ $diajukanAktif ? 'selesai' : 'pending' }}">
+                                                            {{ $diajukanAktif ? 'selesai' : 'pending' }}">
 
                                     <div class="admin-tracking-icon">
 
@@ -812,7 +812,7 @@
                                 2. DIVERIFIKASI
                                 ================================================== --}}
                                 <div class="admin-tracking-item
-                                                    {{ $verifikasiAktif ? 'selesai' : 'pending' }}">
+                                                            {{ $verifikasiAktif ? 'selesai' : 'pending' }}">
 
                                     <div class="admin-tracking-icon">
 
@@ -897,7 +897,7 @@
 
                                                         <i class="bi bi-paperclip me-1"></i>
 
-                                                        Lihat Lampiran Verifikasi
+                                                        Lihat Lampiran
 
                                                     </a>
 
@@ -926,7 +926,7 @@
                                 3. DIPROSES
                                 ================================================== --}}
                                 <div class="admin-tracking-item
-                                                    {{ $prosesAktif ? 'selesai' : 'pending' }}">
+                                                            {{ $prosesAktif ? 'selesai' : 'pending' }}">
 
                                     <div class="admin-tracking-icon">
 
@@ -969,23 +969,7 @@
                                                                             </small>
 
 
-                                                                            {{-- LAMPIRAN --}}
-                                                                            @if($permohonan->file_verifikasi)
 
-                                                                                <div class="mt-3">
-
-                                                                                    <a href="{{ asset('storage/' . $permohonan->file_verifikasi) }}" target="_blank"
-                                                                                        class="btn btn-sm btn-primary">
-
-                                                                                        <i class="bi bi-paperclip me-1"></i>
-
-                                                                                        Lihat Lampiran Verifikasi
-
-                                                                                    </a>
-
-                                                                                </div>
-
-                                                                            @endif
 
                                             @else
 
@@ -1030,7 +1014,7 @@
 
                                                         <i class="bi bi-paperclip me-1"></i>
 
-                                                        Lihat Lampiran Proses
+                                                        Lihat Lampiran
 
                                                     </a>
 
@@ -1059,7 +1043,7 @@
                                 4. SELESAI
                                 ================================================== --}}
                                 <div class="admin-tracking-item
-                                                    {{ $selesaiAktif ? 'selesai' : 'pending' }}">
+                                                            {{ $selesaiAktif ? 'selesai' : 'pending' }}">
 
                                     <div class="admin-tracking-icon">
 
@@ -1144,7 +1128,7 @@
 
                                                         <i class="bi bi-paperclip me-1"></i>
 
-                                                        Lihat Lampiran Selesai
+                                                        Lihat Lampiran
 
                                                     </a>
 
@@ -1343,19 +1327,19 @@
 
                                         <img id="previewBukti" src="" alt="Preview Bukti" class="img-fluid rounded shadow"
                                             style="
-                                                                display:none;
-                                                                max-height:400px;
-                                                                width:auto;
-                                                            ">
+                                                                        display:none;
+                                                                        max-height:400px;
+                                                                        width:auto;
+                                                                    ">
 
 
                                         <iframe id="previewPdf" src="" style="
-                                                                display:none;
-                                                                width:100%;
-                                                                height:500px;
-                                                                border:1px solid #ddd;
-                                                                border-radius:8px;
-                                                            "></iframe>
+                                                                        display:none;
+                                                                        width:100%;
+                                                                        height:500px;
+                                                                        border:1px solid #ddd;
+                                                                        border-radius:8px;
+                                                                    "></iframe>
 
                                     </div>
 
