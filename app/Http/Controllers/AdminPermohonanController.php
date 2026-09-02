@@ -83,24 +83,47 @@ class AdminPermohonanController extends Controller
     }
 
     /*
-    |--------------------------------------------------------------------------
-    | UPDATE PERMOHONAN
-    |--------------------------------------------------------------------------
-    */
+|--------------------------------------------------------------------------
+| UPDATE PERMOHONAN
+|--------------------------------------------------------------------------
+*/
 
     public function updatePermohonan(Request $request, $id)
     {
+        /*
+        |--------------------------------------------------------------------------
+        | VALIDASI
+        |--------------------------------------------------------------------------
+        */
+
         $request->validate([
             'status' => 'required|in:Diverifikasi,Diproses,Selesai,Ditolak',
+
             'catatan' => 'nullable|string',
-            'bukti' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+
+            'bukti' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
         ]);
 
+
+        /*
+        |--------------------------------------------------------------------------
+        | AMBIL DATA PERMOHONAN
+        |--------------------------------------------------------------------------
+        */
+
         $permohonan = Permohonan::findOrFail($id);
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | DATA DASAR
+        |--------------------------------------------------------------------------
+        */
 
         $data = [
             'status' => $request->status,
         ];
+
 
         /*
         |--------------------------------------------------------------------------
@@ -108,64 +131,106 @@ class AdminPermohonanController extends Controller
         |--------------------------------------------------------------------------
         */
 
-        if ($request->status == 'Diverifikasi') {
+        if ($request->status === 'Diverifikasi') {
 
             $data['tanggal_verifikasi'] = now();
+
             $data['catatan_verifikasi'] = $request->catatan;
+
+
+            /*
+            |----------------------------------------------------------------------
+            | SIMPAN FILE VERIFIKASI
+            |----------------------------------------------------------------------
+            */
 
             if ($request->hasFile('bukti')) {
 
-                $data['foto_verifikasi'] = $request
+                $data['file_verifikasi'] = $request
                     ->file('bukti')
                     ->store('permohonan/verifikasi', 'public');
             }
         }
 
+
         /*
         |--------------------------------------------------------------------------
         | DIPROSES
         |--------------------------------------------------------------------------
-        */ elseif ($request->status == 'Diproses') {
+        */ elseif ($request->status === 'Diproses') {
 
             $data['tanggal_proses'] = now();
+
             $data['catatan_proses'] = $request->catatan;
+
+
+            /*
+            |----------------------------------------------------------------------
+            | SIMPAN FILE PROSES
+            |----------------------------------------------------------------------
+            */
 
             if ($request->hasFile('bukti')) {
 
-                $data['foto_proses'] = $request
+                $data['file_proses'] = $request
                     ->file('bukti')
                     ->store('permohonan/proses', 'public');
             }
         }
 
+
         /*
         |--------------------------------------------------------------------------
         | SELESAI
         |--------------------------------------------------------------------------
-        */ elseif ($request->status == 'Selesai') {
+        */ elseif ($request->status === 'Selesai') {
 
             $data['tanggal_selesai'] = now();
+
             $data['catatan_selesai'] = $request->catatan;
+
+
+            /*
+            |----------------------------------------------------------------------
+            | SIMPAN FILE SELESAI
+            |----------------------------------------------------------------------
+            */
 
             if ($request->hasFile('bukti')) {
 
-                $data['foto_selesai'] = $request
+                $data['file_selesai'] = $request
                     ->file('bukti')
                     ->store('permohonan/selesai', 'public');
             }
         }
 
+
         /*
         |--------------------------------------------------------------------------
         | DITOLAK
         |--------------------------------------------------------------------------
-        */ elseif ($request->status == 'Ditolak') {
+        */ elseif ($request->status === 'Ditolak') {
 
             $data['tanggal_verifikasi'] = now();
+
             $data['catatan_verifikasi'] = $request->catatan;
         }
 
+
+        /*
+        |--------------------------------------------------------------------------
+        | UPDATE DATABASE
+        |--------------------------------------------------------------------------
+        */
+
         $permohonan->update($data);
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | REDIRECT
+        |--------------------------------------------------------------------------
+        */
 
         return redirect()
             ->route(
@@ -177,7 +242,6 @@ class AdminPermohonanController extends Controller
                 'Data permohonan berhasil diperbarui.'
             );
     }
-
     /*
 |--------------------------------------------------------------------------
 | HAPUS PERMOHONAN

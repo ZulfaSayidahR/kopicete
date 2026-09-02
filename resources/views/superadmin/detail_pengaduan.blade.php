@@ -870,12 +870,16 @@
 
                                 <div class="mb-3">
 
-                                    <label for="bukti" class="form-label">
-                                        Bukti / Foto
+                                  <label for="bukti" class="form-label">
+                                        Upload Bukti Tindak Lanjut
                                     </label>
 
                                     <input type="file" name="bukti" id="bukti" class="form-control"
                                         accept=".jpg,.jpeg,.png">
+
+                                           <small class="text-muted">
+                                        Format JPG, JPEG, PNG, PDF. Maksimal 2 MB.
+                                    </small>
 
                                 </div>
 

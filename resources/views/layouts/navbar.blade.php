@@ -31,16 +31,17 @@
                 </li>
 
                 <li class="nav-item">
+                    <a class="nav-link" href="{{ route('pencarian') }}">
+                        Pencarian Pelayanan
+                    </a>
+                </li>
+
+                <li class="nav-item">
                     <a class="nav-link" href="{{ route('about') }}">
                         About
                     </a>
                 </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('pencarian') }}">
-                        Pencarian Pelayanan
-                    </a>
-                </li>
 
                 <li class="nav-item ms-lg-3 mt-3 mt-lg-0">
                     <a href="{{ route('login') }}" class="btn btn-yellow w-100">

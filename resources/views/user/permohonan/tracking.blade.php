@@ -110,13 +110,11 @@
 
                                     <p>
 
-                                        @if($permohonan->kode_permohonan)
+                                       @if($permohonan->kode_permohonan)
 
-                                            {{ substr($permohonan->kode_permohonan, 0, 4) }}
-                                            ******
-                                            {{ substr($permohonan->kode_permohonan, -3) }}
+    {{ $permohonan->kode_permohonan }}
 
-                                        @else
+@else
 
                                             -
 
@@ -193,13 +191,12 @@
 
                                         <p>
 
-                                            @if($permohonan->no_hp)
+                                           @if($permohonan->no_hp)
 
-                                                {{ substr($permohonan->no_hp, 0, 4) }}
-                                                ******
-                                                {{ substr($permohonan->no_hp, -3) }}
+    {{ $permohonan->no_hp }}
 
-                                            @else
+@else
+
 
                                                 -
 
@@ -209,20 +206,6 @@
 
                                     </div>
 
-
-                                    {{-- JENIS REHABILITASI --}}
-                                    <!-- <div>
-
-                                                        <strong>
-                                                            <i class="bi bi-heart-pulse-fill"></i>
-                                                            Jenis Rehabilitasi
-                                                        </strong>
-
-                                                        <p>
-                                                            {{ $permohonan->jenis_rehabilitasi ?? '-' }}
-                                                        </p>
-
-                                                    </div> -->
 
 
                                     {{-- ALAMAT PEMOHON --}}
@@ -288,14 +271,13 @@
                                         </strong>
 
                                         <p>
+@if($permohonan->no_hp)
 
-                                            @if($permohonan->no_hp)
+    {{ $permohonan->no_hp }}
 
-                                                {{ substr($permohonan->no_hp, 0, 4) }}
-                                                ******
-                                                {{ substr($permohonan->no_hp, -3) }}
+@else
 
-                                            @else
+
 
                                                 -
 
@@ -1140,13 +1122,11 @@
 
                                     <div class="detail-value">
 
-                                        @if($permohonan->no_hp)
+                                      @if($permohonan->no_hp)
 
-                                            {{ substr($permohonan->no_hp, 0, 4) }}
-                                            ******
-                                            {{ substr($permohonan->no_hp, -3) }}
+    {{ $permohonan->no_hp }}
 
-                                        @else
+@else
 
                                             -
 

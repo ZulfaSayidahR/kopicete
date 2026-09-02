@@ -456,7 +456,7 @@ class PengaduanController extends Controller
         }
 
         // Generate kode
-        $kode = 'BNNK-' . date('Ymd') . '-' . strtoupper(Str::random(5));
+        $kode = 'PGD-' . date('Ymd') . '-' . strtoupper(Str::random(5));
 
         Pengaduan::create([
             'kode_aduan' => $kode,
